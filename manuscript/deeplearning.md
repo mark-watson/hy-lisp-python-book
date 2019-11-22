@@ -4,3 +4,11 @@ Most of my professional career since 2014 has involved deep learning, mostly wit
 
 TBD
 
+## Implementing the HyKeras Library for Wrapping TensorFlow and Keras
+
+TBD
+
+## Example Applications
+
+TBD
+

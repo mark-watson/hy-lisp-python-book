@@ -8,3 +8,6 @@ You will learn how to apply both DL and NLP in two stages: develop low level "sm
 
 TBD - update previous intro!!
 
+## Implementing the HyNLP Wrapper for the Python spaCy Library
+
+TBD
