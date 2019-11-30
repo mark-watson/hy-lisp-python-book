@@ -20,9 +20,10 @@ Youi can install the current stable version oy **Hy** using:
 
         pip install git+https://github.com/hylang/hy.git
 
+## About the Book Cover
 
+The official Hy Language logo is an octopus:
 
+![The Hy Language logo 'Cuddles' by Karen Rustad](images/hylisp-logo.png)
 
-
-
-**Cover Credit**: Thanks to Wikimedia user Pseudopanax for placing the cover image in the pubic domain.
+Usually I use photographs that I take myself for covers of my LeanPub books. Although I have SCUBA dived since I was 13 years old, sadly I have no pictures of an octopus that I have taken myself. I did find a public domain picture I liked (that is the cover of this book) on Wikimedia. **Cover Credit**: Thanks to Wikimedia user Pseudopanax for placing the cover image in the pubic domain.

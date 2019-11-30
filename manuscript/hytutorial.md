@@ -8,3 +8,20 @@ Please start by installing Hy in your current Python environment:
 
         pip install git+https://github.com/hylang/hy.git
 
+## Writing Functions in the Hy Language
+
+TBD
+
+## How Simple Lisp Data Structures Can Represent Our Data
+
+TBD: better section title
+
+TBD: examples
+
+## Using Python Libraries in Hy Programs
+
+TBD
+
+## Writing Your Own Libraries in the Hy Language
+
+TBD

@@ -1,7 +1,10 @@
 preface.md
 hytutorial.md
+whylisp.md
 datastores.md
 webscrape.md
+linkeddata.md
 deeplearning.md
 nlp.md
 kg.md
+
