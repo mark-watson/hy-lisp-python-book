@@ -6,3 +6,18 @@ Historically Knowledge Graphs used semantic web technology like [Resource Descri
 
 TBD
 
+test code, remove:
+
+{lang="lisp",linenos=on}
+~~~~~~~~
+(require [hy.contrib.walk [let]])
+
+(let [x 1]
+  (defn increment []
+    (setv x (+ x 1))
+    x))
+
+(print (increment))
+(print (increment))
+(print (increment))
+~~~~~~~~
