@@ -8,7 +8,7 @@ TBD
 
 test code, remove:
 
-{lang="lisp",linenos=on}
+{lang="hylang",linenos=on}
 ~~~~~~~~
 (require [hy.contrib.walk [let]])
 
@@ -20,4 +20,34 @@ test code, remove:
 (print (increment))
 (print (increment))
 (print (increment))
+~~~~~~~~
+
+Hy:
+
+{lang="clojure",linenos=on}
+~~~~~~~~
+(require [hy.contrib.walk [let]])
+
+(let [x 1]
+  (defn increment []
+    (setv x (+ x 1))
+    x))
+
+(print (increment))
+(print (increment))
+(print (increment))
+~~~~~~~~
+
+
+
+{width=80%}
+![Part of a Knowledge Graph shown in Neo4j web application console](images/neo4j.jpg)
+
+{lang="lisp",linenos=on}
+~~~~~~~~
+(defpackage #:kgcreator
+  (:use #:cl
+        #:entities_dbpedia #:categorize_summarize #:myutils
+        #:cl-who #:hunchentoot #:parenscript)
+  (:export kgcreator))
 ~~~~~~~~
