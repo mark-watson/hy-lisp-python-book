@@ -21,6 +21,12 @@ In Scheme, Clojure, and Common Lisp languages the **let** special form is used t
 
 Line 1 is similar to how we make Python scripts into runnable programs. Here we run **hy** instead of **python**. Line 3 imports the **let** macro. We can use **let** for code blocks with local variable and function definitions and also for using closures (I will cover closures at the end of this chapter):
 
+{lang="bash",linenos=on}
+~~~~~~~~
+#!/usr/bin/env hy
+~~~~~~~~
+
+
 {lang="lisp",linenos=on}
 ~~~~~~~~
 #!/usr/bin/env hy
@@ -69,6 +75,34 @@ TBD
 ~~~~~~~~
 #!/usr/bin/env hy
 
+(require [hy.contrib.walk [let]])
+
+(let [x 1]
+  (defn increment []
+    (setv x (+ x 1))
+    x))
+
+(print (increment))
+(print (increment))
+(print (increment))
+~~~~~~~~
+
+{lang="clojure",linenos=on}
+~~~~~~~~
+(require [hy.contrib.walk [let]])
+
+(let [x 1]
+  (defn increment []
+    (setv x (+ x 1))
+    x))
+
+(print (increment))
+(print (increment))
+(print (increment))
+~~~~~~~~
+
+{lang="lisp",linenos=on}
+~~~~~~~~
 (require [hy.contrib.walk [let]])
 
 (let [x 1]
