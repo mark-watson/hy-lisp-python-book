@@ -1,8 +1,9 @@
 preface.md
 hytutorial.md
 whylisp.md
-datastores.md
+webapps.md
 webscrape.md
+datastores.md
 linkeddata.md
 deeplearning.md
 nlp.md

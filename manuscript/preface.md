@@ -16,7 +16,7 @@ This is a hands-on book! I expect you, dear reader, to follow along with the exa
 
 - TBD list out Python library requirements here  TBD
 
-You can install the current stable version oy **Hy** using:
+You can install the current stable version of **Hy** using:
 
         pip install git+https://github.com/hylang/hy.git
 

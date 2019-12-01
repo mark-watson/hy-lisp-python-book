@@ -4,11 +4,15 @@ Most of my professional career since 2014 has involved deep learning, mostly wit
 
 TBD
 
-## Implementing the HyKeras Library for Wrapping TensorFlow and Keras
+## Tutorial on Deep Learning
 
 TBD
 
-## Example Applications
+## Using Keras and TensorFlow to Model The Wisconsin Cancer Data Set
+
+TBD
+
+## Using a LSTM Recurrent Neural Network to Generate Hy Language Code
 
 TBD
 
