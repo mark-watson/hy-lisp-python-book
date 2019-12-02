@@ -24,7 +24,7 @@ You can install the current stable version of **Hy** using:
 
 The official Hy Language logo is an octopus:
 
-{width=30%}
+{width=22%}
 ![The Hy Language logo Cuddles by Karen Rustad](images/hylisplogo.jpg)
 
 Usually I use photographs that I take myself for covers of my LeanPub books. Although I have SCUBA dived since I was 13 years old, sadly I have no pictures of an octopus that I have taken myself. I did find a public domain picture I liked (that is the cover of this book) on Wikimedia. **Cover Credit**: Thanks to Wikimedia user Pseudopanax for placing the cover image in the pubic domain.

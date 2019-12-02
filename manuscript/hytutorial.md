@@ -73,23 +73,73 @@ a_tags = soup.find_all("a")
 print("a tags:", a_tags)
 ~~~~~~~~
 
+In the following listing notice how we import other code and libraries in Hy. The special form **setv** is used to define variables in a local context. Since the **setv** statements in lines 3 and 5 are used at the top level, they are global in the Python/Hy module named after the root name of the source file.
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
 (import [bs4 [BeautifulSoup]])
 
-(setv raw-data "<html><body><a href=\"http://markwatson.com\">Mark</a></body></html>")
+(setv raw-data
+      "<html><body><a href=\"http://markwatson.com\">Mark</a></body></html>")
 (setv soup (BeautifulSoup raw-data "lxml"))
 (setv a (.find-all soup "a"))
 (print "a tags:" a)
 ~~~~~~~~
 
-Notice in line XXX that we can have "-" characters inside of variable and function names (**find-all** in this case) in the Hy language where we might use "_" underscore characters in Python.
+Notice in line 5 that we can have "-" characters inside of variable and function names (**find-all** in this case) in the Hy language where we might use "_" underscore characters in Python.
 
 
 ## Using Python Libraries in Hy Programs
 
-TBD
+If there is a Python source file, named for example, *test.py* in the same directory as a Hy language file:
+
+{lang="python",linenos=on}
+~~~~~~~~
+def factorial (n):
+  if n < 2:
+    return 1
+  return n * factorial(n - 1)
+~~~~~~~~
+
+This code will be in a module named **test** because that is the root source code file name. We might import the Python code using the following in Python:
+
+{lang="python",linenos=on}
+~~~~~~~~
+import test
+
+print(test.factorial(5))
+~~~~~~~~
+
+and we can use the following in Hy to import the Python module **test** (defined in *test.py*):
+
+{lang="hylang",linenos=on}
+~~~~~~~~
+(import test)
+
+(print (test.factorial 5))
+~~~~~~~~
+
+Running this interactively in Hy:
+
+{lang="bash",linenos=on}
+~~~~~~~~
+(base) Marks-MacBook:hy-lisp-python $ hy
+hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
+=> (import test)
+=> test
+<module 'test' from '/Users/markw/GITHUB/hy-lisp-python/test.py'>
+=> (print (test.factorial 5))
+120
+~~~~~~~~
+
+If we only wanted to import **BeautifulSoup** from the Python BeautifulSoup library **bs4** we can specify this in the **import** form:
+
+{lang="hylang",linenos=on}
+~~~~~~~~
+(import [bs4 [BeautifulSoup]])
+~~~~~~~~
+
+
 
 ## Writing Your Own Libraries in the Hy Language
 
