@@ -57,6 +57,36 @@ TBD: better section title
 
 TBD: examples
 
+## Using Python Libraires
+
+Using Python libraires like TensorFlow, Keras, BeutifulSoup, etc. are the reason I use the Hy language. Importing Python code and libraires and calling out to Python is simple and here we look at sufficient examples so that you will understand example code that we will look at later.
+
+For example, in the chapter **Responsible Web Scraping** we will use the BeautifulSoup library. We will look at some Python code snippets and the corresponding Hylanguage versions of these snippets.
+
+{lang="python",linenos=on}
+~~~~~~~~
+from bs4 import BeautifulSoup
+
+raw_data = '<html><body><a href="http://markwatson.com">Mark</a></body></html>'
+soup = BeautifulSoup(raw_data)
+a_tags = soup.find_all("a")
+print("a tags:", a_tags)
+~~~~~~~~
+
+
+{lang="hylang",linenos=on}
+~~~~~~~~
+(import [bs4 [BeautifulSoup]])
+
+(setv raw-data "<html><body><a href=\"http://markwatson.com\">Mark</a></body></html>")
+(setv soup (BeautifulSoup raw-data "lxml"))
+(setv a (.find-all soup "a"))
+(print "a tags:" a)
+~~~~~~~~
+
+Notice in line XXX that we can have "-" characters inside of variable and function names (**find-all** in this case) in the Hy language where we might use "_" underscore characters in Python.
+
+
 ## Using Python Libraries in Hy Programs
 
 TBD

@@ -8,6 +8,17 @@ TBD
 
 TBD
 
+## Data Preparation Utilities
+
+### Normalizing the Range of Data
+
+TBD
+
+### Handling Missing Input Data
+
+TBD
+
+
 ## Using Keras and TensorFlow to Model The Wisconsin Cancer Data Set
 
 TBD
