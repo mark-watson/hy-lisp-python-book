@@ -88,6 +88,27 @@ In the following listing notice how we import other code and libraries in Hy. Th
 
 Notice in line 5 that we can have "-" characters inside of variable and function names (**find-all** in this case) in the Hy language where we might use "_" underscore characters in Python.
 
+## Global vs. Local Variables
+
+Although I don't generally recommend it, sometimes it is convenient to export local variables defines with **setv** or in a **let** macro expansion to be global variables in the context of the current module (that is defined by the current source file). As an exmaple:
+
+{lang="hylang",linenos=on}
+~~~~~~~~
+Marks-MacBook:deeplearning $ hy
+hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
+=> (defn foo []
+... (global x)
+... (setv x 1)
+... (print x))
+=> (foo)
+1
+=> x
+1
+=> 
+~~~~~~~~
+
+TBD describe above code
+
 
 ## Using Python Libraries in Hy Programs
 
@@ -139,6 +160,50 @@ If we only wanted to import **BeautifulSoup** from the Python BeautifulSoup libr
 (import [bs4 [BeautifulSoup]])
 ~~~~~~~~
 
+## Replacing the Python slice (cut) notation with the Hy Functional Form
+
+In Python we use a special notation for extracting sub-sequences from lists or strings:
+
+{lang="bash",linenos=off}
+~~~~~~~~
+Marks-MacBook:deeplearning $ python
+Python 3.7.3 (default, Mar 27 2019, 16:54:48) 
+[Clang 4.0.1 (tags/RELEASE_401/final)] :: Anaconda, Inc. on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> s = '0123456789'
+>>> s[2:4]
+'23'
+>>> s[-4:]
+'6789'
+>>> s[-4:-1]
+'678'
+>>> 
+~~~~~~~~
+
+In Hy this would be:
+
+{lang="bash",linenos=off}
+~~~~~~~~
+Marks-MacBook:deeplearning $ hy
+hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
+=> (setv s "0123456789")
+=> (cut s 2 4)
+'23'
+=> (cut s -4)
+'6789'
+=> (cut s -4 -1)
+'678'
+=> 
+~~~~~~~~
+
+
+## Common Pitfalls When Starting to Use Hy
+
+When I started using Hy I found myself initially making simple mistakes that I list here to help you avoid them:
+
+- When converting Python code, I would copy "," comma characters separating arguments to functions which leads to errors, of a "naed undefined error".
+- TBD
+- TBD
 
 
 ## Writing Your Own Libraries in the Hy Language
