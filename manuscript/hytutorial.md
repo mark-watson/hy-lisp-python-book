@@ -196,6 +196,52 @@ hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 => 
 ~~~~~~~~
 
+It also works to use **cut** with **setv** to destructively change a list; for example:
+
+{lang="bash",linenos=off}
+~~~~~~~~
+=> (setv x [0 1 2 3 4 5 6 7 8])
+=> x
+[0, 1, 2, 3, 4, 5, 6, 7, 8]
+=> (cut x 2 4)
+[2, 3]
+=> (setv (cut x 2 4) [22 33])
+=> x
+[0, 1, 22, 33, 4, 5, 6, 7, 8]
+~~~~~~~~
+
+## Iterating Through a List With Index of Each Element
+
+We will use **lfor** as a form of Python list comprehension; for example:
+
+{lang="bash",linenos=on}
+~~~~~~~~
+=> (setv sentence "The ball rolled")
+=> (lfor i (enumerate sentence) i)
+[(0, 'T'), (1, 'h'), (2, 'e'), (3, ' '), (4, 'b'), (5, 'a'), (6, 'l'), (7, 'l'), (8, ' '), (9, 'r'), (10, 'o'), (11, 'l'), (12, 'l'), (13, 'e'), (14, 'd')]
+=> (setv vv (lfor i (enumerate sentence) i))
+=> vv
+[(0, 'T'), (1, 'h'), (2, 'e'), (3, ' '), (4, 'b'), (5, 'a'), (6, 'l'), (7, 'l'), (8, ' '), (9, 'r'), (10, 'o'), (11, 'l'), (12, 'l'), (13, 'e'), (14, 'd')]
+=> (for [[a b] vv]
+... (print a b))
+0 T
+1 h
+2 e
+3  
+4 b
+5 a
+6 l
+7 l
+8  
+9 r
+10 o
+11 l
+12 l
+13 e
+14 d
+=> 
+~~~~~~~~
+
 
 ## Common Pitfalls When Starting to Use Hy
 
