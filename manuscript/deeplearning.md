@@ -28,7 +28,53 @@ TBD
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
+#!/usr/bin/env hy
 
+(import argparse os)
+(import keras
+        keras.utils.data-utils)
+
+(import [pandas [read-csv]])
+
+(defn build-model []
+  (setv model (keras.models.Sequential))
+  (.add model (keras.layers.core.Dense 9
+                 :activation "relu"))
+  (.add model (keras.layers.core.Dense 12
+                 :activation "relu"))
+  (.add model (keras.layers.core.Dense 1
+                 :activation "sigmoid"))
+  (.compile model :loss      "binary_crossentropy"
+                  :optimizer (keras.optimizers.RMSprop))
+  model)
+
+(defn train [batch-size model x y]
+  (for [it (range 50)]
+    (.fit model x y :batch-size batch-size :epochs 10 :verbose False)))
+
+(defn predict [model x-data]
+    (.predict model x-data))
+
+(defn load-data [file-name]
+  (setv all-data (read-csv file-name :header None))
+  (setv x-data10 (. all-data.iloc [(, (slice 0 10) [0 1 2 3 4 5 6 7 8])] values))
+  (setv x-data (* 0.1 x-data10))
+  (setv y-data (. all-data.iloc [(, (slice 0 10) [9])] values))
+  [x-data y-data])
+
+(defn main []
+  (setv xyd (load-data "train.csv"))
+  (setv model (build-model))
+  (setv xytest (load-data "test.csv"))
+  (train 10 model (. xyd [0]) (. xyd [1]))
+  (print "* predictions (calculated, expected):")
+  (setv predictions (list (map first (predict model (. xytest [0])))))
+  (setv expected (list (map first (. xytest [1]))))
+  (print
+    (list
+      (zip predictions expected))))
+
+(main)
 ~~~~~~~~
 
 
@@ -194,6 +240,40 @@ hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 ~~~~~~~~
 
 So the input training sentences are each **maxlen** characters long and the **next-chars** target outputs each start with the character after the last character in the corresponding input training sentence.
+
+This script pauses during each training epoc to generate text given diversity values of 0.2, 0.5, 1.0, and 1.2. The smaller the diversity value the more closely the generated text matches the training text. The generated text is more realistic after many training epocs. In the following, I list a highly edited copy of running through several training epochs. I only show generated text for diversity equal to 0.2:
+
+{lang="hylang",linenos=on}
+~~~~~~~~
+----- Generating text after Epoch: 0
+----- diversity: 0.2
+----- Generating with seed: ocity. Equally so, gratitude.--Justice r
+ocity. Equally so, gratitude.--Justice read in the become to the conscience the seener and the conception that the becess of the power to the procentical that the because and the prostice of the prostice and the will to the conscience of the power of the perhaps the self-distance of the all the soul and the world and the soul of the soul of the world and the soul and an an and the profound the self-dister the all the belief and the
+
+----- Generating text after Epoch: 8
+----- diversity: 0.2
+----- Generating with seed: nations
+laboring simultaneously under th
+nations
+laboring simultaneously under the subjection of the soul of the same to the subjection of the subjection of the same not a strong the soul of the spiritual to the same really the propers to the stree be the subjection of the spiritual that is to probably the stree concerning the spiritual the sublicities and the spiritual to the processities the spirit to the soul of the subjection of the self-constitution and propers to the
+
+----- Generating text after Epoch: 14
+----- diversity: 0.2
+----- Generating with seed:  to which no other path could conduct us
+ to which no other path could conduct us a stronger that is the self-delight and the strange the soul of the world of the sense of the sense of the consider the such a state of the sense of the sense of the sense of such a sandine and interpretation of the process of the sense of the sense of the sense of the soul of the process of the world in the sense of the sense of the spirit and superstetion of the world the sense of the
+
+----- Generating text after Epoch: 17
+----- diversity: 0.2
+----- Generating with seed: hemselves although they could easily hav
+hemselves although they could easily have been moral morality and the self-in which the self-in the world to the same man in the standard to the possibility that is to the strength of the sense-in the former the sense-in the special and the same man in the consequently the soul of the superstition of the special in the end to the possible that it is will not be a sort of the superior of the superstition of the same man to the same man
+~~~~~~~~
+
+Here we trained on examples, translated to English, of the philosopher Nietzsche. I have used similar code to this example to train on highly structured JSON data and the resulting LSTM bsed model was usually able to generate similarly structured JSON. I have seen other examples where the training data was code in C++.
+
+How is this example working? The model learns what combinations of characters tend to appear together and in what order.
+
+TBD: better explanation
+
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
