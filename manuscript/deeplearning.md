@@ -45,7 +45,7 @@ TBD
 
 TBD
 
-We will translate a Python example program from the [Keras documentation (listing of LSTM example)](https://keras.io/examples/lstm_text_generation/) to Hy. This is a moderately long example and you can use the original Python and the translated Hy code as a guide if you see other models written using Keras that you want in Hy. I have (mostly) kept the same variable names to make it easier to compare the Python and Hy code.
+We will translate a Python example program from the [Keras documentation (listing of LSTM.py example)](https://keras.io/examples/lstm_text_generation/) to Hy. This is a moderately long example and you can use the original Python and the translated Hy code as a guide if you see other models written using Keras that you want in Hy. I have (mostly) kept the same variable names to make it easier to compare the Python and Hy code.
 
 Note that using the nietzsche.txt data set requires a fair amount of memory. If your computer has less than 16G of RAM, you might want to run the following example until you see the printout "Create sentencs and next_chars data..." then kill the program, manually edit the file ~/.keras/datasets/nietzsche.txt to remove 75% of the data by:
 
@@ -200,3 +200,4 @@ So the input training sentences are each **maxlen** characters long and the **ne
 
 ~~~~~~~~
 
+I have used LSTM models trained on application specific highly structured JSON data to generate synthetic JSON data matching the schema of the original JSON training data. In the next chapter we will use pre-trained deep learning models for natural language processing (NLP).
