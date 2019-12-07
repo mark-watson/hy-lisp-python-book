@@ -211,7 +211,61 @@ hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 => 
 ~~~~~~~~
 
+Listing of **postgres_lib.hy**:
 
+{lang="hy",linenos=on}
+~~~~~~~~
+(import [psycopg2 [connect]])
+
+(defn connection-and-cursor [dbname username]
+  (setv conn (connect :dbname dbname :user username))
+  (setv cursor (conn.cursor))
+  [conn cursor])
+
+(defn query [cursor sql &optional variable-bindings]
+  (if variable-bindings
+    (cursor.execute sql variable-bindings)
+    (cursor.execute sql)))
+~~~~~~~~
+
+
+{lang="hy",linenos=on}
+~~~~~~~~
+#!/usr/bin/env hy
+
+(import [postgres-lib [connection-and-cursor query]])
+
+(defn test-postgres-lib []
+  (setv [conn cursor] (connection-and-cursor "hybook" "markw"))
+  (query cursor "CREATE TABLE people (name TEXT, email TEXT);")
+  (conn.commit)
+  (query cursor "INSERT INTO people VALUES ('Mark', 'mark@markwatson.com')")
+  (query cursor "INSERT INTO people VALUES ('Kiddo', 'kiddo@markwatson.com')")
+  (conn.commit)
+  (query cursor "SELECT * FROM people")
+  (print (cursor.fetchall))
+  (query cursor "UPDATE people SET name = %s WHERE email = %s"
+      ["Mark Watson" "mark@markwatson.com"])
+  (query cursor "SELECT * FROM people")
+  (print (cursor.fetchall))
+  (query cursor "DELETE FROM people  WHERE name = %s" ["Kiddo"])
+  (query cursor "SELECT * FROM people")
+  (print (cursor.fetchall))
+  (query cursor "DROP TABLE people;")
+  (conn.commit)
+  (conn.close))
+
+(test-postgres-lib)
+~~~~~~~~
+
+
+{lang="bash",linenos=on}
+~~~~~~~~
+Marks-MacBook:database $ ./postgres_example.hy
+[('Mark', 'mark@markwatson.com'), ('Kiddo', 'kiddo@markwatson.com')]
+[('Kiddo', 'kiddo@markwatson.com'), ('Mark Watson', 'mark@markwatson.com')]
+[('Mark Watson', 'mark@markwatson.com')]
+~~~~~~~~
 
 
 ## Neo4j Graph Database
