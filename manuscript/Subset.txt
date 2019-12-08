@@ -4,8 +4,9 @@ whylisp.md
 webapps.md
 webscrape.md
 datastores.md
-linkeddata.md
 deeplearning.md
 nlp.md
+linkeddata.md
 kg.md
-
+quantum.md
+wrapup.md
