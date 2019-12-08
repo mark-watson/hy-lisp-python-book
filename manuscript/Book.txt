@@ -3,9 +3,9 @@ hytutorial.md
 whylisp.md
 webapps.md
 webscrape.md
-datastores.md
 deeplearning.md
 nlp.md
+datastores.md
 linkeddata.md
 kg.md
 quantum.md

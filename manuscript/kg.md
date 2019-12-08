@@ -29,11 +29,11 @@ Assuming that you are in the directory for this example, two possible use cases 
 ./KGcreator -i test_data -r out.rdf -c out.cyper
 ./KGcreator -port 8001
 ~~~~~~~~
-The example on line 1 specifies that all text files in the directory path **test_data** should be processed, generated RDF data should be written to **out,rdf**, and that generated Neo4j cypher data should be written to **out.cypher**. You can leave off either **-r** or **-c** options if you only want cypher or RDF data generated.
+The example on line 1 specifies that all text files in the directory path **test_data** should be processed, generated RDF data should be written to **out.rdf**, and that generated Neo4j cypher data should be written to **out.cypher**. You can leave off either **-r** or **-c** options if you only want cypher or RDF data generated.
 
-The exmaple on line 2 runs a web interface on **http://localhost:8001**.
+The example on line 2 runs a web interface on [http://localhost:8001](http://localhost:8001).
 
-The folowing figure shows, at a high level, how we will organize the code for this example.
+The following figure shows, at a high level, how we will organize the code for this example.
 
 {width=80%}
 ![Main application and three utility classes for KGCreator](images/kg_overview.jpg)

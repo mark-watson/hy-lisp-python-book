@@ -276,6 +276,10 @@ TBD
 
 TBD
 
+TBD discuss how we only cover RDF, not RDF + OWL (recommend https://bitbucket.org/jibalamy/owlready2/src/default/ for OWL)
+
+TBD reference next chapter on linked data
+
 
 ## Wrap Up
 
