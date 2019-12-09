@@ -280,9 +280,211 @@ TBD discuss how we only cover RDF, not RDF + OWL (recommend https://bitbucket.or
 
 TBD reference next chapter on linked data
 
+We will go into some detail on using semantic web and linked data resources in the next chapter. Here we will study the use of library **rdflib** as a data store, reading RDF data from disk and from web resources, adding RDF statements (which are triples containing a subject, predicate, and object) and for serializing an in memory graph to a file in one of the standard RDF XML, turtle, or NT formats.
 
-## Wrap Up
+The following REPL session shows importing the *rdflib** library, fetching RDF (in XML format) from my personal web wite, print out the triples i the graph in NT format, and showing how the graph can be queried. I added most of this RDF to my web site in 2005, with a few updates since then. The following REPL session is split up into several listings (with some long output removed) so I can explain how the **rdflib** is being used. In the first REPL listing I load an RDF file in XML format from my web site and print it in NT format. NT format can either have subject/predicate/object all on one line separated by spaces and terminated by a period, or, as shown below the subject is on one line with predicate and objects printed indented on two additional lines. In both cases a period character "." is used to terminate seach RDF NT statement. The statements are displayed in arbitrary order.
 
-TBD
+{lang="hy",linenos=on}
+~~~~~~~~
+Marks-MacBook:database $ hy
+hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
+=> (import [rdflib [Graph]])
+=> (setv graph (Graph))
+=> (graph.load "http://markwatson.com/index.rdf")
+=> (for [[subject predicate object] graph]
+... (print subject "\n  " predicate "\n  " object " ."))
+http://markwatson.com/index.rdf#mark_watson_consulting_services 
+   http://www.w3.org/1999/02/22-rdf-syntax-ns#label 
+   Mark Watson Consulting Services  .
+http://markwatson.com/index.rdf#mark_watson 
+   http://www.w3.org/2000/10/swap/pim/contact#firstName 
+   Mark  .
+http://markwatson.com/index.rdf#mark_watson 
+   http://www.ontoweb.org/ontology/1#name 
+   Mark Watson  .
+http://www.markwatson.com/ 
+   http://purl.org/dc/elements/1.1/language 
+   en-us  .
+http://markwatson.com/index.rdf#mark_watson 
+   http://www.ontoweb.org/ontology/1#researchTopic 
+   Semantic Web  .
+http://www.markwatson.com/ 
+   http://purl.org/dc/elements/1.1/date 
+   2005-7-10  .
+http://markwatson.com/index.rdf#mark_watson 
+   http://www.ontoweb.org/ontology/1#researchTopic 
+   RDF and RDF Schema  .
+http://markwatson.com/index.rdf#mark_watson 
+   http://www.ontoweb.org/ontology/1#researchTopic 
+   ontologies  .
+http://www.markwatson.com/ 
+   http://purl.org/dc/elements/1.1/title 
+   Mark Watson's Home Page  .
+http://markwatson.com/index.rdf#mark_watson 
+   http://www.w3.org/2000/10/swap/pim/contact#mailbox 
+   mailto:markw@markwatson.com  .
+http://markwatson.com/index.rdf#mark_watson 
+   http://www.w3.org/2000/10/swap/pim/contact#homepage 
+   http://www.markwatson.com/  .
+http://markwatson.com/index.rdf#mark_watson 
+   http://www.w3.org/2000/10/swap/pim/contact#fullName 
+   Mark Watson  .
+http://markwatson.com/index.rdf#mark_watson_consulting_services 
+   http://www.ontoweb.org/ontology/1#name 
+   Mark Watson Consulting Services  .
+http://markwatson.com/index.rdf#mark_watson 
+   http://www.w3.org/2000/10/swap/pim/contact#company 
+   Mark Watson Consulting Services  .
+http://markwatson.com/index.rdf#mark_watson 
+   http://www.w3.org/1999/02/22-rdf-syntax-ns#type 
+   http://www.w3.org/2000/10/swap/pim/contact#Person  .
+http://markwatson.com/index.rdf#mark_watson 
+   http://www.w3.org/1999/02/22-rdf-syntax-ns#value 
+   Mark Watson  .
+http://www.markwatson.com/ 
+   http://purl.org/dc/elements/1.1/creator 
+   http://markwatson.com/index.rdf#mark_watson  .
+http://www.markwatson.com/ 
+   http://purl.org/dc/elements/1.1/description 
+   
+      Mark Watson is the author of 16 published books and a consultant specializing in artificial intelligence and Java technologies.
+      .
+http://markwatson.com/index.rdf#mark_watson 
+   http://www.w3.org/1999/02/22-rdf-syntax-ns#type 
+   http://www.ontoweb.org/ontology/1#Person  .
+http://markwatson.com/index.rdf#mark_watson 
+   http://www.w3.org/2000/10/swap/pim/contact#motherTongue 
+   en  .
+http://markwatson.com/index.rdf#mark_watson 
+   http://www.w3.org/1999/02/22-rdf-syntax-ns#type 
+   http://markwatson.com/index.rdf#Consultant  .
+http://markwatson.com/index.rdf#mark_watson_consulting_services 
+   http://www.w3.org/1999/02/22-rdf-syntax-ns#type 
+   http://www.ontoweb.org/ontology/1#Organization  .
+http://markwatson.com/index.rdf#mark_watson 
+   http://www.w3.org/1999/02/22-rdf-syntax-ns#label 
+   Mark Watson  .
+http://markwatson.com/index.rdf#Sun_ONE 
+   http://www.w3.org/1999/02/22-rdf-syntax-ns#type 
+   http://www.ontoweb.org/ontology/1#Book  .
+=> 
+~~~~~~~~
 
-In the next chapter we will look at another way to organize data using the Resource Description Framework (RDF).
+We will cover the SPARQL query language in more detail in the next chapter but for now, notice that SPARQL is similar to SQL queries. SPARQL queries can find triples in a graph matching simple patterns, match complex patterns, and update and delete triples in a graph. TYhe following simple query finds all triples with the predicate equal to <http://www.w3.org/2000/10/swap/pim/contact#company> and prints ot the subject and object of any matching triples:
+
+{lang="hy",linenos=on}
+~~~~~~~~
+=> (for [[subject object] (graph.query "select ?s ?o where { ?s <http://www.w3.org/2000/10/swap/pim/contact#company> ?o }")]
+... (print subject " contact company: " object))
+http://markwatson.com/index.rdf#mark_watson  contact company:  Mark Watson Consulting Services
+~~~~~~~~
+
+We will dive deeper into the SPARQL query language in the next chapter.
+
+As I mentioned, the RDF data on my web site has been mostly unchanged since 2005. What if I wanted to update it noting that more recently I worked as a contractor at Google and as a deep learning engineering manager at Capital One? In the following listing, continuing the same REPL session, I will add two RDF statements indicating additional jobs and show how to serialize the new updated graph in three formats: XML, turtle (my favorite RDF notation) and NT:
+
+{lang="hy",linenos=on}
+~~~~~~~~
+=> **(import rdflib)**
+=> **(setv mark-node (rdflib.URIRef  "http://markwatson.com/index.rdf#mark_watson"))**
+=> **mark-node**
+rdflib.term.URIRef('http://markwatson.com/index.rdf#mark_watson')
+=> **(graph.add [mark-node company-node (rdflib.Literal "Google")])**
+=> **(graph.add [mark-node company-node (rdflib.Literal "Capital One")])**
+=> (for [[subject object]
+...       (graph.query
+...         "select ?s ?o where { ?s <http://www.w3.org/2000/10/swap/pim/contact#company> ?o }")]
+... (print subject " contact company: " object))
+http://markwatson.com/index.rdf#mark_watson  contact company:  Mark Watson Consulting Services
+http://markwatson.com/index.rdf#mark_watson  contact company:  Google
+http://markwatson.com/index.rdf#mark_watson  contact company:  Capital One
+=> 
+=> **(graph.serialize :format "pretty-xml")**
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF\n  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:ow="http://www.ontoweb.org/ontology/1#"
+  xmlns:ns1="http://markwatson.com/index.rdf#">
+
+    LOTS	OF STUFF NOT SHOWN
+
+</rdf:Description>\n</rdf:RDF>
+~~~~~~~~
+
+
+
+{lang="hy",linenos=on}
+~~~~~~~~
+=> **(graph.serialize :format "turtle")**
+@prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ns1: <http://markwatson.com/index.rdf#> .
+@prefix ow: <http://www.ontoweb.org/ontology/1#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+s1:mark_watson_consulting_services a ow:Organization ;
+    ow:name "Mark Watson Consulting Services" ;
+    rdf:label "Mark Watson Consulting Services" .
+<http://www.markwatson.com/> 
+    dc:creator ns1:mark_watson ;
+    dc:date "2005-7-10" ;
+    dc:description 
+          "Mark Watson is the author of 16 published books and a consultant
+          specializing in artificial intelligence and Java technologies." ;
+     dc:format "text/html" ;
+     dc:language "en-us" ;
+     dc:title "Mark Watson\'s Home Page" ;
+     dc:type "Consultant Homepage" .
+ns1:mark_watson a ns1:Consultant,
+                  ow:Person,
+                  contact:Person ;
+                ow:name "Mark Watson" ;
+                ow:researchTopic "RDF and RDF Schema",
+                                 "Semantic Web",
+                                 "ontologies" ;
+                rdf:label "Mark Watson" ;
+                rdf:value "Mark Watson" ;
+                contact:company "Capital One",
+                                "Google",
+                                "Mark Watson Consulting Services" ;
+                contact:familyName "Watson" ;
+                contact:firstName "Mark" ;
+                contact:fullName "Mark Watson" ;
+                contact:homepage <http://www.markwatson.com/> ;
+                contact:mailbox <mailto:markw@markwatson.com> ;
+                contact:motherTongue "en" .
+~~~~~~~~
+
+
+
+
+{lang="hy",linenos=on}
+~~~~~~~~
+=> **(graph.serialize :format "nt")**
+<http://markwatson.com/index.rdf#Sun_ONE> <http://www.ontoweb.org/ontology/1#booktitle> "Sun ONE Services - J2EE" .
+<http://www.markwatson.com/> <http://purl.org/dc/elements/1.1/language> "en-us" .
+<http://markwatson.com/index.rdf#Sun_ONE> <http://www.ontoweb.org/ontology/1#author> <http://markwatson.com/index.rdf#mark_watson> .
+<http://www.markwatson.com/> <http://purl.org/dc/elements/1.1/date> "2005-7-10" .
+<http://markwatson.com/index.rdf#mark_watson> <http://www.ontoweb.org/ontology/1#researchTopic> "ontologies" .
+<http://www.markwatson.com/> <http://purl.org/dc/elements/1.1/type> "Consultant Homepage" .
+<http://markwatson.com/index.rdf#mark_watson> <http://www.w3.org/2000/10/swap/pim/contact#homepage> <http://www.markwatson.com/> .
+<http://markwatson.com/index.rdf#mark_watson> <http://www.w3.org/2000/10/swap/pim/contact#company> "Google" .
+<http://markwatson.com/index.rdf#mark_watson> <http://www.w3.org/2000/10/swap/pim/contact#company> "Capital One" .
+<http://markwatson.com/index.rdf#mark_watson> <http://www.ontoweb.org/ontology/1#researchTopic> "Semantic Web" .
+<http://markwatson.com/index.rdf#mark_watson> <http://www.ontoweb.org/ontology/1#researchTopic> "RDF and RDF Schema" .
+<http://www.markwatson.com/> <http://purl.org/dc/elements/1.1/title> "Mark Watson\'s Home Page" .
+<http://markwatson.com/index.rdf#mark_watson> <http://www.w3.org/2000/10/swap/pim/contact#mailbox> <mailto:markw@markwatson.com> .
+<http://www.markwatson.com/> <http://purl.org/dc/elements/1.1/format> "text/html" .
+<http://markwatson.com/index.rdf#mark_watson> <http://www.w3.org/2000/10/swap/pim/contact#fullName> "Mark Watson" .
+<http://markwatson.com/index.rdf#mark_watson> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/10/swap/pim/contact#Person> .
+<http://www.markwatson.com/> <http://purl.org/dc/elements/1.1/creator> <http://markwatson.com/index.rdf#mark_watson> .
+
+      LOTS	OF STUFF NOT SHOWN
+=> 
+~~~~~~~~
+
+We will go into much more detail on practical uses of RDF and SPARQL in the next chapter. I hope that you worked through the REPL examples in this section because if you understand the basics of using the **rdflib** then you will have an easier time understanding the more abstract material in the next chapter.
