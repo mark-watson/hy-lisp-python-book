@@ -385,12 +385,12 @@ As I mentioned, the RDF data on my web site has been mostly unchanged since 2005
 
 {lang="hy",linenos=on}
 ~~~~~~~~
-=> **(import rdflib)**
-=> **(setv mark-node (rdflib.URIRef  "http://markwatson.com/index.rdf#mark_watson"))**
-=> **mark-node**
+=> (import rdflib)
+=> (setv mark-node (rdflib.URIRef  "http://markwatson.com/index.rdf#mark_watson"))
+=> mark-node
 rdflib.term.URIRef('http://markwatson.com/index.rdf#mark_watson')
-=> **(graph.add [mark-node company-node (rdflib.Literal "Google")])**
-=> **(graph.add [mark-node company-node (rdflib.Literal "Capital One")])**
+=> (graph.add [mark-node company-node (rdflib.Literal "Google")])
+=> (graph.add [mark-node company-node (rdflib.Literal "Capital One")])
 => (for [[subject object]
 ...       (graph.query
 ...         "select ?s ?o where { ?s <http://www.w3.org/2000/10/swap/pim/contact#company> ?o }")]
@@ -399,7 +399,7 @@ http://markwatson.com/index.rdf#mark_watson  contact company:  Mark Watson Consu
 http://markwatson.com/index.rdf#mark_watson  contact company:  Google
 http://markwatson.com/index.rdf#mark_watson  contact company:  Capital One
 => 
-=> **(graph.serialize :format "pretty-xml")**
+=> (graph.serialize :format "pretty-xml")
 <?xml version="1.0" encoding="utf-8"?>
 <rdf:RDF\n  xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#"
@@ -416,7 +416,7 @@ http://markwatson.com/index.rdf#mark_watson  contact company:  Capital One
 
 {lang="hy",linenos=on}
 ~~~~~~~~
-=> **(graph.serialize :format "turtle")**
+=> (graph.serialize :format "turtle")
 @prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix ns1: <http://markwatson.com/index.rdf#> .
@@ -464,7 +464,7 @@ ns1:mark_watson a ns1:Consultant,
 
 {lang="hy",linenos=on}
 ~~~~~~~~
-=> **(graph.serialize :format "nt")**
+=> (graph.serialize :format "nt")
 <http://markwatson.com/index.rdf#Sun_ONE> <http://www.ontoweb.org/ontology/1#booktitle> "Sun ONE Services - J2EE" .
 <http://www.markwatson.com/> <http://purl.org/dc/elements/1.1/language> "en-us" .
 <http://markwatson.com/index.rdf#Sun_ONE> <http://www.ontoweb.org/ontology/1#author> <http://markwatson.com/index.rdf#mark_watson> .
