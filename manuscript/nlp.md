@@ -8,6 +8,191 @@ You will learn how to apply both DL and NLP in two stages: develop low level "sm
 
 TBD - update previous intro!!
 
+## Exploring the spaCy Library
+
+We will use the Hy REPL to experiment with spaCy, Lisp style. The following REPL listings are all from the same session:
+
+{lang="hy",linenos=on}
+~~~~~~~~
+Marks-MacBook:nlp $ hy
+hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
+=> (setv nlp-model (spacy.load "en"))
+Traceback (most recent call last):
+  File "stdin-ba96067fd5e131901815d7d8c81d2747c2806fc7", line 1, in <module>
+    (setv nlp-model (spacy.load "en"))
+NameError: name 'spacy' is not defined
+=> (import spacy)
+=> (setv nlp-model (spacy.load "en"))
+=> (setv doc (nlp-model "President George Bush went to Mexico and he had a very good meal"))
+=> doc
+President George Bush went to Mexico and he had a very good meal
+=> (dir doc)
+['_', '__bytes__', '__class__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__ne__', '__new__', '__pyx_vtable__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__setstate__', '__sizeof__', '__str__', '__subclasshook__', '__unicode__', '_bulk_merge', '_py_tokens', '_realloc', '_vector', '_vector_norm', 'cats', 'char_span', 'count_by', 'doc', 'ents', 'extend_tensor', 'from_array', 'from_bytes', 'from_disk', 'get_extension', 'get_lca_matrix', 'has_extension', 'has_vector', 'is_nered', 'is_parsed', 'is_sentenced', 'is_tagged', 'lang', 'lang_', 'mem', 'merge', 'noun_chunks', 'noun_chunks_iterator', 'print_tree', 'remove_extension', 'retokenize', 'sentiment', 'sents', 'set_extension', 'similarity', 'tensor', 'text', 'text_with_ws', 'to_array', 'to_bytes', 'to_disk', 'to_json', 'user_data', 'user_hooks', 'user_span_hooks', 'user_token_hooks', 'vector', 'vector_norm', 'vocab']
+~~~~~~~~
+
+
+{lang="hy",linenos=on}
+~~~~~~~~
+=> (lfor
+... x (dir doc)
+... :if (not (.startswith x "__"))
+... x)
+['_', '_bulk_merge', '_py_tokens', '_realloc', '_vector', '_vector_norm', 'cats', 'char_span', 'count_by', 'doc', 'ents', 'extend_tensor', 'from_array', 'from_bytes', 'from_disk', 'get_extension', 'get_lca_matrix', 'has_extension', 'has_vector', 'is_nered', 'is_parsed', 'is_sentenced', 'is_tagged', 'lang', 'lang_', 'mem', 'merge', 'noun_chunks', 'noun_chunks_iterator', 'print_tree', 'remove_extension', 'retokenize', 'sentiment', 'sents', 'set_extension', 'similarity', 'tensor', 'text', 'text_with_ws', 'to_array', 'to_bytes', 'to_disk', 'to_json', 'user_data', 'user_hooks', 'user_span_hooks', 'user_token_hooks', 'vector', 'vector_norm', 'vocab']
+=>
+~~~~~~~~
+
+
+
+{lang="hy",linenos=on}
+~~~~~~~~
+=> (import [pprint [pprint]])
+=> (pprint (doc.to_json))
+{'ents': [{'end': 21, 'label': 'PERSON', 'start': 10},
+          {'end': 36, 'label': 'GPE', 'start': 30}],
+ 'sents': [{'end': 64, 'start': 0}],
+ 'text': 'President George Bush went to Mexico and he had a very good meal',
+ 'tokens': [{'dep': 'compound',
+             'end': 9,
+             'head': 2,
+             'id': 0,
+             'pos': 'PROPN',
+             'start': 0,
+             'tag': 'NNP'},
+            {'dep': 'compound',
+             'end': 16,
+             'head': 2,
+             'id': 1,
+             'pos': 'PROPN',
+             'start': 10,
+             'tag': 'NNP'},
+            {'dep': 'nsubj',
+             'end': 21,
+             'head': 3,
+             'id': 2,
+             'pos': 'PROPN',
+             'start': 17,
+             'tag': 'NNP'},
+            {'dep': 'ROOT',
+             'end': 26,
+             'head': 3,
+             'id': 3,
+             'pos': 'VERB',
+             'start': 22,
+             'tag': 'VBD'},
+            {'dep': 'prep',
+             'end': 29,
+             'head': 3,
+             'id': 4,
+             'pos': 'ADP',
+             'start': 27,
+             'tag': 'IN'},
+            {'dep': 'pobj',
+             'end': 36,
+             'head': 4,
+             'id': 5,
+             'pos': 'PROPN',
+             'start': 30,
+             'tag': 'NNP'},
+            {'dep': 'cc',
+             'end': 40,
+             'head': 3,
+             'id': 6,
+             'pos': 'CCONJ',
+             'start': 37,
+             'tag': 'CC'},
+            {'dep': 'nsubj',
+             'end': 43,
+             'head': 8,
+             'id': 7,
+             'pos': 'PRON',
+             'start': 41,
+             'tag': 'PRP'},
+            {'dep': 'conj',
+             'end': 47,
+             'head': 3,
+             'id': 8,
+             'pos': 'VERB',
+             'start': 44,
+             'tag': 'VBD'},
+            {'dep': 'det',
+             'end': 49,
+             'head': 12,
+             'id': 9,
+             'pos': 'DET',
+             'start': 48,
+             'tag': 'DT'},
+            {'dep': 'advmod',
+             'end': 54,
+             'head': 11,
+             'id': 10,
+             'pos': 'ADV',
+             'start': 50,
+             'tag': 'RB'},
+            {'dep': 'amod',
+             'end': 59,
+             'head': 12,
+             'id': 11,
+             'pos': 'ADJ',
+             'start': 55,
+             'tag': 'JJ'},
+            {'dep': 'dobj',
+             'end': 64,
+             'head': 8,
+             'id': 12,
+             'pos': 'NOUN',
+             'start': 60,
+             'tag': 'NN'}]}
+=> 
+~~~~~~~~
+
+
+{lang="hy",linenos=on}
+~~~~~~~~
+=> doc.ents
+(George Bush, Mexico)
+=> (for [entity doc.ents]
+... (print "entity text:" entity.text "entity label:" entity.label_))
+entity text: George Bush entity label: PERSON
+entity text: Mexico entity label: GPE
+=> (lfor entity doc.ents [entity.text entity.label_])
+[['George Bush', 'PERSON'], ['Mexico', 'GPE']]
+=> 
+~~~~~~~~
+
+
+{lang="hy",linenos=on}
+~~~~~~~~
+=> (list doc.sents)
+[President George Bush went to Mexico and he had a very good meal]
+=> 
+~~~~~~~~
+
+
+
+{lang="hy",linenos=on}
+~~~~~~~~
+=> (for [word doc]
+... (print word.text word.pos_))
+President PROPN
+George PROPN
+Bush PROPN
+went VERB
+to ADP
+Mexico PROPN
+and CCONJ
+he PRON
+had VERB
+a DET
+very ADV
+good ADJ
+meal NOUN
+=> 
+~~~~~~~~
+
+
+
+
+
 ## Implementing the HyNLP Wrapper for the Python spaCy Library
 
 TBD
