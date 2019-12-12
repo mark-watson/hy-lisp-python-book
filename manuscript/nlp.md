@@ -12,7 +12,25 @@ TBD - update previous intro!!
 
 TBD
 
-We will generate two libraries, one a general NLP librry and one that specifically solves the anaphora resolution, or coreference, problem.
+We will generate two libraries, one a general NLP library and one that specifically solves the anaphora resolution, or coreference, problem.
+
+For a later example automatically generating Knowledge Graphs from text data, we will need the ability to find person, company, location, etc. names in text. We use spaCy here to do this. The types of named entities that spaCy is pre-trained that includes:
+
+- CARDINAL: any number that is not identified as a more specific type, like money, time, etc.
+- DATE
+- FAC: facilities like highways, bridges, airports, etc.
+- GPE: Countries, states (or provinces), and cities
+- LOC: any non-GPE location
+- PRODUCT
+- EVENT
+- LANGUAGE: any named language
+- MONEY: any monetary value or unit of money
+- NORP: nationalities or religious groups
+- ORG: any organization like a company, non-profit, school, etc.
+- PERCENT: any number in \[0, 100\] followed by the percent % character
+- PERSON
+- ORDINAL: any number spelled out, like "one", "two", etc.
+- TIME
 
 
 {lang="hylang",linenos=on}

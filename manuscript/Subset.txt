@@ -9,4 +9,5 @@ datastores.md
 linkeddata.md
 kg.md
 quantum.md
+blockchain.md
 wrapup.md
