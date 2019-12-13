@@ -328,7 +328,7 @@ Marks-MacBook:nlp $ ./coref_example.hy
 {'corefs': 'Lucy threw a ball to Bill and Bill caught a ball', 'clusters': [a ball: [a ball, it], Bill: [Bill, he]], 'scores': {Lucy: {Lucy: 0.41820740699768066}, a ball: {a ball: 1.8033190965652466, Lucy: -2.721518039703369}, Bill: {Bill: 1.5611814260482788, Lucy: -2.8222298622131348, a ball: -1.806389570236206}, he: {he: -0.5760076642036438, Lucy: 3.054243326187134, a ball: -1.818403720855713, Bill: 3.077427625656128}, it: {it: -1.0269954204559326, Lucy: -3.4972281455993652, a ball: -0.31290221214294434, Bill: -2.5343685150146484, he: -3.6687228679656982}}}
 ~~~~~~~~
 
-Anaphora resolution, also called coreference, refers to two or more words or phrases in an input text refer to the same noun.
+Anaphora resolution, also called coreference, refers to two or more words or phrases in an input text refer to the same noun. This analysis usually entails identifying which noun phrases that pronouns refer to.
 
 ## Wrap Up
 
