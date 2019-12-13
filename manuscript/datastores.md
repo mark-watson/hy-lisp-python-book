@@ -1,7 +1,11 @@
 # Datastores
 
-TBD
+I use flat files and the PostgreSQL relational database for most data storage and processing needs in my consulting business over the last twenty years and for work on large data at Compass Labs and Google I used Hadoop and Big Table. I will not cover big data datastores here, rather I will concentrate on what I think of as "laptop development" requirements: modest amount of data and optimizing speed of development and ease of infrastructure setup. We will cover three datastores:
 
+- Sqlite file based relational database
+- PostgreSQL relational database
+- Neo4J graph database
+- RDF library **rdflib** that is useful for semantic web and linked data applications
 
 
 ## Sqlite
@@ -72,7 +76,7 @@ Running te example program:
 
 {lang="bash",linenos=on}
 ~~~~~~~~
-Marks-MacBook:database $ ./sqlite_example.hy
+Marks-MacBook:datastores $ ./sqlite_example.hy
 2.6.0
 []
 []
@@ -80,7 +84,7 @@ Marks-MacBook:database $ ./sqlite_example.hy
 [('Mark Watson', 'mark@markwatson.com'), ('Kiddo', 'kiddo@markwatson.com')]
 []
 [('Mark Watson', 'mark@markwatson.com')]
-Marks-MacBook:database $ ./sqlite_example.hy
+Marks-MacBook:datastores $ ./sqlite_example.hy
 2.6.0
 []
 []
@@ -118,7 +122,7 @@ For macOS we use the PostgreSQL application and we will start by using the *post
 
 {lang="sql",linenos=on}
 ~~~~~~~~
-Marks-MacBook:database $ psql -d "postgres"
+Marks-MacBook:datastores $ psql -d "postgres"
 psql (9.6.3)
 Type "help" for help.
 
@@ -127,7 +131,7 @@ No relations found.
 postgres=# CREATE DATABASE hybook;
 CREATE DATABASE
 postgres=# \q
-Marks-MacBook:database $ 
+Marks-MacBook:datastores $ 
 ~~~~~~~~
 
 
@@ -189,7 +193,7 @@ When using Hy (or any other Lisp language and also for Haskell), I almost always
 
 {lang="hy",linenos=on}
 ~~~~~~~~
-Marks-MacBook:database $ hy
+Marks-MacBook:datastores $ hy
 hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 => (import json psycopg2)
 => (setv conn (psycopg2.connect :dbname "hybook" :user "markw"))
@@ -261,7 +265,7 @@ Listing of **postgres_lib.hy**:
 
 {lang="bash",linenos=on}
 ~~~~~~~~
-Marks-MacBook:database $ ./postgres_example.hy
+Marks-MacBook:datastores $ ./postgres_example.hy
 [('Mark', 'mark@markwatson.com'), ('Kiddo', 'kiddo@markwatson.com')]
 [('Kiddo', 'kiddo@markwatson.com'), ('Mark Watson', 'mark@markwatson.com')]
 [('Mark Watson', 'mark@markwatson.com')]
@@ -286,7 +290,7 @@ The following REPL session shows importing the *rdflib** library, fetching RDF (
 
 {lang="hy",linenos=on}
 ~~~~~~~~
-Marks-MacBook:database $ hy
+Marks-MacBook:datastores $ hy
 hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 => (import [rdflib [Graph]])
 => (setv graph (Graph))
