@@ -25,6 +25,9 @@ President George Bush went to Mexico and he had a very good meal
 ['_', '__bytes__', '__class__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__ne__', '__new__', '__pyx_vtable__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__setstate__', '__sizeof__', '__str__', '__subclasshook__', '__unicode__', '_bulk_merge', '_py_tokens', '_realloc', '_vector', '_vector_norm', 'cats', 'char_span', 'count_by', 'doc', 'ents', 'extend_tensor', 'from_array', 'from_bytes', 'from_disk', 'get_extension', 'get_lca_matrix', 'has_extension', 'has_vector', 'is_nered', 'is_parsed', 'is_sentenced', 'is_tagged', 'lang', 'lang_', 'mem', 'merge', 'noun_chunks', 'noun_chunks_iterator', 'print_tree', 'remove_extension', 'retokenize', 'sentiment', 'sents', 'set_extension', 'similarity', 'tensor', 'text', 'text_with_ws', 'to_array', 'to_bytes', 'to_disk', 'to_json', 'user_data', 'user_hooks', 'user_span_hooks', 'user_token_hooks', 'vector', 'vector_norm', 'vocab']
 ~~~~~~~~
 
+In lines 3-6 we import the spaCy library, load the English language model, and crete a document from input text. What is a spaCy document? In line 24 we used the **dir** function (familiar to Python programmers) to see the attributes and methods for this class.
+
+**dir** returns more information than we need, so let's try again but this time do not print the ython "dunder" methods and properties that start and end with double underscore characters:
 
 {lang="hy",linenos=on, number-from=23}
 ~~~~~~~~
@@ -36,7 +39,7 @@ President George Bush went to Mexico and he had a very good meal
 =>
 ~~~~~~~~
 
-
+The **to_json** method looks promising so we will import the Python pretty print library and look at the pretty printed result of calling the **to_json** method on our document stored in **doc**:
 
 {lang="hy",linenos=on, number-from=36}
 ~~~~~~~~
@@ -140,6 +143,13 @@ President George Bush went to Mexico and he had a very good meal
 => 
 ~~~~~~~~
 
+The JSON data is nested dictionaries. In a later chapter on Knowledge Graphs, we will want to get the nemed entities like people, organizations, etc. from text and use this information to automatically generate data for Knowledge Graphs. The values for the key **ents** (stands for "entities") will be useful. the words in the original text is specified by begining and ending text token indices.
+
+The values for the key **tokens** listed on lines 42-132 contains the head (or starting index, ending index, the token number (**id**), and the part of speech (**pos**). We will list what the parts of speech mean later.
+
+We would like the words for each entity to be concatenated into a single string for each entity and we do this here in lines 136-137 and see the results in lines 138-139.
+
+I like to add the entity name strings back into the dictionary representing a document and line 140 shows the use of **lfor** to create a list of lists where the sublists cntain the entity name as a single string and the type of entity. We list the entity types supported by spaCy in the next section.
 
 {lang="hy",linenos=on, number-from=134}
 ~~~~~~~~
@@ -154,6 +164,7 @@ entity text: Mexico entity label: GPE
 => 
 ~~~~~~~~
 
+We can also access each sentence as a separate string. In this example the original text used to create our sample document only had a single sentence so the **sents** property returns a list containing a single string:
 
 {lang="hy",linenos=on, number-from=147}
 ~~~~~~~~
@@ -163,8 +174,10 @@ entity text: Mexico entity label: GPE
 ~~~~~~~~
 
 
+The last example showing how to use a spaCy document object is listing each word with its part of speech:
 
-{lang="hy",linenos=on, numberfrom=150}
+
+{lang="hy",linenos=on, number-from=150}
 ~~~~~~~~
 => (for [word doc]
 ... (print word.text word.pos_))
@@ -184,7 +197,25 @@ meal NOUN
 => 
 ~~~~~~~~
 
+The following list shows the definitions for the part of speech (POS) tags:
 
+-  ADJ: adjective
+-  ADP: adposition
+-  ADV: adverb
+-  AUX: auxiliary verb
+-  CONJ: coordinating conjunction
+-  DET: determiner
+-  INTJ: interjection
+-  NOUN: noun
+-  NUM: numeral
+-  PART: particle
+-  PRON: pronoun
+-  PROPN: proper noun
+-  PUNCT: punctuation
+-  SCONJ: subordinating conjunction
+-  SYM: symbol
+-  VERB: verb
+-  X: other
 
 
 
@@ -212,29 +243,46 @@ For a later example automatically generating Knowledge Graphs from text data, we
 - ORDINAL: any number spelled out, like "one", "two", etc.
 - TIME
 
+Listing for hy-lisp-python/nlp/nlp_lib.hy:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
+(import spacy)
+
+(setv nlp-model (spacy.load "en"))
+
+(defn nlp [some-text]
+  (setv doc (nlp-model some-text))
+  (setv entities (lfor entity doc.ents [entity.text entity.label_]))
+  (setv j (doc.to_json))
+  (setv (get j "entities") entities)
+  j)
+ ~~~~~~~~
 
 
+Listing for hy-lisp-python/nlp/nlp_example.hy:
+
+{lang="hylang",linenos=on}
 ~~~~~~~~
+#!/usr/bin/env hy
 
+(import [nlp-lib [nlp]])
+
+(print
+  (nlp "President George Bush went to Mexico and he had a very good meal"))
+
+(print
+  (nlp "Lucy threw a ball to Bill and he caught it"))
+~~~~~~~~
 
 
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
+Marks-MacBook:nlp $ ./nlp_example.hy
+{'text': 'President George Bush went to Mexico and he had a very good meal', 'ents': [{'start': 10, 'end': 21, 'label': 'PERSON'}, {'start': 30, 'end': 36, 'label': 'GPE'}], 'sents': [{'start': 0, 'end': 64}], 'tokens': 
 
-
-~~~~~~~~
-
-
-
-
-{lang="hylang",linenos=on}
-~~~~~~~~
-
-
+  ..LOTS OF OUTPUT NOT SHOWN..
 ~~~~~~~~
 
 
@@ -280,8 +328,10 @@ Marks-MacBook:nlp $ ./coref_example.hy
 {'corefs': 'Lucy threw a ball to Bill and Bill caught a ball', 'clusters': [a ball: [a ball, it], Bill: [Bill, he]], 'scores': {Lucy: {Lucy: 0.41820740699768066}, a ball: {a ball: 1.8033190965652466, Lucy: -2.721518039703369}, Bill: {Bill: 1.5611814260482788, Lucy: -2.8222298622131348, a ball: -1.806389570236206}, he: {he: -0.5760076642036438, Lucy: 3.054243326187134, a ball: -1.818403720855713, Bill: 3.077427625656128}, it: {it: -1.0269954204559326, Lucy: -3.4972281455993652, a ball: -0.31290221214294434, Bill: -2.5343685150146484, he: -3.6687228679656982}}}
 ~~~~~~~~
 
-
-
-
-
 Anaphora resolution, also called coreference, refers to two or more words or phrases in an input text refer to the same noun.
+
+## Wrap Up
+
+I spent several years total  of time at work from 1984 through 2015 working on natural language processing technology and as a personal side project I sold commercial NLP libraries that I wrote on my own time in Ruby and Common Lisp. The state of the art of deep learning enhanced NLP is very good and the open source spaCy library makes excellent use of both conventional NLP technology and pre-trained deep learning models. I no longer spend very much time writing my own NLP libraries ad instead use spaCy.
+
+I urge you to read through the [spaCy documentation](https://spacy.io/api/doc) because we just covered  basic functionality here that we will also need in the later chapter on automatically generating data for Knowledge Graphs.
