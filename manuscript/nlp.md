@@ -16,11 +16,6 @@ We will use the Hy REPL to experiment with spaCy, Lisp style. The following REPL
 ~~~~~~~~
 Marks-MacBook:nlp $ hy
 hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
-=> (setv nlp-model (spacy.load "en"))
-Traceback (most recent call last):
-  File "stdin-ba96067fd5e131901815d7d8c81d2747c2806fc7", line 1, in <module>
-    (setv nlp-model (spacy.load "en"))
-NameError: name 'spacy' is not defined
 => (import spacy)
 => (setv nlp-model (spacy.load "en"))
 => (setv doc (nlp-model "President George Bush went to Mexico and he had a very good meal"))
@@ -31,7 +26,7 @@ President George Bush went to Mexico and he had a very good meal
 ~~~~~~~~
 
 
-{lang="hy",linenos=on}
+{lang="hy",linenos=on, number-from=23}
 ~~~~~~~~
 => (lfor
 ... x (dir doc)
@@ -43,7 +38,7 @@ President George Bush went to Mexico and he had a very good meal
 
 
 
-{lang="hy",linenos=on}
+{lang="hy",linenos=on, number-from=36}
 ~~~~~~~~
 => (import [pprint [pprint]])
 => (pprint (doc.to_json))
@@ -146,7 +141,7 @@ President George Bush went to Mexico and he had a very good meal
 ~~~~~~~~
 
 
-{lang="hy",linenos=on}
+{lang="hy",linenos=on, number-from=134}
 ~~~~~~~~
 => doc.ents
 (George Bush, Mexico)
@@ -160,7 +155,7 @@ entity text: Mexico entity label: GPE
 ~~~~~~~~
 
 
-{lang="hy",linenos=on}
+{lang="hy",linenos=on, number-from=147}
 ~~~~~~~~
 => (list doc.sents)
 [President George Bush went to Mexico and he had a very good meal]
@@ -169,7 +164,7 @@ entity text: Mexico entity label: GPE
 
 
 
-{lang="hy",linenos=on}
+{lang="hy",linenos=on, numberfrom=150}
 ~~~~~~~~
 => (for [word doc]
 ... (print word.text word.pos_))
