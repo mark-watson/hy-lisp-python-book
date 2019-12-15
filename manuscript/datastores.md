@@ -491,4 +491,14 @@ ns1:mark_watson a ns1:Consultant,
 => 
 ~~~~~~~~
 
+### Using Relational Database as a Backend for rdflib
+
+First, install the Python SQLAlchemy RDF library:
+
+        pip install rdflib_sqlalchemy
+
+
+
+## Wrap Up
+
 We will go into much more detail on practical uses of RDF and SPARQL in the next chapter. I hope that you worked through the REPL examples in this section because if you understand the basics of using the **rdflib** then you will have an easier time understanding the more abstract material in the next chapter.
