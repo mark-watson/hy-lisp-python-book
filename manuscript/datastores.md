@@ -493,13 +493,15 @@ ns1:mark_watson a ns1:Consultant,
 
 ### Using Relational Database as a Backend for rdflib
 
-TBD
+I am not going to cover using a non-default rdflib backend, but if you want to be able to load large RDF data sets and persist the data then you can use the SQLAlchemy plugin extension.
 
 First, install the Python SQLAlchemy RDF library:
 
         pip install rdflib_sqlalchemy
 
-TBD
+Then, follow the test examples at the [rdflib-sqlalchemy](https://github.com/RDFLib/rdflib-sqlalchemy) github repository.
+
+If I need to use large RDF data sets I prefer to not use rdflib and instead use SPARQL to access a free or open source standalone RDF data store like [OpenLink Virtuoso](https://en.wikipedia.org/wiki/Virtuoso_Universal_Server) or [GraphDB™ Free Edition](https://www.ontotext.com/products/graphdb/graphdb-free/). I also like and recommend the commercial AllegroGraph and Stardog RDF server products.
 
 
 ## Wrap Up
