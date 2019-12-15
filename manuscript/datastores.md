@@ -493,10 +493,13 @@ ns1:mark_watson a ns1:Consultant,
 
 ### Using Relational Database as a Backend for rdflib
 
+TBD
+
 First, install the Python SQLAlchemy RDF library:
 
         pip install rdflib_sqlalchemy
 
+TBD
 
 
 ## Wrap Up
