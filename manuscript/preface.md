@@ -10,6 +10,8 @@ I have been using Lisp languages professionally since 1982 and have written book
 - Deep Learning
 - Natural Language Processing (NLP) using Deep Learning
 
+In some sense the particular topics of example programs is not relevant to the main idea of this book: how to increase programmer productivity and happiness using a Lisp language in a bottom up development style. This style relies heavily on an interactive REPL for exploring APIs and writing new code. I chose the above topics based on my experience working as a developer and researcher.
+
 ## Setting Up Your Development Environment
 
 This is a hands-on book! I expect you, dear reader, to follow along with the examples as you read this book. I assume that you know some Python and know how to use the command line tools **python** and **pip** and use a virtual Python environment like [Anaconda (**conda**)](https://www.anaconda.com/) or [**virtualenv**](https://virtualenv.pypa.io/en/latest/). Personally I prefer **conda** but you can use any Pyhton setup you like as long as you have a few packages installed:
