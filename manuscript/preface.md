@@ -28,7 +28,7 @@ You can install the current stable version of **Hy** using:
 
         pip install git+https://github.com/hylang/hy.git
 
-The Hy language is under active development and it is not unusual for libraries and frameworks created more than a few months before the current Hy release to break. As a result of this, I have been careful in the selection of book material to leave out interesting functionality and libraries from the Hy ecosystem that I feel might not work with new releases. Here we stick with a few popular Python libraires like Kerase, TensorFlow, and spaCy and otherwise we will work with mostly pure Hy language code in the examples.
+The Hy language is under active development and it is not unusual for libraries and frameworks created more than a few months before the current Hy release to break. As a result of this, I have been careful in the selection of book material to leave out interesting functionality and libraries from the Hy ecosystem that I feel might not work with new releases. Here we stick with a few popular Python libraires like Keras, TensorFlow, and spaCy and otherwise we will work with mostly pure Hy language code in the examples.
 
 ## What is Lisp Programming Style?
 
