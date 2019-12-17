@@ -14,7 +14,7 @@ In some sense the particular topics of example programs is not relevant to the m
 
 ## Setting Up Your Development Environment
 
-This is a hands-on book! I expect you, dear reader, to follow along with the examples as you read this book. I assume that you know some Python and know how to use the command line tools **python** and **pip** and use a virtual Python environment like [Anaconda (**conda**)](https://www.anaconda.com/) or [**virtualenv**](https://virtualenv.pypa.io/en/latest/). Personally I prefer **conda** but you can use any Pyhton setup you like as long as you have a few packages installed:
+This is a hands-on book! I expect you, dear reader, to follow along with the examples as you read this book. I assume that you know some Python and know how to use the command line tools **python** and **pip** and use a virtual Python environment like [Anaconda (**conda**)](https://www.anaconda.com/) or [**virtualenv**](https://virtualenv.pypa.io/en/latest/). Personally I prefer **conda** but you can use any Python setup you like as long as you have a few packages installed:
 
 - TBD list out Python library requirements here  TBD
 
@@ -28,7 +28,7 @@ You can install the current stable version of **Hy** using:
 
         pip install git+https://github.com/hylang/hy.git
 
-
+The Hy language is under active development and it is not unusual for libraries and frameworks created more than a few months before the current Hy release may break. As a result of this, I have been careful in the selection of book material to leave out interesting functionality and libraries from the Hy ecosystem that I feel might not work with new releases. Here we stick with a few popular Python libraires like Kerase, TensorFlow, and spaCy and otherwise we will work with mostly pure Hy language code in the examples.
 
 ## What is Lisp Programming Style?
 
