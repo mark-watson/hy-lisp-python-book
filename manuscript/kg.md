@@ -18,6 +18,7 @@ Here is a detail view:
 ![Detail of Neo4j console](images/neo4j_ex1.jpg)
 
 
+
 ## Design of KGCreator Application
 
 The single application developed here will serve as both a command line tool for converting text file assets to knowledge graph data (RDF and/or Neo4j cypher data) and provides a simple web interface using Flask.

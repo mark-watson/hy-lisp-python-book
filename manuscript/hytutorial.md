@@ -256,6 +256,32 @@ When I started using Hy I found myself initially making simple mistakes that I l
 
 TBD
 
+## Importing Libraries form Different Directories on Your Laptop
+
+I usually write applications by first implementing simpler low-level utility libraires that are often not in the same directory path as the application that I am working on. Let's look at a simple example of accessing the library **nlp_lib.hy** in the directory **hy-lisp-python/nlp** from the directory **hy-lisp-python/webscraping**:
+
+{lang="hylang",linenos=on}
+~~~~~~~~
+Marks-MacBook:hy-lisp-python $ pwd
+/Users/markw/GITHUB/hy-lisp-python
+Marks-MacBook:hy-lisp-python $ cd webscraping 
+Marks-MacBook:webscraping $ hy
+hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
+=> (import sys)
+=> (sys.path.insert 1 "../nlp")
+=> (import [nlp-lib [nlp]])
+=> (nlp "President George Bush went to Mexico and he had a very good meal")
+{'text': 'President George Bush went to Mexico and he had a very good meal', 
+  ...
+ 'entities': [['George Bush', 'PERSON'], ['Mexico', 'GPE']]}
+=> (import [coref-nlp-lib [coref-nlp]])
+=> (coref-nlp "President George Bush went to Mexico and he had a very good meal")
+{'corefs': 'President George Bush went to Mexico and President George Bush had a very good meal',  ...  }}}
+=> 
+~~~~~~~~
+
+TBD explain both examples
+
 
 ## Using Closures
 
