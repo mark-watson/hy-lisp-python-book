@@ -4,21 +4,27 @@ I put the word "Responsible" in the chapter title to remind you that just becaus
 
 The web scraping code we develop here uses the Python BeautifulSoup Python library and URI libraries.
 
-TBD
+For my work and research, I have been most interested in using web scraping to collect text data for natural language processing but other applications include writing AI news collection and summarization assistants, trying to predict stock prices based on comments in social media (which is what we did at Webmind Corporation in 2000 and 2001), etc.
 
 ## Using the Python BeautifulSoup Library in the Hy Language
+
+There are many good libraries for parsing HTML text and extracting both structure (headings, what is in bold font, etc.) and embedded raw text. I particularly like the Python Beautiful Soup library and we will use it here.
+
+In line 4 for the following listing of file XXXX.hy, I am setting the default user agent to a descriptive string "HyLangBook" but you might for some web sites need to set this to appear as a Firefox or Chrome browser (iOS, Android, Windows, Linux, or macOS). The function **get-raw-data** gets the entire contents of a web site as a single string value.
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
 (import [urllib.request [Request urlopen]])
 
-(defn get-raw-data-from-web [aUri &optional [anAgent {"User-Agent" "HyLangBook/1.0"}]]
+(defn get-raw-data-from-web [aUri
+                             &optional [anAgent {"User-Agent" "HyLangBook/1.0"}]]
   (setv req (Request aUri :headers anAgent))
   (setv httpResponse (urlopen req))
   (setv data (.read httpResponse))
   data)
 ~~~~~~~~
 
+The following listing of file YYYY.hy uses the Beautiful Soup library to parse the string data for HTML text from a web site. The funtion **get-page-html-tags** TBD TBD also add repl examples TBD
 
 
 {lang="hylang",linenos=on}
