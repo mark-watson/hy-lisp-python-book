@@ -1,10 +1,17 @@
 # Linked Data and the Semantic Web
 
-TBD
+Tim Berners Lee, XX, and YY wrote an article for Scientific Amercican where the introduced the term Semantic Web. Here I do not capitalize semantic web and use the similar term linked data somewhat interchangably with semantic web.
+
+TBD: describe differences between sw and ld....
+
+While the "web" describes information for human readers, the semantic web is meant to provide structured data for ingestion by software agents. This distinction will be clear as we compare WikiPedia, made for human readers, with DBPedia which uses the info boxes on WikiPedia topics to automatically extract RDF data describing WikiPedia topics. Lets look at the WikiPedia topic for the town I live in Sedona Arizona and show how the info box on the English version of the [WikiPedia topic page for Sedona https://en.wikipedia.org/wiki/Sedona,_Arizona](https://en.wikipedia.org/wiki/Sedona,_Arizona) maps to the [DBPedia page http://dbpedia.org/page/Sedona,_Arizona](http://dbpedia.org/page/Sedona,_Arizona). Please open both of these WikiPedia and DBPedia URIs in two browser tabs and keep them open for reference.
+
 
 ## Understanding the Resource Description Framework (RDF)
 
-TBD
+RDF is used to model and represent data. RDF is defined by three values so an instance of an RDF statement is called a *triple* with three parts:
+
+- 
 
 ## Resource Namespaces Provided in rdflib
 
