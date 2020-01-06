@@ -1,4 +1,4 @@
-# Introduction to Programming Quantum Computers
+# Introduction to Programming Quantum Computing
 
 Although you can now get cloud computing access from Amazon AWS and Microsoft Azure to existing quantum computing hardware, here we will take a lite approach: review just enough math for you to understand the basics of quantum computing and accessing quantum computing simulators in a few Hy language examples. I try hard to cover material in my books that will be of immediate practical use to my readers but this chapter is more forward thinking, hopefully introducing you to ideas that will be useful when quantum computers are scaled to solve a wider range of practical problems. To be honest, the material in this chapter is really for my use to learn enough about quantum technology to use it when appropriate in the future. I hope that you also benefit from tinkering with earky quantum technology.
 
