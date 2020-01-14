@@ -1,6 +1,6 @@
 # Introduction to the Hy Language
 
-The [Hy programming language](http://docs.hylang.org/en/stable/) is a Lisp language that inter-operates smoothly with Python. We start with a few interactive examples that I encourage you to experiment with as you read. Then we will look at Hy data types and commonly used built in functions that are used in the remainder of this book.
+The [Hy programming language](http://docs.hylang.org/en/stable/) is a Lisp language that inter-operates smoothly with Python. We start with a few interactive examples that I encourage you to experiment with as you read. Then we will look at Hy data types and commonly used built-in functions that are used in the remainder of this book.
 
 I assume that you know at least a little Python and more importantly the Python ecosystem and general tools like **pip**.
 
@@ -13,7 +13,7 @@ pip install git+https://github.com/hylang/hy.git
 
 ## We Will Use the Contributed **let** Macro in Book Example Code
 
-In Scheme, Clojure, and Common Lisp languages the **let** special form is used to define blocks of code with local variables and functions. I will require (or import) the contributed **let** macro, that substitutes for a built-in special form, in most examples in this book but I might not include the **require** in short code listings. Always assume that the following lines start each example:
+In Scheme, Clojure, and Common Lisp languages the **let** special form is used to define blocks of code with local variables and functions. I will require (or import) the contributed **let** macro, that substitutes for a built-in special form in most examples in this book, but I might not include the **require** in short code listings. Always assume that the following lines start each example:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -90,7 +90,7 @@ Notice in line 5 that we can have "-" characters inside of variable and function
 
 ## Global vs. Local Variables
 
-Although I don't generally recommend it, sometimes it is convenient to export local variables defines with **setv** or in a **let** macro expansion to be global variables in the context of the current module (that is defined by the current source file). As an exmaple:
+Although I don't generally recommend it, sometimes it is convenient to export local variables defines with **setv** or in a **let** macro expansion to be global variables in the context of the current module (that is defined by the current source file). As an example:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -160,7 +160,7 @@ If we only wanted to import **BeautifulSoup** from the Python BeautifulSoup libr
 (import [bs4 [BeautifulSoup]])
 ~~~~~~~~
 
-## Replacing the Python slice (cut) notation with the Hy Functional Form
+## Replacing the Python slice (cut) Notation with the Hy Functional Form
 
 In Python we use a special notation for extracting sub-sequences from lists or strings:
 
@@ -247,7 +247,7 @@ We will use **lfor** as a form of Python list comprehension; for example:
 
 When I started using Hy I found myself initially making simple mistakes that I list here to help you avoid them:
 
-- When converting Python code, I would copy "," comma characters separating arguments to functions which leads to errors, of a "naed undefined error".
+- When converting Python code, I would copy "," comma characters separating arguments to functions which leads to errors, of an "undefined error".
 - TBD
 - TBD
 

@@ -1,10 +1,10 @@
 # Natural Language Processing
 
-I have been working in the field of NLP since 1985 so I 'lived through' the revolutionary change in NLP that occurred in sincd 2014: deep learning results out-classed results from previous symbolic methods.
+I have been working in the field of NLP since 1985 so I 'lived through' the revolutionary change in NLP that have occurred since 2014: deep learning results out-classed results from previous symbolic methods.
 
 I will not cover older symbolic methods of NLP here, rather I refer you to my previous books [Practical Artificial Intelligence Programming With Java](https://leanpub.com/javaai), [Loving Common Lisp, or the Savvy Programmer's Secret Weapon](https://leanpub.com/lovinglisp), and [Haskell Tutorial and Cookbook](https://leanpub.com/haskell-cookbook).
 
-You will learn how to apply both DL and NLP in two stages: develop low level "small feature" implementations to understand the underlying technology, and use state of the art full-feature libraries. You will need some math background for the first stage so if you are not interested or don't have the required background, you can still learn to effectively use these technologies by just studying through the second stages where we use industry standard libraries.
+You will learn how to apply both DL and NLP in two stages: develop low level "small feature" implementations to understand the underlying technology, and use state-of-the-art full-feature libraries. You will need some math background for the first stage so if you are not interested or don't have the required background, you can still learn to effectively use these technologies by just studying through the second stages where we use industry standard libraries.
 
 TBD - update previous intro!!
 
@@ -25,9 +25,9 @@ President George Bush went to Mexico and he had a very good meal
 ['_', '__bytes__', '__class__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__ne__', '__new__', '__pyx_vtable__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__setstate__', '__sizeof__', '__str__', '__subclasshook__', '__unicode__', '_bulk_merge', '_py_tokens', '_realloc', '_vector', '_vector_norm', 'cats', 'char_span', 'count_by', 'doc', 'ents', 'extend_tensor', 'from_array', 'from_bytes', 'from_disk', 'get_extension', 'get_lca_matrix', 'has_extension', 'has_vector', 'is_nered', 'is_parsed', 'is_sentenced', 'is_tagged', 'lang', 'lang_', 'mem', 'merge', 'noun_chunks', 'noun_chunks_iterator', 'print_tree', 'remove_extension', 'retokenize', 'sentiment', 'sents', 'set_extension', 'similarity', 'tensor', 'text', 'text_with_ws', 'to_array', 'to_bytes', 'to_disk', 'to_json', 'user_data', 'user_hooks', 'user_span_hooks', 'user_token_hooks', 'vector', 'vector_norm', 'vocab']
 ~~~~~~~~
 
-In lines 3-6 we import the spaCy library, load the English language model, and crete a document from input text. What is a spaCy document? In line 24 we used the **dir** function (familiar to Python programmers) to see the attributes and methods for this class.
+In lines 3-6 we import the spaCy library, load the English language model, and create a document from input text. What is a spaCy document? In line 24 we used the **dir** function (familiar to Python programmers) to see the attributes and methods for this class.
 
-**dir** returns more information than we need, so let's try again but this time do not print the ython "dunder" methods and properties that start and end with double underscore characters:
+**dir** returns more information than we need, so let's try again but this time do not print the Python "dunder" methods and properties that start and end with double underscore characters:
 
 {lang="hy",linenos=on, number-from=23}
 ~~~~~~~~
@@ -143,7 +143,7 @@ The **to_json** method looks promising so we will import the Python pretty print
 => 
 ~~~~~~~~
 
-The JSON data is nested dictionaries. In a later chapter on Knowledge Graphs, we will want to get the nemed entities like people, organizations, etc. from text and use this information to automatically generate data for Knowledge Graphs. The values for the key **ents** (stands for "entities") will be useful. the words in the original text is specified by begining and ending text token indices.
+The JSON data is nested dictionaries. In a later chapter on Knowledge Graphs, we will want to get the named entities like people, organizations, etc. from text and use this information to automatically generate data for Knowledge Graphs. The values for the key **ents** (stands for "entities") will be useful. the words in the original text is specified by begining and ending text token indices.
 
 The values for the key **tokens** listed on lines 42-132 contains the head (or starting index, ending index, the token number (**id**), and the part of speech (**pos**). We will list what the parts of speech mean later.
 
@@ -332,6 +332,6 @@ Anaphora resolution, also called coreference, refers to two or more words or phr
 
 ## Wrap Up
 
-I spent several years total  of time at work from 1984 through 2015 working on natural language processing technology and as a personal side project I sold commercial NLP libraries that I wrote on my own time in Ruby and Common Lisp. The state of the art of deep learning enhanced NLP is very good and the open source spaCy library makes excellent use of both conventional NLP technology and pre-trained deep learning models. I no longer spend very much time writing my own NLP libraries ad instead use spaCy.
+I spent several years total  of time at work from 1984 through 2015 working on natural language processing technology and as a personal side project I sold commercial NLP libraries that I wrote on my own time in Ruby and Common Lisp. The state-of-the-art of deep learning enhanced NLP is very good and the open source spaCy library makes excellent use of both conventional NLP technology and pre-trained deep learning models. I no longer spend very much time writing my own NLP libraries ad instead use spaCy.
 
 I urge you to read through the [spaCy documentation](https://spacy.io/api/doc) because we just covered  basic functionality here that we will also need in the later chapter on automatically generating data for Knowledge Graphs.

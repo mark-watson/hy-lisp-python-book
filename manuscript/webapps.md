@@ -4,7 +4,7 @@ Python has good libraries and frameworks for building web applications and here 
 
 TBD: really do a SQLite example? maybe not.
 
-I like light weight web frameworks. In Ruby I use Sinatra, in Haskell I use Spock, and when I built Java web apps I liked light weight tools like JSP. Flask is simple but capable and using it from Hy is productive and fun.
+I like light-weight web frameworks. In Ruby I use Sinatra, in Haskell I use Spock, and when I built Java web apps I liked light-weight tools like JSP. Flask is simple but capable and using it from Hy is productive and fun.
 
 TBD
 
@@ -14,7 +14,7 @@ You will need to install Flask using:
 
         pip install flask
 
-We will use the Hy macro **with-decorator** macro to replace Python code with annotations. Here the decorator **@app.route** is used to map a URI pattern with a Python callback function. In the following case we define the behavior when the index page of a web app is accessed:
+We will use the Hy macro **with-decorator** to replace Python code with annotations. Here the decorator **@app.route** is used to map a URI pattern with a Python callback function. In the following case we define the behavior when the index page of a web app is accessed:
 
 {lang="python",linenos=on}
 ~~~~~~~~
@@ -171,7 +171,7 @@ Inside a Jinja2 template you can use a simple Python expression to place a sessi
 {{ session['name'] }}
 ~~~~~~~~
 
-In a web app you can access to session using:
+In a web app you can access the session using:
 
 {lang="hylang",linenos=off}
 ~~~~~~~~

@@ -97,7 +97,7 @@ TBD
 
 We will translate a Python example program from the [Keras documentation (listing of LSTM.py example)](https://keras.io/examples/lstm_text_generation/) to Hy. This is a moderately long example and you can use the original Python and the translated Hy code as a guide if you see other models written using Keras that you want in Hy. I have (mostly) kept the same variable names to make it easier to compare the Python and Hy code.
 
-Note that using the nietzsche.txt data set requires a fair amount of memory. If your computer has less than 16G of RAM, you might want to run the following example until you see the printout "Create sentencs and next_chars data..." then kill the program, manually edit the file ~/.keras/datasets/nietzsche.txt to remove 75% of the data by:
+Note that using the nietzsche.txt data set requires a fair amount of memory. If your computer has less than 16G of RAM, you might want to run the following example until you see the printout "Create sentences and next_chars data..." then kill the program, manually edit the file ~/.keras/datasets/nietzsche.txt to remove 75% of the data by:
 
         cd
         mv nietzsche.txt nietzsche_large.txt
@@ -143,7 +143,7 @@ When I am training deep learning models I like to monitor system resources using
 (setv sentences (list))
 (setv next_chars (list))
 
-(print "Create sentencs and next_chars data...")
+(print "Create sentences and next_chars data...")
 (for [i (range 0 (- (len text) maxlen) step)]
   (.append sentences (cut text i (+ i maxlen)))
   (.append next_chars (get text (+ i maxlen))))
@@ -210,7 +210,7 @@ corpus length: 600893
 ['\n', ' ', '!', '"', "'", '(', ')', ',', '-', '.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '=', '?', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', ']', '_', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'Æ', 'ä', 'æ', 'é', 'ë']
 ~~~~~~~~
 
-It is important to understand how we one hot encode input text and decode back to text when we use a trained model to generate text. It will hep to see the dictionaries for converting characters to indices and th reverse indices to original characters:
+It is important to understand how we one-hot encode input text to inputs for the model and decode back one-hot vectors to text when we use a trained model to generate text. It will help to see the dictionaries for converting characters to indices and then reverse indices to original characters:
 
 {linenos=off}
 ~~~~~~~~
@@ -220,7 +220,7 @@ indices_char:
  {0: '\n', 1: ' ', 2: '!', 3: '"', 4: "'", 5: '(', 6: ')', 7: ',', 8: '-', 9: '.', 10: '0', 11: '1', 12: '2', 13: '3', 14: '4', 15: '5', 16: '6', 17: '7', 18: '8', 19: '9', 20: ':', 21: ';', 22: '=', 23: '?', 24: 'A', 25: 'B', 26: 'C', 27: 'D', 28: 'E', 29: 'F', 30: 'G', 31: 'H', 32: 'I', 33: 'J', 34: 'K', 35: 'L', 36: 'M', 37: 'N', 38: 'O', 39: 'P', 40: 'Q', 41: 'R', 42: 'S', 43: 'T', 44: 'U', 45: 'V', 46: 'W', 47: 'X', 48: 'Y', 49: 'Z', 50: '[', 51: ']', 52: '_', 53: 'a', 54: 'b', 55: 'c', 56: 'd', 57: 'e', 58: 'f', 59: 'g', 60: 'h', 61: 'i', 62: 'j', 63: 'k', 64: 'l', 65: 'm', 66: 'n', 67: 'o', 68: 'p', 69: 'q', 70: 'r', 71: 's', 72: 't', 73: 'u', 74: 'v', 75: 'w', 76: 'x', 77: 'y', 78: 'z', 79: 'Æ', 80: 'ä', 81: 'æ', 82: 'é', 83: 'ë'}
 ~~~~~~~~
 
-We prepare the input and target output data in lines 43-48 in the last code listing. Using a short string lets look in the next code listing at how these input and output training examples are extracted for an input string:
+We prepare the input and target output data in lines 43-48 in the last code listing. Using a short string, lets look in the next code listing at how these input and output training examples are extracted for an input string:
 
 {lang="bash",linenos=on}
 ~~~~~~~~
@@ -284,7 +284,7 @@ TBD: better explanation
 
 ~~~~~~~~
 
-I have used LSTM models trained on application specific highly structured JSON data to generate synthetic JSON data matching the schema of the original JSON training data. In the next chapter we will use pre-trained deep learning models for natural language processing (NLP).
+I have used LSTM models trained on application-specific highly structured JSON data to generate synthetic JSON data matching the schema of the original JSON training data. In the next chapter we will use pre-trained deep learning models for natural language processing (NLP).
 
 ## Using a GAN Model to Synthesize New Data
 

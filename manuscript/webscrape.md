@@ -10,7 +10,7 @@ For my work and research, I have been most interested in using web scraping to c
 
 There are many good libraries for parsing HTML text and extracting both structure (headings, what is in bold font, etc.) and embedded raw text. I particularly like the Python Beautiful Soup library and we will use it here.
 
-In line 4 for the following listing of file XXXX.hy, I am setting the default user agent to a descriptive string "HyLangBook" but you might for some web sites need to set this to appear as a Firefox or Chrome browser (iOS, Android, Windows, Linux, or macOS). The function **get-raw-data** gets the entire contents of a web site as a single string value.
+In line 4 for the following listing of file XXXX.hy, I am setting the default user agent to a descriptive string "HyLangBook" but for some web sites you might need to set this to appear as a Firefox or Chrome browser (iOS, Android, Windows, Linux, or macOS). The function **get-raw-data** gets the entire contents of a web site as a single string value.
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -24,7 +24,7 @@ In line 4 for the following listing of file XXXX.hy, I am setting the default us
   data)
 ~~~~~~~~
 
-The following listing of file YYYY.hy uses the Beautiful Soup library to parse the string data for HTML text from a web site. The funtion **get-page-html-tags** TBD TBD also add repl examples TBD
+The following listing of file YYYY.hy uses the Beautiful Soup library to parse the string data for HTML text from a web site. The function **get-page-html-tags** TBD TBD also add repl examples TBD
 
 
 {lang="hylang",linenos=on}
@@ -55,7 +55,7 @@ The following listing of file YYYY.hy uses the Beautiful Soup library to parse t
 (for [ta (get tags "a")] (print (get-tag-data ta)))
 ~~~~~~~~
 
-Here is the utput (with many lines removed for brevity):
+Here is the output (with many lines removed for brevity):
 
 {linenos=on}
 ~~~~~~~~
