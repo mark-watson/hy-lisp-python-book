@@ -143,13 +143,13 @@ The **to_json** method looks promising so we will import the Python pretty print
 => 
 ~~~~~~~~
 
-The JSON data is nested dictionaries. In a later chapter on Knowledge Graphs, we will want to get the named entities like people, organizations, etc. from text and use this information to automatically generate data for Knowledge Graphs. The values for the key **ents** (stands for "entities") will be useful. the words in the original text is specified by begining and ending text token indices.
+The JSON data is nested dictionaries. In a later chapter on Knowledge Graphs, we will want to get the named entities like people, organizations, etc. from text and use this information to automatically generate data for Knowledge Graphs. The values for the key **ents** (stands for "entities") will be useful. the words in the original text is specified by beginning and ending text token indices.
 
 The values for the key **tokens** listed on lines 42-132 contains the head (or starting index, ending index, the token number (**id**), and the part of speech (**pos**). We will list what the parts of speech mean later.
 
 We would like the words for each entity to be concatenated into a single string for each entity and we do this here in lines 136-137 and see the results in lines 138-139.
 
-I like to add the entity name strings back into the dictionary representing a document and line 140 shows the use of **lfor** to create a list of lists where the sublists cntain the entity name as a single string and the type of entity. We list the entity types supported by spaCy in the next section.
+I like to add the entity name strings back into the dictionary representing a document and line 140 shows the use of **lfor** to create a list of lists where the sublists contain the entity name as a single string and the type of entity. We list the entity types supported by spaCy in the next section.
 
 {lang="hy",linenos=on, number-from=134}
 ~~~~~~~~
@@ -164,7 +164,7 @@ entity text: Mexico entity label: GPE
 => 
 ~~~~~~~~
 
-We can also access each sentence as a separate string. In this example the original text used to create our sample document only had a single sentence so the **sents** property returns a list containing a single string:
+We can also access each sentence as a separate string. In this example the original text used to create our sample document had only a single sentence so the **sents** property returns a list containing a single string:
 
 {lang="hy",linenos=on, number-from=147}
 ~~~~~~~~
@@ -332,6 +332,6 @@ Anaphora resolution, also called coreference, refers to two or more words or phr
 
 ## Wrap Up
 
-I spent several years total  of time at work from 1984 through 2015 working on natural language processing technology and as a personal side project I sold commercial NLP libraries that I wrote on my own time in Ruby and Common Lisp. The state-of-the-art of deep learning enhanced NLP is very good and the open source spaCy library makes excellent use of both conventional NLP technology and pre-trained deep learning models. I no longer spend very much time writing my own NLP libraries ad instead use spaCy.
+I spent several years during the period from  1984 through 2015 working on natural language processing technology and as a personal side project I sold commercial NLP libraries that I wrote on my own time in Ruby and Common Lisp. The state-of-the-art of deep learning enhanced NLP is very good and the open source spaCy library makes excellent use of both conventional NLP technology and pre-trained deep learning models. I no longer spend very much time writing my own NLP libraries and instead use spaCy.
 
-I urge you to read through the [spaCy documentation](https://spacy.io/api/doc) because we just covered  basic functionality here that we will also need in the later chapter on automatically generating data for Knowledge Graphs.
+I urge you to read through the [spaCy documentation](https://spacy.io/api/doc) because we covered just basic functionality here that we will also need in the later chapter on automatically generating data for Knowledge Graphs.

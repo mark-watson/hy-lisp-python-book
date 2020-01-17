@@ -29,7 +29,6 @@ The following listing of file YYYY.hy uses the Beautiful Soup library to parse t
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-(import argparse os)
 (import [get_web_page [get-raw-data-from-web]])
 
 (import [bs4 [BeautifulSoup]])
@@ -70,30 +69,109 @@ Here is the output (with many lines removed for brevity):
 {'text': 'WikiData', 'name': 'a', 'class': None, 'href': 'https://www.wikidata.org/wiki/Q18670263'}
 ~~~~~~~~
 
-## Getting Headlines and Summaries from the DemocracyNow.org News Web Site
+## Getting HTML Links from the DemocracyNow.org News Web Site
 
-I financially support and rely on DemocracyNow.org News as the main news that I usually watch so I will use their news site for this  example. Web sites differ so much in format that it is often necessary to build highly customized web scrapers for individual web sites and to maintain the web scraping code as the format of the site changes in time.
+I financially support and rely on NPR.org DemocracyNow.org News as the main news that I usually read so I will use their news sites for examples here and in the next section. Web sites differ so much in format that it is often necessary to build highly customized web scrapers for individual web sites and to maintain the web scraping code as the format of the site changes in time.
 
-I have copied the HTML from a recent home page for DemocracyNow.org the file democracy_now_front_page.html in the example repo hy-lisp-python/webscraping and we will use this fetched file for experimenting with the current example.
+Before working through this example and/or the example in the next section, use the ****Makefile** to fetch data:
 
-TBD
+        make data
 
-The function get_headline_stories returns a list of tuples, each tuple containing:
+This should copy the home pages for both web sites to the files:
 
-TBD: fix the following list
+- democracynow_home_page.html (used here)
+- npr_home_page.html (used for the example in the next section)
 
-- URI of a news story
-- Title of news story
-- Plain text from story
+The following listing shows **democracynow_front_page.hy**
 
-Here is an edited for brevity example:
+{lang="hylang",linenos=on}
+~~~~~~~~
+#!/usr/bin/env hy
 
-TBD: replace the following list
+(import [get-web-page [get-web-page-from-disk]])
+(import [bs4 [BeautifulSoup]])
+
+;; you need to run 'make data' to fetch sample HTML data for dev and testing
+
+(defn get-democracy-now-links []
+  (setv test-html (get-web-page-from-disk "democracynow_home_page.html"))
+  (setv bs (BeautifulSoup test-html :features "lxml"))
+  (setv all-anchor-elements (.findAll bs "a"))
+  (lfor e all-anchor-elements
+          :if (> (len (.get-text e)) 0)
+          (, (.get e "href") (.get-text e))))
+
+(if (= __name__ "__main__")
+  (for [[uri text] (get-democracy-now-links)]
+    (print uri ":" text)))
+~~~~~~~~
+
+This simply prints our URIs and text (separated with the string ":") for each link on the home page. A few lines of output from today's front page is:
 
 ~~~~~~~~
-('https://www.npr.org/2019/05/01/716760556/watch-live-attorney-general',
- "Barr, After Acrimonious Day In Congress, Says He'll Skip Another One On Thursday",
- 'Attorney General William Barr testifies before the Senate Judiciary Committee on Wednesday about the special counsel report on Russian interference in the 2016 election ... ')
+/2020/1/7/the_great_hack_cambridge_analytica : Meet Brittany Kaiser, Cambridge Analytica Whistleblower Releasing Troves of New Files from Data Firm
+/2019/11/8/remembering_orangeburg_massacre_1968_south_carolina : Remembering the 1968 Orangeburg Massacre When Police Shot Dead Three Unarmed Black Students
+/2020/1/15/democratic_debate_higher_education_universal_programs : Democrats Debate Wealth Tax, Free Public College & Student Debt Relief as Part of New Economic Plan
+/2020/1/14/dahlia_lithwick_impeachment : GOP Debate on Impeachment Witnesses Intensifies as Pelosi Prepares to Send Articles to Senate
+/2020/1/14/oakland_california_moms_4_housing : Moms 4 Housing: Meet the Oakland Mothers Facing Eviction After Two Months Occupying Vacant House
+/2020/1/14/luis_garden_acosta_martin_espada : “Morir Soñando”: Martín Espada Reads Poem About Luis Garden Acosta, Young Lord & Community Activist
+/~~~~~~~~
+
+The URIs are relative to the root URI https://www.democracynow.org/.
+
+
+
+## Getting Summaries of Front Page from the NPR.org News Web Site
+
+This example is similar to the example in the last section except that text from home page links is formatted to provide a daily news summary. I am assuming that you ran the example in the last section so the web site home pages have been copied to local files.
+
+The following listing shows **npr_front_page_summary.hy**
+
+
+{lang="hylang",linenos=on}
+~~~~~~~~
+#!/usr/bin/env hy
+
+(import [get-web-page [get-web-page-from-disk]])
+(import [bs4 [BeautifulSoup]])
+
+;; you need to run 'make data' to fetch sample HTML data for dev and testing
+
+(defn get-npr-links []
+  (setv test-html (get-web-page-from-disk "npr_home_page.html"))
+  (setv bs (BeautifulSoup test-html :features "lxml"))
+  (setv all-anchor-elements (.findAll bs "a"))
+  (setv filtered-a
+    (lfor e all-anchor-elements
+          :if (> (len (.get-text e)) 0)
+          (, (.get e "href") (.get-text e))))
+  filtered-a)
+
+(defn create-npr-summary []
+  (setv links (get-npr-links))
+  (setv filtered-links (lfor [uri text] links :if (> (len (.strip text)) 40) (.strip text)))
+  (.join "\n\n" filtered-links))
+
+(if (= __name__ "__main__")
+  (print (create-npr-summary)))
 ~~~~~~~~
 
-TBD
+The following shows a few lines of the generated output for data collected today:
+
+~~~~~~~~
+January 16, 2020  Birds change the shape of their wings far more than planes. The complexities of bird flight have posed a major design challenge for scientists trying to translate the way birds fly into robots.
+
+FBI Vows To Warn More Election Officials If Discovering A Cyberattack
+
+January 16, 2020  The bureau was faulted after the Russian attack on the 2016 election for keeping too much information from state and local authorities. It says it'll use a new policy going forward.
+
+Ukraine Is Investigating Whether U.S. Ambassador Yovanovitch Was Surveilled
+
+January 16, 2020  Ukraine's Internal Affairs Ministry says it's asking the FBI to help determine whether international laws were broken, or "whether it is just a bravado and a fake information" from a U.S. politician.
+
+Electric Burn: Those Who Bet Against Elon Musk And Tesla Are Paying A Big Price
+
+January 16, 2020  For years, Elon Musk skeptics have shorted Tesla stock, confident the electric carmaker was on the brink of disaster. Instead, share value has skyrocketed, costing short sellers billions.
+
+TSA Says It Seized A Record Number Of Firearms At U.S. Airports Last Year
+~~~~~~~~

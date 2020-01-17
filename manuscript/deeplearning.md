@@ -10,20 +10,6 @@ TBD
 
 TBD
 
-## Data Preparation Utilities
-
-### Useful Sources of Machine Learning Data
-
-TBD cover standrd teaching data sets in sklearn, etc.
-
-### Normalizing the Range of Data
-
-TBD
-
-### Handling Missing Input Data
-
-TBD
-
 
 ## Using Keras and TensorFlow to Model The Wisconsin Cancer Data Set
 
@@ -285,8 +271,4 @@ TBD: better explanation
 ~~~~~~~~
 
 I have used LSTM models trained on application-specific highly structured JSON data to generate synthetic JSON data matching the schema of the original JSON training data. In the next chapter we will use pre-trained deep learning models for natural language processing (NLP).
-
-## Using a GAN Model to Synthesize New Data
-
-TBD USE SKLEARN Iris data set and my Hy GAN code
 

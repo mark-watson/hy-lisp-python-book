@@ -1,8 +1,8 @@
 # Datastores
 
-I use flat files and the PostgreSQL relational database for most data storage and processing needs in my consulting business over the last twenty years and for work on large data at Compass Labs and Google I used Hadoop and Big Table. I will not cover big data datastores here, rather I will concentrate on what I think of as "laptop development" requirements: modest amount of data and optimizing speed of development and ease of infrastructure setup. We will cover three datastores:
+I use flat files and the PostgreSQL relational database for most data storage and processing needs in my consulting business over the last twenty years. For work on large data projects at Compass Labs and Google I used Hadoop and Big Table. I will not cover big data datastores here, rather I will concentrate on what I think of as "laptop development" requirements: a modest amount of data and optimizing speed of development and ease of infrastructure setup. We will cover three datastores:
 
-- Sqlite file based relational database
+- Sqlite single-file-based relational database
 - PostgreSQL relational database
 - Neo4J graph database
 - RDF library **rdflib** that is useful for semantic web and linked data applications
@@ -116,7 +116,11 @@ We will use the [psycopg](http://initd.org/psycopg/) PostgreSQL adapter that is 
 
         pip install psycopg2
 
-### Notes for Using PostgreSQL and Setting Up an Example Database "hybook"
+### Notes for Using PostgreSQL and Setting Up an Example Database "hybook" on macOS and Linux
+
+The following two sections may help you get PostgreSQL set up on macOS and Linux.
+
+#### macOS
 
 For macOS we use the PostgreSQL application and we will start by using the *postgres** command line utility to create a new database and table in this database. Using **postgres** account, create a new database **hybook**:
 
@@ -147,6 +151,8 @@ hybook=# CREATE TABLE news (uri VARCHAR(50) not null, title VARCHAR(50), article
 CREATE TABLE
 hybook=# 
 ~~~~~~~~
+
+#### Linux
 
 For **Ubuntu** **Linux** first install PostgreSQL and then use **sudo** to use the account **postgres**:
 
@@ -189,7 +195,7 @@ hybook=# \d
 
 ### Using Hy with PostgreSQL
 
-When using Hy (or any other Lisp language and also for Haskell), I almost always start both coding and experimenting with new libraries and APIs in a REPL. Let's do that here to see from a high level how we can use psycopg on tabel **news** in the database **hybook** that we created in the last section:
+When using Hy (or any other Lisp language and also for Haskell), I usually start both coding and experimenting with new libraries and APIs in a REPL. Let's do that here to see from a high level how we can use psycopg on the table **news** in the database **hybook** that we created in the last section:
 
 {lang="hy",linenos=on}
 ~~~~~~~~
@@ -286,7 +292,7 @@ TBD reference next chapter on linked data
 
 We will go into some detail on using semantic web and linked data resources in the next chapter. Here we will study the use of library **rdflib** as a data store, reading RDF data from disk and from web resources, adding RDF statements (which are triples containing a subject, predicate, and object) and for serializing an in memory graph to a file in one of the standard RDF XML, turtle, or NT formats.
 
-The following REPL session shows importing the *rdflib** library, fetching RDF (in XML format) from my personal web wite, print out the triples i the graph in NT format, and showing how the graph can be queried. I added most of this RDF to my web site in 2005, with a few updates since then. The following REPL session is split up into several listings (with some long output removed) so I can explain how the **rdflib** is being used. In the first REPL listing I load an RDF file in XML format from my web site and print it in NT format. NT format can either have subject/predicate/object all on one line separated by spaces and terminated by a period, or, as shown below the subject is on one line with predicate and objects printed indented on two additional lines. In both cases a period character "." is used to terminate seach RDF NT statement. The statements are displayed in arbitrary order.
+The following REPL session shows importing the *rdflib** library, fetching RDF (in XML format) from my personal web site, printing out the triples in the graph in NT format, and showing how the graph can be queried. I added most of this RDF to my web site in 2005, with a few updates since then. The following REPL session is split up into several listings (with some long output removed) so I can explain how the **rdflib** is being used. In the first REPL listing I load an RDF file in XML format from my web site and print it in NT format. NT format can have either subject/predicate/object all on one line separated by spaces and terminated by a period or, as shown below the subject is on one line with predicate and objects printed indented on two additional lines. In both cases a period character "." is used to terminate search RDF NT statement. The statements are displayed in arbitrary order.
 
 {lang="hy",linenos=on}
 ~~~~~~~~
@@ -374,7 +380,7 @@ http://markwatson.com/index.rdf#Sun_ONE
 => 
 ~~~~~~~~
 
-We will cover the SPARQL query language in more detail in the next chapter but for now, notice that SPARQL is similar to SQL queries. SPARQL queries can find triples in a graph matching simple patterns, match complex patterns, and update and delete triples in a graph. TYhe following simple query finds all triples with the predicate equal to <http://www.w3.org/2000/10/swap/pim/contact#company> and prints ot the subject and object of any matching triples:
+We will cover the SPARQL query language in more detail in the next chapter but for now, notice that SPARQL is similar to SQL queries. SPARQL queries can find triples in a graph matching simple patterns, match complex patterns, and update and delete triples in a graph. The following simple query finds all triples with the predicate equal to <http://www.w3.org/2000/10/swap/pim/contact#company> and prints out the subject and object of any matching triples:
 
 {lang="hy",linenos=on}
 ~~~~~~~~
@@ -385,7 +391,7 @@ http://markwatson.com/index.rdf#mark_watson  contact company:  Mark Watson Consu
 
 We will dive deeper into the SPARQL query language in the next chapter.
 
-As I mentioned, the RDF data on my web site has been mostly unchanged since 2005. What if I wanted to update it noting that more recently I worked as a contractor at Google and as a deep learning engineering manager at Capital One? In the following listing, continuing the same REPL session, I will add two RDF statements indicating additional jobs and show how to serialize the new updated graph in three formats: XML, turtle (my favorite RDF notation) and NT:
+As I mentioned, the RDF data on my web site has been essentially unchanged since 2005. What if I wanted to update it noting that more recently I worked as a contractor at Google and as a deep learning engineering manager at Capital One? In the following listing, continuing the same REPL session, I will add two RDF statements indicating additional jobs and show how to serialize the new updated graph in three formats: XML, turtle (my favorite RDF notation) and NT:
 
 {lang="hy",linenos=on}
 ~~~~~~~~

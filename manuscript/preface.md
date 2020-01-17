@@ -1,8 +1,10 @@
 # Preface
 
-I have been using Lisp languages professionally since 1982 and have written books covering the Common Lisp and Scheme languages. This book covers many programming topics using the Lisp language **Hy** that compiles to Python AST and is compatible with code, libraries, and frameworks written in Python. The main topics we will cover and write example applications for are:
+I have been using Lisp languages professionally since 1982 and have written books covering the Common Lisp and Scheme languages. Most of my career has involved working on artificial intelligence (AI) projects so tools for developing AI applications will be a major theme. In addition the Hy language, you will get experience with AI tools and techniques that will help you craft your own AI platforms regardless of whether you are a consultant, work at a large startup, or a corporation.
 
-- Relational databases
+This book covers many programming topics using the Lisp language **Hy** that compiles to Python AST and is compatible with code, libraries, and frameworks written in Python. The main topics we will cover and write example applications for are:
+
+- Relational and graph databases
 - Web app development
 - Web scraping
 - Accessing semantic web and linked data sources like Wikipedia, DBpedia, and Wikidata
@@ -16,13 +18,8 @@ The topics of example programs where chosen because of my work experience and th
 
 This is a hands-on book! I expect you, dear reader, to follow along with the examples as you read this book. I assume that you know some Python and know how to use the command line tools **python** and **pip** and use a virtual Python environment like [Anaconda (**conda**)](https://www.anaconda.com/) or [**virtualenv**](https://virtualenv.pypa.io/en/latest/). Personally I prefer **conda** but you can use any Python setup you like as long as you have a few packages installed:
 
-- TBD list out Python library requirements here  TBD
-
+- Python library requirements: beautifulsoup4, Flask, hy, Keras, psycopg2, rdflib, rdflib-sqlalchemy, rdflib-sqlite, spacy, tensorflow
 - Python 3.x
-- spaCy
-- TensorFlow and Keras
-- TBD
-
 
 You can install the current stable version of **Hy** using:
 
@@ -46,7 +43,7 @@ When I need a library for a Hy project I search for Python libraries and either 
 
 Since starting work on AI in 1982 I have seen the field progress from a niche technology where even international conferences had small attendances to a field that is generally viewed as transformative. In the USA there is legitimate concern that economic adversaries like China will exceed our abilities to develop core AI technologies and integrate these technologies into commercial and military systems. As I write this in the last days of 2019, some people in our field including myself believe that the Chinese company Baidu may have already passed Google and Microsoft in applied AI.
 
-Even though most of my professiknal work in the last five years has been in deep learning (and before that I worked with the Knowledge Graph at Google on a knowledge representaion problem and application), I believe that human level Artificial General Intelligence (AGI) will use hybrid deep learning, "old fashioned" symbolic AI, and techniques that we have yet to discover.
+Even though most of my professional work in the last five years has been in deep learning (and before that I worked with the Knowledge Graph at Google on a knowledge representation problem and application), I believe that human level Artificial General Intelligence (AGI) will use hybrid deep learning, "old fashioned" symbolic AI, and techniques that we have yet to discover.
 
 This belief that deep learning will not get us to AGI capabilities is a motivator for me to use the Hy language because it offers transparent access to Python deep learning frameworks with a bottom-up Lisp development style that I used for decades of work using symbolic AI.
 
@@ -60,3 +57,7 @@ The official Hy Language logo is an octopus:
 ![The Hy Language logo Cuddles by Karen Rustad](images/hylisplogo.jpg)
 
 Usually I use photographs that I take myself for covers of my LeanPub books. Although I have SCUBA dived since I was 13 years old, sadly I have no pictures of an octopus that I have taken myself. I did find a public domain picture I liked (that is the cover of this book) on Wikimedia. **Cover Credit**: Thanks to Wikimedia user Pseudopanax for placing the cover image in the pubic domain.
+
+## Acknowledgements
+
+I thank my wife Carol for editing this manuscript, finding typos, and suggesting improvements.
