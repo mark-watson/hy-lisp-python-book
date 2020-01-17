@@ -73,9 +73,12 @@ Here is the output (with many lines removed for brevity):
 
 I financially support and rely on NPR.org DemocracyNow.org News as the main news that I usually read so I will use their news sites for examples here and in the next section. Web sites differ so much in format that it is often necessary to build highly customized web scrapers for individual web sites and to maintain the web scraping code as the format of the site changes in time.
 
-Before working through this example and/or the example in the next section, use the ****Makefile** to fetch data:
+Before working through this example and/or the example in the next section use the file **Makefile** to fetch data:
 
-        make data
+{linenos=off}
+~~~~~~~~
+make data
+~~~~~~~~
 
 This should copy the home pages for both web sites to the files:
 
@@ -108,6 +111,7 @@ The following listing shows **democracynow_front_page.hy**
 
 This simply prints our URIs and text (separated with the string ":") for each link on the home page. A few lines of output from today's front page is:
 
+{linenos=off}
 ~~~~~~~~
 /2020/1/7/the_great_hack_cambridge_analytica : Meet Brittany Kaiser, Cambridge Analytica Whistleblower Releasing Troves of New Files from Data Firm
 /2019/11/8/remembering_orangeburg_massacre_1968_south_carolina : Remembering the 1968 Orangeburg Massacre When Police Shot Dead Three Unarmed Black Students
@@ -115,7 +119,7 @@ This simply prints our URIs and text (separated with the string ":") for each li
 /2020/1/14/dahlia_lithwick_impeachment : GOP Debate on Impeachment Witnesses Intensifies as Pelosi Prepares to Send Articles to Senate
 /2020/1/14/oakland_california_moms_4_housing : Moms 4 Housing: Meet the Oakland Mothers Facing Eviction After Two Months Occupying Vacant House
 /2020/1/14/luis_garden_acosta_martin_espada : “Morir Soñando”: Martín Espada Reads Poem About Luis Garden Acosta, Young Lord & Community Activist
-/~~~~~~~~
+~~~~~~~~
 
 The URIs are relative to the root URI https://www.democracynow.org/.
 
@@ -158,6 +162,7 @@ The following listing shows **npr_front_page_summary.hy**
 
 The following shows a few lines of the generated output for data collected today:
 
+{linenos=off}
 ~~~~~~~~
 January 16, 2020  Birds change the shape of their wings far more than planes. The complexities of bird flight have posed a major design challenge for scientists trying to translate the way birds fly into robots.
 
