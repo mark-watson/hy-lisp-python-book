@@ -307,7 +307,7 @@ TBD explain both examples
 
 Unfortunately, Clojure's immutable  data structures cannot be easily implemented efficiently in Python so the Hy language does  not support immutable data. Otherwise the syntax for defining functions, using maps/hash tables/dictionaries, etc. is similar between the two languages.
 
-The original Hy language developer Paul Tagliamonte was cleaerly inspired by Clojure.
+The original Hy language developer Paul Tagliamonte was clearly inspired by Clojure.
 
 The book **Serious Python** by Julien Danjou has an entire chapter (chapter 9) on the Python AST (abstract syntax tree), an introduction to Hy, and an interview with Paul Tagliamonte. Recommended!
 
