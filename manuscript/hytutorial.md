@@ -300,3 +300,16 @@ TBD explain both examples
 (print (increment))
 (print (increment))
 ~~~~~~~~
+
+## Hy Looks Like Clojure: How Similar Are They?
+
+[Clojure](https://clojure.org/) is a dynamic general purpose Lisp language for the JVM. One of the great Clojure features is support of immutable data (read only after creation) that makes multi-threaded code easier to write and maintain.
+
+Unfortunately, Clojure's immutable  data structures cannot be easily implemented efficiently in Python so the Hy language does  not support immutable data. Otherwise the syntax for defining functions, using maps/hash tables/dictionaries, etc. is similar between the two languages.
+
+The original Hy language developer Paul Tagliamonte was cleaerly inspired by Clojure.
+
+The book **Serious Python** by Julien Danjou has an entire chapter (chapter 9) on the Python AST (abstract syntax tree), an introduction to Hy, and an interview with Paul Tagliamonte. Recommended!
+
+[This podcast](https://www.pythonpodcast.com/episode-23-hylang-core-developers/) in 2015 interviews Hy developers Paul Tagliamonte, Tuukka Turto, and Morten Linderud. You can see the [current Hy contributer list on github](https://github.com/hylang/hy/graphs/contributors).
+
