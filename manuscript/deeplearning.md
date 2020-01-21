@@ -1,14 +1,50 @@
 # Deep Learning
 
-Most of my professional career since 2014 has involved deep learning, mostly with TensorFlow using the Keras APIs. In the late 1980s I was on a DARPA neural network technology advisory panel for a year, I wrote the first prototype of the SAIC ANSim neural network library commercial product, and I wrote the neural network prediction code for a bomb detector my company designed and built for the FAA for deployment in airports.
+Most of my professional career since 2014 has involved deep learning, mostly with TensorFlow using the Keras APIs. In the late 1980s I was on a DARPA neural network technology advisory panel for a year, I wrote the first prototype of the SAIC ANSim neural network library commercial product, and I wrote the neural network prediction code for a bomb detector my company designed and built for the FAA for deployment in airports. More recently I have used GAN (generative adversarial networks) models for synthesizing numeric spreadsheet data and LSTM (long short term memory) models to synthesize highly structured text data like nested JSON and for NLP (natural language processing). I have several USA and European patents using neural network and deep learning technology.
 
-The Hy language utilities and example programs we develop here all use TensorFlow and Keras "under the hood" to do the heavy lifting. 
+The Hy language utilities and example programs we develop here all use TensorFlow and Keras "under the hood" to do the heavy lifting. Keras is a simpler to use API for TensorFlow and I usually use Keras rather than the lower level TensorFlow APIs.
+
+There are other libraries and frameworks that might interest you in addition to TensorFlow and Keras. I particularly like the Flux library for the Julia programming language. Currently Python has the most comprehensive libraries for deep learning but other languages that support differential computing (more on this later) like Julia and Swift may gain popularity in the future.
+
+Here we will learn a vocabulary for discussing deep learning neural network models, look at possible architectures, and show two Hy language examples that should be sufficient to get you used to using Keras with the Hy language. If you already have deep learning application development experience you might want to skip the following review material and skip to the Hy language examples.
+
+If you want to use deep learning professionally, there are two specific online resources that I recommend to you: Andrew Ng leads the efforts at [deeplearning.ai](https://www.deeplearning.ai/) and Jeremy Howard leads the efforts at [fast.ai](https://www.fast.ai/). Here I will show you how to use a few useful tools. Andrew and Jeremy will help you skills that may lead a professional level of expertise.
+
+There are many deep learning neural architectures in current practical use; a few types that I use are:
+
+- Multi-layer perceptron networks with many layers. An input layer contains placeholders for input data. Each element in the input layer is connected by a two-dimensional weight matrix to each element in the first hidden layer. We can use any number of fully connected hidden layers, with the last hidden layer connected to an output layer.
+- Convolutional networks for image processing and text classification. Convolutions, or filters, are small windows that can process input images (filters are two-dimensional) or sequences like text (filters are one-dimensional). Each filter uses a single set of learned weights independent of where the filter is applied in an input image or input sequence.
+- Autoencoders have the same number of input layer and output layer elements with one or more hidden fully connected layers. Autoencoders are trained to produce the same output as training input values using a relatively small number of hidden layer elements. Autoencoders are capable of removing noise in input data.
+- LSTM (long short term memory) process elements in a sequence in order and are capable of remembering patterns that they have seen earlier in the sequence.
+- GAN (generative adversarial networks) models comprise two different and competing neural models, the generator and the discriminator. GANs are often trained on input images (although in my work I have applied GANs to two-dimensional numeric spreadsheet data). The generator model takes as input a "latent input vector" (this is just a vector of specific size with random values) and generates a random output image. The weights of the generator model are trained to produce random images that are similar to how training images look. The discriminator model is trained to recognize if an arbitrary output image is original training data or an image created by the generator model. The generator and discriminator models are trained together.
+
+The core functionality of libraries like TensorFlow are written in C++ and take advantage or special hardware like GPUs, custom ASICs, and devices like Google's TPUs. Most people who work with deep learning models don't need to even be aware of the low level optimizations used to make training and using deep learning models more efficient. That said, in the following section I am going to show you how simple neural networks are trained and used.
+
+## Tutorial on Simple Multi-layer Perceptron Neural Networks
+
+
+I use the terms Multi-layer perceptron neural networks, backpropagation neural networks and delta-rule networks interchangeably. Backpropagation refers to the model training process of calculating the output errors when training inputs are passed ij the forward direction from input lay, to hidden layers, and to the output layer. There will be an error of the calculated and actual output errors. This error can be used to adjust the weights from the last hidden layer to the output layer to reduce the error. The error is then backprogated backwards through the hidden layers, updating all weights in the model. I have detailed example code in any of my older artificial intelligence books. Here I am satisfied to give you an intuition to how simple neural networks are trained.
+
+The basic idea is that we start with a network initialized with random weights and for each training case we propagate the inputs through the network towards the output neurons, calculate the output errors, and back-up the errors from the output neurons back towards the input neurons in order to make small changes to the weights to lower the error for the current training example. We repeat this process by cycling through the training examples many times.
+
+The following figure shows a simple backpropagation network with one hidden layer. Neurons in adjacent layers are connected by floating point connection strength weights. These weights start out as small random values that change as the network is trained. Weights are represented in the following figure by arrows; in the code the weights connecting the input to hidden neurons are represented as a two-dimensional array. The weights connecting the hidden to output neurons are also represented as a second two-dimensional array.
+
+{#nn-backprop}
+![Example Backpropagation network with One Hidden Layer](images/nn_backprop2d.png)
+
+Each non-input neuron has an activation value that is calculated from the activation values of connected neurons feeding into it, gated (adjusted) by the connection weights. We want to flatten activation values to a relatively small range but still maintain relative values. To do this flattening we use the Sigmoid function that is seen in the next figure, along with the derivative of the Sigmoid function which we will use in the code for training a network by adjusting the weights.
+
+{#nn-sigmoid}
+![Sigmoid Function and Derivative of Sigmoid Function (SigmoidP)](images/nn_sigmoid.png)
+
 
 TBD
 
 ## Tutorial on Deep Learning
 
-TBD
+
+Differential computing refers to ....TBD
+
 
 
 ## Using Keras and TensorFlow to Model The Wisconsin Cancer Data Set
