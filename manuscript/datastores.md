@@ -14,6 +14,7 @@ In a few of my previous books (e.g., [Loving Common Lisp, or the Savvy Programme
 
 TBD
 
+TBD discuss SQLite being serverless https://www.sqlite.org/serverless.html vs. server model like Postgres
 
 Listing of **sqlite_lib.hy**:
 
