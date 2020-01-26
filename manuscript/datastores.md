@@ -12,6 +12,8 @@ In a few of my previous books (e.g., [Loving Common Lisp, or the Savvy Programme
 
 ## Sqlite
 
+We will cover two relational databases: Sqlite and PostgreSQL. Sqlite is an embedded database. There are Sqlite libraries for many programming languages and here we use the Python library.
+
 TBD
 
 TBD discuss SQLite being serverless https://www.sqlite.org/serverless.html vs. server model like Postgres
@@ -112,6 +114,8 @@ In the next section we will see how PostgreSQL treats JSON data as a native data
 
 
 ## PostgreSQL
+
+We just saw use cases for the Sqlite embedded database. Now we look at my favorite general purpose database, PostgreSQL. The PostgreSQL database server is available as a managed service on most cloud providers and it is easy to also run a PostgreSQL server on your laptop or on a VPS or server.
 
 TBD
 
