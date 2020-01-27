@@ -385,18 +385,19 @@ http://markwatson.com/index.rdf#Sun_ONE
 
 We will cover the SPARQL query language in more detail in the next chapter but for now, notice that SPARQL is similar to SQL queries. SPARQL queries can find triples in a graph matching simple patterns, match complex patterns, and update and delete triples in a graph. The following simple query finds all triples with the predicate equal to <http://www.w3.org/2000/10/swap/pim/contact#company> and prints out the subject and object of any matching triples:
 
-{lang="hy",linenos=on}
+{lang="hy",linenos=on, number-from=84}
 ~~~~~~~~
 => (for [[subject object] (graph.query "select ?s ?o where { ?s <http://www.w3.org/2000/10/swap/pim/contact#company> ?o }")]
-... (print subject " contact company: " object))
-http://markwatson.com/index.rdf#mark_watson  contact company:  Mark Watson Consulting Services
+... (print subject "\n contact company: " object))
+http://markwatson.com/index.rdf#mark_watson
+  contact company:  Mark Watson Consulting Services
 ~~~~~~~~
 
 We will dive deeper into the SPARQL query language in the next chapter.
 
 As I mentioned, the RDF data on my web site has been essentially unchanged since 2005. What if I wanted to update it noting that more recently I worked as a contractor at Google and as a deep learning engineering manager at Capital One? In the following listing, continuing the same REPL session, I will add two RDF statements indicating additional jobs and show how to serialize the new updated graph in three formats: XML, turtle (my favorite RDF notation) and NT:
 
-{lang="hy",linenos=on}
+{lang="hy",linenos=on, number-from=89}
 ~~~~~~~~
 => (import rdflib)
 => (setv mark-node (rdflib.URIRef  "http://markwatson.com/index.rdf#mark_watson"))
