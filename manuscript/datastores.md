@@ -402,6 +402,7 @@ As I mentioned, the RDF data on my web site has been essentially unchanged since
 => (setv mark-node (rdflib.URIRef  "http://markwatson.com/index.rdf#mark_watson"))
 => mark-node
 rdflib.term.URIRef('http://markwatson.com/index.rdf#mark_watson')
+=> (setv company-node (rdflib.URIRef "http://www.w3.org/2000/10/swap/pim/contact#company"))
 => (graph.add [mark-node company-node (rdflib.Literal "Google")])
 => (graph.add [mark-node company-node (rdflib.Literal "Capital One")])
 => (for [[subject object]
