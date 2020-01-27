@@ -4,7 +4,7 @@ I have been working in the field of NLP since 1985 so I 'lived through' the revo
 
 I will not cover older symbolic methods of NLP here, rather I refer you to my previous books [Practical Artificial Intelligence Programming With Java](https://leanpub.com/javaai), [Loving Common Lisp, or the Savvy Programmer's Secret Weapon](https://leanpub.com/lovinglisp), and [Haskell Tutorial and Cookbook](https://leanpub.com/haskell-cookbook).
 
-You will learn how to apply both DL and NLP in two stages: develop low level "small feature" implementations to understand the underlying technology, and use state-of-the-art full-feature libraries. You will need some math background for the first stage so if you are not interested or don't have the required background, you can still learn to effectively use these technologies by just studying through the second stages where we use industry standard libraries.
+You will learn how to apply both DL and NLP by using the state-of-the-art full-feature library [spaCy](https://spacy.io/). This chapter concentrates on how to use spaCy in the Hy language for solutions to a few selected problems in NLP that I use in my own work. I urge you to also review the "Guides" section of the [spaCy documentation](https://spacy.io/usage) where examples are in Python but after experimenting with the examples in this chapter you should have no difficulty in translating any spaCy Python examples to the Hy language.
 
 TBD - update previous intro!!
 
@@ -143,7 +143,7 @@ The **to_json** method looks promising so we will import the Python pretty print
 => 
 ~~~~~~~~
 
-The JSON data is nested dictionaries. In a later chapter on Knowledge Graphs, we will want to get the named entities like people, organizations, etc. from text and use this information to automatically generate data for Knowledge Graphs. The values for the key **ents** (stands for "entities") will be useful. the words in the original text is specified by beginning and ending text token indices.
+The JSON data is nested dictionaries. In a later chapter on Knowledge Graphs, we will want to get the named entities like people, organizations, etc. from text and use this information to automatically generate data for Knowledge Graphs. The values for the key **ents** (stands for "entities") will be useful. Notice that the words in the original text are specified by beginning and ending text token indices (values of **head** and **end** in lines 52 to 142).
 
 The values for the key **tokens** listed on lines 42-132 contains the head (or starting index, ending index, the token number (**id**), and the part of speech (**pos**). We will list what the parts of speech mean later.
 
@@ -223,7 +223,7 @@ The following list shows the definitions for the part of speech (POS) tags:
 
 TBD
 
-We will generate two libraries, one a general NLP library and one that specifically solves the anaphora resolution, or coreference, problem.
+We will generate two libraries (in files **nlp_lib.hy** and **coref_nlp_lib.hy**), the first is a general NLP library and the second that specifically solves the anaphora resolution, or coreference, problem. There are test programs for each library in the files **nlp_example.hy** and **coref_example.hy**.
 
 For a later example automatically generating Knowledge Graphs from text data, we will need the ability to find person, company, location, etc. names in text. We use spaCy here to do this. The types of named entities that spaCy is pre-trained that includes:
 
@@ -332,6 +332,6 @@ Anaphora resolution, also called coreference, refers to two or more words or phr
 
 ## Wrap Up
 
-I spent several years during the period from  1984 through 2015 working on natural language processing technology and as a personal side project I sold commercial NLP libraries that I wrote on my own time in Ruby and Common Lisp. The state-of-the-art of deep learning enhanced NLP is very good and the open source spaCy library makes excellent use of both conventional NLP technology and pre-trained deep learning models. I no longer spend very much time writing my own NLP libraries and instead use spaCy.
+I spent several years of development time during the period from  1984 through 2015 working on natural language processing technology and as a personal side project I sold commercial NLP libraries that I wrote on my own time in Ruby and Common Lisp. The state-of-the-art of deep learning enhanced NLP is very good and the open source spaCy library makes excellent use of both conventional NLP technology and pre-trained deep learning models. I no longer spend very much time writing my own NLP libraries and instead use spaCy.
 
-I urge you to read through the [spaCy documentation](https://spacy.io/api/doc) because we covered just basic functionality here that we will also need in the later chapter on automatically generating data for Knowledge Graphs.
+I urge you to read through the [spaCy documentation](https://spacy.io/api/doc) because we covered just basic functionality here that we will also need in the later chapter on automatically generating data for Knowledge Graphs. After working through the interactive repl sessions and also the examples in this chapter, you should be able to translate any Python API example code to Hy.

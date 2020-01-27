@@ -16,6 +16,8 @@ This book covers many programming topics using the Lisp language **Hy** that com
 
 The topics of example programs where chosen because of my work experience and the theme of this book is  how to increase programmer productivity and happiness using a Lisp language in a bottom-up development style. This style relies heavily on an interactive REPL for exploring APIs and writing new code. I chose the above topics based on my experience working as a developer and researcher.
 
+Some of the examples are very simple (e.g., the web app examples) while some are more complex (e.g., deep learning and knowledge graph examples). Regardless of the simplicity or complexity of the examples I hope that you find the code interesting, useful in your projects, and fun to experiment with.
+
 ## Setting Up Your Development Environment
 
 This is a hands-on book! I expect you, dear reader, to follow along with the examples as you read this book. I assume that you know some Python and know how to use the command line tools **python** and **pip** and use a virtual Python environment like [Anaconda (**conda**)](https://www.anaconda.com/) or [**virtualenv**](https://virtualenv.pypa.io/en/latest/). Personally I prefer **conda** but you can use any Python setup you like as long as you have a few packages installed:

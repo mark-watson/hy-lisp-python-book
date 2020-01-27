@@ -1,6 +1,6 @@
 # Writing Web Applications
 
-Python has good libraries and frameworks for building web applications and here we will use the **Flask** library and framework "under the hood" and write Hy Language web applications. We will start with a simple "Hello World" example in Python, see how to reformulate it in Hy, and then proceed with more complex examples that will show how to use sessions, cookies, and store use data in an SQLite database.
+Python has good libraries and frameworks for building web applications and here we will use the **Flask** library and framework "under the hood" and write two simple Hy Language web applications. We will start with a simple "Hello World" example in Python, see how to reformulate it in Hy, and then proceed with more complex examples that will show how to use sessions, cookies, and store use data in an SQLite database.
 
 TBD: really do a SQLite example? maybe not.
 
@@ -8,7 +8,7 @@ I like light-weight web frameworks. In Ruby I use Sinatra, in Haskell I use Spoc
 
 TBD
 
-## Getting Started With Flask
+## Getting Started With Flask: Using Python Decorators in Hy
 
 You will need to install Flask using:
 
@@ -58,6 +58,11 @@ I liked this example and started real use of Hy and Flask. Please try running th
  * Debug mode: off
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 ~~~~~~~~
+
+Open [http://127.0.0.1:5000/](http://127.0.0.1:5000/) in your web browser:
+
+![Hello world Flask web app](images/flask1.jpg)
+
 
 ## Using Jinja2 Templates To Generate HTML
 
@@ -153,6 +158,13 @@ The following Flask web app defines behavior for rendering the template without 
 
 Please note that there is nothing special about the names inside the **with-decorator** code blocks: the functions **index** and **response** could have arbitrary names like **a123** an **b17**. I used the function names **index** and **response** because they help describe what the functions do.
 
+Open [http://127.0.0.1:5000/](http://127.0.0.1:5000/) in your web browser:
+
+![Flask web app using a Jinja2 Template](images/flask2.jpg)
+
+![Flask web app using a Jinja2 Template after entering my name and submitting the HTML input form](images/flask3.jpg)
+
+
 ## Handling HTTP Sessions and Cookies
 
 There is a special variable **session** that Flask maintains for each client of a Flask web app. Different people using a web app will have independant sessions. In a web app, we can set a session value by treating the session for a given user as a dictionary:
@@ -199,4 +211,32 @@ Values of named cookies can be retrieved using:
 (request.cookies.get "name")
 ~~~~~~~~
 
-inside of a **with-decorator** form. The value for **request** is defined in the execution context by Flask when handling HTTP requests.
+inside of a **with-decorator** form. The value for **request** is defined in the execution context by Flask when handling HTTP requests. Here is a complete example of handling cookies in the file *cookie_test.hy*:
+
+{lang="hylang",linenos=on}
+~~~~~~~~
+#!/usr/bin/env hy
+
+(import [flask [Flask render_template request make-response]])
+
+(setv app (Flask "Flask and Jinja2 test"))
+
+(with-decorator (app.route "/")
+  (defn index []
+    (setv cookie-data (request.cookies.get "hy-cookie"))
+    (print "cookie-data:" cookie-data)
+    (setv a-response (render_template "template1.j2" :name cookie-data))
+    a-response))
+
+(with-decorator (app.route "/response" :methods ["POST"])
+  (defn response []
+    (setv name (request.form.get "name"))
+    (print name)
+    (setv a-response (make-response (render-template "template1.j2" :name name)))
+    (a-response.set-cookie "hy-cookie" name)
+    a-response))
+
+(app.run)
+~~~~~~~~
+
+Run this example setting a few different names.
