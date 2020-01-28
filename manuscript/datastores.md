@@ -6,7 +6,7 @@ I use flat files and the PostgreSQL relational database for most data storage an
 - PostgreSQL relational database
 - RDF library **rdflib** that is useful for semantic web and linked data applications
 
-For graph data we will stick with RDF because it is a fairly widely used standard. Google, Microsoft, Yahoo and Yandex support [schema.org](https://schema.org/) for defining schemas for structured data on the web. In a later chapter we will develop tools to automatically generate RDF data from raw text as a tool for developing customized Knowledge Graphs.
+For graph data we will stick with RDF because it is a fairly widely used standard. Google, Microsoft, Yahoo and Yandex support [schema.org](https://schema.org/) for defining schemas for structured data on the web. In the next chapter we will go into more details on RDF, here we look at the "plumbing" for using the **rdflib** library to manipulate and query RDF data and how to export RDF data in several formats. Then, in a later chapter, we will develop tools to automatically generate RDF data from raw text as a tool for developing customized Knowledge Graphs.
 
 In a few of my previous books (e.g., [Loving Common Lisp, or the Savvy Programmer's Secret Weapon](https://leanpub.com/lovinglisp) and [Haskell Tutorial and Cookbook](https://leanpub.com/haskell-cookbook)) I also covered the general purpose graph database Neo4j which I also like to use for some use cases, but for the purposes of this book we stick with RDF.
 
@@ -427,9 +427,9 @@ http://markwatson.com/index.rdf#mark_watson  contact company:  Capital One
 </rdf:Description>\n</rdf:RDF>
 ~~~~~~~~
 
+I like Turtle RDF notation better than the XML notation because Turtle is easier to read and understand. Here, on line 118 we serialize the graph (with new ndes added above in lines 90 to 96) to Turtle:
 
-
-{lang="hy",linenos=on}
+{lang="hy",linenos=on, number-from=118}
 ~~~~~~~~
 => (graph.serialize :format "turtle")
 @prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .
@@ -474,10 +474,9 @@ ns1:mark_watson a ns1:Consultant,
                 contact:motherTongue "en" .
 ~~~~~~~~
 
+In addition to the Turtle format I also use the simpler NT format that puts URI prefixes inline and unlike Turtle does not use prefix abrieviations. Here in line 159 we serialize to NT format:
 
-
-
-{lang="hy",linenos=on}
+{lang="hy",linenos=on, number-from=159}
 ~~~~~~~~
 => (graph.serialize :format "nt")
 <http://markwatson.com/index.rdf#Sun_ONE> <http://www.ontoweb.org/ontology/1#booktitle> "Sun ONE Services - J2EE" .

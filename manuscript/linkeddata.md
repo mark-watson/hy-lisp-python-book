@@ -1,22 +1,51 @@
 # Linked Data and the Semantic Web
 
-Tim Berners Lee, XX, and YY wrote an article for Scientific Amercican where they introduced the term Semantic Web. Here I do not capitalize semantic web and use the similar term linked data somewhat interchangably with semantic web.
+Tim Berners Lee, James Hendler, and Ora Lassila wrote an article for Scientific Amercican where they introduced the term Semantic Web. Here I do not capitalize semantic web and use the similar term linked data somewhat interchangeably with semantic web.
 
-TBD: describe differences between sw and ld....
+In the same way that the web allows links between related web pages, linked data supports linking associated data on the web together. I view linked data as a relatively simple way to link data while the semantic web has a much larger vision: the semantic web has the potential to be the entirety of human knowledge represented as data on the web.
 
 While the "web" describes information for human readers, the semantic web is meant to provide structured data for ingestion by software agents. This distinction will be clear as we compare WikiPedia, made for human readers, with DBPedia which uses the info boxes on WikiPedia topics to automatically extract RDF data describing WikiPedia topics. Lets look at the WikiPedia topic for the town I live in Sedona, Arizona and show how the info box on the English version of the [WikiPedia topic page for Sedona https://en.wikipedia.org/wiki/Sedona,_Arizona](https://en.wikipedia.org/wiki/Sedona,_Arizona) maps to the [DBPedia page http://dbpedia.org/page/Sedona,_Arizona](http://dbpedia.org/page/Sedona,_Arizona). Please open both of these WikiPedia and DBPedia URIs in two browser tabs and keep them open for reference.
 
 I assume that the format of the WikiPedia page is familiar so let's look at the DBPdeia page for Sedona that in human readble form shows the RDF statements with Sedona Arizona as the subject. RDF is used to model and represent data. RDF is defined by three values so an instance of an RDF statement is called a *triple* with three parts:
 
-- subject: a URI
-- property: a URI
-- value: a URI or a literal value (like a string)
+- subject: a URI (also referred to as a "Resource")
+- property: a URI (also referred to as a "Resource")
+- value: a URI (also refered to as a "Resource") or a literal value (like a string)
 
 The subject for each Sedona related triple is the above URI for the DBPedia human readable page. The subject and property references in an RDF triple will almost always be a URI that can both ground an entity to information on the web. The human readable page for Sedona lists several properties and the values of these properties. One of the properties is "dbo:areaCode" where "dbo" is a name space reference (in this case for a [DatatypeProperty](http://www.w3.org/2002/07/owl#DatatypeProperty).
+
+![Abstract RDF representation with 2 Resources, 2 literal values, and 3 Properties](images/rdf1.png)
+
+![Concrete example using RDF seen in last chapter showing the RDF representation with 2 Resources, 2 literal values, and 3 Properties](images/rdf2.png)
+
+We saw a SPARQL Query (SPARQL for RDF data is similar to SQL for relational database queries) in the last chapter. Let's look at another example using the RDF in the last figure:
+
+        "select ?v where { <http://markwatson.com/index.rdf#Sun_ONE>
+                           <http://www.ontoweb.org/ontology/1#booktitle>
+                           ?v }
+
+This query should return the result "Sun ONE Services - J2EE". If you wanted to query for all URI resources that are books with the liter value of their titles, then you can use:
+
+        "select ?s ?v where { ?s
+                           <http://www.ontoweb.org/ontology/1#booktitle>
+                           ?v }
+
+
+Note that **?s** and **?v** are arbitrary query variable names, here standing for "subject" and "value". You can use more descriptive variable names like:
+
+        "select ?bookURI ?bookTitle where 
+            { ?bookURI
+              <http://www.ontoweb.org/ontology/1#booktitle>
+              ?bookTitle }
+
 
 We will be diving a little deeper into RDF examples but for now I want you to understand the idea of RDF statements represented as triples, that web URIs represent things, properties, and sometimes values, and that URIs can be followed manually to see what they reference.
 
 ## Understanding the Resource Description Framework (RDF)
+
+Text data on the web has some structure in the form of HTML elements like headers, page titles, anchor links, etc. but this structure is too imprecise for general use by software agents. RDF is a method for encoding structured data in a more precise way.
+
+We used the RDF data on my web site in the last chapter to introduce the "plumbing" of using the **rdflib** Python library to access, manipulate, and query RDF data. The following two figures show an abstract representation of RDF and then a concrete example using some of the RDF on my web site.
 
 
 ## Resource Namespaces Provided in rdflib
@@ -89,6 +118,8 @@ Social Web
     sha1
     thumbnail
     logo
+
+You now have seen a few common Schemas for RDF data. Another Schema that is widely used, that we won't need for our examples here, is [schema.org](https://schema.org). Let's now use a Hy repl session to explore namespaces and programatically create RDF using **rdflib**:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
