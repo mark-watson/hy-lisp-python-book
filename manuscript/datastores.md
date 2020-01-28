@@ -393,7 +393,7 @@ http://markwatson.com/index.rdf#mark_watson
   contact company:  Mark Watson Consulting Services
 ~~~~~~~~
 
-We will dive deeper into the SPARQL query language in the next chapter.
+We will see more examples of the SPARQL query language in the next chapter. For now, notice that the geneeral form of a **select** query statement is a list of query variables (names beginning with a question mark) and a **where** clause in curly brackets that contains matching patterns. This SPARQL query is simple, but like SQL queries, SPARQL queries can get very complex. I only lightly cover SPARQL in this book. You can get free PDF copies of my two older semantic web books for free: [Practical Semantic Web and Linked Data Applications, Java, Scala, Clojure, and JRuby Edition](https://markwatson.com/opencontentdata/book_java.pdf) and [Practical Semantic Web and Linked Data Applications, Common Lisp Edition](https://markwatson.com/opencontentdata/book_lisp.pdf). There are links to relevant git repos and other information on my [book web page](https://markwatson.com/books/).
 
 As I mentioned, the RDF data on my web site has been essentially unchanged since 2005. What if I wanted to update it noting that more recently I worked as a contractor at Google and as a deep learning engineering manager at Capital One? In the following listing, continuing the same REPL session, I will add two RDF statements indicating additional jobs and show how to serialize the new updated graph in three formats: XML, turtle (my favorite RDF notation) and NT:
 

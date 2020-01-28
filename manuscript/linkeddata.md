@@ -178,12 +178,13 @@ _:N21c7fa7385b545eb8a7e3821b75b9cb5 <http://xmlns.com/foaf/0.1/nick> "Mark"@en .
 
 ## Understanding the SPARQL Query Language
 
-TBD
+For the purposes of the material in this book, the two sample SPARQL queries here and in the last chapter are sufficient for you to get started using **rdflib** with arbitrary RDF data sources and simple queries.
+
+The Apache Foundation has a [good introduction to SPARQL](https://jena.apache.org/tutorials/sparql.html) that I refer you to for more information.
 
 ## Wrapping the Python **rdflib** Library
 
-TBD
-
+I hope that I have provided you with enough motivation to explore RDF data sources and consider the use of linked data/semantic web technologies for your projects.
 
 You can install using the [source code for **rdflib**](https://github.com/RDFLib/rdflib) or using:
 
@@ -192,17 +193,5 @@ You can install using the [source code for **rdflib**](https://github.com/RDFLib
 pip install rdflib
 ~~~~~~~~
 
-## Wrapping the Python **sparqlwrapper** Library
+If I depend on a library, regardless of the programming language, I like to keep an up to date copy of th source code ready at hand.
 
-TBD
-
-You can install using the [source code for **sparqlwrapper**](https://github.com/RDFLib/sparqlwrapper) or using:
-
-{lang="bash",linenos=off}
-~~~~~~~~
-pip install sparqlwrapper
-~~~~~~~~
-
-## RDF Data Storage and SPARQL Query Examples
-
-TBD
