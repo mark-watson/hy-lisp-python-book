@@ -16,43 +16,92 @@ TBD
 
 ## Design of KGCreator Application
 
-The single application developed here will serve as both a command line tool for converting text file assets to knowledge graph data stored as RDF and provides a simple web interface using Flask.
+The example application developed here processes input text files in the sub-directory **test_data**. For each file with the extension **.txt** in **test_data**, there should be a matching file with the extension **.meta** that contains the origin URI for the cooresponding text file. The git repo has a few files in **test_data** that you can experiment with or replace with your own data:
 
-Assuming that you are in the directory for this example, two possible use cases would be:
-
-{lang="hylang",linenos=on}
+{lang="bash",linenos=off}
 ~~~~~~~~
-./KGcreator -i test_data -r out.rdf
-./KGcreator -port 8001
+$ ls test_data 
+test1.meta	test1.txt	test2.meta	test2.txt	test3.meta	test3.txt
 ~~~~~~~~
-The example on line 1 specifies that all text files in the directory path **test_data** should be processed and generated RDF data should be written to **out.rdf**. You can leave off either **-r** or **-c** options if you only want cypher or RDF data generated.
 
-The example on line 2 runs a web interface on [http://localhost:8001](http://localhost:8001).
-
-The following figure shows, at a high level, how we will organize the code for this example.
-
-{width=80%}
-![Main application and three utility classes for KGCreator](images/kg_overview.jpg)
+Using only the spaCy NLP library that we used earlier and the built in Hy/Python libraries, this example is implemented in just 60 lines of Hy code that is seen in the following three code listings:
 
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
+#!/usr/bin/env hy
 
+(import [os [scandir]])
+(import [os.path [splitext exists]])
+(import spacy)
+
+(setv nlp-model (spacy.load "en"))
+
+(defn find-entities-in-text [some-text]
+  (defn clean [s]
+    (.strip (.replace s "\n" " ")))
+  (setv doc (nlp-model some-text))
+  (map list (lfor entity doc.ents [(clean entity.text) entity.label_])))
+~~~~~~~~
+
+{lang="hylang",linenos=on, number-from=14}
+~~~~~~~~
+(defn Data2Rdf [meta-data entities fout]
+  (for [[value abreviation] entities]
+    (if (in abreviation e2umap)
+      (.write fout (+ "<" meta-data ">\t" (get e2umap abreviation) "\t" "\"" value "\"" " .\n")))))
+
+(setv e2umap {
+  "ORG" "<https://schema.org/Organization>"
+  "LOC" "<https://schema.org/location>"
+  "GPE" "<https://schema.org/location>"
+  "NORP" "<https://schema.org/nationality>"
+  "PRODUCT" "<https://schema.org/Product>"
+  "PERSON" "<https://schema.org/Person>"})
 ~~~~~~~~
 
 
 
 
-{lang="hylang",linenos=on}
+{lang="hylang",linenos=on, number-from=28}
+~~~~~~~~
+(defn process-directory [directory-name output-rdf]
+  (with [frdf (open output-rdf "w")]
+    (with [entries (scandir directory-name)]
+      (for [entry entries]
+        (setv [_ file-extension] (splitext entry.name))
+        (if (= file-extension ".txt")
+            (do
+              (setv check-file-name (+ (cut entry.path 0 -4) ".meta"))
+              (if (exists check-file-name)
+                  (process-file entry.path check-file-name frdf)
+                  (print "Warning: no .meta file for" entry.path
+                         "in directory" directory-name))))))))
 ~~~~~~~~
 
+
+{lang="hylang",linenos=on, number-from=40}
 ~~~~~~~~
+(defn process-file [txt-path meta-path frdf]
+  
+  (defn read-data [text-path meta-path]
+    (with [f (open text-path)] (setv t1 (.read f)))
+    (with [f (open meta-path)] (setv t2 (.read f)))
+    [t1 t2])
+  
+  (defn modify-entity-names [ename]
+    (.replace ename "the " ""))
+  
+  (setv [txt meta] (read-data txt-path meta-path))
+  (setv entities (find-entities-in-text txt))
+  (setv entities ;; only operate on a few entity types
+        (lfor [e t] entities
+              :if (in t ["NORP" "ORG" "PRODUCT" "GPE" "PERSON" "LOC"])
+              [(modify-entity-names e) t]))
+  (Data2Rdf meta entities frdf))
 
-
-
-
-
-
+(process-directory "test_data" "output.rdf")
+~~~~~~~~
 
 
 {lang="hylang",linenos=on}
