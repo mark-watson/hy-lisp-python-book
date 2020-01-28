@@ -1,6 +1,6 @@
 # Linked Data and the Semantic Web
 
-Tim Berners Lee, James Hendler, and Ora Lassila wrote an article for Scientific Amercican where they introduced the term Semantic Web. Here I do not capitalize semantic web and use the similar term linked data somewhat interchangeably with semantic web.
+Tim Berners Lee, James Hendler, and Ora Lassila wrote in 2001 an article for Scientific American where they introduced the term Semantic Web. Here I do not capitalize semantic web and use the similar term linked data somewhat interchangeably with semantic web.
 
 In the same way that the web allows links between related web pages, linked data supports linking associated data on the web together. I view linked data as a relatively simple way to link data while the semantic web has a much larger vision: the semantic web has the potential to be the entirety of human knowledge represented as data on the web.
 
@@ -14,8 +14,10 @@ I assume that the format of the WikiPedia page is familiar so let's look at the 
 
 The subject for each Sedona related triple is the above URI for the DBPedia human readable page. The subject and property references in an RDF triple will almost always be a URI that can both ground an entity to information on the web. The human readable page for Sedona lists several properties and the values of these properties. One of the properties is "dbo:areaCode" where "dbo" is a name space reference (in this case for a [DatatypeProperty](http://www.w3.org/2002/07/owl#DatatypeProperty).
 
+{width=70%}
 ![Abstract RDF representation with 2 Resources, 2 literal values, and 3 Properties](images/rdf1.png)
 
+{width=70%}
 ![Concrete example using RDF seen in last chapter showing the RDF representation with 2 Resources, 2 literal values, and 3 Properties](images/rdf2.png)
 
 We saw a SPARQL Query (SPARQL for RDF data is similar to SQL for relational database queries) in the last chapter. Let's look at another example using the RDF in the last figure:
@@ -27,8 +29,8 @@ We saw a SPARQL Query (SPARQL for RDF data is similar to SQL for relational data
 This query should return the result "Sun ONE Services - J2EE". If you wanted to query for all URI resources that are books with the liter value of their titles, then you can use:
 
         "select ?s ?v where { ?s
-                           <http://www.ontoweb.org/ontology/1#booktitle>
-                           ?v }
+                              <http://www.ontoweb.org/ontology/1#booktitle>
+                              ?v }
 
 
 Note that **?s** and **?v** are arbitrary query variable names, here standing for "subject" and "value". You can use more descriptive variable names like:
@@ -39,7 +41,7 @@ Note that **?s** and **?v** are arbitrary query variable names, here standing fo
               ?bookTitle }
 
 
-We will be diving a little deeper into RDF examples but for now I want you to understand the idea of RDF statements represented as triples, that web URIs represent things, properties, and sometimes values, and that URIs can be followed manually to see what they reference.
+We will be diving a little deeper into RDF examples in the next chapter when we write a tool for generating RDF data from raw text input.  For now I want you to understand the idea of RDF statements represented as triples, that web URIs represent things, properties, and sometimes values, and that URIs can be followed manually to see what they reference.
 
 ## Understanding the Resource Description Framework (RDF)
 
@@ -141,9 +143,9 @@ rdflib.term.URIRef('http://xmlns.com/foaf/0.1/title')
 => (graph.add [mark FOAF.nick (rdflib.Literal "Mark" :lang "en")])
 => (graph.add [mark FOAF.name (rdflib.Literal "Mark Watson" :lang "en")])
 => (for [node graph] (print node))
-(rdflib.term.BNode('N21c7fa7385b545eb8a7e3821b75b9cb5'), rdflib.term.URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'), rdflib.term.URIRef('http://xmlns.com/foaf/0.1/Person'))
-(rdflib.term.BNode('N21c7fa7385b545eb8a7e3821b75b9cb5'), rdflib.term.URIRef('http://xmlns.com/foaf/0.1/name'), rdflib.term.Literal('Mark Watson', lang='en'))
-(rdflib.term.BNode('N21c7fa7385b545eb8a7e3821b75b9cb5'), rdflib.term.URIRef('http://xmlns.com/foaf/0.1/nick'), rdflib.term.Literal('Mark', lang='en'))
+(rdflib.term.BNode('N21c7fa7385b545eb8a7e3821b7cb5'), rdflib.term.URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'), rdflib.term.URIRef('http://xmlns.com/foaf/0.1/Person'))
+(rdflib.term.BNode('N21c7fa7385b545eb8a7e3821b7cb5'), rdflib.term.URIRef('http://xmlns.com/foaf/0.1/name'), rdflib.term.Literal('Mark Watson', lang='en'))
+(rdflib.term.BNode('N21c7fa7385b545eb8a7e3821b7cb5'), rdflib.term.URIRef('http://xmlns.com/foaf/0.1/nick'), rdflib.term.Literal('Mark', lang='en'))
 => (graph.serialize :format "pretty-xml")
 b'<?xml version="1.0" encoding="utf-8"?>
 <rdf:RDF
@@ -194,4 +196,6 @@ pip install rdflib
 ~~~~~~~~
 
 If I depend on a library, regardless of the programming language, I like to keep an up to date copy of th source code ready at hand.
+
+In the next chapter we will use natural language processing to extract structured information from raw text and automatically generate RDF data.
 
