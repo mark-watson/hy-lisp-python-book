@@ -24,6 +24,9 @@ $ ls test_data
 test1.meta	test1.txt	test2.meta	test2.txt	test3.meta	test3.txt
 ~~~~~~~~
 
+{width=70%}
+![Overview of the Knowledge Graph Creator script](images/kg1.png)
+
 Using only the spaCy NLP library that we used earlier and the built in Hy/Python libraries, this example is implemented in just 60 lines of Hy code that is seen in the following three code listings:
 
 
@@ -44,12 +47,16 @@ Using only the spaCy NLP library that we used earlier and the built in Hy/Python
   (map list (lfor entity doc.ents [(clean entity.text) entity.label_])))
 ~~~~~~~~
 
+In lines 3 and 4 we import three standard Python utilites we need for finding all files in a directory, checking to see if a file exists, and splitting text into tokens.  In line 7 we load the English language spaCy model and save the value of the model in the variable **nlp-model**. The function find-entities-in-text uses the spaCy English language model to find entities like organizations, people, etc. in text and cleans entity names by removing new line characters and other unnecessary white space (nested function **clean** in lines 10 and 11).
+
+
 {lang="hylang",linenos=on, number-from=14}
 ~~~~~~~~
-(defn Data2Rdf [meta-data entities fout]
+(defn data2Rdf [meta-data entities fout]
   (for [[value abreviation] entities]
     (if (in abreviation e2umap)
-      (.write fout (+ "<" meta-data ">\t" (get e2umap abreviation) "\t" "\"" value "\"" " .\n")))))
+      (.write fout (+ "<" meta-data ">\t" (get e2umap abreviation) "\t" "\""
+                       value "\"" " .\n")))))
 
 (setv e2umap {
   "ORG" "<https://schema.org/Organization>"
@@ -98,13 +105,13 @@ Using only the spaCy NLP library that we used earlier and the built in Hy/Python
         (lfor [e t] entities
               :if (in t ["NORP" "ORG" "PRODUCT" "GPE" "PERSON" "LOC"])
               [(modify-entity-names e) t]))
-  (Data2Rdf meta entities frdf))
+  (data2Rdf meta entities frdf))
 
 (process-directory "test_data" "output.rdf")
 ~~~~~~~~
 
 
-{lang="hylang",linenos=on}
+{lang="hylang",linenos=off}
 ~~~~~~~~
 
 ~~~~~~~~
@@ -115,7 +122,7 @@ Using only the spaCy NLP library that we used earlier and the built in Hy/Python
 
 
 
-{lang="hylang",linenos=on}
+{lang="hylang",linenos=off}
 ~~~~~~~~
 
 ~~~~~~~~
