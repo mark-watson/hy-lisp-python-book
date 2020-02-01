@@ -47,7 +47,15 @@ Using only the spaCy NLP library that we used earlier and the built in Hy/Python
   (map list (lfor entity doc.ents [(clean entity.text) entity.label_])))
 ~~~~~~~~
 
-In lines 3 and 4 we import three standard Python utilites we need for finding all files in a directory, checking to see if a file exists, and splitting text into tokens.  In line 7 we load the English language spaCy model and save the value of the model in the variable **nlp-model**. The function find-entities-in-text uses the spaCy English language model to find entities like organizations, people, etc. in text and cleans entity names by removing new line characters and other unnecessary white space (nested function **clean** in lines 10 and 11).
+In lines 3 and 4 we import three standard Python utilites we need for finding all files in a directory, checking to see if a file exists, and splitting text into tokens.  In line 7 we load the English language spaCy model and save the value of the model in the variable **nlp-model**. The function find-entities-in-text uses the spaCy English language model to find entities like organizations, people, etc. in text and cleans entity names by removing new line characters and other unnecessary white space (nested function **clean** in lines 10 and 11). We can run a test in a repl:
+
+{lang="hylang",linenos=off}
+~~~~~~~~
+=> (list (find-entities-in-text "John Smith went to Los Angeles to work at IBM"))
+[['John Smith', 'PERSON'], ['Los Angeles', 'GPE'], ['IBM', 'ORG']]
+~~~~~~~~
+
+The function **find-entities-in-text** returns a map object so I wrapped the results in a **list** to print out the entities in the test sentence. The entity types used by spaCy were defined in an earlier chapter, here we just use the entity types defined in lines 21-26 in the following listing:
 
 
 {lang="hylang",linenos=on, number-from=14}
@@ -67,7 +75,7 @@ In lines 3 and 4 we import three standard Python utilites we need for finding al
   "PERSON" "<https://schema.org/Person>"})
 ~~~~~~~~
 
-
+In lines 28-39 we open an output file for writing generated RDF data and loop through all text files in the input directory and call the function **process-file** for each text + meta file pair in the input directory:
 
 
 {lang="hylang",linenos=on, number-from=28}
@@ -110,10 +118,57 @@ In lines 3 and 4 we import three standard Python utilites we need for finding al
 (process-directory "test_data" "output.rdf")
 ~~~~~~~~
 
+Let's look at some of the generated RDF for the text files in the input test directory (most output is not shown):
+
 
 {lang="hylang",linenos=off}
 ~~~~~~~~
-
+<https://newsshop.com/may/a1023.html>
+  <https://schema.org/nationality>	"European" .
+<https://newsshop.com/may/a1023.html>
+  <https://schema.org/nationality>	"Portuguese" .
+<https://newsshop.com/may/a1023.html>
+  <https://schema.org/Organization>	"Banco Espirito Santo SA" .
+<https://newsshop.com/may/a1023.html>
+  <https://schema.org/Person>	"John Evans" .
+<https://newsshop.com/may/a1023.html>
+  <https://schema.org/Person>	"Jill Hines" .
+<https://newsshop.com/may/a1023.html>
+  <https://schema.org/Organization>	"Banco Espirito" .
+<https://newsshop.com/may/a1023.html>
+  <https://schema.org/Organization>	"The Wall Street Journal" .
+<https://newsshop.com/may/a1023.html>
+  <https://schema.org/Organization>	"Banco Espirito Santo's" .
+<https://newsshop.com/may/a1023.html>
+  <https://schema.org/Person>	"Ben Cole" .
+<https://newsshop.com/may/a1023.html>
+  <https://schema.org/Organization>	"IBM" .
+<https://newsshop.com/may/a1023.html>
+  <https://schema.org/location>	"Canada" .
+<https://newsshop.com/may/a1023.html>
+  <https://schema.org/Organization>	"Australian Broadcasting Corporation" .
+<https://newsshop.com/may/a1023.html>
+  <https://schema.org/Person>	"Frank Smith" .
+<https://newsshop.com/may/a1023.html>
+  <https://schema.org/Organization>	"Australian Writers Guild" .
+<https://newsshop.com/may/a1023.html>
+  <https://schema.org/Organization>	"American University" .
+<https://localnews.com/june/z902.html>
+  <https://schema.org/Organization>	"The Wall Street Journal" .
+<https://localnews.com/june/z902.html>
+  <https://schema.org/location>	"Mexico" .
+<https://localnews.com/june/z902.html>
+  <https://schema.org/location>	"Canada" .
+<https://localnews.com/june/z902.html>
+  <https://schema.org/Person>	"Bill Clinton" .
+<https://localnews.com/june/z902.html>
+  <https://schema.org/Organization>	"IBM" .
+<https://localnews.com/june/z902.html>
+  <https://schema.org/Organization>	"Microsoft" .
+<https://abcnews.go.com/US/tornadoes-threaten-oklahoma-texas/story?id=63146361>
+  <https://schema.org/Person>	"Jane Deerborn" .
+<https://abcnews.go.com/US/tornadoes-threaten-oklahoma-texas/story?id=63146361>
+  <https://schema.org/location>	"Texas" .
 ~~~~~~~~
 
 
