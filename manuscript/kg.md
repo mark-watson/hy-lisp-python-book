@@ -165,9 +165,9 @@ Let's look at some of the generated RDF for the text files in the input test dir
   <https://schema.org/Organization>	"IBM" .
 <https://localnews.com/june/z902.html>
   <https://schema.org/Organization>	"Microsoft" .
-<https://trend7news.com/US/tornadoes-threaten-oklahoma-texas/story?id=63146361>
+<https://abcnews.go.com/US/violent-long-lasting-tornadoes-threaten-oklahoma-texas/story?id=63146361>
   <https://schema.org/Person>	"Jane Deerborn" .
-<https://trend7news.com/US/tornadoes-threaten-oklahoma-texas/story?id=63146361>
+<https://abcnews.go.com/US/violent-long-lasting-tornadoes-threaten-oklahoma-texas/story?id=63146361>
   <https://schema.org/location>	"Texas" .
 ~~~~~~~~
 
