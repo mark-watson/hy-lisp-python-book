@@ -169,16 +169,18 @@ Let's look at some of the generated RDF for the text files in the input test dir
 
 Let's visualize the results:
 
-1037  git clone https://github.com/fatestigma/ontology-visualization
- 1038  cd ontology-visualization
- 1039  ls
- 1040  more README.org
- 1041  ./ontology_viz.py -o test.dot output.rdf
- 1042  chmod +x ontology_viz.py
- 1043  ./ontology_viz.py -o test.dot output.rdf
- 1044  lh
- 1045  dot -Tpng -o test.png test.dot
- 1046  open test.png
+{lang="bash",linenos=off}
+~~~~~~~~
+git clone https://github.com/fatestigma/ontology-visualization
+cd ontology-visualization
+chmod +x ontology_viz.py
+./ontology_viz.py -o test.dot output.rdf  -O ontology.ttl
+# copy the file output.rdf from the examples repo directory hy-lisp-python/kgcreator
+dot -Tpng -o test.png test.dot
+open test.png
+~~~~~~~~
+
+Edited to fit on the page, the output looks like:
 
 ![](images/1dot1.png)
 ![](images/1dot2.png)
@@ -187,9 +189,9 @@ Let's visualize the results:
 
 ## Revisiting This Example Using URIs Instead of Literal Values
 
-Note that in the figure in the last section that nodes for literal values (e.g., for "IBM") are not shared. In this section we will copy the file **kgcreator.hy** to **kgcreator_uri.hy** add a few additions to map string literal values for entity names to [http://dbpedia.org](http://dbpedia.org) URIs by individually searching [https://wiki.dbpedia.org/search/node](https://wiki.dbpedia.org/search/node) and defining a new map **v2umap** for mapping literal values to DBPedia URIs.
+Note that in the figure in the last section that nodes for literal values (e.g., for "IBM") are not shared. In this section we will copy the file **kgcreator.hy** to **kgcreator_uri.hy** add a few additions to map string literal values for entity names to [http://dbpedia.org](http://dbpedia.org) URIs by individually searching Google using the pattern "DBPedia 'entity name'" and defining a new map **v2umap** for mapping literal values to DBPedia URIs.
 
-Note: in a production system (not a book example), I would probably use [https://www.wikidata.org/wiki/Wikidata:Database_download](https://www.wikidata.org/wiki/Wikidata:Database_download) to download all of WikiData (which includes DBPedia data) and use a fuzzy text matching to find WikiData URIs for string literals. The compressed WikiData JSON data file is about 50 GB. Here we will manually find DBPedia for entity names that are in the example data.
+Note: in a production system (not a book example), I would use [https://www.wikidata.org/wiki/Wikidata:Database_download](https://www.wikidata.org/wiki/Wikidata:Database_download) to download all of WikiData (which includes DBPedia data) and use a fuzzy text matching to find WikiData URIs for string literals. The compressed WikiData JSON data file is about 50 GB. Here we will manually find DBPedia for entity names that are in the example data.
 
 In **kgcreator_uri.hy** we add a map **v2umap** for selected entity literal names to DBPedia URIs:
 
