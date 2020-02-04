@@ -21,13 +21,15 @@ The example application developed here processes input text files in the sub-dir
 {lang="bash",linenos=off}
 ~~~~~~~~
 $ ls test_data 
-test1.meta	test1.txt	test2.meta	test2.txt	test3.meta	test3.txt
+test1.meta test1.txt test2.meta test2.txt test3.meta test3.txt
 ~~~~~~~~
+
+The *.txt files contain plain text for analysis and the *.meta files contain the original web source URI for the corresponding *.txt files. Using the spaCy library and Python/Hy's standard libraries for file access, the KGCreator is simple to implement. Here is the overall design of this example:
 
 {width=70%}
 ![Overview of the Knowledge Graph Creator script](images/kg1.png)
 
-Using only the spaCy NLP library that we used earlier and the built in Hy/Python libraries, this example is implemented in just 60 lines of Hy code that is seen in the following three code listings:
+Using only the spaCy NLP library that we used earlier and the built in Hy/Python libraries, this example is implemented in just 58 lines of Hy code that is seen in the following three code listings:
 
 
 {lang="hylang",linenos=on}
@@ -118,13 +120,12 @@ In lines 28-39 we open an output file for writing generated RDF data and loop th
 (process-directory "test_data" "output.rdf")
 ~~~~~~~~
 
-Let's look at some of the generated RDF for the text files in the input test directory (most output is not shown):
+## Problems with using Literal Values in RDF
 
+Let's look at some of the generated RDF for the text files in the input test directory (most output is not shown):
 
 {lang="hylang",linenos=off}
 ~~~~~~~~
-<https://newsshop.com/may/a1023.html>
-  <https://schema.org/nationality>	"European" .
 <https://newsshop.com/may/a1023.html>
   <https://schema.org/nationality>	"Portuguese" .
 <https://newsshop.com/may/a1023.html>
@@ -132,15 +133,9 @@ Let's look at some of the generated RDF for the text files in the input test dir
 <https://newsshop.com/may/a1023.html>
   <https://schema.org/Person>	"John Evans" .
 <https://newsshop.com/may/a1023.html>
-  <https://schema.org/Person>	"Jill Hines" .
-<https://newsshop.com/may/a1023.html>
   <https://schema.org/Organization>	"Banco Espirito" .
 <https://newsshop.com/may/a1023.html>
   <https://schema.org/Organization>	"The Wall Street Journal" .
-<https://newsshop.com/may/a1023.html>
-  <https://schema.org/Organization>	"Banco Espirito Santo's" .
-<https://newsshop.com/may/a1023.html>
-  <https://schema.org/Person>	"Ben Cole" .
 <https://newsshop.com/may/a1023.html>
   <https://schema.org/Organization>	"IBM" .
 <https://newsshop.com/may/a1023.html>
@@ -172,10 +167,69 @@ Let's look at some of the generated RDF for the text files in the input test dir
 ~~~~~~~~
 
 
+Let's visualize the results:
+
+1037  git clone https://github.com/fatestigma/ontology-visualization
+ 1038  cd ontology-visualization
+ 1039  ls
+ 1040  more README.org
+ 1041  ./ontology_viz.py -o test.dot output.rdf
+ 1042  chmod +x ontology_viz.py
+ 1043  ./ontology_viz.py -o test.dot output.rdf
+ 1044  lh
+ 1045  dot -Tpng -o test.png test.dot
+ 1046  open test.png
+
+![](images/1dot1.png)
+![](images/1dot2.png)
+![Because we used literal values, notice how for example the node for the entity **IBM** is not shared.](images/1dot3.png)
 
 
+## Revisiting This Example Using URIs Instead of Literal Values
 
+Note that in the figure in the last section that nodes for literal values (e.g., for "IBM") are not shared. In this section we will copy the file **kgcreator.hy** to **kgcreator_uri.hy** add a few additions to map string literal values for entity names to [http://dbpedia.org](http://dbpedia.org) URIs by individually searching [https://wiki.dbpedia.org/search/node](https://wiki.dbpedia.org/search/node) and defining a new map **v2umap** for mapping literal values to DBPedia URIs.
 
+Note: in a production system (not a book example), I would probably use [https://www.wikidata.org/wiki/Wikidata:Database_download](https://www.wikidata.org/wiki/Wikidata:Database_download) to download all of WikiData (which includes DBPedia data) and use a fuzzy text matching to find WikiData URIs for string literals. The compressed WikiData JSON data file is about 50 GB. Here we will manually find DBPedia for entity names that are in the example data.
+
+In **kgcreator_uri.hy** we add a map **v2umap** for selected entity literal names to DBPedia URIs:
+
+{lang="hylang",linenos=off}
+~~~~~~~~
+(setv v2umap { ;; object literal value to URI mapping
+  "IBM" "<http://dbpedia.org/page/IBM>"
+  "The Wall Street Journal" "<http://dbpedia.org/page/The_Wall_Street_Journal>"
+  "Banco Espirito" "<http://dbpedia.org/page/Banco_Esp%C3%ADrito_Santo>"
+  "Australian Broadcasting Corporation"
+  "http://dbpedia.org/page/Australian_Broadcasting_Corporation"
+  "Australian Writers Guild" "http://dbpedia.org/page/Australian_Broadcasting_Corporation"
+  "Microsoft" "http://dbpedia.org/page/Microsoft"})
+~~~~~~~~
+
+We also make a change in the function **data2Rdf** to use the map **v2umap**:
+
+{lang="hylang",linenos=off}
+~~~~~~~~
+(defn data2Rdf [meta-data entities fout]
+  (for [[value abreviation] entities]
+    (setv a-literal (+ "\"" value "\""))
+    (if (in value v2umap) (setv a-literal (get v2umap value)))
+    (if (in abreviation e2umap)
+      (.write fout (+ "<" meta-data ">\t" (get e2umap abreviation) "\t" a-literal " .\n")))))
+~~~~~~~~
+
+Here is some of the generated RDF that has changed:
+
+{linenos=off}
+~~~~~~~~
+<https://newsshop.com/may/a1023.html>
+  <https://schema.org/Organization>
+  <http://dbpedia.org/page/IBM> .
+<https://newsshop.com/may/a1023.html>
+  <https://schema.org/Organization>
+  <http://dbpedia.org/page/Banco_Esp%C3%ADrito_Santo> .
+~~~~~~~~
+
+![Part of the RDF graph that shows shared nodes when URIs are used for RDF values instead of literal strings](images/2dot1.png)
 
 {lang="hylang",linenos=off}
 ~~~~~~~~
