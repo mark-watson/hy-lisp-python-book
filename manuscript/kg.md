@@ -183,9 +183,12 @@ open test.png
 Edited to fit on the page, the output looks like:
 
 ![](images/1dot1.png)
-![](images/1dot2.png)
-![Because we used literal values, notice how for example the node for the entity **IBM** is not shared.](images/1dot3.png)
 
+![](images/1dot2.png)
+
+![](images/1dot3.png)
+
+Because we used literal values, notice how for example the node for the entity **IBM** is not shared.
 
 ## Revisiting This Example Using URIs Instead of Literal Values
 
@@ -216,7 +219,8 @@ We also make a change in the function **data2Rdf** to use the map **v2umap**:
     (setv a-literal (+ "\"" value "\""))
     (if (in value v2umap) (setv a-literal (get v2umap value)))
     (if (in abreviation e2umap)
-      (.write fout (+ "<" meta-data ">\t" (get e2umap abreviation) "\t" a-literal " .\n")))))
+      (.write fout (+ "<" meta-data ">\t" (get e2umap abreviation)
+                      "\t" a-literal " .\n")))))
 ~~~~~~~~
 
 Here is some of the generated RDF that has changed:
@@ -231,7 +235,7 @@ Here is some of the generated RDF that has changed:
   <http://dbpedia.org/page/Banco_Esp%C3%ADrito_Santo> .
 ~~~~~~~~
 
-{width=70%}
+{width=90%}
 ![Part of the RDF graph that shows shared nodes when URIs are used for RDF values instead of literal strings](images/2dot1.png)
 
 {lang="hylang",linenos=off}
