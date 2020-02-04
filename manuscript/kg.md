@@ -206,7 +206,8 @@ In **kgcreator_uri.hy** we add a map **v2umap** for selected entity literal name
   "Banco Espirito" "<http://dbpedia.org/page/Banco_Esp%C3%ADrito_Santo>"
   "Australian Broadcasting Corporation"
   "http://dbpedia.org/page/Australian_Broadcasting_Corporation"
-  "Australian Writers Guild" "http://dbpedia.org/page/Australian_Broadcasting_Corporation"
+  "Australian Writers Guild"
+  "http://dbpedia.org/page/Australian_Broadcasting_Corporation"
   "Microsoft" "http://dbpedia.org/page/Microsoft"})
 ~~~~~~~~
 
