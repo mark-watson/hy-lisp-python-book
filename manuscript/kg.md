@@ -231,6 +231,7 @@ Here is some of the generated RDF that has changed:
   <http://dbpedia.org/page/Banco_Esp%C3%ADrito_Santo> .
 ~~~~~~~~
 
+{width=70%}
 ![Part of the RDF graph that shows shared nodes when URIs are used for RDF values instead of literal strings](images/2dot1.png)
 
 {lang="hylang",linenos=off}
