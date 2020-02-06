@@ -20,7 +20,7 @@ There are many deep learning neural architectures in current practical use; a fe
 
 The core functionality of libraries like TensorFlow are written in C++ and take advantage or special hardware like GPUs, custom ASICs, and devices like Google's TPUs. Most people who work with deep learning models don't need to even be aware of the low level optimizations used to make training and using deep learning models more efficient. That said, in the following section I am going to show you how simple neural networks are trained and used.
 
-## Tutorial on Simple Multi-layer Perceptron Neural Networks
+## Simple Multi-layer Perceptron Neural Networks
 
 
 I use the terms Multi-layer perceptron neural networks, backpropagation neural networks and delta-rule networks interchangeably. Backpropagation refers to the model training process of calculating the output errors when training inputs are passed ij the forward direction from input lay, to hidden layers, and to the output layer. There will be an error of the calculated and actual output errors. This error can be used to adjust the weights from the last hidden layer to the output layer to reduce the error. The error is then backprogated backwards through the hidden layers, updating all weights in the model. I have detailed example code in any of my older artificial intelligence books. Here I am satisfied to give you an intuition to how simple neural networks are trained.
@@ -37,17 +37,51 @@ Each non-input neuron has an activation value that is calculated from the activa
 {#nn-sigmoid}
 ![Sigmoid Function and Derivative of Sigmoid Function (SigmoidP)](images/nn_sigmoid.png)
 
+Simple neural network architectures with just one or two hidden layers are easy to train using backpropagation and I have from scratch code for doing s in severa of my previous books. However, here we are using Hy to write models using the TensorFlow framework which has the huge advantage that small models you experiment with on your laptop can be scaled to more parameters (usually this means more neurons in hidden layers which increases the number of weights in a model) and run in the cloud using multiple GPUs.
 
-TBD
+## Deep Learning
 
-## Tutorial on Deep Learning
+Deep learning models are generally understood to have many more hidden layers than than simple multi-layer perceptron neural networks and often comprise multiple simple models combined together in series or in parallel.
+Complex architectures can be iteratively developed by manually adjusting the size of model components, changing the components, etc. Alternatively, model architecture search can be automated. At Capital One, I used Google's 
+[AdaNet project](https://github.com/tensorflow/adanet) that efficiently searches for effective model architectures inside a single TensorFlow session.
 
+The material in this chapter is intended to serve two purposes:
 
-Differential computing refers to ....TBD
+- If you are already familiar with deep learning and TensorFlow then the examples here will serve to show you how to call the TensorFLow APIs from Hy.
+- If you have little or no exposure with deep learning then the short Hy language examples will provide you with concise code to experiment and you can then decide to study further.
 
-
+I recommend two online deep learning course sequences. For no cost, Jeremy Howard provides lessons at [fast.ai](https://fast.ai) that are very good and the later classes use PyTorch which is a framework that is similar to TensorFlow. For a modest cost Andrew Ng provides classes at [deeplearning.ai](https://www.deeplearning.ai/) that use TensorFlow. I have been working in the field of machine learning since the 1980s, but I still take Andrew's online classes to stay up to date. In the last eight years I have taken his Stanford University machine learning class twice and also his complete course sequence using TensorFlow. I have also worked through much of Jeremy's material. I recommend both course sequences without reservation.
 
 ## Using Keras and TensorFlow to Model The Wisconsin Cancer Data Set
+
+The University of Wisconsin cancer database has 646 samples. Each sample has 9 input values and one output value, the target output class (0 for benign, 1 for cancer):
+
+- 0 Clump Thickness               1 - 10
+- 1 Uniformity of Cell Size       1 - 10
+- 2 Uniformity of Cell Shape      1 - 10
+- 3 Marginal Adhesion             1 - 10
+- 4 Single Epithelial Cell Size   1 - 10
+- 5 Bare Nuclei                   1 - 10
+- 6 Bland Chromatin               1 - 10
+- 7 Normal Nucleoli               1 - 10
+- 8 Mitoses                       1 - 10
+- 9 Class (0 for benign, 1 for malignant)
+
+Here are a feww samples:
+
+{linenos=off}
+~~~~~~~~
+6,2,1,1,1,1,7,1,1,0
+2,5,3,3,6,7,7,5,1,1
+10,4,3,1,3,3,6,5,2,1
+6,10,10,2,8,10,7,3,3,1
+5,6,5,6,10,1,3,1,1,1
+1,1,1,1,2,1,2,1,2,0
+3,7,7,4,4,9,4,8,1,1
+1,1,1,1,2,1,2,1,1,0
+~~~~~~~~
+
+
 
 TBD
 
