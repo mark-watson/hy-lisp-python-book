@@ -313,3 +313,52 @@ The book **Serious Python** by Julien Danjou has an entire chapter (chapter 9) o
 
 [This podcast](https://www.pythonpodcast.com/episode-23-hylang-core-developers/) in 2015 interviews Hy developers Paul Tagliamonte, Tuukka Turto, and Morten Linderud. You can see the [current Hy contributer list on github](https://github.com/hylang/hy/graphs/contributors).
 
+## Plotting Data Using the Numpy and the Matplotlib Libraries
+
+Data visualization is a common task when working with numeric data. In a later chapter on Deep Learning, we will use two functions, the **relu** and **sigmoid** functions. Here we will use a few simple Hy language scripts to plot these functions.
+
+The Numpy library supports what is called "broadcasting" in Python. In the function **sigmoid** that we define in the following repl, we can pass either a single floating point number or a Numpy array as an argument. When we pass a Numpy array, then the function **sigmoid** is applied to each element of the Numpy array:
+
+{lang="hylang",linenos=on}
+~~~~~~~~
+$ hy
+hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
+=> (import [numpy :as np])
+=> (import [matplotlib.pyplot :as plt])
+=> 
+=> (defn sigmoid [x]
+...   (/ 1.0 (+ 1.0 (np.exp (- x)))))
+=> (sigmoid 0.2)
+0.549833997312478
+=> (sigmoid 2)
+0.8807970779778823
+=> (np.array [-5 -2 0 2 5])
+array([-5, -2,  0,  2,  5])
+=> (sigmoid (np.array [-5 -2 0 2 5]))
+array([0.00669285, 0.11920292, 0.5, 0.88079708, 0.99330715])
+=> 
+~~~~~~~~
+
+The git repo directory **hy-lisp-python/matplotlib** contains two similar scripts for plotting the **sigmoid** and **relu** functions. Here is the script to plot the **sigmoid** function:
+
+{lang="hylang",linenos=on}
+~~~~~~~~
+(import [numpy :as np])
+(import [matplotlib.pyplot :as plt])
+
+(defn sigmoid [x]
+  (/ 1.0 (+ 1.0 (np.exp (- x)))))
+
+(setv X (np.linspace -8 8 50))
+(plt.plot X (sigmoid X))
+(plt.title "Sigmoid Function")
+(plt.ylabel "Sigmoid")
+(plt.xlabel "X")
+(plt.grid)
+(plt.show)
+~~~~~~~~
+
+The generated plot looks like this on macOS (Matplotlib is portable and also works on Windows and Linux):
+
+![Sigmoid Function](images/sigmoid.png)
+

@@ -67,7 +67,7 @@ The University of Wisconsin cancer database has 646 samples. Each sample has 9 i
 - 8 Mitoses                       1 - 10
 - 9 Class (0 for benign, 1 for malignant)
 
-Here are a feww samples:
+Here are a few samples:
 
 {linenos=off}
 ~~~~~~~~
@@ -81,9 +81,16 @@ Here are a feww samples:
 1,1,1,1,2,1,2,1,1,0
 ~~~~~~~~
 
+After you look at this data, if you did not have much experience with machine learning then it might not be obvious how to build a model to accept a sample for a patient like we see in the Wisconsin data set and then predict if the sample implies benign or cancerous outcome for the patient. Using TensorFlow with a simple 
+neural network model, we will implement a model in about 47 lines of Hy code (including 8 blank lines for readability, so it takes 39 lines of code to implement this example.
 
+Since there are nine input values we will need nine input neurons that will represent the input values for a sample in either training or separate test data. These nine input neurons (created in lines 9-10 in the following listing) will be completely connected to twelve neurons in a hidden layer. Here, completely connected means that each of the nine input neurons is connected via a weight to each hidden layer neuron. There are 9 * 12 = 108 weights between the input and hidden layers. There is a single output layer neuron that is connected to each hidden layer neuron.
 
-TBD
+Notice that in lines 12 and 14 in the following listing that we specify a **relu** activation function while the activation function connecting the hidden layer to the output layer uses the **sigmoid** activation function that we saw plotted earlier.
+
+There is an example in the git example repo directory **hy-lisp-python/matplotlib** in the file **plot_relu.hy** that generated the following figure:
+
+![Relu Function](images/relu.png)
 
 
 {lang="hylang",linenos=on}
@@ -137,15 +144,19 @@ TBD
 (main)
 ~~~~~~~~
 
+TBD explain about listing
 
-
+The following listing shows the output:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-
+$ hy wisconsin.hy 
+Using TensorFlow backend.
+* predictions (calculated, expected):
+[(0.9759052, 1), (0.99994254, 1), (0.8564741, 1), (0.95866203, 1), (0.03042546, 0), (0.21845636, 0), (0.99662805, 1), (0.08626339, 0), (0.045683343, 0), (0.9992156, 1)]
 ~~~~~~~~
 
-
+TBD explain about listing
 
 ## Using a LSTM Recurrent Neural Network to Generate Hy Language Code
 
