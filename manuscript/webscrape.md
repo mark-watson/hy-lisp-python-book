@@ -10,7 +10,7 @@ For my work and research, I have been most interested in using web scraping to c
 
 There are many good libraries for parsing HTML text and extracting both structure (headings, what is in bold font, etc.) and embedded raw text. I particularly like the Python Beautiful Soup library and we will use it here.
 
-In line 4 for the following listing of file XXXX.hy, I am setting the default user agent to a descriptive string "HyLangBook" but for some web sites you might need to set this to appear as a Firefox or Chrome browser (iOS, Android, Windows, Linux, or macOS). The function **get-raw-data** gets the entire contents of a web site as a single string value.
+In line 4 for the following listing of file **get_web_page.hy**, I am setting the default user agent to a descriptive string "HyLangBook" but for some web sites you might need to set this to appear as a Firefox or Chrome browser (iOS, Android, Windows, Linux, or macOS). The function **get-raw-data** gets the entire contents of a web site as a single string value.
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -24,7 +24,34 @@ In line 4 for the following listing of file XXXX.hy, I am setting the default us
   data)
 ~~~~~~~~
 
-The following listing of file YYYY.hy uses the Beautiful Soup library to parse the string data for HTML text from a web site. The function **get-page-html-tags** TBD TBD also add repl examples TBD
+Let's use this function in a repl to try out this function:
+
+
+TBD:
+
+{lang="hylang",linenos=on}
+~~~~~~~~
+($ hy
+hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
+=> (import [get-page-data [get-raw-data-from-web]])
+=> (get-raw-data-from-web "http://knowledgebooks.com")
+b'<!DOCTYPE html><html><head><title>KnowledgeBooks.com - research on the Knowledge Management, and the Semantic Web ...'
+=> 
+=> (import [get-page-data [get-page-html-tags]])
+=> (get-page-html-tags "http://knowledgebooks.com")
+{'title': [<title>KnowledgeBooks.com - research on the Knowledge Management, and the Semantic Web </title>],
+'a': [<a class="brand" href="#">KnowledgeBooks.com  </a>,  ...
+=> 
+~~~~~~~~
+
+
+TBD
+
+
+
+
+
+The following listing of file **get_page_data.hy** uses the Beautiful Soup library to parse the string data for HTML text from a web site. The function **get-page-html-tags** TBD TBD also add repl examples TBD
 
 
 {lang="hylang",linenos=on}

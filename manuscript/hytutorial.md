@@ -285,6 +285,8 @@ TBD explain both examples
 
 ## Using Closures
 
+Function definitions can capture values defined outside of a function and even change the captured value as seen in this example:
+
 {lang="hylang",linenos=on}
 ~~~~~~~~
 #!/usr/bin/env hy
@@ -300,6 +302,8 @@ TBD explain both examples
 (print (increment))
 (print (increment))
 ~~~~~~~~
+
+Using closures is often a good alternative to object oriented programming. In the last example the **let** statement could have defined many variables with initial values and many functions could have been defined to perform various calulations with the values of these captured variables and/or change the values of captured variables. This effectively hides the variables defined in the *let** statement from code outside of the let statement but the functions are accessible from outside the let statement.
 
 ## Hy Looks Like Clojure: How Similar Are They?
 

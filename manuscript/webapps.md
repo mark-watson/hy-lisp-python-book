@@ -1,12 +1,9 @@
 # Writing Web Applications
 
-Python has good libraries and frameworks for building web applications and here we will use the **Flask** library and framework "under the hood" and write two simple Hy Language web applications. We will start with a simple "Hello World" example in Python, see how to reformulate it in Hy, and then proceed with more complex examples that will show how to use sessions, cookies, and store use data in an SQLite database.
-
-TBD: really do a SQLite example? maybe not.
+Python has good libraries and frameworks for building web applications and here we will use the **Flask** library and framework "under the hood" and write two simple Hy Language web applications. We will start with a simple "Hello World" example in Python, see how to reformulate it in Hy, and then proceed with more complex examples that will show how to use HTML generating templates, sessions, and cookies to store user data for the next time they visit your web site. In a later chapter we will cover use of the SQLite and PostgreSQL databases which are commonly used to persistent data for users in web applications. This pattern involves in letting a user login and storing a unique token for the user in a web browser cookie. In principle, you can do the same with web browser cookies but if a user visits your web site with a different browser or device then they will not have access to the data stored in cookies on a previous visit.
 
 I like light-weight web frameworks. In Ruby I use Sinatra, in Haskell I use Spock, and when I built Java web apps I liked light-weight tools like JSP. Flask is simple but capable and using it from Hy is productive and fun.
 
-TBD
 
 ## Getting Started With Flask: Using Python Decorators in Hy
 
@@ -92,7 +89,7 @@ By default Jinja2 templates are stored in a subdirectory named **templates**. Th
 </html>
 ~~~~~~~~
 
-Note that in line XXX we are using a Python **if** expression to check if the variable **name** is defined in the current app execution context.
+Note that in line 6 we are using a Python **if** expression to check if the variable **name** is defined in the current app execution context.
 
 In the context of a running Flask app, the following will render the above template with the variable **name** defined as **None**:
 
