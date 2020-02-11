@@ -362,3 +362,20 @@ The generated plot looks like this on macOS (Matplotlib is portable and also wor
 
 ![Sigmoid Function](images/sigmoid.png)
 
+## Bonus Points: Configuration for Generating Plots Inline in a Hy Repl and Shell
+
+On the macOS ITerm2 terminal app and on most Linux terminal apps, it is possible to get inline matplotlib plots in a shell (bash, zsh, etc.), in Emacs, etc. This will take some setup work but it is well worth it especially if you work on remote servers via SSH or tmux. Here is the setup for macOS:
+
+      pip3 install itermplot
+
+The add the following to your .profile, .bash_profile, or .zshrc (depending on your shell setup):
+
+      export MPLBACKEND="module://itermplot"
+
+Here we run an example from the last section in a zsh shell (bash, etc. also should work):
+
+![Inline matplotlib use in zsh shell in an ITerm on macOS](images/mac-inline-matplotlib.png)
+
+The best part of generating inline plots is during interactive repl-based coding sessions:
+
+![Inline matplotlib use in a Hy repl on macOS](images/mac-inline-matplotlib2.png)
