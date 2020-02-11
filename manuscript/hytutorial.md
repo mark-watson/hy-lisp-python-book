@@ -379,3 +379,5 @@ Here we run an example from the last section in a zsh shell (bash, etc. also sho
 The best part of generating inline plots is during interactive repl-based coding sessions:
 
 ![Inline matplotlib use in a Hy repl on macOS](images/mac-inline-matplotlib2.png)
+
+You can similarly set up you Linux environment (web search "inline matplotlib on linux in shell") and Windows using the Linux shell (web search "inline matplotlib on windows in shell").
