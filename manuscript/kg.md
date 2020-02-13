@@ -2,6 +2,8 @@
 
 A Knowledge Graph, that I often abbreviate as KG, is a graph database using a schema to define types (both objects and relationships between objects) and properties that link property values to objects. The term "Knowledge Graph" is both a general term and also sometimes refers to the specific Knowledge Graph used at Google which I worked with while working at there in 2013. Here, we use KG to reference the general technology of storing knowledge in graph databases.
 
+Knowledge Engineering is a discipline from the 1990s for organizing data and in-house knowledge. I view KGs as an extension of this earlier work.
+
 There are two general types of KGs that are widely used in industry and that we will cover here. Property graphs, as used in Neo4J, are general graphs that place no restrictions on the number of links a graph node may have and allow general data structures to be stored as node data and for the property links between nodes. Semantic web data as represented by subject/property/value RDF triples are more constrained but support powerful logic inferencing to better use data that is implicit in a graph but not explicitly stated (i.e., data is more easily inferred).
 
 We covered RDF data in some detail in the last chapter. Here we will implement a toolset for converting unstructured text into RDF data using a few schema definitions from [schema.org](https://schema.org/). I believe in both the RDF and the general graph database approaches but here we will just use RDF.
@@ -10,8 +12,37 @@ Historically Knowledge Graphs used semantic web technology like [Resource Descri
 
 I have an ongoing personal research project for creating knowledge graphs from various data sources. You can read more at [my KGCreator web site](http://www.kgcreator.com/). I have simplified versions of my KGCreator software implemented in both my [Haskell Book](https://leanpub.com/haskell-cookbook) and in my most recent [Common Lisp book](https://leanpub.com/lovinglisp). The example here is similar to my Common Lisp implementation, except that it is implemented in the Hy language and I only support generating RDF. The examples in my Haskell and Common Lisp books also generate data for the Neo4J graph database.
 
-TBD
+TBD: reword: What is a KG? It is a modern way to organize and access structured data and integrating data and meta data with other automated systems.
 
+A Knowledge Graph is different than just a graph database containing graph data. The difference is that a KG will in general use Schemas, Taxonomy's and Ontology's that define data and relationships.
+
+There is also an executable aspect to KGs since their primary use may be to support other systems in an organization.
+
+## Recommended Industrial Use of Knowledge Graphs
+
+Who needs a KG? If you are spending much time doing general web search, it might be a signal that you should maintain your own curated knowledge in a human searchable and software accessible way.
+
+At Google we used their Knowledge Graph for ....
+
+When you have many diverse data sources that you want to integrate in one large graph database.
+
+What does your data mean? How to interpret relationships between data.
+
+Do you have difficulty finding the location of data in your organization.
+
+It is common to build a large data lake and then have staff not be able to find data in the lake.
+
+Digital transformations: start by using a KG to hold meta data for current data, .... TBD  ....
+
+Capture senior human expertise and preserve this model. The act of building an Ontology for in-house knowledge helps to understand how to organize data.
+
+KYC (Know Your Customer) applications using data from many diverse data sources.
+
+Take advantage of expertise in a domain (e.g., healthcare or financial services) to build a Taxonomy and Ontology to use to organize available data. For most domains, their are standard existing Schemas, Taxonomy's and Ontology's that can be identified and used as-is or extended for your organization.
+
+A good way to start is to identify a single problem, determine the best data sources to use, define an Ontology that is just sufficient to solve the current problem and build a prototype "vertical slice" application. Lessons learned with a quick prototype with inform you on what was valuable and what to put effort into when expanding your KG.mStart small and don't try to build a huge system without taking many small development and evaluation steps.
+
+What about KGs for small organizations? Small companies have less development resources but starting small and implementing a system that models the key data relationships, customer relationships, etc. does not require excessive resources. Just capturing where data comes from and who is responsible for maintaining important data sources can be valuable.
 
 
 ## Design of KGCreator Application
