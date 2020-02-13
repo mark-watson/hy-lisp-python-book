@@ -22,6 +22,13 @@ There is also an executable aspect to KGs since their primary use may be to supp
 
 Who needs a KG? If you are spending much time doing general web search, it might be a signal that you should maintain your own curated knowledge in a human searchable and software accessible way.
 
+To get started:
+
+- start small, one use case
+- design a Schema that identifies object types and relationships
+- write some acceptance test cases that you want a prototype to be able to serve
+- avoid having too many stakeholders in early prototype projects - try to choose stakeholders based on potential stakeholders' initial enthusiasm
+
 At Google we used their Knowledge Graph for ....
 
 When you have many diverse data sources that you want to integrate in one large graph database.
@@ -275,3 +282,6 @@ Here is some of the generated RDF that has changed:
 
 ~~~~~~~~
 
+## Wrapup
+
+KGs are part of larger systems that you build .... TBD  ..
