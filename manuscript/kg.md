@@ -20,32 +20,24 @@ There is also an executable aspect to KGs since their primary use may be to supp
 
 ## Recommended Industrial Use of Knowledge Graphs
 
-Who needs a KG? If you are spending much time doing general web search, it might be a signal that you should maintain your own curated knowledge in a human searchable and software accessible way.
+Who needs a KG? How do you get started?
+
+If you are spending much time doing general web search, it might be a signal that you should maintain your own curated knowledge in a human searchable and software accessible way.
+
+Here are a few use cases:
+
+- At Google we used their Knowledge Graph for researching new internal systems that were built on their standard Knowledge Graph, with new schemas and data added.
+- Digital transformations: start by using a KG to hold meta data for current data in already existing databases. A KG of meta data can provide you with a virtual data lake. It is common to build a large data lake and then have staff not be able to find data in the lake. Don't try to do everything at once.
+- Capture senior human expertise and preserve this model. The act of building an Ontology for in-house knowledge helps to understand how to organize data.
+- KYC (Know Your Customer) applications using data from many diverse data sources.
+- Take advantage of expertise in a domain (e.g., healthcare or financial services) to build a Taxonomy and Ontology to use to organize available data. For most domains, their are standard existing Schemas, Taxonomy's and Ontology's that can be identified and used as-is or extended for your organization.
 
 To get started:
 
-- start small, one use case
-- design a Schema that identifies object types and relationships
-- write some acceptance test cases that you want a prototype to be able to serve
-- avoid having too many stakeholders in early prototype projects - try to choose stakeholders based on potential stakeholders' initial enthusiasm
-
-At Google we used their Knowledge Graph for ....
-
-When you have many diverse data sources that you want to integrate in one large graph database.
-
-What does your data mean? How to interpret relationships between data.
-
-Do you have difficulty finding the location of data in your organization.
-
-It is common to build a large data lake and then have staff not be able to find data in the lake.
-
-Digital transformations: start by using a KG to hold meta data for current data, .... TBD  ....
-
-Capture senior human expertise and preserve this model. The act of building an Ontology for in-house knowledge helps to understand how to organize data.
-
-KYC (Know Your Customer) applications using data from many diverse data sources.
-
-Take advantage of expertise in a domain (e.g., healthcare or financial services) to build a Taxonomy and Ontology to use to organize available data. For most domains, their are standard existing Schemas, Taxonomy's and Ontology's that can be identified and used as-is or extended for your organization.
+- Start small with just one use case.
+- Design a Schema that identifies object types and relationships
+- Write some acceptance test cases that you want a prototype to be able to serve as a baseline to develop against.
+- Avoid having too many stakeholders in early prototype projects - try to choose stakeholders based on potential stakeholders' initial enthusiasm.
 
 A good way to start is to identify a single problem, determine the best data sources to use, define an Ontology that is just sufficient to solve the current problem and build a prototype "vertical slice" application. Lessons learned with a quick prototype with inform you on what was valuable and what to put effort into when expanding your KG.mStart small and don't try to build a huge system without taking many small development and evaluation steps.
 
