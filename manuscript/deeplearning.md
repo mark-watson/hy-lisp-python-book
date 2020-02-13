@@ -32,7 +32,7 @@ The following figure shows a simple backpropagation network with one hidden laye
 {#nn-backprop}
 ![Example Backpropagation network with One Hidden Layer](images/nn_backprop2d.png)
 
-Each non-input neuron has an activation value that is calculated from the activation values of connected neurons feeding into it, gated (adjusted) by the connection weights. We want to flatten activation values to a relatively small range but still maintain relative values. To do this flattening we use the Sigmoid function that is seen in the next figure, along with the derivative of the Sigmoid function which we will use in the code for training a network by adjusting the weights.
+Each non-input neuron has an activation value that is calculated from the activation values of connected neurons feeding into it, gated (adjusted) by the connection weights. For example, in the above figure, the value of Output 1 neuron is calculated by summing the activation of Input 1 times W1,1 and Input 2 activation times W2,1 and applying a "squashing function" like Sigmoid or Relu (see figures below) to this sum to get the final value for Output 1's activation value. We want to flatten activation values to a relatively small range but still maintain relative values. To do this flattening we use the Sigmoid function that is seen in the next figure, along with the derivative of the Sigmoid function which we will use in the code for training a network by adjusting the weights.
 
 {#nn-sigmoid}
 ![Sigmoid Function and Derivative of Sigmoid Function (SigmoidP)](images/nn_sigmoid.png)
@@ -47,7 +47,7 @@ Complex architectures can be iteratively developed by manually adjusting the siz
 
 The material in this chapter is intended to serve two purposes:
 
-- If you are already familiar with deep learning and TensorFlow then the examples here will serve to show you how to call the TensorFLow APIs from Hy.
+- If you are already familiar with deep learning and TensorFlow then the examples here will serve to show you how to call the TensorFlow APIs from Hy.
 - If you have little or no exposure with deep learning then the short Hy language examples will provide you with concise code to experiment and you can then decide to study further.
 
 I recommend two online deep learning course sequences. For no cost, Jeremy Howard provides lessons at [fast.ai](https://fast.ai) that are very good and the later classes use PyTorch which is a framework that is similar to TensorFlow. For a modest cost Andrew Ng provides classes at [deeplearning.ai](https://www.deeplearning.ai/) that use TensorFlow. I have been working in the field of machine learning since the 1980s, but I still take Andrew's online classes to stay up to date. In the last eight years I have taken his Stanford University machine learning class twice and also his complete course sequence using TensorFlow. I have also worked through much of Jeremy's material. I recommend both course sequences without reservation.
@@ -92,6 +92,11 @@ There is an example in the git example repo directory **hy-lisp-python/matplotli
 
 ![Relu Function](images/relu.png)
 
+The following listing shows the use of the Keras TensorFlow APIs to build a model (lines 9-19) with one input layer, two hidden layers, and an output layer with just one neuron. After we build the model, we define two utility functions **train** (lines 21-23) to train a model given training inputs (**x** argument**) and corresponding training outputs (**y** argument), and we also define **predict** (lines 25-26) to use a trained model to make a cancer or benign prediction given test input values (**x-data argument).
+
+Lines 28-33 show a utility function **load-data** that loads a University of Wisconsin cancer data set CSV file, scales the input and output values to the range [0.0, 1.0] and returns a list containing input (**x-data**) and target output data (**y-data**). You may want to load this example in a repl and evaluate **load-data** on one of the CSV files.
+
+The function **main** (lines 35-45) loads training and test (evaluation of model accuracy on data not used for training), trains a model, and then tests the accuracy of the model on the test (evaluation) data:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -144,8 +149,6 @@ There is an example in the git example repo directory **hy-lisp-python/matplotli
 (main)
 ~~~~~~~~
 
-TBD explain about listing
-
 The following listing shows the output:
 
 {lang="hylang",linenos=on}
@@ -156,13 +159,12 @@ Using TensorFlow backend.
 [(0.9759052, 1), (0.99994254, 1), (0.8564741, 1), (0.95866203, 1), (0.03042546, 0), (0.21845636, 0), (0.99662805, 1), (0.08626339, 0), (0.045683343, 0), (0.9992156, 1)]
 ~~~~~~~~
 
-TBD explain about listing
+Lets look at the first test case: the "real" output from the training data is a value of 1 and the calculated prediucted value (using the trained model) is 0.9759052. In making predictions, we can choose a cutoff value, 0.5 for example, and inter[pret any calculated prediction value less than the cutoff is a Boolean *false* prediction and and calculated prediction value greater to or equal to the cutoff value is a Boolean *true* prediction.] 
 
-## Using a LSTM Recurrent Neural Network to Generate Hy Language Code
 
-TBD
+## Using a LSTM Recurrent Neural Network to Generate English Text Similar to the  Philosopher Nietzsche's writing
 
-We will translate a Python example program from the [Keras documentation (listing of LSTM.py example)](https://keras.io/examples/lstm_text_generation/) to Hy. This is a moderately long example and you can use the original Python and the translated Hy code as a guide if you see other models written using Keras that you want in Hy. I have (mostly) kept the same variable names to make it easier to compare the Python and Hy code.
+We will translate a Python example program from the [Keras documentation (listing of LSTM.py example)](https://keras.io/examples/lstm_text_generation/) to Hy. This is a moderately long example and you can use the original Python and the translated Hy code as a guide if you see other models written using Keras that you want use in Hy. I have (mostly) kept the same variable names to make it easier to compare the Python and Hy code.
 
 Note that using the nietzsche.txt data set requires a fair amount of memory. If your computer has less than 16G of RAM, you might want to run the following example until you see the printout "Create sentences and next_chars data..." then kill the program, manually edit the file ~/.keras/datasets/nietzsche.txt to remove 75% of the data by:
 
@@ -171,6 +173,57 @@ Note that using the nietzsche.txt data set requires a fair amount of memory. If 
         head -800 nietzsche_large.txt > nietzsche.txt
 
 When I am training deep learning models I like to monitor system resources using the **top** command line activity, specifically watching for page faults when training on a CPU. If you are using CUDA and a GPU then use the CUDA command line utilities for monitoring the state of the GPU.
+
+There are a few things that make the following examle code more complex than the example using the University of Wisconsin cancer data set. We need to convert each character in the training data to a one-hot encoding which is a vector of all 0.0 values except for a single value of 1.0. I am going to show you a short repl session so that you understand how this works and then we will look at the complete Hy code example.
+
+{lang="hylang",linenos=on}
+~~~~~~~~
+$ hy
+hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
+=> (import [keras.callbacks [LambdaCallback]])
+Using TensorFlow backend.
+=> (import [keras.models [Sequential]])
+=> (import [keras.layers [Dense LSTM]])
+=> (import [keras.optimizers [RMSprop]])
+=> (import [keras.utils.data_utils [get_file]])
+=> (import [numpy :as np]) ;; note the syntax for aliasing a module name
+=> (import random sys io)
+=> (with [f (io.open "/Users/markw/.keras/datasets/nietzsche.txt" :encoding "utf-8")]
+... (setv text (.read f)))
+=> (cut text 98 130)
+'philosophers, in so far as they '
+=> (setv chars (sorted (list (set text))))
+=> chars
+['\n', ' ', '!', '"', "'", '(', ')', ',', '-', '.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '?', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', '_', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+=> (setv char_indices (dict (lfor i (enumerate chars) (, (last i) (first i)))))
+=> char_indices
+{'\n': 0, ' ': 1, '!': 2, '"': 3, "'": 4, '(': 5, ')': 6, ',': 7, '-': 8, '.': 9, '0': 10, '1': 11, '2': 12, '3': 13, '4': 14, '5': 15, '6': 16, '7': 17, '8': 18, '9': 19, ':': 20, ';': 21, '?': 22, 'A': 23, 'B': 24, 'C': 25, 'D': 26, 'E': 27, 'F': 28, 'G': 29, 'H': 30, 'I': 31, 'J': 32, 'K': 33, 'L': 34, 'M': 35, 'N': 36, 'O': 37, 'P': 38, 'Q': 39, 'R': 40, 'S': 41, 'T': 42, 'U': 43, 'V': 44, 'W': 45, 'X': 46, 'Y': 47, '_': 48, 'a': 49, 'b': 50, 'c': 51, 'd': 52, 'e': 53, 'f': 54, 'g': 55, 'h': 56, 'i': 57, 'j': 58, 'k': 59, 'l': 60, 'm': 61, 'n': 62, 'o': 63, 'p': 64, 'q': 65, 'r': 66, 's': 67, 't': 68, 'u': 69, 'v': 70, 'w': 71, 'x': 72, 'y': 73, 'z': 74}
+=> (setv indices_char (dict (lfor i (enumerate chars) i)))
+=> indices_char
+{0: '\n', 1: ' ', 2: '!', 3: '"', 4: "'", 5: '(', 6: ')', 7: ',', 8: '-', 9: '.', 10: '0', 11: '1', 12: '2', 13: '3', 14: '4', 15: '5', 16: '6', 17: '7', 18: '8', 19: '9', 20: ':', 21: ';', 22: '?', 23: 'A', 24: 'B', 25: 'C', 26: 'D', 27: 'E', 28: 'F', 29: 'G', 30: 'H', 31: 'I', 32: 'J', 33: 'K', 34: 'L', 35: 'M', 36: 'N', 37: 'O', 38: 'P', 39: 'Q', 40: 'R', 41: 'S', 42: 'T', 43: 'U', 44: 'V', 45: 'W', 46: 'X', 47: 'Y', 48: '_', 49: 'a', 50: 'b', 51: 'c', 52: 'd', 53: 'e', 54: 'f', 55: 'g', 56: 'h', 57: 'i', 58: 'j', 59: 'k', 60: 'l', 61: 'm', 62: 'n', 63: 'o', 64: 'p', 65: 'q', 66: 'r', 67: 's', 68: 't', 69: 'u', 70: 'v', 71: 'w', 72: 'x', 73: 'y', 74: 'z'}
+=> (setv maxlen 40)
+=> (setv s "Oh! I saw 1 dog (yesterday)")
+=> (setv x_pred (np.zeros [1 maxlen (len chars)]))
+=> (for [[t char] (lfor j (enumerate s) j)]
+... (setv (get x_pred 0 t (get char_indices char)) 1))
+=> x_pred
+array([[[0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 1., ..., 0., 0., 0.],   // here 1. is the third character "!"
+        ...,
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.]]])
+=> 
+~~~~~~~~
+
+
+TBD: explain the above one-hot encoding
+
+Now that you have a feeling for how one-hot encoding works, hopefully the following example will make sense to you. For training, we take 40 (the value of the variable **maxlen**) at a time, and in order one-hot encode a character as input and the target output will be the one-hot encoding of the following character. We training the model to be able to, given a few characters of text, to then be able to predict a likely next character. The generated text then is used as input to generate yet more text. You can repeat this process until you have generated sufficient text.
+
+This is a powerful technique that I used to model JSON with complex deeply nested schemas. In my work, a trained model could then generate synthetic JSON in the same schema as the training data. Here, training a model to mimic the philosopher Nietzsche's writing is much easier than learning highly structured data ike JSON:
+
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -268,6 +321,15 @@ When I am training deep learning models I like to monitor system resources using
 (model.fit x y :batch_size 128 :epochs 60 :callbacks [print_callback])
 ~~~~~~~~
 
+In lines 52-54 we defined a model using the Keras APIs and in lines 56-57 compiled the model using a [categorical crossentropy optimizer](https://keras.io/optimizers/).
+
+In lines 59-65 we define a function **sample** that takes a a first required argument **preds** a one-hot predicted encoded character that might look like (maxlen or 40 values):
+
+[2.80193929e-02 6.78635418e-01 7.85831537e-04 4.92034527e-03
+   . . .
+ 6.62320468e-04 9.14627407e-03 2.31375365e-04]
+
+Now, here the predicted one hot encoding values are not strictly 0 or 1, rather they are small floating point numbers of a single number much larger than the others.
 
 If we print out the number of characters in text and the unique list of characters (variable **chars**) in the training text file nietzsche.txt we see:
 

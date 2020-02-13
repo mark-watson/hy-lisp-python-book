@@ -62,7 +62,7 @@ NameError: name 'runpuppyrun' is not defined
 => 
 ~~~~~~~~
 
-## Performing Bottom Up Development Inside a Repl is a Life Style Choice
+## Performing Bottom Up Development Inside a Repl is a Lifestyle Choice
 
 It is my personal choice to prefer a bottom up style of coding, effectively extending the Hy (or other Lisp) language to look like something that looks custom designed and built to solve a specific problem. This is possible in Lisp languages because once a function or macro is defined, it is for our purposes part of the Hy language. If you are writing a web application that uses a database then I believe that it makes sense to first write low level functions to perform operations that you know you will need, for example, for creating and updating customer data from the database, special functions to parts of a web application (which we cover in the next chapter), etc.
 

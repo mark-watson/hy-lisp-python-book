@@ -160,6 +160,42 @@ If we only wanted to import **BeautifulSoup** from the Python BeautifulSoup libr
 (import [bs4 [BeautifulSoup]])
 ~~~~~~~~
 
+## Using Hy Libraries in Python Programs
+
+There is nothing special about importing and using Hy library code or your own Hy scripts in Python programs. The the directory **hy-lisp-python/use_hy_in_python** in the git repo for this book contains an example Hy script **get_web_page.h** that is a slightly modified version of code we will explain and use in the later chapter on web scraping and a short Python script **use_hy_stuff.py** that uses a function defined in Hy:
+
+**get_web_page.h:**
+
+{lang="hylang",linenos=on}
+~~~~~~~~
+(import argparse os)
+(import [urllib.request [Request urlopen]])
+
+(defn get-raw-data-from-web [aUri &optional [anAgent {"User-Agent" "HyLangBook/1.0"}]]
+  (setv req (Request aUri :headers anAgent))
+  (setv httpResponse (urlopen req))
+  (setv data (.read httpResponse))
+  data)
+
+(defn main_hy []
+  (print (get-raw-data-from-web "http://markwatson.com")))
+~~~~~~~~
+
+We define two functions here. In the next Python listing we import the file in the last listing and call the Hy function **main** on line 4 using the Python calling syntax.
+
+Hy is the same as Python once it is compiled to an abstract syntax tree (AST).
+
+**hy-lisp-python/use_in_python:**
+
+{lang="hylang",linenos=on}
+~~~~~~~~
+import hy
+from get_web_page import main_hy
+
+main_hy()
+~~~~~~~~
+
+
 ## Replacing the Python slice (cut) Notation with the Hy Functional Form
 
 In Python we use a special notation for extracting sub-sequences from lists or strings:

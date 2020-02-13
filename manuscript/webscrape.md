@@ -207,3 +207,5 @@ January 16, 2020  For years, Elon Musk skeptics have shorted Tesla stock, conf
 
 TSA Says It Seized A Record Number Of Firearms At U.S. Airports Last Year
 ~~~~~~~~
+
+The examples seen here are simple but should be sufficient to get you started gathering text data from the web.
