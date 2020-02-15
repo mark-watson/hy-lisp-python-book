@@ -1,12 +1,10 @@
 # Natural Language Processing
 
-I have been working in the field of NLP since 1985 so I 'lived through' the revolutionary change in NLP that have occurred since 2014: deep learning results out-classed results from previous symbolic methods.
+I have been working in the field of Natural Language Processing (NLP) since 1985 so I 'lived through' the revolutionary change in NLP that have occurred since 2014: Deep Learning results out-classed results from previous symbolic methods.
 
-I will not cover older symbolic methods of NLP here, rather I refer you to my previous books [Practical Artificial Intelligence Programming With Java](https://leanpub.com/javaai), [Loving Common Lisp, or the Savvy Programmer's Secret Weapon](https://leanpub.com/lovinglisp), and [Haskell Tutorial and Cookbook](https://leanpub.com/haskell-cookbook).
+I will not cover older symbolic methods of NLP here, rather I refer you to my previous books [Practical Artificial Intelligence Programming With Java](https://leanpub.com/javaai), [Loving Common Lisp, or the Savvy Programmer's Secret Weapon](https://leanpub.com/lovinglisp), and [Haskell Tutorial and Cookbook](https://leanpub.com/haskell-cookbook) for examples. We get better results using Deep Learning (DL) for NLP and the library **spaCy** that we use in this chapter provides near state of the art performance and the authors of **spaCy** frequently update it to use the latest breakthroughs in the field.
 
 You will learn how to apply both DL and NLP by using the state-of-the-art full-feature library [spaCy](https://spacy.io/). This chapter concentrates on how to use spaCy in the Hy language for solutions to a few selected problems in NLP that I use in my own work. I urge you to also review the "Guides" section of the [spaCy documentation](https://spacy.io/usage) where examples are in Python but after experimenting with the examples in this chapter you should have no difficulty in translating any spaCy Python examples to the Hy language.
-
-TBD - update previous intro!!
 
 ## Exploring the spaCy Library
 
@@ -221,11 +219,9 @@ The following list shows the definitions for the part of speech (POS) tags:
 
 ## Implementing the HyNLP Wrapper for the Python spaCy Library
 
-TBD
-
 We will generate two libraries (in files **nlp_lib.hy** and **coref_nlp_lib.hy**), the first is a general NLP library and the second that specifically solves the anaphora resolution, or coreference, problem. There are test programs for each library in the files **nlp_example.hy** and **coref_example.hy**.
 
-For a later example automatically generating Knowledge Graphs from text data, we will need the ability to find person, company, location, etc. names in text. We use spaCy here to do this. The types of named entities that spaCy is pre-trained that includes:
+For an example in a later chapter, we will use the library developed here to automatically generate Knowledge Graphs from text data, we will need the ability to find person, company, location, etc. names in text. We use spaCy here to do this. The types of named entities that spaCy is pre-trained that includes:
 
 - CARDINAL: any number that is not identified as a more specific type, like money, time, etc.
 - DATE
@@ -332,6 +328,6 @@ Anaphora resolution, also called coreference, refers to two or more words or phr
 
 ## Wrap Up
 
-I spent several years of development time during the period from  1984 through 2015 working on natural language processing technology and as a personal side project I sold commercial NLP libraries that I wrote on my own time in Ruby and Common Lisp. The state-of-the-art of deep learning enhanced NLP is very good and the open source spaCy library makes excellent use of both conventional NLP technology and pre-trained deep learning models. I no longer spend very much time writing my own NLP libraries and instead use spaCy.
+I spent several years of development time during the period from  1984 through 2015 working on natural language processing technology and as a personal side project I sold commercial NLP libraries that I wrote on my own time in Ruby and Common Lisp. The state-of-the-art of Deep Learning enhanced NLP is very good and the open source spaCy library makes excellent use of both conventional NLP technology and pre-trained Deep Learning models. I no longer spend very much time writing my own NLP libraries and instead use spaCy.
 
 I urge you to read through the [spaCy documentation](https://spacy.io/api/doc) because we covered just basic functionality here that we will also need in the later chapter on automatically generating data for Knowledge Graphs. After working through the interactive repl sessions and also the examples in this chapter, you should be able to translate any Python API example code to Hy.

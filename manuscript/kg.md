@@ -12,7 +12,7 @@ Historically Knowledge Graphs used semantic web technology like [Resource Descri
 
 I have an ongoing personal research project for creating knowledge graphs from various data sources. You can read more at [my KGCreator web site](http://www.kgcreator.com/). I have simplified versions of my KGCreator software implemented in both my [Haskell Book](https://leanpub.com/haskell-cookbook) and in my most recent [Common Lisp book](https://leanpub.com/lovinglisp). The example here is similar to my Common Lisp implementation, except that it is implemented in the Hy language and I only support generating RDF. The examples in my Haskell and Common Lisp books also generate data for the Neo4J graph database.
 
-TBD: reword: What is a KG? It is a modern way to organize and access structured data and integrating data and meta data with other automated systems.
+What is a KG? It is a modern way to organize and access structured data and integrating data and metadata with other automated systems.
 
 A Knowledge Graph is different than just a graph database containing graph data. The difference is that a KG will in general use Schemas, Taxonomy's and Ontology's that define data and relationships.
 
@@ -27,7 +27,7 @@ If you are spending much time doing general web search, it might be a signal tha
 Here are a few use cases:
 
 - At Google we used their Knowledge Graph for researching new internal systems that were built on their standard Knowledge Graph, with new schemas and data added.
-- Digital transformations: start by using a KG to hold meta data for current data in already existing databases. A KG of meta data can provide you with a virtual data lake. It is common to build a large data lake and then have staff not be able to find data in the lake. Don't try to do everything at once.
+- Digital transformations: start by using a KG to hold metadata for current data in already existing databases. A KG of metadata can provide you with a virtual data lake. It is common to build a large data lake and then have staff not be able to find data in the lake. Don't try to do everything at once.
 - Capture senior human expertise and preserve this model. The act of building an Ontology for in-house knowledge helps to understand how to organize data.
 - KYC (Know Your Customer) applications using data from many diverse data sources.
 - Take advantage of expertise in a domain (e.g., healthcare or financial services) to build a Taxonomy and Ontology to use to organize available data. For most domains, their are standard existing Schemas, Taxonomy's and Ontology's that can be identified and used as-is or extended for your organization.
@@ -269,11 +269,7 @@ Here is some of the generated RDF that has changed:
 {width=90%}
 ![Part of the RDF graph that shows shared nodes when URIs are used for RDF values instead of literal strings](images/2dot1.png)
 
-{lang="hylang",linenos=off}
-~~~~~~~~
-
-~~~~~~~~
 
 ## Wrapup
 
-KGs are part of larger systems that you build .... TBD  ..
+In the field of Artificial Intelligence there are two topics that get me the most excited and I have been fortunate to be paid to work on both: Deep Learning and Knowledge Graphs. Here we have just touched the surface for creating data for Knowledge Graphs but I hope that between this chapter and the material on RDF in the chapter **Datastores** that you have enough information and experience playing with the examples to get started prototyping a Knowledge Graph in your organizartion. My advice is to "start small" by picking a problem that your organization has that can be solved by not moving data around, but rather, by creating a custom Knowledge Graph for metadata for existing information in your organization.

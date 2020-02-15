@@ -1,16 +1,16 @@
 # Deep Learning
 
-Most of my professional career since 2014 has involved deep learning, mostly with TensorFlow using the Keras APIs. In the late 1980s I was on a DARPA neural network technology advisory panel for a year, I wrote the first prototype of the SAIC ANSim neural network library commercial product, and I wrote the neural network prediction code for a bomb detector my company designed and built for the FAA for deployment in airports. More recently I have used GAN (generative adversarial networks) models for synthesizing numeric spreadsheet data and LSTM (long short term memory) models to synthesize highly structured text data like nested JSON and for NLP (natural language processing). I have several USA and European patents using neural network and deep learning technology.
+Most of my professional career since 2014 has involved Deep Learning, mostly with TensorFlow using the Keras APIs. In the late 1980s I was on a DARPA neural network technology advisory panel for a year, I wrote the first prototype of the SAIC ANSim neural network library commercial product, and I wrote the neural network prediction code for a bomb detector my company designed and built for the FAA for deployment in airports. More recently I have used GAN (generative adversarial networks) models for synthesizing numeric spreadsheet data and LSTM (long short term memory) models to synthesize highly structured text data like nested JSON and for NLP (natural language processing). I have several USA and European patents using neural network and Deep Learning technology.
 
 The Hy language utilities and example programs we develop here all use TensorFlow and Keras "under the hood" to do the heavy lifting. Keras is a simpler to use API for TensorFlow and I usually use Keras rather than the lower level TensorFlow APIs.
 
-There are other libraries and frameworks that might interest you in addition to TensorFlow and Keras. I particularly like the Flux library for the Julia programming language. Currently Python has the most comprehensive libraries for deep learning but other languages that support differential computing (more on this later) like Julia and Swift may gain popularity in the future.
+There are other libraries and frameworks that might interest you in addition to TensorFlow and Keras. I particularly like the Flux library for the Julia programming language. Currently Python has the most comprehensive libraries for Deep Learning but other languages that support differential computing (more on this later) like Julia and Swift may gain popularity in the future.
 
-Here we will learn a vocabulary for discussing deep learning neural network models, look at possible architectures, and show two Hy language examples that should be sufficient to get you used to using Keras with the Hy language. If you already have deep learning application development experience you might want to skip the following review material and skip to the Hy language examples.
+Here we will learn a vocabulary for discussing Deep Learning neural network models, look at possible architectures, and show two Hy language examples that should be sufficient to get you used to using Keras with the Hy language. If you already have Deep Learning application development experience you might want to skip the following review material and skip to the Hy language examples.
 
-If you want to use deep learning professionally, there are two specific online resources that I recommend to you: Andrew Ng leads the efforts at [deeplearning.ai](https://www.deeplearning.ai/) and Jeremy Howard leads the efforts at [fast.ai](https://www.fast.ai/). Here I will show you how to use a few useful tools. Andrew and Jeremy will help you skills that may lead a professional level of expertise.
+If you want to use Deep Learning professionally, there are two specific online resources that I recommend to you: Andrew Ng leads the efforts at [deeplearning.ai](https://www.deeplearning.ai/) and Jeremy Howard leads the efforts at [fast.ai](https://www.fast.ai/). Here I will show you how to use a few useful tools. Andrew and Jeremy will help you skills that may lead a professional level of expertise.
 
-There are many deep learning neural architectures in current practical use; a few types that I use are:
+There are many Deep Learning neural architectures in current practical use; a few types that I use are:
 
 - Multi-layer perceptron networks with many layers. An input layer contains placeholders for input data. Each element in the input layer is connected by a two-dimensional weight matrix to each element in the first hidden layer. We can use any number of fully connected hidden layers, with the last hidden layer connected to an output layer.
 - Convolutional networks for image processing and text classification. Convolutions, or filters, are small windows that can process input images (filters are two-dimensional) or sequences like text (filters are one-dimensional). Each filter uses a single set of learned weights independent of where the filter is applied in an input image or input sequence.
@@ -18,7 +18,7 @@ There are many deep learning neural architectures in current practical use; a fe
 - LSTM (long short term memory) process elements in a sequence in order and are capable of remembering patterns that they have seen earlier in the sequence.
 - GAN (generative adversarial networks) models comprise two different and competing neural models, the generator and the discriminator. GANs are often trained on input images (although in my work I have applied GANs to two-dimensional numeric spreadsheet data). The generator model takes as input a "latent input vector" (this is just a vector of specific size with random values) and generates a random output image. The weights of the generator model are trained to produce random images that are similar to how training images look. The discriminator model is trained to recognize if an arbitrary output image is original training data or an image created by the generator model. The generator and discriminator models are trained together.
 
-The core functionality of libraries like TensorFlow are written in C++ and take advantage or special hardware like GPUs, custom ASICs, and devices like Google's TPUs. Most people who work with deep learning models don't need to even be aware of the low level optimizations used to make training and using deep learning models more efficient. That said, in the following section I am going to show you how simple neural networks are trained and used.
+The core functionality of libraries like TensorFlow are written in C++ and take advantage or special hardware like GPUs, custom ASICs, and devices like Google's TPUs. Most people who work with Deep Learning models don't need to even be aware of the low level optimizations used to make training and using Deep Learning models more efficient. That said, in the following section I am going to show you how simple neural networks are trained and used.
 
 ## Simple Multi-layer Perceptron Neural Networks
 
@@ -41,16 +41,16 @@ Simple neural network architectures with just one or two hidden layers are easy 
 
 ## Deep Learning
 
-Deep learning models are generally understood to have many more hidden layers than than simple multi-layer perceptron neural networks and often comprise multiple simple models combined together in series or in parallel.
+Deep Learning models are generally understood to have many more hidden layers than than simple multi-layer perceptron neural networks and often comprise multiple simple models combined together in series or in parallel.
 Complex architectures can be iteratively developed by manually adjusting the size of model components, changing the components, etc. Alternatively, model architecture search can be automated. At Capital One, I used Google's 
 [AdaNet project](https://github.com/tensorflow/adanet) that efficiently searches for effective model architectures inside a single TensorFlow session.
 
 The material in this chapter is intended to serve two purposes:
 
-- If you are already familiar with deep learning and TensorFlow then the examples here will serve to show you how to call the TensorFlow APIs from Hy.
-- If you have little or no exposure with deep learning then the short Hy language examples will provide you with concise code to experiment and you can then decide to study further.
+- If you are already familiar with Deep Learning and TensorFlow then the examples here will serve to show you how to call the TensorFlow APIs from Hy.
+- If you have little or no exposure with Deep Learning then the short Hy language examples will provide you with concise code to experiment and you can then decide to study further.
 
-I recommend two online deep learning course sequences. For no cost, Jeremy Howard provides lessons at [fast.ai](https://fast.ai) that are very good and the later classes use PyTorch which is a framework that is similar to TensorFlow. For a modest cost Andrew Ng provides classes at [deeplearning.ai](https://www.deeplearning.ai/) that use TensorFlow. I have been working in the field of machine learning since the 1980s, but I still take Andrew's online classes to stay up to date. In the last eight years I have taken his Stanford University machine learning class twice and also his complete course sequence using TensorFlow. I have also worked through much of Jeremy's material. I recommend both course sequences without reservation.
+I recommend two online Deep Learning course sequences. For no cost, Jeremy Howard provides lessons at [fast.ai](https://fast.ai) that are very good and the later classes use PyTorch which is a framework that is similar to TensorFlow. For a modest cost Andrew Ng provides classes at [deeplearning.ai](https://www.deeplearning.ai/) that use TensorFlow. I have been working in the field of machine learning since the 1980s, but I still take Andrew's online classes to stay up to date. In the last eight years I have taken his Stanford University machine learning class twice and also his complete course sequence using TensorFlow. I have also worked through much of Jeremy's material. I recommend both course sequences without reservation.
 
 ## Using Keras and TensorFlow to Model The Wisconsin Cancer Data Set
 
@@ -172,7 +172,7 @@ Note that using the nietzsche.txt data set requires a fair amount of memory. If 
         mv nietzsche.txt nietzsche_large.txt
         head -800 nietzsche_large.txt > nietzsche.txt
 
-When I am training deep learning models I like to monitor system resources using the **top** command line activity, specifically watching for page faults when training on a CPU. If you are using CUDA and a GPU then use the CUDA command line utilities for monitoring the state of the GPU.
+When I am training Deep Learning models I like to monitor system resources using the **top** command line activity, specifically watching for page faults when training on a CPU. If you are using CUDA and a GPU then use the CUDA command line utilities for monitoring the state of the GPU.
 
 There are a few things that make the following examle code more complex than the example using the University of Wisconsin cancer data set. We need to convert each character in the training data to a one-hot encoding which is a vector of all 0.0 values except for a single value of 1.0. I am going to show you a short repl session so that you understand how this works and then we will look at the complete Hy code example.
 
@@ -217,8 +217,7 @@ array([[[0., 0., 0., ..., 0., 0., 0.],
 => 
 ~~~~~~~~
 
-
-TBD: explain the above one-hot encoding
+Each for lines 210-216, each line represents a single character one-hot encoded. Notice how the third character shown on line 212 has a value of "1." it index 2, which correspnds to the one-hot encoding of the letter "!".
 
 Now that you have a feeling for how one-hot encoding works, hopefully the following example will make sense to you. For training, we take 40 (the value of the variable **maxlen**) at a time, and in order one-hot encode a character as input and the target output will be the one-hot encoding of the following character. We training the model to be able to, given a few characters of text, to then be able to predict a likely next character. The generated text then is used as input to generate yet more text. You can repeat this process until you have generated sufficient text.
 
@@ -411,5 +410,5 @@ Here we trained on examples, translated to English, of the philosopher Nietzsche
 
 How is this example working? The model learns what combinations of characters tend to appear together and in what order.
 
-I have used LSTM models trained on application-specific highly structured JSON data to generate synthetic JSON data matching the schema of the original JSON training data. In the next chapter we will use pre-trained deep learning models for natural language processing (NLP).
+I have used LSTM models trained on application-specific highly structured JSON data to generate synthetic JSON data matching the schema of the original JSON training data. In the next chapter we will use pre-trained Deep Learning models for natural language processing (NLP).
 

@@ -26,12 +26,9 @@ In line 4 for the following listing of file **get_web_page.hy**, I am setting th
 
 Let's use this function in a repl to try out this function:
 
-
-TBD:
-
 {lang="hylang",linenos=on}
 ~~~~~~~~
-($ hy
+$ hy
 hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 => (import [get-page-data [get-raw-data-from-web]])
 => (get-raw-data-from-web "http://knowledgebooks.com")
@@ -44,14 +41,9 @@ b'<!DOCTYPE html><html><head><title>KnowledgeBooks.com - research on the Knowled
 => 
 ~~~~~~~~
 
+This repl session shows the the function **get-raw-data-from-web** defined in the previous listing returns a web page as a string. Now we will in the next listing show how to parse and process the string contents of a web pages.
 
-TBD
-
-
-
-
-
-The following listing of file **get_page_data.hy** uses the Beautiful Soup library to parse the string data for HTML text from a web site. The function **get-page-html-tags** TBD TBD also add repl examples TBD
+The following listing of file **get_page_data.hy** uses the Beautiful Soup library to parse the string data for HTML text from a web site. The function **get-page-html-tags**
 
 
 {lang="hylang",linenos=on}

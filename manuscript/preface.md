@@ -16,7 +16,7 @@ This book covers many programming topics using the Lisp language **Hy** that com
 
 The topics of example programs where chosen because of my work experience and the theme of this book is  how to increase programmer productivity and happiness using a Lisp language in a bottom-up development style. This style relies heavily on an interactive REPL for exploring APIs and writing new code. I chose the above topics based on my experience working as a developer and researcher.
 
-Some of the examples are very simple (e.g., the web app examples) while some are more complex (e.g., deep learning and knowledge graph examples). Regardless of the simplicity or complexity of the examples I hope that you find the code interesting, useful in your projects, and fun to experiment with.
+Some of the examples are very simple (e.g., the web app examples) while some are more complex (e.g., Deep Learning and knowledge graph examples). Regardless of the simplicity or complexity of the examples I hope that you find the code interesting, useful in your projects, and fun to experiment with.
 
 ## Setting Up Your Development Environment
 
@@ -47,9 +47,9 @@ When I need a library for a Hy project I search for Python libraries and either 
 
 Since starting work on AI in 1982 I have seen the field progress from a niche technology where even international conferences had small attendances to a field that is generally viewed as transformative. In the USA there is legitimate concern that economic adversaries like China will exceed our abilities to develop core AI technologies and integrate these technologies into commercial and military systems. As I write this in the last days of 2019, some people in our field including myself believe that the Chinese company Baidu may have already passed Google and Microsoft in applied AI.
 
-Even though most of my professional work in the last five years has been in deep learning (and before that I worked with the Knowledge Graph at Google on a knowledge representation problem and application), I believe that human level Artificial General Intelligence (AGI) will use hybrid deep learning, "old fashioned" symbolic AI, and techniques that we have yet to discover.
+Even though most of my professional work in the last five years has been in Deep Learning (and before that I worked with the Knowledge Graph at Google on a knowledge representation problem and application), I believe that human level Artificial General Intelligence (AGI) will use hybrid Deep Learning, "old fashioned" symbolic AI, and techniques that we have yet to discover.
 
-This belief that deep learning will not get us to AGI capabilities is a motivator for me to use the Hy language because it offers transparent access to Python deep learning frameworks with a bottom-up Lisp development style that I used for decades of work using symbolic AI.
+This belief that Deep Learning will not get us to AGI capabilities is a motivator for me to use the Hy language because it offers transparent access to Python Deep Learning frameworks with a bottom-up Lisp development style that I used for decades of work using symbolic AI.
 
 I hope that you find that Hy meets your needs as it does my own.
 

@@ -47,21 +47,11 @@ The output is:
 ~~~~~~~~
 
 
-## Writing Functions in the Hy Language
+## Using Python Libraries
 
-TBD
+Using Python libraries like TensorFlow, Keras, BeutifulSoup, etc. are the reason I use the Hy language. Importing Python code and libraries and calling out to Python is simple and here we look at sufficient examples so that you will understand example code that we will look at later.
 
-## How Simple Lisp Data Structures Can Represent Our Data
-
-TBD: better section title
-
-TBD: examples
-
-## Using Python Libraires
-
-Using Python libraires like TensorFlow, Keras, BeutifulSoup, etc. are the reason I use the Hy language. Importing Python code and libraires and calling out to Python is simple and here we look at sufficient examples so that you will understand example code that we will look at later.
-
-For example, in the chapter **Responsible Web Scraping** we will use the BeautifulSoup library. We will look at some Python code snippets and the corresponding Hylanguage versions of these snippets.
+For example, in the chapter **Responsible Web Scraping** we will use the BeautifulSoup library. We will look at some Python code snippets and the corresponding Hy language versions of these snippets.
 
 {lang="python",linenos=on}
 ~~~~~~~~
@@ -90,7 +80,7 @@ Notice in line 5 that we can have "-" characters inside of variable and function
 
 ## Global vs. Local Variables
 
-Although I don't generally recommend it, sometimes it is convenient to export local variables defines with **setv** or in a **let** macro expansion to be global variables in the context of the current module (that is defined by the current source file). As an example:
+Although I don't generally recommend it, sometimes it is convenient to export local variables defined with **setv** or in a **let** macro expansion to be global variables in the context of the current module (that is defined by the current source file). As an example:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -107,7 +97,7 @@ hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 => 
 ~~~~~~~~
 
-TBD describe above code
+Before executing function **foo** the global variable **x** is undefined (unless you coincidentally already defined somewhere else). When function **foo* is called, a global variable **x** is defined and then it equal to the value 1.
 
 
 ## Using Python Libraries in Hy Programs
@@ -279,22 +269,9 @@ We will use **lfor** as a form of Python list comprehension; for example:
 ~~~~~~~~
 
 
-## Common Pitfalls When Starting to Use Hy
-
-When I started using Hy I found myself initially making simple mistakes that I list here to help you avoid them:
-
-- When converting Python code, I would copy "," comma characters separating arguments to functions which leads to errors, of an "undefined error".
-- TBD
-- TBD
-
-
-## Writing Your Own Libraries in the Hy Language
-
-TBD
-
 ## Importing Libraries form Different Directories on Your Laptop
 
-I usually write applications by first implementing simpler low-level utility libraires that are often not in the same directory path as the application that I am working on. Let's look at a simple example of accessing the library **nlp_lib.hy** in the directory **hy-lisp-python/nlp** from the directory **hy-lisp-python/webscraping**:
+I usually write applications by first implementing simpler low-level utility libraries that are often not in the same directory path as the application that I am working on. Let's look at a simple example of accessing the library **nlp_lib.hy** in the directory **hy-lisp-python/nlp** from the directory **hy-lisp-python/webscraping**:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -316,7 +293,9 @@ hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 => 
 ~~~~~~~~
 
-TBD explain both examples
+Here I did not install the library **nlp_lib.hy** using Python setuptools (which I don't cover in this book, you can [read the documentation](https://setuptools.readthedocs.io)) as a librry on the system. I rely on relative paths between the library directory and the application code that uses the library.
+
+On line 6 I am inserting the library directory into the Python system load path so the import statement on line 8 can find the **nlp-lib** library and on line 13 can find the **coref-nlp-lib** library.
 
 
 ## Using Closures
