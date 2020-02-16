@@ -22,7 +22,7 @@ In Scheme, Clojure, and Common Lisp languages the **let** special form is used t
 (require [hy.contrib.walk [let]])
 ~~~~~~~~
 
-Line 1 is similar to how we make Python scripts into runnable programs. Here we run **hy** instead of **python**. Line 3 imports the **let** macro. We can use **let** for code blocks with local variable and function definitions and also for using closures (I will cover closures at the end of this chapter):
+Line 1 is similar to how we make Python scripts into runnable programs. Here we run **hy** instead of **python**. Line 3 imports the **let** macro. We will occasionally use **let** for code blocks with local variable and function definitions and also for using closures (I will cover closures at the end of this chapter):
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -33,6 +33,8 @@ Line 1 is similar to how we make Python scripts into runnable programs. Here we 
 (let [x 1]
   (print x)
   (let [x 33]
+    (print x)
+    (setv x 44)
     (print x))
   (print x))
 ~~~~~~~~
@@ -43,15 +45,17 @@ The output is:
 ~~~~~~~~
 1
 33
+44
 1
 ~~~~~~~~
 
+Notice that setting a new value for **x** in the inner **let** expression does not change the value bound to the variable **x** in the outer **let** expression.
 
 ## Using Python Libraries
 
 Using Python libraries like TensorFlow, Keras, BeutifulSoup, etc. are the reason I use the Hy language. Importing Python code and libraries and calling out to Python is simple and here we look at sufficient examples so that you will understand example code that we will look at later.
 
-For example, in the chapter **Responsible Web Scraping** we will use the BeautifulSoup library. We will look at some Python code snippets and the corresponding Hy language versions of these snippets.
+For example, in the chapter **Responsible Web Scraping** we will use the BeautifulSoup library. We will look at some Python code snippets and the corresponding Hy language versions of these snippets. Let's first look at a Python example that we will then convert to Hy:
 
 {lang="python",linenos=on}
 ~~~~~~~~
@@ -63,7 +67,7 @@ a_tags = soup.find_all("a")
 print("a tags:", a_tags)
 ~~~~~~~~
 
-In the following listing notice how we import other code and libraries in Hy. The special form **setv** is used to define variables in a local context. Since the **setv** statements in lines 3 and 5 are used at the top level, they are global in the Python/Hy module named after the root name of the source file.
+In the following listing notice how we import other code and libraries in Hy. The special form **setv** is used to define variables in a local context. Since the **setv** statements in lines 3, 5, and 6 are used at the top level, they are global in the Python/Hy module named after the root name of the source file.
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -76,7 +80,7 @@ In the following listing notice how we import other code and libraries in Hy. Th
 (print "a tags:" a)
 ~~~~~~~~
 
-Notice in line 5 that we can have "-" characters inside of variable and function names (**find-all** in this case) in the Hy language where we might use "_" underscore characters in Python.
+Notice in line 6 that we can have "-" characters inside of variable and function names (**find-all** in this case) in the Hy language where we might use "_" underscore characters in Python.
 
 ## Global vs. Local Variables
 
@@ -97,10 +101,10 @@ hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 => 
 ~~~~~~~~
 
-Before executing function **foo** the global variable **x** is undefined (unless you coincidentally already defined somewhere else). When function **foo* is called, a global variable **x** is defined and then it equal to the value 1.
+Before executing function **foo** the global variable **x** is undefined (unless you coincidentally already defined somewhere else). When function **foo** is called, a global variable **x** is defined and then it equal to the value 1.
 
 
-## Using Python Libraries in Hy Programs
+## Using Python Code in Hy Programs
 
 If there is a Python source file, named for example, *test.py* in the same directory as a Hy language file:
 
@@ -152,16 +156,17 @@ If we only wanted to import **BeautifulSoup** from the Python BeautifulSoup libr
 
 ## Using Hy Libraries in Python Programs
 
-There is nothing special about importing and using Hy library code or your own Hy scripts in Python programs. The the directory **hy-lisp-python/use_hy_in_python** in the git repo for this book contains an example Hy script **get_web_page.h** that is a slightly modified version of code we will explain and use in the later chapter on web scraping and a short Python script **use_hy_stuff.py** that uses a function defined in Hy:
+There is nothing special about importing and using Hy library code or your own Hy scripts in Python programs. The directory **hy-lisp-python/use_hy_in_python** in the [git repository for this book https://github.com/mark-watson/hy-lisp-python](https://github.com/mark-watson/hy-lisp-python) contains an example Hy script **get_web_page.hy** that is a slightly modified version of code we will explain and use in the later chapter on web scraping and a short Python script **use_hy_stuff.py** that uses a function defined in Hy:
 
-**get_web_page.h:**
+**get_web_page.hy:**
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
 (import argparse os)
 (import [urllib.request [Request urlopen]])
 
-(defn get-raw-data-from-web [aUri &optional [anAgent {"User-Agent" "HyLangBook/1.0"}]]
+(defn get-raw-data-from-web [aUri &optional [anAgent
+                                            {"User-Agent" "HyLangBook/1.0"}]]
   (setv req (Request aUri :headers anAgent))
   (setv httpResponse (urlopen req))
   (setv data (.read httpResponse))
@@ -171,7 +176,7 @@ There is nothing special about importing and using Hy library code or your own H
   (print (get-raw-data-from-web "http://markwatson.com")))
 ~~~~~~~~
 
-We define two functions here. In the next Python listing we import the file in the last listing and call the Hy function **main** on line 4 using the Python calling syntax.
+We define two functions here. Notice the optional argument **anAgent** defined in lines 4-5 where we provide a default value in case the calling code does not provide a value. In the next Python listing we import the file in the last listing and call the Hy function **main** on line 4 using the Python calling syntax.
 
 Hy is the same as Python once it is compiled to an abstract syntax tree (AST).
 
@@ -184,6 +189,8 @@ from get_web_page import main_hy
 
 main_hy()
 ~~~~~~~~
+
+What I want you to understand and develop a feeling for is that Hy and Python are really the same but with a different syntax and that both languages can easily be used side by side.
 
 
 ## Replacing the Python slice (cut) Notation with the Hy Functional Form
@@ -268,8 +275,27 @@ We will use **lfor** as a form of Python list comprehension; for example:
 => 
 ~~~~~~~~
 
+On line 2, the expression **(enumerate sentence)** generates one character at a time from a string. **enumerate** operating on a list will generate one list element at a time.
 
-## Importing Libraries form Different Directories on Your Laptop
+Line 9 shows an example of *destructuring*: the values in the list **vv** are tuples (tutples are like lists but are immutable, that is, once a tuple is constructed the values it holds can not be changed) with two values. The values in each tuple are copied into binding variables in the list **[a b]**. We could have used the following code instead but it is more verbose:
+
+{lang="bash",linenos=off}
+=> (for [x vv]
+    (setv a (first x))
+    (setv b (second x))
+... (print a b))
+0 T
+1 h
+2 e
+3  
+4 b
+ . . .
+13 e
+14 d
+=> 
+~~~~~~~~
+
+## Importing Libraries from Different Directories on Your Laptop
 
 I usually write applications by first implementing simpler low-level utility libraries that are often not in the same directory path as the application that I am working on. Let's look at a simple example of accessing the library **nlp_lib.hy** in the directory **hy-lisp-python/nlp** from the directory **hy-lisp-python/webscraping**:
 
@@ -293,14 +319,14 @@ hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 => 
 ~~~~~~~~
 
-Here I did not install the library **nlp_lib.hy** using Python setuptools (which I don't cover in this book, you can [read the documentation](https://setuptools.readthedocs.io)) as a librry on the system. I rely on relative paths between the library directory and the application code that uses the library.
+Here I did not install the library **nlp_lib.hy** using Python setuptools (which I don't cover in this book, you can [read the documentation](https://setuptools.readthedocs.io)) as a library on the system. I rely on relative paths between the library directory and the application code that uses the library.
 
 On line 6 I am inserting the library directory into the Python system load path so the import statement on line 8 can find the **nlp-lib** library and on line 13 can find the **coref-nlp-lib** library.
 
 
 ## Using Closures
 
-Function definitions can capture values defined outside of a function and even change the captured value as seen in this example:
+Function definitions can capture values defined outside of a function and even change the captured value as seen in this example (file **closure_example.hy** in the directory **hy-lisp-python/misc**):
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -318,13 +344,22 @@ Function definitions can capture values defined outside of a function and even c
 (print (increment))
 ~~~~~~~~
 
-Using closures is often a good alternative to object oriented programming. In the last example the **let** statement could have defined many variables with initial values and many functions could have been defined to perform various calulations with the values of these captured variables and/or change the values of captured variables. This effectively hides the variables defined in the *let** statement from code outside of the let statement but the functions are accessible from outside the let statement.
+That produces:
+
+{linenos=off}
+~~~~~~~~
+2
+3
+4
+~~~~~~~~
+
+Using closures is often a good alternative to object oriented programming for maintaining private state that only one or a few functions (that are defined inside the closure) are allowed to access and modify. In the last example the **let** statement could have defined more than one variables with initial values and many functions could have been defined to perform various calculations with the values of these captured variables and/or change the values of captured variables. This effectively hides the variables defined in the **let** statement from code outside of the let statement but the functions are accessible from outside the **let** statement.
 
 ## Hy Looks Like Clojure: How Similar Are They?
 
 [Clojure](https://clojure.org/) is a dynamic general purpose Lisp language for the JVM. One of the great Clojure features is support of immutable data (read only after creation) that makes multi-threaded code easier to write and maintain.
 
-Unfortunately, Clojure's immutable  data structures cannot be easily implemented efficiently in Python so the Hy language does  not support immutable data. Otherwise the syntax for defining functions, using maps/hash tables/dictionaries, etc. is similar between the two languages.
+Unfortunately, Clojure's immutable  data structures cannot be easily implemented efficiently in Python so the Hy language does  not support immutable data, except for tuples. Otherwise the syntax for defining functions, using maps/hash tables/dictionaries, etc. is similar between the two languages.
 
 The original Hy language developer Paul Tagliamonte was clearly inspired by Clojure.
 
@@ -358,7 +393,7 @@ array([0.00669285, 0.11920292, 0.5, 0.88079708, 0.99330715])
 => 
 ~~~~~~~~
 
-The git repo directory **hy-lisp-python/matplotlib** contains two similar scripts for plotting the **sigmoid** and **relu** functions. Here is the script to plot the **sigmoid** function:
+The git repository directory **hy-lisp-python/matplotlib** contains two similar scripts for plotting the **sigmoid** and **relu** functions. Here is the script to plot the **sigmoid** function:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -381,7 +416,7 @@ The generated plot looks like this on macOS (Matplotlib is portable and also wor
 
 ![Sigmoid Function](images/sigmoid.png)
 
-## Bonus Points: Configuration for MacOS and ITerm2 for Generating Plots Inline in a Hy Repl and Shell
+## Bonus Points: Configuration for macOS and ITerm2 for Generating Plots Inline in a Hy Repl and Shell
 
 On the macOS ITerm2 terminal app and on most Linux terminal apps, it is possible to get inline matplotlib plots in a shell (bash, zsh, etc.), in Emacs, etc. This will take some setup work but it is well worth it especially if you work on remote servers via SSH or tmux. Here is the setup for macOS:
 
