@@ -43,7 +43,7 @@ I first used Flask with the Hy language after seeing a post of code from HN user
 
 The Hy macro **with-decorator** macro is in general used to use Python style decorators in Hy applications.
 
-I liked this example and started real use of Hy and Flask. Please try running this example to make sure you are setup properly with Flask:
+I liked this example and after experimenting with the code, I then started using Hy and Flask. Please try running this example to make sure you are setup properly with Flask:
 
 {lang="bash",linenos=off}
 ~~~~~~~~
@@ -63,7 +63,7 @@ Open [http://127.0.0.1:5000/](http://127.0.0.1:5000/) in your web browser:
 
 ## Using Jinja2 Templates To Generate HTML
 
-Jinja2 is a templating system that allows HTML markup to be supplemented with Python variable references and simple Python loops, etc. The values of application variables can be stored in a context and the HTML template has the variables values substituted with current values before returning a HTML response to the user's web browser.
+[Jinja2](https://pypi.org/project/Jinja2/) is a templating system that allows HTML markup to be supplemented with Python variable references and simple Python loops, etc. The values of application variables can be stored in a context and the HTML template has the variables values substituted with current values before returning a HTML response to the user's web browser.
 
 By default Jinja2 templates are stored in a subdirectory named **templates**. The template for this example can be found in the file **hy-lisp-python/webapp/templates/template1.j2** that is shown here:
 
@@ -105,30 +105,7 @@ We can set values as named parameters for variables used in the template, for ex
 (render_template "template1.j2" :name "Mark")
 ~~~~~~~~
 
-I am assuming that you understand the basics or HTML as a language and GET and POST operations in HTTP requests.
-
-The template file **templates/template1.j2** contains:
-
-{lang="html",linenos=on}
-~~~~~~~~
-<html>
-  <head>
-    <title>Testing Jinja2 and Flask with the Hy language</title>
-  </head>
-  <body>
-     {% if name %}
-       <h1>Hello {{name}}</h1>
-     {% else %}
-       <h1>Hey, please enter your name!</h1>
-     {% endif %}
-    
-    <form method="POST" action="/response">
-      Name: <input type="text" name="name" required>
-      <input type="submit" value="Submit">
-    </form>
-  </body>
-</html>
-~~~~~~~~
+I am assuming that you understand the basics or HTML and also GET and POST operations in HTTP requests.
 
 The following Flask web app defines behavior for rendering the template without the variable **name** set and also a HTML POST handler to pass the name entered on the HTML form back to the POST response handler:
 
@@ -237,3 +214,9 @@ inside of a **with-decorator** form. The value for **request** is defined in the
 ~~~~~~~~
 
 Run this example setting a few different names.
+
+## Wrap Up
+
+I like to be able to implement simple things simply, without a lot of ceremony. Once you work through these examples I hope you feel like you can generate Hy and Flask based web apps quickly and with very little code required.
+
+To return to the theme of bottom-up programming, I find that starting with short low level utility functions and placing them in a separate file makes reuse simple, and makes future similar projects even easier. For each language I work with, I collect snippets of useful code and short utilities kept in separate files. When writing code I start looking in my snippets directory for the language I am using to implement low level functionality even before doing a web search. When I work in Common Lisp I keep all low level code that I ever write in small libraries contained a single Quicklisp source root directory and for Python and Hy I use Python's setuptools to generate libraries that are installed globally on my laptop for easy reuse. It is worth some effort to organize your work for future reuse.

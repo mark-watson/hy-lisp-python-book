@@ -270,6 +270,6 @@ Here is some of the generated RDF that has changed:
 ![Part of the RDF graph that shows shared nodes when URIs are used for RDF values instead of literal strings](images/2dot1.png)
 
 
-## Wrapup
+## Wrap Up
 
 In the field of Artificial Intelligence there are two topics that get me the most excited and I have been fortunate to be paid to work on both: Deep Learning and Knowledge Graphs. Here we have just touched the surface for creating data for Knowledge Graphs but I hope that between this chapter and the material on RDF in the chapter **Datastores** that you have enough information and experience playing with the examples to get started prototyping a Knowledge Graph in your organizartion. My advice is to "start small" by picking a problem that your organization has that can be solved by not moving data around, but rather, by creating a custom Knowledge Graph for metadata for existing information in your organization.
