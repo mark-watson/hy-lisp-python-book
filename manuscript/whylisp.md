@@ -26,9 +26,9 @@ Even though I proceeded to use C++ for much of my development, as well as writin
 
 ## Hy Macros Let You Extend the Hy Language in Your Programs
 
-In my work I usually seldom use macros since I mostly write application type programs. Macros are useful for extending the syntax allowed for programs written in Lisp languages.
+In my work I seldom use macros since I mostly write application type programs. Macros are useful for extending the syntax allowed for programs written in Lisp languages.
 
-My most common use of macros is flexibly handling arguments without evaluating them. In the following example I want to write a macro **all-to-string** that takes a list of objects that can include undefined symbols. For example, if the variable **x** is undefined, then tring to evaluate **(print x 1)** will throw an error like:
+My most common use of macros is flexibly handling arguments without evaluating them. In the following example I want to write a macro **all-to-string** that takes a list of objects that can include undefined symbols. For example, if the variable **x** is undefined, then trying to evaluate **(print x 1)** will throw an error like:
 
         NameError: name 'x' is not defined
 
@@ -68,4 +68,4 @@ My first try in line 7 did not work, the macro just returning a function that ec
 
 It is my personal choice to prefer a bottom up style of coding, effectively extending the Hy (or other Lisp) language to look like something that looks custom designed and built to solve a specific problem. This is possible in Lisp languages because once a function or macro is defined, it is for our purposes part of the Hy language. If, for example, you are writing a web application that uses a database then I believe that it makes sense to first write low level functions to perform operations that you know you will need, for example, for creating and updating customer data from the database, special functions to parts of a web application (which we cover in the next chapter), etc. For the rest of your application, you use these new low level functions as if they were built into the language.
 
-When I need to write a new low-level function, I start in a REPL and define variables (with test values) for what the function arguments will be. I then write the code for the function one line at a time using these "arguments" in expressions that will later be copied to a Hy source file. Immediately seeing results in a REPL helps me catch mistakes early, often a misunderstanding of the type or values of intermediate calculations. Anyway, this style of coding works for me and I hope you like it also.
+When I need to write a new low-level function, I start in a REPL and define variables (with test values) for what the function arguments will be. I then write the code for the function one line at a time using these "arguments" in expressions that will later be copied to a Hy source file. Immediately seeing results in a REPL helps me catch mistakes early, often a misunderstanding of the type or values of intermediate calculations. This style of coding works for me and I hope you like it also.

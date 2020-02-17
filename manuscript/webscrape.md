@@ -4,7 +4,7 @@ I put the word "Responsible" in the chapter title to remind you that just becaus
 
 The web scraping code we develop here uses the Python BeautifulSoup and URI libraries.
 
-For my work and research, I have been most interested in using web scraping to collect text data for natural language processing but other common applications include writing AI news collection and summarization assistants, trying to predict stock prices based on comments in social media (which is what we did at Webmind Corporation in 2000 and 2001), etc.
+For my work and research, I have been most interested in using web scraping to collect text data for natural language processing but other common applications include writing AI news collection and summarization assistants, trying to predict stock prices based on comments in social media which is what we did at Webmind Corporation in 2000 and 2001, etc.
 
 ## Using the Python BeautifulSoup Library in the Hy Language
 
@@ -73,7 +73,7 @@ The following listing of file **get_page_data.hy** uses the Beautiful Soup libra
 (for [ta (get elements "a")] (print (get-element-data ta)))
 ~~~~~~~~
 
-The function **get-element-data** defined in lines 5-9 accepts as an argument an HTML element object (as defined in the Beautiful soup library) and extracs data, if available, for text, name, class, and href values. The function **get-page-html-elements** defied in lines 11-18 accepts as an argument a string containing a URI and returns a dictionary (or map, or hashtable) containing lists of all **a**, **h1**, **h2**, and **title** elements in the web page pointed to by the input URI. You can modify **get-page-html-elements** to add additional HTML element types, as needed.
+The function **get-element-data** defined in lines 5-9 accepts as an argument an HTML element object (as defined in the Beautiful soup library) and extracts data, if available, for text, name, class, and href values. The function **get-page-html-elements** defied in lines 11-18 accepts as an argument a string containing a URI and returns a dictionary (or map, or hashtable) containing lists of all **a**, **h1**, **h2**, and **title** elements in the web page pointed to by the input URI. You can modify **get-page-html-elements** to add additional HTML element types, as needed.
 
 Here is the output (with many lines removed for brevity):
 
@@ -92,7 +92,7 @@ Here is the output (with many lines removed for brevity):
 
 ## Getting HTML Links from the DemocracyNow.org News Web Site
 
-I financially support and rely on NPR.org and also DemocracyNow.org News as my main sources of news so I will use their news sites for examples here and in the next section. Web sites differ so much in format that it is often necessary to build highly customized web scrapers for individual web sites and to maintain the web scraping code as the format of the site changes in time.
+I financially support and rely on both NPR.org and DemocracyNow.org News as my main sources of news so I will use their news sites for examples here and in the next section. Web sites differ so much in format that it is often necessary to build highly customized web scrapers for individual web sites and to maintain the web scraping code as the format of the site changes in time.
 
 Before working through this example and/or the example in the next section use the file **Makefile** to fetch data:
 

@@ -1,6 +1,6 @@
 # Natural Language Processing
 
-I have been working in the field of Natural Language Processing (NLP) since 1985 so I 'lived through' the revolutionary change in NLP that have occurred since 2014: Deep Learning results out-classed results from previous symbolic methods.
+I have been working in the field of Natural Language Processing (NLP) since 1985 so I 'lived through' the revolutionary change in NLP that has occurred since 2014: Deep Learning results out-classed results from previous symbolic methods.
 
 I will not cover older symbolic methods of NLP here, rather I refer you to my previous books [Practical Artificial Intelligence Programming With Java](https://leanpub.com/javaai), [Loving Common Lisp, or the Savvy Programmer's Secret Weapon](https://leanpub.com/lovinglisp), and [Haskell Tutorial and Cookbook](https://leanpub.com/haskell-cookbook) for examples. We get better results using Deep Learning (DL) for NLP and the library **spaCy** that we use in this chapter provides near state of the art performance and the authors of **spaCy** frequently update it to use the latest breakthroughs in the field.
 
@@ -23,7 +23,7 @@ President George Bush went to Mexico and he had a very good meal
 ['_', '__bytes__', '__class__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__ne__', '__new__', '__pyx_vtable__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__setstate__', '__sizeof__', '__str__', '__subclasshook__', '__unicode__', '_bulk_merge', '_py_tokens', '_realloc', '_vector', '_vector_norm', 'cats', 'char_span', 'count_by', 'doc', 'ents', 'extend_tensor', 'from_array', 'from_bytes', 'from_disk', 'get_extension', 'get_lca_matrix', 'has_extension', 'has_vector', 'is_nered', 'is_parsed', 'is_sentenced', 'is_tagged', 'lang', 'lang_', 'mem', 'merge', 'noun_chunks', 'noun_chunks_iterator', 'print_tree', 'remove_extension', 'retokenize', 'sentiment', 'sents', 'set_extension', 'similarity', 'tensor', 'text', 'text_with_ws', 'to_array', 'to_bytes', 'to_disk', 'to_json', 'user_data', 'user_hooks', 'user_span_hooks', 'user_token_hooks', 'vector', 'vector_norm', 'vocab']
 ~~~~~~~~
 
-In lines 3-6 we import the spaCy library, load the English language model, and create a document from input text. What is a spaCy document? In line 9 we use the standard Python function **dir** to look at all names and functions defined for the objct **doc** returned from applying a spaCy model to a string containing text. The value printed show many built in "dunder" (double underscore attributes), and we can remove these:
+In lines 3-6 we import the spaCy library, load the English language model, and create a document from input text. What is a spaCy document? In line 9 we use the standard Python function **dir** to look at all names and functions defined for the object **doc** returned from applying a spaCy model to a string containing text. The value printed shows many built in "dunder" (double underscore attributes), and we can remove these:
 
 In lines 23-26 we use the **dir** function again to see the attributes and methods for this class, but filter out any attributes containing the characters "__":
 
@@ -141,7 +141,7 @@ The **to_json** method looks promising so we will import the Python pretty print
 => 
 ~~~~~~~~
 
-The JSON data is nested dictionaries. In a later chapter on Knowledge Graphs, we will want to get the named entities like people, organizations, etc. from text and use this information to automatically generate data for Knowledge Graphs. The values for the key **ents** (stands for "entities") will be useful. Notice that the words in the original text are specified by beginning and ending text token indices (values of **head** and **end** in lines 52 to 142).
+The JSON data is nested dictionaries. In a later chapter on Knowledge Graphs, we will want to get the named entities like people, organizations, etc., from text and use this information to automatically generate data for Knowledge Graphs. The values for the key **ents** (stands for "entities") will be useful. Notice that the words in the original text are specified by beginning and ending text token indices (values of **head** and **end** in lines 52 to 142).
 
 The values for the key **tokens** listed on lines 42-132 contains the head (or starting index, ending index, the token number (**id**), and the part of speech (**pos**). We will list what the parts of speech mean later.
 
@@ -219,9 +219,9 @@ The following list shows the definitions for the part of speech (POS) tags:
 
 ## Implementing a HyNLP Wrapper for the Python spaCy Library
 
-We will generate two libraries (in files **nlp_lib.hy** and **coref_nlp_lib.hy**), the first is a general NLP library and the second that specifically solves the anaphora resolution, or coreference, problem. There are test programs for each library in the files **nlp_example.hy** and **coref_example.hy**.
+We will generate two libraries (in files **nlp_lib.hy** and **coref_nlp_lib.hy**). The first is a general NLP library and the second specifically solves the anaphora resolution, or coreference, problem. There are test programs for each library in the files **nlp_example.hy** and **coref_example.hy**.
 
-For an example in a later chapter, we will use the library developed here to automatically generate Knowledge Graphs from text data, we will need the ability to find person, company, location, etc. names in text. We use spaCy here to do this. The types of named entities that spaCy is pre-trained that includes:
+For an example in a later chapter, we will use the library developed here to automatically generate Knowledge Graphs from text data. We will need the ability to find person, company, location, etc. names in text. We use spaCy here to do this. The types of named entities on which spaCy is pre-trained includes:
 
 - CARDINAL: any number that is not identified as a more specific type, like money, time, etc.
 - DATE
@@ -281,7 +281,7 @@ Marks-MacBook:nlp $ ./nlp_example.hy
   ..LOTS OF OUTPUT NOT SHOWN..
 ~~~~~~~~
 
-Another common NLP task is coreference (or anaphora resolution) that is the process of resolving pronouns in text (e.g., he, she, it, etc.) with preceding proper nouns that pronouns refer to. A simple example would be translating "John ran fast and he fell" to "John ran fast and John fell." This is an easy example, but often proper nouns that pronouns refer to are in previous sentences and resolving coreference can be ambiguous and require knowledge of common word use and grammar. This problem is now handled by deep learning transfer models like [BERT](https://github.com/google-research/bert).
+Another common NLP task is coreference (or anaphora resolution) which is the process of resolving pronouns in text (e.g., he, she, it, etc.) with preceding proper nouns that pronouns refer to. A simple example would be translating "John ran fast and he fell" to "John ran fast and John fell." This is an easy example, but often proper nouns that pronouns refer to are in previous sentences and resolving coreference can be ambiguous and require knowledge of common word use and grammar. This problem is now handled by deep learning transfer models like [BERT](https://github.com/google-research/bert).
 
 Listing of coref_nlp_lib.hy contains a wrapper for spaCy's coreference model:
 
@@ -331,4 +331,4 @@ Anaphora resolution, also called coreference, refers to two or more words or phr
 
 I spent several years of development time during the period from  1984 through 2015 working on natural language processing technology and as a personal side project I sold commercial NLP libraries that I wrote on my own time in Ruby and Common Lisp. The state-of-the-art of Deep Learning enhanced NLP is very good and the open source spaCy library makes excellent use of both conventional NLP technology and pre-trained Deep Learning models. I no longer spend very much time writing my own NLP libraries and instead use spaCy.
 
-I urge you to read through the [spaCy documentation](https://spacy.io/api/doc) because we covered just basic functionality here that we will also need in the later chapter on automatically generating data for Knowledge Graphs. After working through the interactive REPL sessions and also the examples in this chapter, you should be able to translate any Python API example code to Hy.
+I urge you to read through the [spaCy documentation](https://spacy.io/api/doc) because we covered just basic functionality here that we will also need in the later chapter on automatically generating data for Knowledge Graphs. After working through the interactive REPL sessions and the examples in this chapter, you should be able to translate any Python API example code to Hy.

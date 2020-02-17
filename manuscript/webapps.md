@@ -1,6 +1,6 @@
 # Writing Web Applications
 
-Python has good libraries and frameworks for building web applications and here we will use the **Flask** library and framework "under the hood" and write two simple Hy Language web applications. We will start with a simple "Hello World" example in Python, see how to reformulate it in Hy, and then proceed with more complex examples that will show how to use HTML generating templates, sessions, and cookies to store user data for the next time they visit your web site. In a later chapter we will cover use of the SQLite and PostgreSQL databases which are commonly used to persistent data for users in web applications. This pattern involves in letting a user login and storing a unique token for the user in a web browser cookie. In principle, you can do the same with web browser cookies but if a user visits your web site with a different browser or device then they will not have access to the data stored in cookies on a previous visit.
+Python has good libraries and frameworks for building web applications and here we will use the **Flask** library and framework "under the hood" and write two simple Hy Language web applications. We will start with a simple "Hello World" example in Python, see how to reformulate it in Hy, and then proceed with more complex examples that will show how to use HTML generating templates, sessions, and cookies to store user data for the next time they visit your web site. In a later chapter we will cover use of the SQLite and PostgreSQL databases which are commonly used to persistent data for users in web applications. This pattern involves letting a user login and store a unique token for the user in a web browser cookie. In principle, you can do the same with web browser cookies but if a user visits your web site with a different browser or device then they will not have access to the data stored in cookies on a previous visit.
 
 I like light-weight web frameworks. In Ruby I use Sinatra, in Haskell I use Spock, and when I built Java web apps I liked light-weight tools like JSP. Flask is simple but capable and using it from Hy is productive and fun.
 
@@ -41,7 +41,7 @@ I first used Flask with the Hy language after seeing a post of code from HN user
 (app.run)
 ~~~~~~~~
 
-The Hy macro **with-decorator** macro is in general used to use Python style decorators in Hy applications.
+The Hy macro **with-decorator** macro is used to use Python style decorators in Hy applications.
 
 I liked this example and after experimenting with the code, I then started using Hy and Flask. Please try running this example to make sure you are setup properly with Flask:
 
@@ -141,7 +141,7 @@ Open [http://127.0.0.1:5000/](http://127.0.0.1:5000/) in your web browser:
 
 ## Handling HTTP Sessions and Cookies
 
-There is a special variable **session** that Flask maintains for each client of a Flask web app. Different people using a web app will have independant sessions. In a web app, we can set a session value by treating the session for a given user as a dictionary:
+There is a special variable **session** that Flask maintains for each client of a Flask web app. Different people using a web app will have independent sessions. In a web app, we can set a session value by treating the session for a given user as a dictionary:
 
 {lang="bash",linenos=off}
 ~~~~~~~~
@@ -219,4 +219,4 @@ Run this example setting a few different names.
 
 I like to be able to implement simple things simply, without a lot of ceremony. Once you work through these examples I hope you feel like you can generate Hy and Flask based web apps quickly and with very little code required.
 
-To return to the theme of bottom-up programming, I find that starting with short low level utility functions and placing them in a separate file makes reuse simple and makes future similar projects even easier. For each language I work with, I collect snippets of useful code and short utilities kept in separate files. When writing code I start looking in my snippets directory for the language I am using to implement low level functionality even before doing a web search. When I work in Common Lisp I keep all low level code that I ever write in small libraries contained a single Quicklisp source root directory and for Python and Hy I use Python's setuptools to generate libraries that are installed globally on my laptop for easy reuse. It is worth some effort to organize your work for future reuse.
+To return to the theme of bottom-up programming, I find that starting with short low level utility functions and placing them in a separate file makes reuse simple and makes future similar projects even easier. For each language I work with, I collect snippets of useful code and short utilities kept in separate files. When writing code I start looking in my snippets directory for the language I am using to implement low level functionality even before doing a web search. When I work in Common Lisp I keep all low level code that I ever writen in small libraries contained a single Quicklisp source root directory and for Python and Hy I use Python's setuptools to generate libraries that are installed globally on my laptop for easy reuse. It is worth some effort to organize your work for future reuse.
