@@ -280,6 +280,7 @@ On line 2, the expression **(enumerate sentence)** generates one character at a 
 Line 9 shows an example of *destructuring*: the values in the list **vv** are tuples (tutples are like lists but are immutable, that is, once a tuple is constructed the values it holds can not be changed) with two values. The values in each tuple are copied into binding variables in the list **[a b]**. We could have used the following code instead but it is more verbose:
 
 {lang="bash",linenos=off}
+~~~~~~~~
 => (for [x vv]
     (setv a (first x))
     (setv b (second x))

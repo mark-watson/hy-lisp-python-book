@@ -62,6 +62,7 @@ NameError: name 'runpuppyrun' is not defined
 => 
 ~~~~~~~~
 
+My first try in line 7 did not work, the macro just returning a function that echos the arguments but throws an error (line 50) when one of the arguments is a symbol with no definition. The second try on line 16 works as intended because we are mapping the function **str** (which coerces any argument into a string) over the argument list.
 
 ## Performing Bottom Up Development Inside a REPL is a Lifestyle Choice
 
