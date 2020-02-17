@@ -5,7 +5,3 @@ webapps.md
 webscrape.md
 deeplearning.md
 nlp.md
-datastores.md
-linkeddata.md
-kg.md
-wrapup.md
