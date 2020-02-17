@@ -2,7 +2,7 @@
 
 Tim Berners Lee, James Hendler, and Ora Lassila wrote in 2001 an article for Scientific American where they introduced the term Semantic Web. Here I do not capitalize semantic web and use the similar term linked data somewhat interchangeably with semantic web.
 
-In the same way that the web allows links between related web pages, linked data supports linking associated data on the web together. I view linked data as a relatively simple way to link data while the semantic web has a much larger vision: the semantic web has the potential to be the entirety of human knowledge represented as data on the web.
+In the same way that the web allows links between related web pages, linked data supports linking associated data on the web together. I view linked data as a relatively simple way to specify relationships between data sources on the web while the semantic web has a much larger vision: the semantic web has the potential to be the entirety of human knowledge represented as data on the web in a form that software agents can work with to answer questions, perform research, and to infer new data from existing data.
 
 While the "web" describes information for human readers, the semantic web is meant to provide structured data for ingestion by software agents. This distinction will be clear as we compare WikiPedia, made for human readers, with DBPedia which uses the info boxes on WikiPedia topics to automatically extract RDF data describing WikiPedia topics. Lets look at the WikiPedia topic for the town I live in Sedona, Arizona and show how the info box on the English version of the [WikiPedia topic page for Sedona https://en.wikipedia.org/wiki/Sedona,_Arizona](https://en.wikipedia.org/wiki/Sedona,_Arizona) maps to the [DBPedia page http://dbpedia.org/page/Sedona,_Arizona](http://dbpedia.org/page/Sedona,_Arizona). Please open both of these WikiPedia and DBPedia URIs in two browser tabs and keep them open for reference.
 
@@ -12,7 +12,9 @@ I assume that the format of the WikiPedia page is familiar so let's look at the 
 - property: a URI (also referred to as a "Resource")
 - value: a URI (also refered to as a "Resource") or a literal value (like a string)
 
-The subject for each Sedona related triple is the above URI for the DBPedia human readable page. The subject and property references in an RDF triple will almost always be a URI that can both ground an entity to information on the web. The human readable page for Sedona lists several properties and the values of these properties. One of the properties is "dbo:areaCode" where "dbo" is a name space reference (in this case for a [DatatypeProperty](http://www.w3.org/2002/07/owl#DatatypeProperty).
+The subject for each Sedona related triple is the above URI for the DBPedia human readable page. The subject and property references in an RDF triple will almost always be a URI that can both ground an entity to information on the web. The human readable page for Sedona lists several properties and the values of these properties. One of the properties is "dbo:areaCode" where "dbo" is a name space reference (in this case for a [DatatypeProperty](http://www.w3.org/2002/07/owl#DatatypeProperty)).
+
+The following two figures show an abstract representation of linked data and then a sample of linked data with actual web URIs for resources and properties:
 
 {width=70%}
 ![Abstract RDF representation with 2 Resources, 2 literal values, and 3 Properties](images/rdf1.png)
@@ -26,7 +28,7 @@ We saw a SPARQL Query (SPARQL for RDF data is similar to SQL for relational data
                            <http://www.ontoweb.org/ontology/1#booktitle>
                            ?v }
 
-This query should return the result "Sun ONE Services - J2EE". If you wanted to query for all URI resources that are books with the liter value of their titles, then you can use:
+This query should return the result "Sun ONE Services - J2EE". If you wanted to query for all URI resources that are books with the literal value of their titles, then you can use:
 
         "select ?s ?v where { ?s
                               <http://www.ontoweb.org/ontology/1#booktitle>
@@ -41,13 +43,13 @@ Note that **?s** and **?v** are arbitrary query variable names, here standing fo
               ?bookTitle }
 
 
-We will be diving a little deeper into RDF examples in the next chapter when we write a tool for generating RDF data from raw text input.  For now I want you to understand the idea of RDF statements represented as triples, that web URIs represent things, properties, and sometimes values, and that URIs can be followed manually to see what they reference.
+We will be diving a little deeper into RDF examples in the next chapter when we write a tool for generating RDF data from raw text input.  For now I want you to understand the idea of RDF statements represented as triples, that web URIs represent things, properties, and sometimes values, and that URIs can be followed manually (oftwn called "dereferencing") to see what they reference in human readable form.
 
 ## Understanding the Resource Description Framework (RDF)
 
 Text data on the web has some structure in the form of HTML elements like headers, page titles, anchor links, etc. but this structure is too imprecise for general use by software agents. RDF is a method for encoding structured data in a more precise way.
 
-We used the RDF data on my web site in the last chapter to introduce the "plumbing" of using the **rdflib** Python library to access, manipulate, and query RDF data. The following two figures show an abstract representation of RDF and then a concrete example using some of the RDF on my web site.
+We used the RDF data on my web site in the last chapter to introduce the "plumbing" of using the **rdflib** Python library to access, manipulate, and query RDF data.
 
 
 ## Resource Namespaces Provided in rdflib
@@ -65,10 +67,7 @@ The following standard namespaces are predefined in **rdflib**:
 - DCTERMS   [http://purl.org/dc/terms/](http://purl.org/dc/terms/)
 - VOID      [http://rdfs.org/ns/void#](http://rdfs.org/ns/void#)
 
-Let's look into the Friend of a Friend (FOAF) namespace. Click on the above link for FOAF [http://xmlns.com/foaf/0.1/](http://xmlns.com/foaf/0.1/) and find the definitions for:
-
-
-FOAF Core
+Let's look into the Friend of a Friend (FOAF) namespace. Click on the above link for FOAF [http://xmlns.com/foaf/0.1/](http://xmlns.com/foaf/0.1/) and find the definitions for the FOAF Core:
 
         Agent
         Person
@@ -90,10 +89,7 @@ FOAF Core
         Document
         Image
 
-and:
-
-
-Social Web
+and for the Social Web:
 
     nick
     mbox
@@ -121,7 +117,7 @@ Social Web
     thumbnail
     logo
 
-You now have seen a few common Schemas for RDF data. Another Schema that is widely used, that we won't need for our examples here, is [schema.org](https://schema.org). Let's now use a Hy REPL session to explore namespaces and programatically create RDF using **rdflib**:
+You now have seen a few common Schemas for RDF data. Another Schema that is widely used for annotating web sites, that we won't need for our examples here, is [schema.org](https://schema.org). Let's now use a Hy REPL session to explore namespaces and programatically create RDF using **rdflib**:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -195,7 +191,7 @@ You can install using the [source code for **rdflib**](https://github.com/RDFLib
 pip install rdflib
 ~~~~~~~~
 
-If I depend on a library, regardless of the programming language, I like to keep an up to date copy of th source code ready at hand.
+If I depend on a library, regardless of the programming language, I like to keep an up to date copy of th source code ready at hand. There is sometimes no substitute for having library code available to read.
 
 In the next chapter we will use natural language processing to extract structured information from raw text and automatically generate RDF data.
 
