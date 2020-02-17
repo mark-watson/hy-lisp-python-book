@@ -16,10 +16,10 @@ The subject for each Sedona related triple is the above URI for the DBPedia huma
 
 The following two figures show an abstract representation of linked data and then a sample of linked data with actual web URIs for resources and properties:
 
-{width=70%}
+{width=50%}
 ![Abstract RDF representation with 2 Resources, 2 literal values, and 3 Properties](images/rdf1.png)
 
-{width=70%}
+{width=75%}
 ![Concrete example using RDF seen in last chapter showing the RDF representation with 2 Resources, 2 literal values, and 3 Properties](images/rdf2.png)
 
 We saw a SPARQL Query (SPARQL for RDF data is similar to SQL for relational database queries) in the last chapter. Let's look at another example using the RDF in the last figure:
