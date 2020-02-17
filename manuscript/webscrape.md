@@ -24,7 +24,7 @@ In line 4 for the following listing of file **get_web_page.hy**, I am setting th
   data)
 ~~~~~~~~
 
-Let's test this function in a repl:
+Let's test this function in a REPL:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -41,7 +41,7 @@ b'<!DOCTYPE html><html><head><title>KnowledgeBooks.com - research on the Knowled
 => 
 ~~~~~~~~
 
-This repl session shows the the function **get-raw-data-from-web** defined in the previous listing returns a web page as a string. Now we will, in the next listing, show how to parse and process the string contents of a web pages.
+This REPL session shows the the function **get-raw-data-from-web** defined in the previous listing returns a web page as a string. Now we will, in the next listing, show how to parse and process the string contents of a web pages.
 
 The following listing of file **get_page_data.hy** uses the Beautiful Soup library to parse the string data for HTML text from a web site. The function **get-page-html-elements** returns names and associated data with each element in HTML represented as a string:
 

@@ -225,7 +225,7 @@ hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 => 
 ~~~~~~~~
 
-As with most of the material in this book, I hope that you have a Hy repl open and are experimenting with the APIs and code in the book's interactive repl examples.
+As with most of the material in this book, I hope that you have a Hy REPL open and are experimenting with the APIs and code in the book's interactive REPL examples.
 
 The file **postgres_lib.hy** wraps commonly used functionality for accessing a database, adding, modifying, and querying data in a short reusable library:
 

@@ -96,7 +96,7 @@ There is an example in the git example repo directory **hy-lisp-python/matplotli
 
 The following listing shows the use of the Keras TensorFlow APIs to build a model (lines 9-19) with one input layer, two hidden layers, and an output layer with just one neuron. After we build the model, we define two utility functions **train** (lines 21-23) to train a model given training inputs (**x** argument**) and corresponding training outputs (**y** argument), and we also define **predict** (lines 25-26) to use a trained model to make a cancer or benign prediction given test input values (**x-data argument).
 
-Lines 28-33 show a utility function **load-data** that loads a University of Wisconsin cancer data set CSV file, scales the input and output values to the range [0.0, 1.0] and returns a list containing input (**x-data**) and target output data (**y-data**). You may want to load this example in a repl and evaluate **load-data** on one of the CSV files.
+Lines 28-33 show a utility function **load-data** that loads a University of Wisconsin cancer data set CSV file, scales the input and output values to the range [0.0, 1.0] and returns a list containing input (**x-data**) and target output data (**y-data**). You may want to load this example in a REPL and evaluate **load-data** on one of the CSV files.
 
 The function **main** (lines 35-45) loads training and test (evaluation of model accuracy on data not used for training), trains a model, and then tests the accuracy of the model on the test (evaluation) data:
 
@@ -177,7 +177,7 @@ Note that using the nietzsche.txt data set requires a fair amount of memory. If 
 
 When I start training a new Deep Learning model I like to monitor system resources using the **top** command line activity, watching for page faults when training on a CPU which might indicate that I am trying to train too large of a model for my system memory. If you are using CUDA and a GPU then use the CUDA command line utilities for monitoring the state of the GPU utilization. It is beyond the scope of this introductory tutorial, but the tool [TensorBoard](https://www.tensorflow.org/tensorboard/) is very useful for monitoring the state of model training.
 
-There are a few things that make the following example code more complex than the example using the University of Wisconsin cancer data set. We need to convert each character in the training data to a one-hot encoding which is a vector of all 0.0 values except for a single value of 1.0. I am going to show you a short repl session so that you understand how this works and then we will look at the complete Hy code example.
+There are a few things that make the following example code more complex than the example using the University of Wisconsin cancer data set. We need to convert each character in the training data to a one-hot encoding which is a vector of all 0.0 values except for a single value of 1.0. I am going to show you a short REPL session so that you understand how this works and then we will look at the complete Hy code example.
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -357,7 +357,7 @@ indices_char:
  'o', 68: 'p', 69: 'q', 70: 'r', 71: 's', 72: 't', 73: 'u', 74: 'v', 75: 'w', 76: 'x', 77: 'y', 78: 'z', 79: 'Æ', 80: 'ä', 81: 'æ', 82: 'é', 83: 'ë'}
 ~~~~~~~~
 
-We prepare the input and target output data in lines 43-48 in the last code listing. Using a short string, lets look in the next repl session listing at how these input and output training examples are extracted for an input string:
+We prepare the input and target output data in lines 43-48 in the last code listing. Using a short string, lets look in the next REPL session listing at how these input and output training examples are extracted for an input string:
 
 {lang="bash",linenos=on}
 ~~~~~~~~

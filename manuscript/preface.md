@@ -14,7 +14,7 @@ This book covers many programming topics using the Lisp language **Hy** that com
 - Deep Learning
 - Natural Language Processing (NLP) using Deep Learning
 
-The topics were chosen because of my work experience and the theme of this book is  how to increase programmer productivity and happiness using a Lisp language in a bottom-up development style. This style relies heavily on the use of an interactive REPL for exploring APIs and writing new code. I chose the above topics based on my experience working as a developer and researcher.
+The topics were chosen because of my work experience and the theme of this book is  how to increase programmer productivity and happiness using a Lisp language in a bottom-up development style. This style relies heavily on the use of an interactive REPL for exploring APIs and writing new code. I chose the above topics based on my experience working as a developer and researcher. Please note: you will see the term REPL frequently in this book. REPLA stands for *Read Eval Print Loop*.
 
 Some of the examples are very simple (e.g., the web app examples) while some are more complex (e.g., Deep Learning and knowledge graph examples). Regardless of the simplicity or complexity of the examples I hope that you find the code interesting, useful in your projects, and fun to experiment with.
 

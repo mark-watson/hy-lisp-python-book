@@ -121,7 +121,7 @@ Social Web
     thumbnail
     logo
 
-You now have seen a few common Schemas for RDF data. Another Schema that is widely used, that we won't need for our examples here, is [schema.org](https://schema.org). Let's now use a Hy repl session to explore namespaces and programatically create RDF using **rdflib**:
+You now have seen a few common Schemas for RDF data. Another Schema that is widely used, that we won't need for our examples here, is [schema.org](https://schema.org). Let's now use a Hy REPL session to explore namespaces and programatically create RDF using **rdflib**:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~

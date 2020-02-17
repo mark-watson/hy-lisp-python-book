@@ -371,7 +371,7 @@ The book **Serious Python** by Julien Danjou has an entire chapter (chapter 9) o
 
 Data visualization is a common task when working with numeric data. In a later chapter on Deep Learning, we will use two functions, the **relu** and **sigmoid** functions. Here we will use a few simple Hy language scripts to plot these functions.
 
-The Numpy library supports what is called "broadcasting" in Python. In the function **sigmoid** that we define in the following repl, we can pass either a single floating point number or a Numpy array as an argument. When we pass a Numpy array, then the function **sigmoid** is applied to each element of the Numpy array:
+The Numpy library supports what is called "broadcasting" in Python. In the function **sigmoid** that we define in the following REPL, we can pass either a single floating point number or a Numpy array as an argument. When we pass a Numpy array, then the function **sigmoid** is applied to each element of the Numpy array:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -416,7 +416,7 @@ The generated plot looks like this on macOS (Matplotlib is portable and also wor
 
 ![Sigmoid Function](images/sigmoid.png)
 
-## Bonus Points: Configuration for macOS and ITerm2 for Generating Plots Inline in a Hy Repl and Shell
+## Bonus Points: Configuration for macOS and ITerm2 for Generating Plots Inline in a Hy REPL and Shell
 
 On the macOS ITerm2 terminal app and on most Linux terminal apps, it is possible to get inline matplotlib plots in a shell (bash, zsh, etc.), in Emacs, etc. This will take some setup work but it is well worth it especially if you work on remote servers via SSH or tmux. Here is the setup for macOS:
 
@@ -430,8 +430,8 @@ Here we run an example from the last section in a zsh shell (bash, etc. also sho
 
 ![Inline matplotlib use in zsh shell in an ITerm on macOS](images/mac-inline-matplotlib.png)
 
-The best part of generating inline plots is during interactive repl-based coding sessions:
+The best part of generating inline plots is during interactive REPL-based coding sessions:
 
-![Inline matplotlib use in a Hy repl on macOS](images/mac-inline-matplotlib2.png)
+![Inline matplotlib use in a Hy REPL on macOS](images/mac-inline-matplotlib2.png)
 
 If you use a Mac laptop to SSH into a remote Linux server you need to install **itermplot** and set the environment variable **MPLBACKEND** on the remote server.

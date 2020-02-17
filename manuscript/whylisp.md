@@ -32,7 +32,7 @@ My most common use of macros is flexibly handling arguments without evaluating t
 
         NameError: name 'x' is not defined
 
-The following listing shows my experiments in a Hy repl to write the macro **all-to-string**:
+The following listing shows my experiments in a Hy REPL to write the macro **all-to-string**:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -63,8 +63,8 @@ NameError: name 'runpuppyrun' is not defined
 ~~~~~~~~
 
 
-## Performing Bottom Up Development Inside a Repl is a Lifestyle Choice
+## Performing Bottom Up Development Inside a REPL is a Lifestyle Choice
 
 It is my personal choice to prefer a bottom up style of coding, effectively extending the Hy (or other Lisp) language to look like something that looks custom designed and built to solve a specific problem. This is possible in Lisp languages because once a function or macro is defined, it is for our purposes part of the Hy language. If, for example, you are writing a web application that uses a database then I believe that it makes sense to first write low level functions to perform operations that you know you will need, for example, for creating and updating customer data from the database, special functions to parts of a web application (which we cover in the next chapter), etc. For the rest of your application, you use these new low level functions as if they were built into the language.
 
-When I need to write a new low-level function, I start in a repl and define variables (with test values) for what the function arguments will be. I then write the code for the function one line at a time using these "arguments" in expressions that will later be copied to a Hy source file. Immediately seeing results in a repl helps me catch mistakes early, often a misunderstanding of the type or values of intermediate calculations. Anyway, this style of coding works for me and I hope you like it also.
+When I need to write a new low-level function, I start in a REPL and define variables (with test values) for what the function arguments will be. I then write the code for the function one line at a time using these "arguments" in expressions that will later be copied to a Hy source file. Immediately seeing results in a REPL helps me catch mistakes early, often a misunderstanding of the type or values of intermediate calculations. Anyway, this style of coding works for me and I hope you like it also.

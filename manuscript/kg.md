@@ -79,7 +79,7 @@ Using only the spaCy NLP library that we used earlier and the built in Hy/Python
   (map list (lfor entity doc.ents [(clean entity.text) entity.label_])))
 ~~~~~~~~
 
-In lines 3 and 4 we import three standard Python utilites we need for finding all files in a directory, checking to see if a file exists, and splitting text into tokens.  In line 7 we load the English language spaCy model and save the value of the model in the variable **nlp-model**. The function find-entities-in-text uses the spaCy English language model to find entities like organizations, people, etc. in text and cleans entity names by removing new line characters and other unnecessary white space (nested function **clean** in lines 10 and 11). We can run a test in a repl:
+In lines 3 and 4 we import three standard Python utilites we need for finding all files in a directory, checking to see if a file exists, and splitting text into tokens.  In line 7 we load the English language spaCy model and save the value of the model in the variable **nlp-model**. The function find-entities-in-text uses the spaCy English language model to find entities like organizations, people, etc. in text and cleans entity names by removing new line characters and other unnecessary white space (nested function **clean** in lines 10 and 11). We can run a test in a REPL:
 
 {lang="hylang",linenos=off}
 ~~~~~~~~
