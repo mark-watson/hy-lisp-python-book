@@ -8,13 +8,13 @@ I use flat files and the PostgreSQL relational database for most data storage an
 
 For graph data we will stick with RDF because it is a fairly widely used standard. Google, Microsoft, Yahoo and Yandex support [schema.org](https://schema.org/) for defining schemas for structured data on the web. In the next chapter we will go into more details on RDF, here we look at the "plumbing" for using the **rdflib** library to manipulate and query RDF data and how to export RDF data in several formats. Then, in a later chapter, we will develop tools to automatically generate RDF data from raw text as a tool for developing customized Knowledge Graphs.
 
-In a few of my previous books (e.g., [Loving Common Lisp, or the Savvy Programmer's Secret Weapon](https://leanpub.com/lovinglisp) and [Haskell Tutorial and Cookbook](https://leanpub.com/haskell-cookbook)) I also covered the general purpose graph database Neo4j which I also like to use for some use cases, but for the purposes of this book we stick with RDF.
+In one of my previous previous books [Loving Common Lisp, or the Savvy Programmer's Secret Weapon](https://leanpub.com/lovinglisp) I also covered the general purpose graph database Neo4j which I also like to use for some use cases, but for the purposes of this book we stick with RDF.
 
 ## Sqlite
 
 We will cover two relational databases: Sqlite and PostgreSQL. Sqlite is an embedded database. There are Sqlite libraries for many programming languages and here we use the Python library.
 
-The following examples are simple but sufficient to show you how to open a single file Sqlite database, add data, modify data, query data, and delete data. I assume that you have some familiarity with relational databases, especially concepts like data columns and rows.
+The following examples are simple but sufficient to show you how to open a single file Sqlite database, add data, modify data, query data, and delete data. I assume that you have some familiarity with relational databases, especially concepts like data columns and rows, and SQL queries.
 
 Let's start with putting common code for using Sqlite into a reusable library in the file **sqlite_lib.hy**:
 
@@ -37,6 +37,8 @@ Let's start with putting common code for using Sqlite into a reusable library in
     (cur.execute sql))
   (cur.fetchall))
 ~~~~~~~~
+
+The function **create-db** in lines 3-6 creates a database from a file path if it does not already exist. The function **connection** (lines 8-9) creates a persistent connection to a database defined by a file path to the single file used for a Sqlite database. This connection can be reused.  The function **query** (lines 11-16) requires a connection object and a SQL query represented as a string, makes a database query, and returns all matching data in nested lists.
 
 The following listing of file **sqlite_example.hy**shows how to use this simple library:
 
@@ -72,21 +74,15 @@ The following listing of file **sqlite_example.hy**shows how to use this simple 
 (test_sqlite-lib)
 ~~~~~~~~
 
-In lines 15, 20, and 24 we are using a wild card query using the asterisk character to return all column values for each matched row in te database.
+We opened an in-memory database in lines 7 and 8 but we could have also created a persistent database on disk using, for example, "test_database.db" instead of **:memory**. In line 9 we create a database table with just two columns, each column holding string values.
+
+In lines 15, 20, and 24 we are using a wild card query using the asterisk character to return all column values for each matched row in the database.
 
 Running the example program produces the following output:
 
 {lang="bash",linenos=on}
 ~~~~~~~~
-Marks-MacBook:datastores $ ./sqlite_example.hy
-2.6.0
-[]
-[]
-[]
-[('Mark Watson', 'mark@markwatson.com'), ('Kiddo', 'kiddo@markwatson.com')]
-[]
-[('Mark Watson', 'mark@markwatson.com')]
-Marks-MacBook:datastores $ ./sqlite_example.hy
+$ ./sqlite_example.hy
 2.6.0
 []
 []
@@ -96,6 +92,8 @@ Marks-MacBook:datastores $ ./sqlite_example.hy
 []
 [('Mark Watson', 'mark@markwatson.com')]
 ~~~~~~~~
+
+Line 2 shows the version of SQlist we are using. The lists in lines 1-2, 4, and 6 are empty because the functions to create a table, insert data into a table, update a row in a tables, and to delete rows do not return values.
 
 In the next section we will see how PostgreSQL treats JSON data as a native data type. For sqlite, you can store JSON data as a "dumped" string value but you can't query by key/value pairs in the data. You can encode JSON as a string and then decode it back to JSON (or as a dictionary) using:
 
@@ -118,7 +116,7 @@ We will use the [psycopg](http://initd.org/psycopg/) PostgreSQL adapter that is 
 
         pip install psycopg2
 
-The following material is self contained but if before using PostgreSQL and psycopg in your own applications I recommend that you reference the psycopg documentation.
+The following material is self contained but before using PostgreSQL and psycopg in your own applications I recommend that you reference the psycopg documentation.
 
 ### Notes for Using PostgreSQL and Setting Up an Example Database "hybook" on macOS and Linux
 
@@ -208,12 +206,15 @@ hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 => (import json psycopg2)
 => (setv conn (psycopg2.connect :dbname "hybook" :user "markw"))
 => (setv cur (conn.cursor))
-=> (cur.execute "INSERT INTO news VALUES (%s, %s, %s, %s)" ["http://knowledgebooks.com/schema" "test schema" "text in article" (json.dumps {"type" "news"})])
+=> (cur.execute "INSERT INTO news VALUES (%s, %s, %s, %s)"
+      ["http://knowledgebooks.com/schema" "test schema"
+      "text in article" (json.dumps {"type" "news"})])
 => (conn.commit)
 => (cur.execute "SELECT * FROM news")
 => (for [record cur]
 ... (print record))
-('http://knowledgebooks.com/schema', 'test schema', 'text in article', '{"type": "news"}')
+('http://knowledgebooks.com/schema', 'test schema', 'text in article',
+ '{"type": "news"}')
 => (cur.execute "SELECT nlpdata FROM news")
 => (for [record cur]
 ... (print record))
@@ -224,6 +225,8 @@ hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 {'type': 'news'}
 => 
 ~~~~~~~~
+
+In lines 6-8 and 13-14 you notice that I am using PostgreSQL's native JSON support.
 
 As with most of the material in this book, I hope that you have a Hy REPL open and are experimenting with the APIs and code in the book's interactive REPL examples.
 
@@ -243,6 +246,8 @@ The file **postgres_lib.hy** wraps commonly used functionality for accessing a d
     (cursor.execute sql variable-bindings)
     (cursor.execute sql)))
 ~~~~~~~~
+
+The function **query** in lines 8-11 executes any SQL comands so in addition to querying a database, it can also be used with appropriate SQL commands to delete rows, update rows, and create and destroy tables.
 
 The following file **postgres_example.hy** contains examples for using the library we just defined:
 
@@ -285,7 +290,7 @@ Marks-MacBook:datastores $ ./postgres_example.hy
 [('Mark Watson', 'mark@markwatson.com')]
 ~~~~~~~~
 
-I use PostgreSQL more than any other datastore and taking the time to learn how to manage PostgreSQL servers and write application software will save you time and effort when you are prototyping new ideas or developing data oriented product at work.
+I use PostgreSQL more than any other datastore and taking the time to learn how to manage PostgreSQL servers and write application software will save you time and effort when you are prototyping new ideas or developing data oriented product at work. I love using PostgreSQL and personality, I only use Slite for very small database tasks or applications.
 
 ## RDF Data Using the "rdflib" Library
 
@@ -383,17 +388,19 @@ http://markwatson.com/index.rdf#Sun_ONE
 => 
 ~~~~~~~~
 
-We will cover the SPARQL query language in more detail in the next chapter but for now, notice that SPARQL is similar to SQL queries. SPARQL queries can find triples in a graph matching simple patterns, match complex patterns, and update and delete triples in a graph. The following simple query finds all triples with the predicate equal to <http://www.w3.org/2000/10/swap/pim/contact#company> and prints out the subject and object of any matching triples:
+We will cover the SPARQL query language in more detail in the next chapter but for now, notice that SPARQL is similar to SQL queries. SPARQL queries can find triples in a graph matching simple patterns, match complex patterns, and update and delete triples in a graph. The following simple SPARQL query finds all triples with the predicate equal to <http://www.w3.org/2000/10/swap/pim/contact#company> and prints out the subject and object of any matching triples:
 
 {lang="hy",linenos=on, number-from=84}
 ~~~~~~~~
-=> (for [[subject object] (graph.query "select ?s ?o where { ?s <http://www.w3.org/2000/10/swap/pim/contact#company> ?o }")]
+=> (for [[subject object
+... (graph.query
+...   "select ?s ?o where { ?s <http://www.w3.org/2000/10/swap/pim/contact#company> ?o }")]
 ... (print subject "\n contact company: " object))
 http://markwatson.com/index.rdf#mark_watson
   contact company:  Mark Watson Consulting Services
 ~~~~~~~~
 
-We will see more examples of the SPARQL query language in the next chapter. For now, notice that the geneeral form of a **select** query statement is a list of query variables (names beginning with a question mark) and a **where** clause in curly brackets that contains matching patterns. This SPARQL query is simple, but like SQL queries, SPARQL queries can get very complex. I only lightly cover SPARQL in this book. You can get free PDF copies of my two older semantic web books for free: [Practical Semantic Web and Linked Data Applications, Java, Scala, Clojure, and JRuby Edition](https://markwatson.com/opencontentdata/book_java.pdf) and [Practical Semantic Web and Linked Data Applications, Common Lisp Edition](https://markwatson.com/opencontentdata/book_lisp.pdf). There are links to relevant git repos and other information on my [book web page](https://markwatson.com/books/).
+We will see more examples of the SPARQL query language in the next chapter. For now, notice that the geneeral form of a **select** query statement is a list of query variables (names beginning with a question mark) and a **where** clause in curly brackets that contains matching patterns. This SPARQL query is simple, but like SQL queries, SPARQL queries can get very complex. I only lightly cover SPARQL in this book. You can get PDF copies of my two older semantic web books for free: [Practical Semantic Web and Linked Data Applications, Java, Scala, Clojure, and JRuby Edition](https://markwatson.com/opencontentdata/book_java.pdf) and [Practical Semantic Web and Linked Data Applications, Common Lisp Edition](https://markwatson.com/opencontentdata/book_lisp.pdf). There are links to relevant git repos and other information on my [book web page](https://markwatson.com/books/).
 
 As I mentioned, the RDF data on my web site has been essentially unchanged since 2005. What if I wanted to update it noting that more recently I worked as a contractor at Google and as a Deep Learning engineering manager at Capital One? In the following listing, continuing the same REPL session, I will add two RDF statements indicating additional jobs and show how to serialize the new updated graph in three formats: XML, turtle (my favorite RDF notation) and NT:
 
@@ -422,12 +429,12 @@ http://markwatson.com/index.rdf#mark_watson  contact company:  Capital One
   xmlns:ow="http://www.ontoweb.org/ontology/1#"
   xmlns:ns1="http://markwatson.com/index.rdf#">
 
-    LOTS	OF STUFF NOT SHOWN
+    LOTS OF STUFF NOT SHOWN
 
 </rdf:Description>\n</rdf:RDF>
 ~~~~~~~~
 
-I like Turtle RDF notation better than the XML notation because Turtle is easier to read and understand. Here, on line 118 we serialize the graph (with new ndes added above in lines 90 to 96) to Turtle:
+I like Turtle RDF notation better than the XML notation because Turtle is easier to read and understand. Here, on line 118 we serialize the graph (with new nodes added above in lines 90 to 96) to Turtle:
 
 {lang="hy",linenos=on, number-from=118}
 ~~~~~~~~
@@ -441,7 +448,7 @@ I like Turtle RDF notation better than the XML notation because Turtle is easier
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-s1:mark_watson_consulting_services a ow:Organization ;
+ns1:mark_watson_consulting_services a ow:Organization ;
     ow:name "Mark Watson Consulting Services" ;
     rdf:label "Mark Watson Consulting Services" .
 <http://www.markwatson.com/> 
@@ -497,7 +504,7 @@ In addition to the Turtle format I also use the simpler NT format that puts URI 
 <http://markwatson.com/index.rdf#mark_watson> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/10/swap/pim/contact#Person> .
 <http://www.markwatson.com/> <http://purl.org/dc/elements/1.1/creator> <http://markwatson.com/index.rdf#mark_watson> .
 
-      LOTS	OF STUFF NOT SHOWN
+      LOTS OF STUFF NOT SHOWN
 => 
 ~~~~~~~~
 
