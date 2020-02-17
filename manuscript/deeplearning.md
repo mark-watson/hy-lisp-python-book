@@ -8,11 +8,11 @@ There are other libraries and frameworks that might interest you in addition to 
 
 Here we will learn a vocabulary for discussing Deep Learning neural network models, look at possible architectures, and show two Hy language examples that should be sufficient to get you used to using Keras with the Hy language. If you already have Deep Learning application development experience you might want to skip the following review material and skip to the Hy language examples.
 
-If you want to use Deep Learning professionally, there are two specific online resources that I recommend to you: Andrew Ng leads the efforts at [deeplearning.ai](https://www.deeplearning.ai/) and Jeremy Howard leads the efforts at [fast.ai](https://www.fast.ai/). Here I will show you how to use a few useful tools. Andrew and Jeremy will help you skills that may lead a professional level of expertise.
+If you want to use Deep Learning professionally, there are two specific online resources that I recommend to you: Andrew Ng leads the efforts at [deeplearning.ai](https://www.deeplearning.ai/) and Jeremy Howard leads the efforts at [fast.ai](https://www.fast.ai/). Here I will show you how to use a few useful techniques. Andrew and Jeremy will then help you skills that may lead a professional level of expertise if you take their courses.
 
 There are many Deep Learning neural architectures in current practical use; a few types that I use are:
 
-- Multi-layer perceptron networks with many layers. An input layer contains placeholders for input data. Each element in the input layer is connected by a two-dimensional weight matrix to each element in the first hidden layer. We can use any number of fully connected hidden layers, with the last hidden layer connected to an output layer.
+- Multi-layer perceptron networks with many fully connected layers. An input layer contains placeholders for input data. Each element in the input layer is connected by a two-dimensional weight matrix to each element in the first hidden layer. We can use any number of fully connected hidden layers, with the last hidden layer connected to an output layer.
 - Convolutional networks for image processing and text classification. Convolutions, or filters, are small windows that can process input images (filters are two-dimensional) or sequences like text (filters are one-dimensional). Each filter uses a single set of learned weights independent of where the filter is applied in an input image or input sequence.
 - Autoencoders have the same number of input layer and output layer elements with one or more hidden fully connected layers. Autoencoders are trained to produce the same output as training input values using a relatively small number of hidden layer elements. Autoencoders are capable of removing noise in input data.
 - LSTM (long short term memory) process elements in a sequence in order and are capable of remembering patterns that they have seen earlier in the sequence.
@@ -23,27 +23,29 @@ The core functionality of libraries like TensorFlow are written in C++ and take 
 ## Simple Multi-layer Perceptron Neural Networks
 
 
-I use the terms Multi-layer perceptron neural networks, backpropagation neural networks and delta-rule networks interchangeably. Backpropagation refers to the model training process of calculating the output errors when training inputs are passed ij the forward direction from input lay, to hidden layers, and to the output layer. There will be an error of the calculated and actual output errors. This error can be used to adjust the weights from the last hidden layer to the output layer to reduce the error. The error is then backprogated backwards through the hidden layers, updating all weights in the model. I have detailed example code in any of my older artificial intelligence books. Here I am satisfied to give you an intuition to how simple neural networks are trained.
+I use the terms Multi-layer perceptron neural networks, backpropagation neural networks and delta-rule networks interchangeably. Backpropagation refers to the model training process of calculating the output errors when training inputs are passed in the forward direction from input layer, to hidden layers, and then to the output layer. There will be an error which is the difference between the calculated outputs and the training outputs. This error can be used to adjust the weights from the last hidden layer to the output layer to reduce the error. The error is then backprogated backwards through the hidden layers, updating all weights in the model. I have detailed example code in any of my older artificial intelligence books. Here I am satisfied to give you an intuition to how simple neural networks are trained.
 
 The basic idea is that we start with a network initialized with random weights and for each training case we propagate the inputs through the network towards the output neurons, calculate the output errors, and back-up the errors from the output neurons back towards the input neurons in order to make small changes to the weights to lower the error for the current training example. We repeat this process by cycling through the training examples many times.
 
-The following figure shows a simple backpropagation network with one hidden layer. Neurons in adjacent layers are connected by floating point connection strength weights. These weights start out as small random values that change as the network is trained. Weights are represented in the following figure by arrows; in the code the weights connecting the input to hidden neurons are represented as a two-dimensional array. The weights connecting the hidden to output neurons are also represented as a second two-dimensional array.
+The following figure shows a simple backpropagation network with one hidden layer. Neurons in adjacent layers are connected by floating point connection strength weights. These weights start out as small random values that change as the network is trained. Weights are represented in the following figure by arrows; in the code the weights connecting the input to the output neurons are represented as a two-dimensional array.
 
 {#nn-backprop}
 ![Example Backpropagation network with One Hidden Layer](images/nn_backprop2d.png)
 
-Each non-input neuron has an activation value that is calculated from the activation values of connected neurons feeding into it, gated (adjusted) by the connection weights. For example, in the above figure, the value of Output 1 neuron is calculated by summing the activation of Input 1 times W1,1 and Input 2 activation times W2,1 and applying a "squashing function" like Sigmoid or Relu (see figures below) to this sum to get the final value for Output 1's activation value. We want to flatten activation values to a relatively small range but still maintain relative values. To do this flattening we use the Sigmoid function that is seen in the next figure, along with the derivative of the Sigmoid function which we will use in the code for training a network by adjusting the weights.
+Each non-input neuron has an activation value that is calculated from the activation values of connected neurons feeding into it, gated (adjusted) by the connection weights. For example, in the above figure, the value of Output 1 neuron is calculated by summing the activation of Input 1 times weight W1,1 and Input 2 activation times weight W2,1 and applying a "squashing function" like Sigmoid or Relu (see figures below) to this sum to get the final value for Output 1's activation value. We want to flatten activation values to a relatively small range but still maintain relative values. To do this flattening we use the Sigmoid function that is seen in the next figure, along with the derivative of the Sigmoid function which we will use in the code for training a network by adjusting the weights.
 
 {#nn-sigmoid}
 ![Sigmoid Function and Derivative of Sigmoid Function (SigmoidP)](images/nn_sigmoid.png)
 
-Simple neural network architectures with just one or two hidden layers are easy to train using backpropagation and I have from scratch code for doing s in severa of my previous books. However, here we are using Hy to write models using the TensorFlow framework which has the huge advantage that small models you experiment with on your laptop can be scaled to more parameters (usually this means more neurons in hidden layers which increases the number of weights in a model) and run in the cloud using multiple GPUs.
+Simple neural network architectures with just one or two hidden layers are easy to train using backpropagation and I have from scratch code for doing s in several of my previous books. However, here we are using Hy to write models using the TensorFlow framework which has the huge advantage that small models you experiment with on your laptop can be scaled to more parameters (usually this means more neurons in hidden layers which increases the number of weights in a model) and run in the cloud using multiple GPUs.
+
+Except for pendantic purposes, I now never write neural network code from scratch, instead I take advantage of the many person-years of engineering work put into the development of frameworks like TensorFlow, PyTorch, mxnet, etc. We now move on to two examples built with TensorFlow.
 
 ## Deep Learning
 
 Deep Learning models are generally understood to have many more hidden layers than than simple multi-layer perceptron neural networks and often comprise multiple simple models combined together in series or in parallel.
 Complex architectures can be iteratively developed by manually adjusting the size of model components, changing the components, etc. Alternatively, model architecture search can be automated. At Capital One, I used Google's 
-[AdaNet project](https://github.com/tensorflow/adanet) that efficiently searches for effective model architectures inside a single TensorFlow session.
+[AdaNet project](https://github.com/tensorflow/adanet) that efficiently searches for effective model architectures inside a single TensorFlow session. The model architecture used here is simple: one input layer representing the input values in a sample of University of Wisconsin cancer data, one hidden layer, and an output layer consisting of one neuron whose activation value will be interpreted as a prediction of benign or malignant.
 
 The material in this chapter is intended to serve two purposes:
 
@@ -82,7 +84,7 @@ Here are a few samples:
 ~~~~~~~~
 
 After you look at this data, if you did not have much experience with machine learning then it might not be obvious how to build a model to accept a sample for a patient like we see in the Wisconsin data set and then predict if the sample implies benign or cancerous outcome for the patient. Using TensorFlow with a simple 
-neural network model, we will implement a model in about 47 lines of Hy code (including 8 blank lines for readability, so it takes 39 lines of code to implement this example.
+neural network model, we will implement a model in about 47 lines of Hy code (including 8 blank lines for readability, so it takes only 39 lines of code to implement this example.
 
 Since there are nine input values we will need nine input neurons that will represent the input values for a sample in either training or separate test data. These nine input neurons (created in lines 9-10 in the following listing) will be completely connected to twelve neurons in a hidden layer. Here, completely connected means that each of the nine input neurons is connected via a weight to each hidden layer neuron. There are 9 * 12 = 108 weights between the input and hidden layers. There is a single output layer neuron that is connected to each hidden layer neuron.
 
@@ -159,22 +161,23 @@ Using TensorFlow backend.
 [(0.9759052, 1), (0.99994254, 1), (0.8564741, 1), (0.95866203, 1), (0.03042546, 0), (0.21845636, 0), (0.99662805, 1), (0.08626339, 0), (0.045683343, 0), (0.9992156, 1)]
 ~~~~~~~~
 
-Lets look at the first test case: the "real" output from the training data is a value of 1 and the calculated prediucted value (using the trained model) is 0.9759052. In making predictions, we can choose a cutoff value, 0.5 for example, and inter[pret any calculated prediction value less than the cutoff is a Boolean *false* prediction and and calculated prediction value greater to or equal to the cutoff value is a Boolean *true* prediction.] 
+Lets look at the first test case: the "real" output from the training data is a value of 1 and the calculated prediucted value (using the trained model) is 0.9759052. In making predictions, we can choose a cutoff value, 0.5 for example, and interpret any calculated prediction value less than the cutoff is a Boolean *false* prediction and and calculated prediction value greater to or equal to the cutoff value is a Boolean *true* prediction.
 
 
 ## Using a LSTM Recurrent Neural Network to Generate English Text Similar to the  Philosopher Nietzsche's writing
 
-We will translate a Python example program from the [Keras documentation (listing of LSTM.py example)](https://keras.io/examples/lstm_text_generation/) to Hy. This is a moderately long example and you can use the original Python and the translated Hy code as a guide if you see other models written using Keras that you want use in Hy. I have (mostly) kept the same variable names to make it easier to compare the Python and Hy code.
+We will translate a Python example program from Google's [Keras documentation (listing of LSTM.py that is included with the example Hy code)](https://keras.io/examples/lstm_text_generation/) to Hy. This is a moderately long example and you can use the original Python and the translated Hy code as a translation guide if you see other models written using Keras that you want use in Hy. I have (mostly) kept the same variable names to make it easier to compare the Python and Hy code.
 
-Note that using the nietzsche.txt data set requires a fair amount of memory. If your computer has less than 16G of RAM, you might want to run the following example until you see the printout "Create sentences and next_chars data..." then kill the program, manually edit the file ~/.keras/datasets/nietzsche.txt to remove 75% of the data by:
+Note that using the nietzsche.txt data set requires a fair amount of memory. If your computer has less than 16G of RAM, you might want to reduce the size of the training text by first running the following example until you see the printout "Create sentences and next_chars data..." then kill the program. The first time you run this program, the training data is fetched from the web and stored locally. You can manually edit the file **~/.keras/datasets/nietzsche.txt** to remove 75% of the data by:
 
-        cd
+        pushd ~/.keras/datasets/
         mv nietzsche.txt nietzsche_large.txt
         head -800 nietzsche_large.txt > nietzsche.txt
+        popd
 
-When I am training Deep Learning models I like to monitor system resources using the **top** command line activity, specifically watching for page faults when training on a CPU. If you are using CUDA and a GPU then use the CUDA command line utilities for monitoring the state of the GPU.
+When I start training a new Deep Learning model I like to monitor system resources using the **top** command line activity, watching for page faults when training on a CPU which might indicate that I am trying to train too large of a model for my system memory. If you are using CUDA and a GPU then use the CUDA command line utilities for monitoring the state of the GPU utilization. It is beyond the scope of this introductory tutorial, but the tool [TensorBoard](https://www.tensorflow.org/tensorboard/) is very useful for monitoring the state of model training.
 
-There are a few things that make the following examle code more complex than the example using the University of Wisconsin cancer data set. We need to convert each character in the training data to a one-hot encoding which is a vector of all 0.0 values except for a single value of 1.0. I am going to show you a short repl session so that you understand how this works and then we will look at the complete Hy code example.
+There are a few things that make the following example code more complex than the example using the University of Wisconsin cancer data set. We need to convert each character in the training data to a one-hot encoding which is a vector of all 0.0 values except for a single value of 1.0. I am going to show you a short repl session so that you understand how this works and then we will look at the complete Hy code example.
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -217,11 +220,11 @@ array([[[0., 0., 0., ..., 0., 0., 0.],
 => 
 ~~~~~~~~
 
-Each for lines 210-216, each line represents a single character one-hot encoded. Notice how the third character shown on line 212 has a value of "1." it index 2, which correspnds to the one-hot encoding of the letter "!".
+Each for lines 48-54, each line represents a single character one-hot encoded. Notice how the third character shown on line 50 has a value of "1." at index 2, which corresponds to the one-hot encoding of the letter "!".
 
-Now that you have a feeling for how one-hot encoding works, hopefully the following example will make sense to you. For training, we take 40 (the value of the variable **maxlen**) at a time, and in order one-hot encode a character as input and the target output will be the one-hot encoding of the following character. We training the model to be able to, given a few characters of text, to then be able to predict a likely next character. The generated text then is used as input to generate yet more text. You can repeat this process until you have generated sufficient text.
+Now that you have a feeling for how one-hot encoding works, hopefully the following example will make sense to you. We will further discuss one-hot-encoding after the next code listing. For training, we take 40 (the value of the variable **maxlen**) at a time, and using one one-hot encode a character at a time as input and the target output will be the one-hot encoding of the following character in the input sequence. We are training the model to be able to, given a few characters of text, to then be able to predict a likely next character. The generated text then is used as input to the model to generate yet more text. You can repeat this process until you have generated sufficient text.
 
-This is a powerful technique that I used to model JSON with complex deeply nested schemas. In my work, a trained model could then generate synthetic JSON in the same schema as the training data. Here, training a model to mimic the philosopher Nietzsche's writing is much easier than learning highly structured data ike JSON:
+This is a powerful technique that I used to model JSON with complex deeply nested schemas. In my work, a trained model could then generate synthetic JSON in the same schema as the training data. Here, training a model to mimic the philosopher Nietzsche's writing is much easier than learning highly structured data like JSON:
 
 
 {lang="hylang",linenos=on}
@@ -276,7 +279,7 @@ This is a powerful technique that I used to model JSON with complex deeply neste
   (setv (get y i (get char_indices (get next_chars i))) 1))
 (print "Done creating one-hot encoded training data.")
 
-(print "Builing model...")
+(print "Building model...")
 (setv model (Sequential))
 (.add model (LSTM 128 :input_shape [maxlen (len chars)]))
 (.add model (Dense (len chars) :activation "softmax"))
@@ -322,7 +325,7 @@ This is a powerful technique that I used to model JSON with complex deeply neste
 
 In lines 52-54 we defined a model using the Keras APIs and in lines 56-57 compiled the model using a [categorical crossentropy loss function with an RMSprop optimizer](https://keras.io/optimizers/).
 
-In lines 59-65 we define a function **sample** that takes a a first required argument **preds** a one-hot predicted encoded character that might look like (maxlen or 40 values):
+In lines 59-65 we define a function **sample** that takes a first required argument **preds** which is a one-hot predicted encoded character that might look like (maxlen or 40 values):
 
 [2.80193929e-02 6.78635418e-01 7.85831537e-04 4.92034527e-03
    . . .
@@ -354,7 +357,7 @@ indices_char:
  'o', 68: 'p', 69: 'q', 70: 'r', 71: 's', 72: 't', 73: 'u', 74: 'v', 75: 'w', 76: 'x', 77: 'y', 78: 'z', 79: 'Æ', 80: 'ä', 81: 'æ', 82: 'é', 83: 'ë'}
 ~~~~~~~~
 
-We prepare the input and target output data in lines 43-48 in the last code listing. Using a short string, lets look in the next code listing at how these input and output training examples are extracted for an input string:
+We prepare the input and target output data in lines 43-48 in the last code listing. Using a short string, lets look in the next repl session listing at how these input and output training examples are extracted for an input string:
 
 {lang="bash",linenos=on}
 ~~~~~~~~
@@ -369,8 +372,6 @@ hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 '56789abcdefg'
 => (setv i 4)                 ;; i is the for loop variable for
 => (cut text i (+ i maxlen))  ;; defining sentences and next_chars
-'4567'
-=> (cut text i (+ i maxlen))
 '4567'
 => (cut text (+ i maxlen))
 '89abcdefg'
@@ -410,5 +411,5 @@ Here we trained on examples, translated to English, of the philosopher Nietzsche
 
 How is this example working? The model learns what combinations of characters tend to appear together and in what order.
 
-I have used LSTM models trained on application-specific highly structured JSON data to generate synthetic JSON data matching the schema of the original JSON training data. In the next chapter we will use pre-trained Deep Learning models for natural language processing (NLP).
+In the next chapter we will use pre-trained Deep Learning models for natural language processing (NLP).
 

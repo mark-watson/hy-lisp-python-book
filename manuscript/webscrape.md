@@ -92,7 +92,7 @@ Here is the output (with many lines removed for brevity):
 
 ## Getting HTML Links from the DemocracyNow.org News Web Site
 
-I financially support and rely on NPR.org DemocracyNow.org News as the main news that I usually read so I will use their news sites for examples here and in the next section. Web sites differ so much in format that it is often necessary to build highly customized web scrapers for individual web sites and to maintain the web scraping code as the format of the site changes in time.
+I financially support and rely on NPR.org and also DemocracyNow.org News as my main sources of news so I will use their news sites for examples here and in the next section. Web sites differ so much in format that it is often necessary to build highly customized web scrapers for individual web sites and to maintain the web scraping code as the format of the site changes in time.
 
 Before working through this example and/or the example in the next section use the file **Makefile** to fetch data:
 
@@ -130,7 +130,7 @@ The following listing shows **democracynow_front_page.hy**
     (print uri ":" text)))
 ~~~~~~~~
 
-This simply prints our URIs and text (separated with the string ":") for each link on the home page. A few lines of output from today's front page is:
+This simply prints our URIs and text (separated with the string ":") for each link on the home page. On line 14, the comma character at the start of the return list indicates that we are constructing a tuple. A few lines of output from today's front page is:
 
 {linenos=off}
 ~~~~~~~~
@@ -181,19 +181,25 @@ The following listing shows **npr_front_page_summary.hy**
   (print (create-npr-summary)))
 ~~~~~~~~
 
-The following shows a few lines of the generated output for data collected today:
+In lines 12-15 we are filtering out (or removing) all anchor HTML elements that do not contain text. The following shows a few lines of the generated output for data collected today:
 
 {linenos=off}
 ~~~~~~~~
-January 16, 2020  Birds change the shape of their wings far more than planes. The complexities of bird flight have posed a major design challenge for scientists trying to translate the way birds fly into robots.
+January 16, 2020  Birds change the shape of their wings far more than
+planes. The complexities of bird flight have posed a major design challenge
+for scientists trying to translate the way birds fly into robots.
 
 FBI Vows To Warn More Election Officials If Discovering A Cyberattack
 
-January 16, 2020  The bureau was faulted after the Russian attack on the 2016 election for keeping too much information from state and local authorities. It says it'll use a new policy going forward.
+January 16, 2020  The bureau was faulted after the Russian attack on the
+2016 election for keeping too much information from state and local
+authorities. It says it'll use a new policy going forward.
 
 Ukraine Is Investigating Whether U.S. Ambassador Yovanovitch Was Surveilled
 
-January 16, 2020  Ukraine's Internal Affairs Ministry says it's asking the FBI to help determine whether international laws were broken, or "whether it is just a bravado and a fake information" from a U.S. politician.
+January 16, 2020  Ukraine's Internal Affairs Ministry says it's asking the
+FBI to help determine whether international laws were broken, or "whether it
+is just a bravado and a fake information" from a U.S. politician.
 
 Electric Burn: Those Who Bet Against Elon Musk And Tesla Are Paying A Big Price
 
