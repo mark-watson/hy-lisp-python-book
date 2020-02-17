@@ -2,9 +2,9 @@
 
 I put the word "Responsible" in the chapter title to remind you that just because it is easy (as we will soon see) to pull data from web sites, it is important to respect the property rights of web site owners and abide by their terms and conditions for use. This [Wikipedia article on Fair Use](https://en.wikipedia.org/wiki/Fair_use) provides a good overview of using copyright material.
 
-The web scraping code we develop here uses the Python BeautifulSoup Python library and URI libraries.
+The web scraping code we develop here uses the Python BeautifulSoup and URI libraries.
 
-For my work and research, I have been most interested in using web scraping to collect text data for natural language processing but other applications include writing AI news collection and summarization assistants, trying to predict stock prices based on comments in social media (which is what we did at Webmind Corporation in 2000 and 2001), etc.
+For my work and research, I have been most interested in using web scraping to collect text data for natural language processing but other common applications include writing AI news collection and summarization assistants, trying to predict stock prices based on comments in social media (which is what we did at Webmind Corporation in 2000 and 2001), etc.
 
 ## Using the Python BeautifulSoup Library in the Hy Language
 
@@ -24,7 +24,7 @@ In line 4 for the following listing of file **get_web_page.hy**, I am setting th
   data)
 ~~~~~~~~
 
-Let's use this function in a repl to try out this function:
+Let's test this function in a repl:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -34,17 +34,16 @@ hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 => (get-raw-data-from-web "http://knowledgebooks.com")
 b'<!DOCTYPE html><html><head><title>KnowledgeBooks.com - research on the Knowledge Management, and the Semantic Web ...'
 => 
-=> (import [get-page-data [get-page-html-tags]])
-=> (get-page-html-tags "http://knowledgebooks.com")
+=> (import [get-page-data [get-page-html-elements]])
+=> (get-page-html-elements "http://knowledgebooks.com")
 {'title': [<title>KnowledgeBooks.com - research on the Knowledge Management, and the Semantic Web </title>],
 'a': [<a class="brand" href="#">KnowledgeBooks.com  </a>,  ...
 => 
 ~~~~~~~~
 
-This repl session shows the the function **get-raw-data-from-web** defined in the previous listing returns a web page as a string. Now we will in the next listing show how to parse and process the string contents of a web pages.
+This repl session shows the the function **get-raw-data-from-web** defined in the previous listing returns a web page as a string. Now we will, in the next listing, show how to parse and process the string contents of a web pages.
 
-The following listing of file **get_page_data.hy** uses the Beautiful Soup library to parse the string data for HTML text from a web site. The function **get-page-html-tags**
-
+The following listing of file **get_page_data.hy** uses the Beautiful Soup library to parse the string data for HTML text from a web site. The function **get-page-html-elements** returns names and associated data with each element in HTML represented as a string:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -52,13 +51,13 @@ The following listing of file **get_page_data.hy** uses the Beautiful Soup libra
 
 (import [bs4 [BeautifulSoup]])
 
-(defn get-tag-data [aTag]
-  {"text" (.getText aTag)
-   "name" (. aTag name)
-   "class" (.get aTag "class")
-   "href" (.get aTag "href")})
+(defn get-element-data [anElement]
+  {"text" (.getText anElement)
+   "name" (. anElement name)
+   "class" (.get anElement "class")
+   "href" (.get anElement "href")})
 
-(defn get-page-html-tags [aUri]
+(defn get-page-html-elements [aUri]
   (setv raw-data (get-raw-data-from-web aUri))
   (setv soup (BeautifulSoup raw-data "lxml"))
   (setv title (.find_all soup "title"))
@@ -67,11 +66,14 @@ The following listing of file **get_page_data.hy** uses the Beautiful Soup libra
   (setv h2 (.find_all soup "h2"))
   {"title" title "a" a "h1" h1 "h2" h2})
 
-;; throw away code for book output:
-(setv tags (get-page-html-tags "http://markwatson.com"))
-;;(print (get tags "a"))
-(for [ta (get tags "a")] (print (get-tag-data ta)))
+(setv elements (get-page-html-elements "http://markwatson.com"))
+
+(print (get elements "a"))
+
+(for [ta (get elements "a")] (print (get-element-data ta)))
 ~~~~~~~~
+
+The function **get-element-data** defined in lines 5-9 accepts as an argument an HTML element object (as defined in the Beautiful soup library) and extracs data, if available, for text, name, class, and href values. The function **get-page-html-elements** defied in lines 11-18 accepts as an argument a string containing a URI and returns a dictionary (or map, or hashtable) containing lists of all **a**, **h1**, **h2**, and **title** elements in the web page pointed to by the input URI. You can modify **get-page-html-elements** to add additional HTML element types, as needed.
 
 Here is the output (with many lines removed for brevity):
 
