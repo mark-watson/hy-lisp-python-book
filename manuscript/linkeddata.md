@@ -4,7 +4,7 @@ Tim Berners Lee, James Hendler, and Ora Lassila wrote in 2001 an article for Sci
 
 In the same way that the web allows links between related web pages, linked data supports linking associated data on the web together. I view linked data as a relatively simple way to specify relationships between data sources on the web while the semantic web has a much larger vision: the semantic web has the potential to be the entirety of human knowledge represented as data on the web in a form that software agents can work with to answer questions, perform research, and to infer new data from existing data.
 
-While the "web" describes information for human readers, the semantic web is meant to provide structured data for ingestion by software agents. This distinction will be clear as we compare WikiPedia, made for human readers, with DBPedia which uses the info boxes on WikiPedia topics to automatically extract RDF data describing WikiPedia topics. Let's look at the WikiPedia topic for the town I live in Sedona, Arizona and show how the info box on the English version of the [WikiPedia topic page for Sedona https://en.wikipedia.org/wiki/Sedona,_Arizona](https://en.wikipedia.org/wiki/Sedona,_Arizona) maps to the [DBPedia page http://dbpedia.org/page/Sedona,_Arizona](http://dbpedia.org/page/Sedona,_Arizona). Please open both of these WikiPedia and DBPedia URIs in two browser tabs and keep them open for reference.
+While the "web" describes information for human readers, the semantic web is meant to provide structured data for ingestion by software agents. This distinction will be clear as we compare WikiPedia, made for human readers, with DBPedia which uses the info boxes on WikiPedia topics to automatically extract RDF data describing WikiPedia topics. Let's look at the WikiPedia topic for the town I live in, Sedona Arizona, and show how the info box on the English version of the [WikiPedia topic page for Sedona https://en.wikipedia.org/wiki/Sedona,_Arizona](https://en.wikipedia.org/wiki/Sedona,_Arizona) maps to the [DBPedia page http://dbpedia.org/page/Sedona,_Arizona](http://dbpedia.org/page/Sedona,_Arizona). Please open both of these WikiPedia and DBPedia URIs in two browser tabs and keep them open for reference.
 
 I assume that the format of the WikiPedia page is familiar so let's look at the DBPdeia page for Sedona that in human readble form shows the RDF statements with Sedona Arizona as the subject. RDF is used to model and represent data. RDF is defined by three values so an instance of an RDF statement is called a *triple* with three parts:
 
@@ -12,7 +12,7 @@ I assume that the format of the WikiPedia page is familiar so let's look at the 
 - property: a URI (also referred to as a "Resource")
 - value: a URI (also refered to as a "Resource") or a literal value (like a string)
 
-The subject for each Sedona related triple is the above URI for the DBPedia human readable page. The subject and property references in an RDF triple will almost always be a URI that can both ground an entity to information on the web. The human readable page for Sedona lists several properties and the values of these properties. One of the properties is "dbo:areaCode" where "dbo" is a name space reference (in this case for a [DatatypeProperty](http://www.w3.org/2002/07/owl#DatatypeProperty)).
+The subject for each Sedona related triple is the above URI for the DBPedia human readable page. The subject and property references in an RDF triple will almost always be a URI that can ground an entity to information on the web. The human readable page for Sedona lists several properties and the values of these properties. One of the properties is "dbo:areaCode" where "dbo" is a name space reference (in this case for a [DatatypeProperty](http://www.w3.org/2002/07/owl#DatatypeProperty)).
 
 The following two figures show an abstract representation of linked data and then a sample of linked data with actual web URIs for resources and properties:
 
@@ -43,7 +43,7 @@ Note that **?s** and **?v** are arbitrary query variable names, here standing fo
               ?bookTitle }
 
 
-We will be diving a little deeper into RDF examples in the next chapter when we write a tool for generating RDF data from raw text input.  For now I want you to understand the idea of RDF statements represented as triples, that web URIs represent things, properties, and sometimes values, and that URIs can be followed manually (oftwn called "dereferencing") to see what they reference in human readable form.
+We will be diving a little deeper into RDF examples in the next chapter when we write a tool for generating RDF data from raw text input.  For now I want you to understand the idea of RDF statements represented as triples, that web URIs represent things, properties, and sometimes values, and that URIs can be followed manually (often called "dereferencing") to see what they reference in human readable form.
 
 ## Understanding the Resource Description Framework (RDF)
 
@@ -191,7 +191,7 @@ You can install using the [source code for **rdflib**](https://github.com/RDFLib
 pip install rdflib
 ~~~~~~~~
 
-If I depend on a library, regardless of the programming language, I like to keep an up to date copy of th source code ready at hand. There is sometimes no substitute for having library code available to read.
+If I depend on a library, regardless of the programming language, I like to keep an up-to-date copy of the source code ready at hand. There is sometimes no substitute for having library code available to read.
 
 In the next chapter we will use natural language processing to extract structured information from raw text and automatically generate RDF data.
 
