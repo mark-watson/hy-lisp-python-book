@@ -10,7 +10,7 @@ I assume that the format of the WikiPedia page is familiar so let's look at the 
 
 - subject: a URI (also referred to as a "Resource")
 - property: a URI (also referred to as a "Resource")
-- value: a URI (also refered to as a "Resource") or a literal value (like a string)
+- value: a URI (also referred to as a "Resource") or a literal value (like a string)
 
 The subject for each Sedona related triple is the above URI for the DBPedia human readable page. The subject and property references in an RDF triple will almost always be a URI that can ground an entity to information on the web. The human readable page for Sedona lists several properties and the values of these properties. One of the properties is "dbo:areaCode" where "dbo" is a name space reference (in this case for a [DatatypeProperty](http://www.w3.org/2002/07/owl#DatatypeProperty)).
 
