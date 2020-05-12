@@ -41,7 +41,9 @@ b'<!DOCTYPE html><html><head><title>KnowledgeBooks.com - research on the Knowled
 => 
 ~~~~~~~~
 
-This REPL session shows the the function **get-raw-data-from-web** defined in the previous listing returns a web page as a string. Now we will, in the next listing, show how to parse and process the string contents of a web pages.
+This REPL session shows the the function **get-raw-data-from-web** defined in the previous listing returns a web page as a string. Now we will, in the next listing, show how to parse and process the string contents of a web pages. Note: you will need to install the **lxml** library for this example (using pip or pip3 depending on your Python configuration):
+
+    pip install lxml
 
 The following listing of file **get_page_data.hy** uses the Beautiful Soup library to parse the string data for HTML text from a web site. The function **get-page-html-elements** returns names and associated data with each element in HTML represented as a string:
 

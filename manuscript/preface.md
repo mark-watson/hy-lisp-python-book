@@ -28,8 +28,8 @@ You can install the current stable version of **Hy** using:
 
 Depending on which examples you run and experiment with you will also need to install some of the following libraries:
 
-        pip install beautifulsoup4 rdflib Flask Jinja2 Keras psycopg2
-        pip install rdflib rdflib-sqlite, spacy, tensorflow
+        pip install beautifulsoup4 Flask Jinja2 Keras psycopg2
+        pip install rdflib rdflib-sqlite spacy tensorflow
 
 The Hy language is under active development and it is not unusual for libraries and frameworks created more than a few months before the current Hy release to break. As a result of this, I have been careful in the selection of book material to leave out interesting functionality and libraries from the Hy ecosystem that I feel might not work with new releases. Here we stick with a few popular Python libraries like Keras, TensorFlow, and spaCy and otherwise we will work with mostly pure Hy language code in the examples.
 
@@ -76,3 +76,5 @@ I enjoy writing and your support helps me write new editions and updates for my 
 ## Acknowledgements
 
 I thank my wife Carol for editing this manuscript, finding typos, and suggesting improvements.
+
+I would like to thank Pascal (Reddit user chuchana) for corrections and suggestions.
