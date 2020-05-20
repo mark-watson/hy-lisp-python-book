@@ -62,7 +62,7 @@ The official Hy Language logo is an octopus:
 {width=22%}
 ![The Hy Language logo Cuddles by Karen Rustad](images/hylisplogo.jpg)
 
-Usually I use photographs that I take myself for covers of my LeanPub books. Although I have SCUBA dived since I was 13 years old, sadly I have no pictures of an octopus that I have taken myself. I did find a public domain picture I liked (that is the cover of this book) on Wikimedia. **Cover Credit**: Thanks to Wikimedia user Pseudopanax for placing the cover image in the pubic domain.
+Usually I use photographs that I take myself for covers of my LeanPub books. Although I have SCUBA dived since I was 13 years old, sadly I have no pictures of an octopus that I have taken myself. I did find a public domain picture I liked (that is the cover of this book) on Wikimedia. **Cover Credit**: Thanks to Wikimedia user Pseudopanax for placing the cover image in the public domain.
 
 ## A Request from the Author
 
@@ -77,4 +77,4 @@ I enjoy writing and your support helps me write new editions and updates for my 
 
 I thank my wife Carol for editing this manuscript, finding typos, and suggesting improvements.
 
-I would like to thank Pascal (Reddit user chuchana) for corrections and suggestions.
+I would like to thank Pascal (Reddit user chuchana) for corrections and suggestions. I would like to thank Carlos Ungil for catching a typo and reporting it.
