@@ -11,7 +11,7 @@ Please start by installing Hy in your current Python environment:
 pip install git+https://github.com/hylang/hy.git
 ~~~~~~~~
 
-## We Will Use the Contributed **let** Macro in Book Example Code
+## We Will Often Use the Contributed **let** Macro in Book Example Code
 
 In Scheme, Clojure, and Common Lisp languages the **let** special form is used to define blocks of code with local variables and functions. I will require (or import) the contributed **let** macro, that substitutes for a built-in special form in most examples in this book, but I might not include the **require** in short code listings. Always assume that the following lines start each example:
 
@@ -53,7 +53,7 @@ Notice that setting a new value for **x** in the inner **let** expression does n
 
 ## Using Python Libraries
 
-Using Python libraries like TensorFlow, Keras, BeutifulSoup, etc. are the reason I use the Hy language. Importing Python code and libraries and calling out to Python is simple and here we look at sufficient examples so that you will understand example code that we will look at later.
+Using Python libraries like TensorFlow, Keras, BeautifulSoup, etc. are the reason I use the Hy language. Importing Python code and libraries and calling out to Python is simple and here we look at sufficient examples so that you will understand example code that we will look at later.
 
 For example, in the chapter **Responsible Web Scraping** we will use the BeautifulSoup library. We will look at some Python code snippets and the corresponding Hy language versions of these snippets. Let's first look at a Python example that we will then convert to Hy:
 
@@ -71,16 +71,21 @@ In the following listing notice how we import other code and libraries in Hy. Th
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-(import [bs4 [BeautifulSoup]])
-
-(setv raw-data
-      "<html><body><a href=\"http://markwatson.com\">Mark</a></body></html>")
-(setv soup (BeautifulSoup raw-data "lxml"))
-(setv a (.find-all soup "a"))
-(print "a tags:" a)
+$ hy
+hy 0.18.0 using CPython(default) 3.7.4 on Darwin
+=> (import[bs4[BeautifulSoup]])
+=> (setv raw-data "<html><body><a href=\"http://markwatson.com\">Mark</a></body></html>")
+=> (setv soup (BeautifulSoup raw-data "lxml"))
+=> (setv a (.find-all soup "a"))
+=> (print "atags:" a)
+atags: [<a href="http://markwatson.com">Mark</a>]
+=> (type a)
+<class 'bs4.element.ResultSet'>
+=> (dir a)
+['__add__', '__class__', '__contains__', '__delattr__', '__delitem__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattr__', '__getattribute__', '__getitem__', '__gt__', '__hash__', '__iadd__', '__imul__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__module__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__reversed__', '__rmul__', '__setattr__', '__setitem__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'append', 'clear', 'copy', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort', 'source']
 ~~~~~~~~
 
-Notice in line 6 that we can have "-" characters inside of variable and function names (**find-all** in this case) in the Hy language where we might use "_" underscore characters in Python.
+Notice in lines 3 and 6 that we can have "-" characters inside of variable and function names (**raw-data** and **find-all** in this case) in the Hy language where we might use "_" underscore characters in Python. Like Python, we can use **type** get get the type of a value and **dir** to see what symbols are available for a object.
 
 ## Global vs. Local Variables
 
