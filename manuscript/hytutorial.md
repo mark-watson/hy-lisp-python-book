@@ -301,6 +301,26 @@ Line 9 shows an example of *destructuring*: the values in the list **vv** are tu
 => 
 ~~~~~~~~
 
+## Formatted Output
+
+{lang="hylang",linenos=off}
+~~~~~~~~
+$ hy
+hy 0.18.0 using CPython(default) 3.7.4 on Darwin
+=> (.format "first: {} second: {}" "cat" 3.14159)
+'first: cat second: 3.14159'
+=> (.format "first: {:>15} second: {:>15}" "cat" 3.14159)
+'first:             cat second:         3.14159'
+=> (.format "first: {:15} second: {:15}" "cat" 3.14159)
+'first: cat             second:         3.14159'
+=> (.format "first: {:.2} second: {:.3}" "cat" 3.14159)
+'first: ca second: 3.14'
+=> 
+~~~~~~~~
+
+TBD: text for this example
+TBD: maybe: change repl examples globally from language "bash" to "hylang"
+
 ## Importing Libraries from Different Directories on Your Laptop
 
 I usually write applications by first implementing simpler low-level utility libraries that are often not in the same directory path as the application that I am working on. Let's look at a simple example of accessing the library **nlp_lib.hy** in the directory **hy-lisp-python/nlp** from the directory **hy-lisp-python/webscraping**:

@@ -3,6 +3,7 @@ hytutorial.md
 whylisp.md
 webapps.md
 webscrape.md
+bingsearch.md
 deeplearning.md
 nlp.md
 datastores.md
