@@ -2,6 +2,8 @@
 
 A Knowledge Graph, that I often abbreviate as **KG**, is a graph database using a schema to define types (both objects and relationships between objects) and properties that link property values to objects. The term "Knowledge Graph" is both a general term and also sometimes refers to the specific Knowledge Graph used at Google which I worked with while working there in 2013. Here, we use KG to reference the general technology of storing knowledge in graph databases.
 
+The application we develop here, the Knowledge Graph Creator (which I often refer to as KGCreator) is a utility that I use to generate small Knowledge Graphs from input text.
+
 Knowledge Engineering is a discipline from the 1990s for organizing data and in-house knowledge. I view KGs as an extension of this earlier work.
 
 There are two general types of KGs that are widely used in industry and that we will cover here. Property graphs, as used in Neo4J, are general graphs that place no restrictions on the number of links a graph node may have and allow general data structures to be stored as node data and for the property links between nodes. Semantic web data as represented by subject/property/value RDF triples are more constrained but support powerful logic inferencing to better use data that is implicit in a graph but not explicitly stated (i.e., data is more easily inferred).
@@ -14,9 +16,9 @@ I have an ongoing personal research project for creating knowledge graphs from v
 
 What is a KG? It is a modern way to organize and access structured data and integrate data and metadata with other automated systems.
 
-A Knowledge Graph is different than just a graph database containing graph data. The difference is that a KG will in general use Schemas, Taxonomy's and Ontology's that define the allowed types and structure of data and allowed relationships.
+A Knowledge Graph is different from just a graph database containing graph data. The difference is that a KG will in general use Schemas, Taxonomy's and Ontology's that define the allowed types and structure of data and allowed relationships.
 
-There is also an executable aspect to KGs since their primary use may be to support other systems in an organization.
+There is also an executable aspect of KGs since their primary use may be to support other systems in an organization.
 
 ## Recommended Industrial Use of Knowledge Graphs
 
@@ -37,7 +39,7 @@ To get started:
 - Start small with just one use case.
 - Design a Schema that identifies object types and relationships
 - Write some acceptance test cases that you want a prototype to be able to serve as a baseline to develop against.
-- Avoid having too many stakeholders in early prototype projects - try to choose stakeholders based on potential stakeholders' initial enthusiasm.
+- Avoid having too many stakeholders in early prototype projects — try to choose stakeholders based on potential stakeholders' initial enthusiasm.
 
 A good way to start is to identify a single problem, determine the best data sources to use, define an Ontology that is just sufficient to solve the current problem and build a prototype "vertical slice" application. Lessons learned with a quick prototype will inform you on what was valuable and what to put effort into when expanding your KG. Start small and don't try to build a huge system without taking many small development and evaluation steps.
 
@@ -82,7 +84,7 @@ Using only the spaCy NLP library that we used earlier and the built in Hy/Python
   (map list (lfor entity doc.ents [(clean entity.text) entity.label_])))
 ~~~~~~~~
 
-In lines 3 and 4 we import three standard Python utilites we need for finding all files in a directory, checking to see if a file exists, and splitting text into tokens.  In line 7 we load the English language spaCy model and save the value of the model in the variable **nlp-model**. The function find-entities-in-text uses the spaCy English language model to find entities like organizations, people, etc. in text and cleans entity names by removing new line characters and other unnecessary white space (nested function **clean** in lines 10 and 11). We can run a test in a REPL:
+In lines 3 and 4 we import three standard Python utilities we need for finding all files in a directory, checking to see if a file exists, and splitting text into tokens.  In line 7 we load the English language spaCy model and save the value of the model in the variable **nlp-model**. The function find-entities-in-text uses the spaCy English language model to find entities like organizations, people, etc., in text and cleans entity names by removing new line characters and other unnecessary white space (nested function **clean** in lines 10 and 11). We can run a test in a REPL:
 
 {lang="hylang",linenos=off}
 ~~~~~~~~
@@ -96,9 +98,9 @@ The function **find-entities-in-text** returns a map object so I wrapped the res
 {lang="hylang",linenos=on, number-from=14}
 ~~~~~~~~
 (defn data2Rdf [meta-data entities fout]
-  (for [[value abreviation] entities]
-    (if (in abreviation e2umap)
-      (.write fout (+ "<" meta-data ">\t" (get e2umap abreviation) "\t" "\""
+  (for [[value abbreviation] entities]
+    (if (in abbreviation e2umap)
+      (.write fout (+ "<" meta-data ">\t" (get e2umap abbreviation) "\t" "\""
                        value "\"" " .\n")))))
 
 (setv e2umap {
@@ -251,11 +253,11 @@ We also make a change in the function **data2Rdf** to use the map **v2umap**:
 {lang="hylang",linenos=off}
 ~~~~~~~~
 (defn data2Rdf [meta-data entities fout]
-  (for [[value abreviation] entities]
+  (for [[value abbreviation] entities]
     (setv a-literal (+ "\"" value "\""))
     (if (in value v2umap) (setv a-literal (get v2umap value)))
-    (if (in abreviation e2umap)
-      (.write fout (+ "<" meta-data ">\t" (get e2umap abreviation)
+    (if (in abbreviation e2umap)
+      (.write fout (+ "<" meta-data ">\t" (get e2umap abbreviation)
                       "\t" a-literal " .\n")))))
 ~~~~~~~~
 

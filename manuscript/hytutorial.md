@@ -141,9 +141,9 @@ and we can use the following in Hy to import the Python module **test** (defined
 
 Running this interactively in Hy:
 
-{lang="bash",linenos=on}
+{lang="hylang",linenos=on}
 ~~~~~~~~
-(base) Marks-MacBook:hy-lisp-python $ hy
+$ hy
 hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 => (import test)
 => test
@@ -202,12 +202,10 @@ What I want you to understand and develop a feeling for is that Hy and Python ar
 
 In Python we use a special notation for extracting sub-sequences from lists or strings:
 
-{lang="bash",linenos=off}
+{lang="python",linenos=off}
 ~~~~~~~~
-Marks-MacBook:deeplearning $ python
+$ python
 Python 3.7.3 (default, Mar 27 2019, 16:54:48) 
-[Clang 4.0.1 (tags/RELEASE_401/final)] :: Anaconda, Inc. on darwin
-Type "help", "copyright", "credits" or "license" for more information.
 >>> s = '0123456789'
 >>> s[2:4]
 '23'
@@ -220,9 +218,9 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 In Hy this would be:
 
-{lang="bash",linenos=off}
+{lang="hylang",linenos=off}
 ~~~~~~~~
-Marks-MacBook:deeplearning $ hy
+$ hy
 hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 => (setv s "0123456789")
 => (cut s 2 4)
@@ -236,7 +234,7 @@ hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 
 It also works to use **cut** with **setv** to destructively change a list; for example:
 
-{lang="bash",linenos=off}
+{lang="hylang",linenos=off}
 ~~~~~~~~
 => (setv x [0 1 2 3 4 5 6 7 8])
 => x
@@ -252,7 +250,7 @@ It also works to use **cut** with **setv** to destructively change a list; for e
 
 We will use **lfor** as a form of Python list comprehension; for example:
 
-{lang="bash",linenos=on}
+{lang="hylang",linenos=on}
 ~~~~~~~~
 => (setv sentence "The ball rolled")
 => (lfor i (enumerate sentence) i)
@@ -284,7 +282,7 @@ On line 2, the expression **(enumerate sentence)** generates one character at a 
 
 Line 9 shows an example of *destructuring*: the values in the list **vv** are tuples (tuples are like lists but are immutable, that is, once a tuple is constructed the values it holds can not be changed) with two values. The values in each tuple are copied into binding variables in the list **[a b]**. We could have used the following code instead but it is more verbose:
 
-{lang="bash",linenos=off}
+{lang="hylang",linenos=off}
 ~~~~~~~~
 => (for [x vv]
     (setv a (first x))
@@ -303,6 +301,8 @@ Line 9 shows an example of *destructuring*: the values in the list **vv** are tu
 
 ## Formatted Output
 
+I suggest using the Python **format** method when you need to format output. In the following repl listing, you can see a few formatting options: insert any Hy data into a string (line 3), print values with a specific width and right justified (in line 5 the width for both values is 15 characters), print values with a specific width and left justified (in line 7), and limiting the number of characters values can be expressed as (in line 9 the object "cat" is expressed as just the first two characters and the value 3.14159 is expressed as just three numbers, the period not counting).
+
 {lang="hylang",linenos=off}
 ~~~~~~~~
 $ hy
@@ -318,8 +318,7 @@ hy 0.18.0 using CPython(default) 3.7.4 on Darwin
 => 
 ~~~~~~~~
 
-TBD: text for this example
-TBD: maybe: change repl examples globally from language "bash" to "hylang"
+Notice the calling **.format** here returns a string value rather than writing to an output stream.
 
 ## Importing Libraries from Different Directories on Your Laptop
 

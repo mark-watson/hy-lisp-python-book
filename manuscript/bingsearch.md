@@ -1,14 +1,35 @@
 # Using the Microsoft Bing Search APIs
 
-You will need to register with Microsoft's Azure search service to use the material in this book. It is likely that you view search as a manual human-centered activity. I hope to expand your thinking to considering applications that automate search, finding information on the web, and automatically organize information.
+You will need to register with Microsoft's Azure search service to use the material in this chapter. It is likely that you view search as a manual human-centered activity. I hope to expand your thinking to considering applications that automate search, finding information on the web, and automatically organize information.
 
 ## Getting an Access Key for Microsoft Bing Search APIs
 
-TBD
+You will need an Azure account. I use the Bing search APIs fairly often for research but I have never spent more than about a dollar a month and usually I get no bill at all. For personal use it is an inexpensive service.
+
+Get started by going to the web page [https://azure.microsoft.com/en-us/try/cognitive-services/](https://azure.microsoft.com/en-us/try/cognitive-services/) and sign up for an access key. The Search APIs signup is currently in the fourth tab in this web form. When you navigate to the Search APIs tab, select the option Bing Search APIs v7. You will get an API key that you need to store in an environment variable that a later example needs:
+
+    export BING_SEARCH_V7_SUBSCRIPTION_KEY=4e97234341d9891191c772b7371ad5b1
+
+That is not my real subscription key!
+
+After adding this to your **.profile** file (or **.zshrc**, or **.bashrc**, or etc.), open a new terminal window and make sure the following works for you:
+
+{lang="hylang",linenos=off}
+~~~~~~~~
+$ hy
+hy 0.18.0 using CPython(default) 3.7.4 on Darwin
+=> (import os)
+=> (get os.environ "BING_SEARCH_V7_SUBSCRIPTION_KEY")
+'4e97234341d9891191c772b7371ad5b1'
+=> 
+~~~~~~~~
+
 
 ## Example Search Script
 
-{lang="hylang",linenos=off}
+It takes very little Hy code to access the Bing search APIs but we will look t a long example script that expects a command line argument that is a string containing search terms:
+
+{lang="hylang",linenos=on}
 ~~~~~~~~
 #!/usr/bin/env hy
 
@@ -18,13 +39,13 @@ TBD
 (import [pprint [pprint]])
 (import requests)
 
-;; Add your Bing Search V7 subscription key and endpoint to your environment variables.
+;; Add your Bing Search V7 subscription key and 
+;; the endpoint to your environment variables.
 (setv subscription_key (get os.environ "BING_SEARCH_V7_SUBSCRIPTION_KEY"))
+(setv endpoint "https://api.cognitive.microsoft.com/bing/v7.0/search")
 
 ;; Query term(s) to search for. 
-(setv query (get sys.argv 1)) ;;  "site:wikidata.org Sedona Arizona"
-
-(setv endpoint "https://api.cognitive.microsoft.com/bing/v7.0/search")
+(setv query (get sys.argv 1)) ;; an example: "site:wikidata.org Sedona Arizona"
 
 ;; Construct a request
 (setv mkt "en-US")
@@ -62,6 +83,8 @@ TBD
 (if (in "name" first-result)
     (print (.format " key: {:15} \t:\t {}" "name" (get first-result "name"))))
 ~~~~~~~~
+
+TBD: discuss above listing
 
 You can use search hints like "site:wikidata.org" to only search specific web sites. The following example generates 364 lines of output so I only show a few selected lines here:
 
