@@ -1,4 +1,4 @@
-# Knowledge Graphs - Implementing the KGCreator In Hy
+# Knowledge Graph Creator
 
 A Knowledge Graph, that I often abbreviate as **KG**, is a graph database using a schema to define types (both objects and relationships between objects) and properties that link property values to objects. The term "Knowledge Graph" is both a general term and also sometimes refers to the specific Knowledge Graph used at Google which I worked with while working there in 2013. Here, we use KG to reference the general technology of storing knowledge in graph databases.
 
