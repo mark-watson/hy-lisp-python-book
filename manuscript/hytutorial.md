@@ -73,7 +73,7 @@ In the following listing notice how we import other code and libraries in Hy. Th
 ~~~~~~~~
 $ hy
 hy 0.18.0 using CPython(default) 3.7.4 on Darwin
-=> (import[bs4[BeautifulSoup]])
+=> (import [bs4 [BeautifulSoup]])
 => (setv raw-data "<html><body><a href=\"http://markwatson.com\">Mark</a></body></html>")
 => (setv soup (BeautifulSoup raw-data "lxml"))
 => (setv a (.find-all soup "a"))
