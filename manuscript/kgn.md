@@ -8,13 +8,16 @@ Please note that the example is a slightly simplified version that I first wrote
 
 After looking at generated SPARQL for an example query use of the application, we will start a process of bottom up development, first writing low level functions to automate SPARQL queries, writing utilities we will need for a text (console) based UI.
 
-TBD: remove colorization stuff, if we aren't going to implement that
-
 Some of the problems we will need to solve along the way will be colorizing the output the user sees in the UI and implementing a progress bar so the application user does not think the application is "hanging" while generating and making SPARQL queries to DBPedia.
 
 Since the DBPedia queries are time consuming, we will also implement a caching layer using SQLite that will make the app more responsive. The cache is especially helpful during development when the same queries are repeatedly used for testing.
 
 The code for this application is in the directory **kgn**. KGN is a long example application for a book and we will not go over all of the code. Rather, I hope to provide you with a roadmap overview of the code, diving in on code that you might want to reuse for your own projects and some representative code for generating SPARQL queries.
+
+You will need to install the following Python library:
+
+    pip install PyInquirer
+
 
 ## Example Output
 
@@ -68,7 +71,7 @@ In addition to showing generated SPARQL and discovered relationships in the midd
 
 Hopefully after reading through sample output and seeing the screen shot of the application, you now have a better idea what this example application does. Now we will look at project configuration and then implementation.
 
-When the KGN application starts a sample query is randomly chosen. Queries with many entities can take a while to process, especially when you first start using this application. Every time KGN makes a web service call to DBPedia the query and response are cached in a SQLite database in **kgn_hy_cache.db** which can greatly speed up the program, especially in development mode when testing a set of queries. This caching also takes some load off of the public DBPedia endpoint, which is a polite thing to do.
+When the KGN application starts a sample query is randomly chosen. Queries with many entities can take a while to process, especially when you first start using this application. Every time KGN makes a web service call to DBPedia the query and response are cached in a SQLite database in **~/.kgn_hy_cache.db** which can greatly speed up the program, especially in development mode when testing a set of queries. This caching also takes some load off of the public DBPedia endpoint, which is a polite thing to do.
 
 ## Review of NLP Utilities Used in Application
 
@@ -95,7 +98,7 @@ TBD
 
 ### Implementing the Caching Layer
 
-While developing KGN and also using it as an end user, many SPARQL queries to DBPedia contain repeated entity names so it makes sense to write a caching layer.  We use a SQLite database "kgn_hy_cache.db" to store queries and responses.
+While developing KGN and also using it as an end user, many SPARQL queries to DBPedia contain repeated entity names so it makes sense to write a caching layer.  We use a SQLite database "~/.kgn_hy_cache.db" to store queries and responses.
 
 The caching layer is implemented in the file **cache.hy**:
 

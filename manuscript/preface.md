@@ -30,6 +30,7 @@ Depending on which examples you run and experiment with you will also need to in
 
         pip install beautifulsoup4 Flask Jinja2 Keras psycopg2
         pip install rdflib rdflib-sqlite spacy tensorflow
+        pip install PyInquirer
 
 The Hy language is under active development and it is not unusual for libraries and frameworks created more than a few months before the current Hy release to break. As a result of this, I have been careful in the selection of book material to leave out interesting functionality and libraries from the Hy ecosystem that I feel might not work with new releases. Here we stick with a few popular Python libraries like Keras, TensorFlow, and spaCy and otherwise we will work with mostly pure Hy language code in the examples.
 
