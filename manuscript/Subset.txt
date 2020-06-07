@@ -8,5 +8,6 @@ deeplearning.md
 nlp.md
 datastores.md
 linkeddata.md
-kg.md
+kgcreator.md
+kgn.md
 wrapup.md
