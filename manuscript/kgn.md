@@ -322,13 +322,15 @@ In lines 33-35 we are converting the shortened comment strings the user selected
         (for [name (get elist key)]
           (setv dbp (dbpedia-get-entities-by-name name type-uri))
           (for [d dbp]
-            (setv short-comment (shorten-comment (second (second d)) (second (first d))))
+            (setv short-comment (shorten-comment (second (second d)) 
+            (second (first d))))
             (if (= key "PERSON")
                 (.extend people-found-on-dbpedia [(+ name  " || " short-comment)]))
             (if (= key "GPE")
                 (.extend places-found-on-dbpedia [(+ name  " || " short-comment)]))
             (if (= key "ORG")
-                (.extend organizations-found-on-dbpedia [(+ name  " || " short-comment)])))))
+                (.extend organizations-found-on-dbpedia 
+                [(+ name  " || " short-comment)])))))
       (setv user-selected-entities
             (select-entities
               people-found-on-dbpedia
