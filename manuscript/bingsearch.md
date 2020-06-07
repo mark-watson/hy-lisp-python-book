@@ -1,14 +1,17 @@
 # Using the Microsoft Bing Search APIs
 
-You will need to register with Microsoft's Azure search service to use the material in this chapter. It is likely that you view search as a manual human-centered activity. I hope to expand your thinking to considering applications that automate search, finding information on the web, and automatically organize information.
+You will need to register with Microsoft's Azure search service to use the material in this chapter. It is likely that you view search as a manual human-centered activity. I hope to expand your thinking to considering applications that automate search, finding information on the web, and automatically organizing information.
 
 ## Getting an Access Key for Microsoft Bing Search APIs
 
 You will need an Azure account. I use the Bing search APIs fairly often for research but I have never spent more than about a dollar a month and usually I get no bill at all. For personal use it is an inexpensive service.
 
-Get started by going to the web page [https://azure.microsoft.com/en-us/try/cognitive-services/](https://azure.microsoft.com/en-us/try/cognitive-services/) and sign up for an access key. The Search APIs signup is currently in the fourth tab in this web form. When you navigate to the Search APIs tab, select the option Bing Search APIs v7. You will get an API key that you need to store in an environment variable that a later example needs:
+Get started by going to the web page [https://azure.microsoft.com/en-us/try/cognitive-services/](https://azure.microsoft.com/en-us/try/cognitive-services/) and sign up for an access key. The Search APIs signup is currently in the fourth tab in this web form. When you navigate to the Search APIs tab, select the option Bing Search APIs v7. You will get an API key that you need to store in an environment variable that you will soon need:
 
-    export BING_SEARCH_V7_SUBSCRIPTION_KEY=4e97234341d9891191c772b7371ad5b1
+{lang="bash",linenos=off}
+~~~~~~~~
+export BING_SEARCH_V7_SUBSCRIPTION_KEY=4e97234341d9891191c772b7371ad5b1
+~~~~~~~~
 
 That is not my real subscription key!
 
@@ -27,9 +30,9 @@ hy 0.18.0 using CPython(default) 3.7.4 on Darwin
 
 ## Example Search Script
 
-It takes very little Hy code to access the Bing search APIs but we will look at a long example script that expects a command line argument that is a string containing search terms:
+It takes very little Hy code to access the Bing search APIs. we will look at a long example script that expects a single command line argument that is a string containing search terms. The following example script shows you how to make a search query that requests search results in JSON format. We also look at parsing the returned JSON data. I formatted this listing to fit the page width:
 
-{lang="hylang",linenos=on}
+{lang="hylang",linenos=off}
 ~~~~~~~~
 #!/usr/bin/env hy
 
@@ -77,16 +80,26 @@ It takes very little Hy code to access the Bing search APIs but we will look at 
 (pprint (get first-result "displayUrl"))
 
 (if (in "displayUrl" first-result)
-    (print (.format " key: {:15} \t:\t {}" "displayUrl" (get first-result "displayUrl"))))
+    (print
+     (.format
+       " key: {:15} \t:\t {}" "displayUrl"
+       (get first-result "displayUrl"))))
 (if (in "language" first-result)
-    (print (.format " key: {:15} \t:\t {}" "language" (get first-result "language"))))
+    (print
+      (.format " key: {:15} \t:\t {}" "language" 
+      (get first-result "language"))))
 (if (in "name" first-result)
-    (print (.format " key: {:15} \t:\t {}" "name" (get first-result "name"))))
+    (print 
+      (.format 
+        " key: {:15} \t:\t {}" "name" 
+        (get first-result "name"))))
 ~~~~~~~~
 
-TBD: discuss above listing
+You can use search hints like "site:wikidata.org" to only search specific web sites. In the following example I use the search query:
 
-You can use search hints like "site:wikidata.org" to only search specific web sites. The following example generates 364 lines of output so I only show a few selected lines here:
+    "site:wikidata.org Sedona Arizona"
+  
+This example generates 364 lines of output so I only show a few selected lines here:
 
 {lang="hylang",linenos=off}
 ~~~~~~~~

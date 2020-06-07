@@ -215,7 +215,7 @@ inside of a **with-decorator** form. The value for **request** is defined in the
 
 Run this example setting a few different names.
 
-## Wrap Up
+## Wrap-up
 
 I like to be able to implement simple things simply, without a lot of ceremony. Once you work through these examples I hope you feel like you can generate Hy and Flask based web apps quickly and with very little code required.
 
