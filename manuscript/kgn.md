@@ -1,108 +1,73 @@
 # Knowledge Graph Navigator {#kgn}
 
-TBD: COPIED FROM COMMN LISP BOOK, FIX:
+The Knowledge Graph Navigator (which I will often refer to as KGN) is a tool for processing a set of entity names and automatically exploring the public Knowledge Graph [DBPedia](http://dbpedia.org) using SPARQL queries. I wrote KGN in Common Lisp for my own use, to automate some things I used to do manually when exploring Knowledge Graphs, and later thought that KGN might be useful also for educational purposes. KGN uses NLP code developed in earlier chapters and we will reuse that code with a short review of using the APIs.
 
-The Knowledge Graph Navigator (which I will often refer to as KGN) is a tool for processing a set of entity names and automatically exploring the public Knowledge Graph [DBPedia](http://dbpedia.org) using SPARQL queries. I started to write KGN for my own use, to automate some things I used to do manually when exploring Knowledge Graphs, and later thought that KGN might be useful also for educational purposes. KGN shows the user the auto-generated SPARQL queries so hopefully the user will learn by seeing examples. KGN uses NLP code developed in earlier chapters and we will reuse that code with a short review of using the APIs.
+Please note that the example is a simplified version that I first wrote in Common Lisp and is also an example in my book [Loving Common Lisp, or the Savvy Programmer's Secret Weapon](https://leanpub.com/lovinglisp) that you can read for free online.
 
-Please note that the example is a slightly simplified version that I first wrote in Common Lisp and is also an example in my book [Loving Common Lisp, or the Savvy Programmer's Secret Weapon](https://leanpub.com/lovinglisp) that you can read for free online.
+The following two screen shots show the text based user interface for this example. This example application asks the user for a list of entity names and uses SPARQL queries to discover potential matches in DBPedia. We use the python library [PyInquirer](https://github.com/CITGuru/PyInquirer) for requesting entity names and then to show the user a list of matches from DBPedia. The following screen shot shows these steps:
 
-After looking at generated SPARQL for an example query use of the application, we will start a process of bottom up development, first writing low level functions to automate SPARQL queries, writing utilities we will need for a text (console) based UI.
+{width=70%}
+![Initial user interaction with Knowledge Graph Navigator example](images/kgnuserselect.png)
 
-Some of the problems we will need to solve along the way will be colorizing the output the user sees in the UI and implementing a progress bar so the application user does not think the application is "hanging" while generating and making SPARQL queries to DBPedia.
+To select the entities of interest, the user uses a space character to select or deselect an entity and the return (or enter) key to accept the list selections.
 
-Since the DBPedia queries are time consuming, we will also implement a caching layer using SQLite that will make the app more responsive. The cache is especially helpful during development when the same queries are repeatedly used for testing.
+After the user selects entities from the list, the list disappears. The next screen shot shows the output from this example after the user finishes selecting entities of interest:
 
-The code for this application is in the directory **kgn**. KGN is a long example application for a book and we will not go over all of the code. Rather, I hope to provide you with a roadmap overview of the code, diving in on code that you might want to reuse for your own projects and some representative code for generating SPARQL queries.
+{width=70%}
+![After the user selects entities of interest](images/kgnafter.png)
 
-You will need to install the following Python library:
+The code for this application is in the directory **kgn**. You will need to install the following Python library that supports console/text user interfaces:
 
     pip install PyInquirer
 
+You will also need the **spacy** library and language model that we used in the earlier chapter on natural language processing. If you have not already done so install:
 
-## Example Output
+    pip install spacy
+    python -m spacy download en_core_web_sm
 
-Before we get started studying the implementation, let's look at sample output in order to help give meaning to the code we will look at later. Consider a query that a user might type into the top query field in the KGN app:
+After listing the generated SPARQL for finding information for the entities in the query, KGN searches for relationships between these entities. These discovered relationships can be seen at the end of the last screen shot. Please note that this step makes SPARQL queries on **O(n^2)** where **n** is the number of entities. Local caching of SPARQL queries to DBPedia helps make processing several entities possible.
 
-        Steve Jobs lived near San Francisco and was
-        a founder of \<http://dbpedia.org/resource/Apple_Inc.\>
-
-The system will try to recognize entities in a query. If you know the DBPedia URI of an entity, like the company Apple in this example, you can use that directly. Note that in the SPARQL  URIs are surrounded with angle bracket characters.
-
-The application prints out automatically generated SPARQL queries. For the above listed example query the following output will be generated (some editing to fit page width):
-
-{linenos=off}
-~~~~~~~~
-~~~~~~~~
-
-{lang="sparql",linenos=off}
-~~~~~~~~
-
-~~~~~~~~
-
-{linenos=off}
-~~~~~~~~
-~~~~~~~~
-{lang="sparql",linenos=off}
-~~~~~~~~
-
-~~~~~~~~
-{linenos=off}
-~~~~~~~~
-~~~~~~~~
-{lang="sparql",linenos=off}
-~~~~~~~~
-
-{linenos=off}
-~~~~~~~~
-DISCOVERED RELATIONSHIP LINKS:
-~~~~~~~~
-
-{lang="sparql",linenos=off}
-~~~~~~~~
-~~~~~~~~
-
-After listing the generated SPARQL for finding information for the entities in the query, KGN searches for relationships between these entities. These discovered relationships can be seen at the end of the last listing. Please note that this step makes SPARQL queries on **O(n^2)** where **n** is the number of entities. Local caching of SPARQL queries to DBPedia helps make processing several entities possible.
-
-In addition to showing generated SPARQL and discovered relationships in the middle text pane of the application, KGN also generates formatted results that are also displayed in the bottom text pane:
-
-{linenos=off}
-~~~~~~~~
-~~~~~~~~
-
-Hopefully after reading through sample output and seeing the screen shot of the application, you now have a better idea what this example application does. Now we will look at project configuration and then implementation.
-
-When the KGN application starts a sample query is randomly chosen. Queries with many entities can take a while to process, especially when you first start using this application. Every time KGN makes a web service call to DBPedia the query and response are cached in a SQLite database in **~/.kgn_hy_cache.db** which can greatly speed up the program, especially in development mode when testing a set of queries. This caching also takes some load off of the public DBPedia endpoint, which is a polite thing to do.
+Every time KGN makes a web service call to DBPedia the query and response are cached in a SQLite database in **~/.kgn_hy_cache.db** which can greatly speed up the program, especially in development mode when testing a set of queries. This caching also takes some load off of the public DBPedia endpoint, which is a polite thing to do.
 
 ## Review of NLP Utilities Used in Application
 
+The NLP code we use is near the top of the file kgn.hy**"
 
-TBD: update the following:
-
-Here is a quick review of NLP utilities we saw earlier:
-
-- kbnlp:make-text-object
-- kbnlp::text-human-names
-- kbnlp::text-place-name
-- entity-uris:find-entities-in-text
-- entity-uris:pp-entities
-
-The following code snippets show example calls to the relevant NLP functions and the generated output:
-
-{lang="hyping",linenos=off}
+{lang="hylang",linenos=off}
 ~~~~~~~~
+(import spacy)
+
+(setv nlp-model (spacy.load "en"))
+
+(defn entities-in-text [s]
+  (setv doc (nlp-model s))
+  (setv ret {})
+  (for
+    [[ename etype] (lfor entity doc.ents [entity.text entity.label_])]
+    
+    (if (in etype ret)
+        (setv (get ret etype) (+ (get ret etype) [ename]))
+        (assoc ret etype [ename])))
+  ret)
 ~~~~~~~~
+
+Here is an example use of this function:
+
+{linenos=off}
+~~~~~~~~
+=> (kgn.entities-in-text "Bill Gates, Microsoft, Seattle")
+{'PERSON': ['Bill Gates'], 'ORG': ['Microsoft'], 'GPE': ['Seattle']}
+~~~~~~~~
+
+The entity type "GPE" indicates that the entity is some type of location.
 
 ## Developing Low-Level Caching SPARQL Utilities
-
-TBD
-
-### Implementing the Caching Layer
 
 While developing KGN and also using it as an end user, many SPARQL queries to DBPedia contain repeated entity names so it makes sense to write a caching layer.  We use a SQLite database "~/.kgn_hy_cache.db" to store queries and responses.
 
 The caching layer is implemented in the file **cache.hy**:
 
-{lang="hyping",linenos=on}
+{lang="hylang",linenos=on}
 ~~~~~~~~
 (import [sqlite3 [connect version Error ]])
 (import json)
@@ -150,16 +115,10 @@ TBD
 {lang="hylang",linenos=on}
 ~~~~~~~~
 (import json)
-(import os)
-(import sys)
-(import [pprint [pprint]])
 (import requests)
-(import pickle)
 (require [hy.contrib.walk [let]])
 
 (import [cache [fetch-result-dbpedia save-query-results-dbpedia]])
-
-;;(setv query (get sys.argv 1)) ;; "select ?s ?p ?o { ?s ?p ?o } limit 2"
 
 (setv wikidata-endpoint "https://query.wikidata.org/bigdata/namespace/wdq/sparql")
 (setv dbpedia-endpoint "https://dbpedia.org/sparql")
@@ -205,12 +164,9 @@ This caching layer greatly speeds up my own personal use of KGN. Without caching
 
 ## Utilities to Colorize SPARQL and Generated Output
 
-When I first had the basic functionality of KGN working, I was disappointed by how the application looked as normal text. Every editor and IDE I use colorizes text in an appropriate way so I took advantage of the function **capi::write-string-with-properties** to (fairly) easily implement color hilting SPARQL queries.
+When I first had the basic functionality of KGN working, I was disappointed by how the application looked as normal text. Every editor and IDE I use colorizes text in an appropriate way so I used standard ANSI terminal escape sequences to implement color hilting SPARQL queries.
 
 The code in the following listing is in the file **colorize.hy**.
-
-TBD:
-
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -253,12 +209,6 @@ TBD:
     (.read ret)))
 ~~~~~~~~
 
-Here is an example call to function **colorize-sparql**:
-
-{lang="hylang",linenos=off}
-~~~~~~~~
-~~~~~~~~
-
 
 ## Text Utilities for Queries and Results
 
@@ -268,17 +218,117 @@ TBD
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
+#!/usr/bin/env hy
+
+(import [sparql [dbpedia-sparql]])
+(import [colorize [colorize-sparql]])
+
+(import [pprint [pprint]])
+(require [hy.contrib.walk [let]])
+
+(defn dbpedia-get-entities-by-name [name dbpedia-type]
+  (let [sparql
+        (.format "select distinct ?s ?comment {{ ?s ?p \"{}\"@en . ?s <http://www.w3.org/2000/01/rdf-schema#comment>  ?comment  . FILTER  (lang(?comment) = 'en') . ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {} . }} limit 15" name dbpedia-type)]
+    (print "Generated SPARQL to get DBPedia entity URIs from a name:")
+    (print (colorize-sparql sparql))
+    (dbpedia-sparql sparql)))
+
+;;(pprint (dbpedia-get-entities-by-name "Bill Gates" "<http://dbpedia.org/ontology/Person>"))
 ~~~~~~~~
 
+Here is an example:
 
+{width=70%}
+![Getting entities by name with colorized SPARL query script](images/kgnutils.png)
+
+## Finishing the Main Function for KGN
+
+We already looked at the NLP code near the beginning of the file **kgn.hy**. Let's look at the remainder of the implementation.
+
+{lang="hylang",linenos=on}
+~~~~~~~~
+(import spacy)
+
+(setv nlp-model (spacy.load "en"))
+
+(defn entities-in-text [s]
+  (setv doc (nlp-model s))
+  (setv ret {})
+  (for
+    [[ename etype] (lfor entity doc.ents [entity.text entity.label_])]
+    
+    (if (in etype ret)
+        (setv (get ret etype) (+ (get ret etype) [ename]))
+        (assoc ret etype [ename])))
+  ret)
+        
+
+;;(print (entities-in-text "Bill Clinton, Canada, IBM, San Diego, Florida, Great Lakes, Bill Gates, Pepsi, John Smith, Google"))
+
+(setv entity-type-to-type-uri
+      {"PERSON" "<http://dbpedia.org/ontology/Person>"
+       "GPE" "<http://dbpedia.org/ontology/Place>"
+       "ORG" "<http://dbpedia.org/ontology/Organisation>"
+       })
+~~~~~~~~
+   
+When we get entity results from DBPedia, the comments describing entities can be a few paragraphs of text. We want to shorten the comments so they fit in a single line of the entity selection list that we have seen earlier. The following code defines a comment shortening function and also a global variable that we will use to store the entity URIs for each shortened comment:
+
+{lang="hylang",linenos=on}
+~~~~~~~~
+(setv short-comment-to-uri {})
+
+(defn shorten-comment [comment uri]
+  (setv sc (+ (cut comment 0 70) "..."))
+  (assoc short-comment-to-uri sc uri)
+  sc)
+~~~~~~~~
+  
+Finally, let's look at the main application loop:
+
+{lang="hylang",linenos=on}
+~~~~~~~~
+(defn kgn []
+  (while
+    True
+    (let [query (get-query)
+          emap {}]
+      (if (or (= query "quit") (= query "q"))
+          (break))
+      (setv elist (entities-in-text query))
+      (setv people-found-on-dbpedia [])
+      (setv places-found-on-dbpedia [])
+      (setv organizations-found-on-dbpedia [])
+      (global short-comment-to-uri)
+      (setv short-comment-to-uri {})
+      (for [key elist]
+        (setv type-uri (get entity-type-to-type-uri key))
+        (for [name (get elist key)]
+          (setv dbp (dbpedia-get-entities-by-name name type-uri))
+          (for [d dbp]
+            (setv short-comment (shorten-comment (second (second d)) (second (first d))))
+            (if (= key "PERSON")
+                (.extend people-found-on-dbpedia [(+ name  " || " short-comment)]))
+            (if (= key "GPE")
+                (.extend places-found-on-dbpedia [(+ name  " || " short-comment)]))
+            (if (= key "ORG")
+                (.extend organizations-found-on-dbpedia [(+ name  " || " short-comment)])))))
+      (setv user-selected-entities
+            (select-entities
+              people-found-on-dbpedia
+              places-found-on-dbpedia
+              organizations-found-on-dbpedia))
+      (setv uri-list [])
+      (for [entity (get user-selected-entities "entities")]
+        (setv short-comment (cut entity (+ 4 (.index entity " || "))))
+        (.extend uri-list [(get short-comment-to-uri short-comment)]))
+      (setv relation-data (entity-results->relationship-links uri-list))
+      (print "\nDiscovered relationship links:")
+      (pprint relation-data))))
+~~~~~~~~
+  
 ## Wrap-up
 
-This is a long example application for a book so I did not discuss all of the code in the project. If you enjoy running and experimenting with this example and want to modify it for your own projects then I hope that I provided a sufficient road map for you to do so.
+If you enjoy running and experimenting with this example and want to modify it for your own projects then I hope that I provided a sufficient road map for you to do so.
 
-I got the idea for the KGN application because I was spending quite a bit of time manually setting up SPARQL queries for DBPedia (and other public sources like WikiData) and I wanted to experiment with partially automating this process. I wrote the CAPI user interface for fun since this example application could have had similar functionality as a command line tool. In fact, my first cut implementation was a command line tool with the user interface in the file **ui-text** that we looked at earlier. I decided to remove the command line interface and replace it using CAPI.
-
-Most of the Common Lisp development I do has no user interface or implements a web application. When I do need to write an application with a user interface, the LispWorks CAPI library makes writing user interfaces fairly easy to do.
-
-If you are using an open source Common Lisp like SBCL or CCL and you want to add a user interface then you might want to also try [LTK](http://www.peter-herth.de/ltk/) and [McClim](https://www.cliki.net/McCLIM). McClim works well on Linux and also works on macOS with XQuartz but with fuzzy fonts. I also like [Radiance](https://github.com/Shirakumo/radiance) that spawns a web browser so you can package web applications as desktop applications.
-
-If you are using CCL (Clojure Common Lisp) on macOS you can try the supported **COCOA-APPLICATION** package. This is only recommended if you already know the Cocoa APIs, otherwise this route has a very steep learning curve.
+I got the idea for the KGN application because I was spending quite a bit of time manually setting up SPARQL queries for DBPedia (and other public sources like WikiData) and I wanted to experiment with partially automating this process.
