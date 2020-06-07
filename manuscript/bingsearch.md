@@ -30,7 +30,7 @@ hy 0.18.0 using CPython(default) 3.7.4 on Darwin
 
 ## Example Search Script
 
-It takes very little Hy code to access the Bing search APIs. we will look at a long example script that expects a single command line argument that is a string containing search terms. The following example script shows you how to make a search query that requests search results in JSON format. We also look at parsing the returned JSON data. I formatted this listing to fit the page width:
+It takes very little Hy code to access the Bing search APIs. We will look at a long example script that expects a single command line argument that is a string containing search terms. The following example script shows you how to make a search query that requests search results in JSON format. We also look at parsing the returned JSON data. I formatted this listing to fit the page width:
 
 {lang="hylang",linenos=off}
 ~~~~~~~~
