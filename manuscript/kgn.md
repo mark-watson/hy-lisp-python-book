@@ -2,36 +2,42 @@
 
 The Knowledge Graph Navigator (which I will often refer to as KGN) is a tool for processing a set of entity names and automatically exploring the public Knowledge Graph [DBPedia](http://dbpedia.org) using SPARQL queries. I wrote KGN in Common Lisp for my own use, to automate some things I used to do manually when exploring Knowledge Graphs, and later thought that KGN might be useful also for educational purposes. KGN uses NLP code developed in earlier chapters and we will reuse that code with a short review of using the APIs.
 
-Please note that the example is a simplified version that I first wrote in Common Lisp and is also an example in my book [Loving Common Lisp, or the Savvy Programmer's Secret Weapon](https://leanpub.com/lovinglisp) that you can read for free online.
+Please note that the example is a simplified version that I first wrote in Common Lisp and is also an example in my book [Loving Common Lisp, or the Savvy Programmer's Secret Weapon](https://leanpub.com/lovinglisp) that you can read for free online. If you are interested you can see [screen shots of the Common Lisp version here](http://www.knowledgegraphnavigator.com/screen/).
 
 The following two screen shots show the text based user interface for this example. This example application asks the user for a list of entity names and uses SPARQL queries to discover potential matches in DBPedia. We use the python library [PyInquirer](https://github.com/CITGuru/PyInquirer) for requesting entity names and then to show the user a list of matches from DBPedia. The following screen shot shows these steps:
 
-{width=70%}
+{width=92%}
 ![Initial user interaction with Knowledge Graph Navigator example](images/kgnuserselect.png)
 
 To select the entities of interest, the user uses a space character to select or deselect an entity and the return (or enter) key to accept the list selections.
 
 After the user selects entities from the list, the list disappears. The next screen shot shows the output from this example after the user finishes selecting entities of interest:
 
-{width=70%}
+{width=92%}
 ![After the user selects entities of interest](images/kgnafter.png)
 
 The code for this application is in the directory **kgn**. You will need to install the following Python library that supports console/text user interfaces:
 
-    pip install PyInquirer
+{lang="bash",linenos=off}
+~~~~~~~~
+pip install PyInquirer
+~~~~~~~~
 
-You will also need the **spacy** library and language model that we used in the earlier chapter on natural language processing. If you have not already done so install:
+You will also need the **spacy** library and language model that we used in the earlier chapter on natural language processing. If you have not already done so, install these requirements:
 
-    pip install spacy
-    python -m spacy download en_core_web_sm
+{lang="bash",linenos=off}
+~~~~~~~~
+pip install spacy
+python -m spacy download en_core_web_sm
+~~~~~~~~
 
-After listing the generated SPARQL for finding information for the entities in the query, KGN searches for relationships between these entities. These discovered relationships can be seen at the end of the last screen shot. Please note that this step makes SPARQL queries on **O(n^2)** where **n** is the number of entities. Local caching of SPARQL queries to DBPedia helps make processing several entities possible.
+After listing the generated SPARQL for finding information for the entities in the query, KGN searches for relationships between these entities. These discovered relationships can be seen at the end of the last screen shot. Please note that this step makes SPARQL queries on **O(n^2)** where **n** is the number of entities. Local caching of SPARQL queries to DBPedia helps make processing many entities possible.
 
-Every time KGN makes a web service call to DBPedia the query and response are cached in a SQLite database in **~/.kgn_hy_cache.db** which can greatly speed up the program, especially in development mode when testing a set of queries. This caching also takes some load off of the public DBPedia endpoint, which is a polite thing to do.
+Every time KGN makes a SPARQL query web service call to DBPedia the query and response are cached in a SQLite database in **~/.kgn_hy_cache.db** which can greatly speed up the program, especially in development mode when testing a set of queries. This caching also takes some load off of the public DBPedia endpoint, which is a polite thing to do.
 
 ## Review of NLP Utilities Used in Application
 
-The NLP code we use is near the top of the file kgn.hy**"
+We covered NLP in a previous chapter, so the following is just a quick review. The NLP code we use is near the top of the file **kgn.hy**:
 
 {lang="hylang",linenos=off}
 ~~~~~~~~
@@ -43,8 +49,7 @@ The NLP code we use is near the top of the file kgn.hy**"
   (setv doc (nlp-model s))
   (setv ret {})
   (for
-    [[ename etype] (lfor entity doc.ents [entity.text entity.label_])]
-    
+    [[ename etype] (lfor entity doc.ents [entity.text entity.label_])]   
     (if (in etype ret)
         (setv (get ret etype) (+ (get ret etype) [ename]))
         (assoc ret etype [ename])))
@@ -63,7 +68,7 @@ The entity type "GPE" indicates that the entity is some type of location.
 
 ## Developing Low-Level Caching SPARQL Utilities
 
-While developing KGN and also using it as an end user, many SPARQL queries to DBPedia contain repeated entity names so it makes sense to write a caching layer.  We use a SQLite database "~/.kgn_hy_cache.db" to store queries and responses.
+While developing KGN and also using it as an end user, many SPARQL queries to DBPedia contain repeated entity names so it makes sense to write a caching layer.  We use a SQLite database "~/.kgn_hy_cache.db" to store queries and responses. We covered using SQLite in some detail in the chapter on datastores.
 
 The caching layer is implemented in the file **cache.hy**:
 
@@ -87,7 +92,8 @@ The caching layer is implemented in the file **cache.hy**:
   (try
     (setv conn (connect *db-path*))
     (setv cur (conn.cursor))
-    (cur.execute "insert into dbpedia (query, data) values (?, ?)" [query (json.dumps result)])
+    (cur.execute "insert into dbpedia (query, data) values (?, ?)" 
+                 [query (json.dumps result)])
     (conn.commit)
     (conn.close)
     (except [e Exception] (print e))))
@@ -106,13 +112,15 @@ The caching layer is implemented in the file **cache.hy**:
 (create-db)
 ~~~~~~~~
 
-TBD
+Here we store structured data from SPARQL queries as JSON data serialized as string values.
 
 ### SPARQL Utilities
 
-TBD
+We will use the caching code from the last section and also the standard Python library **requests** to access the DBPedia servers. The following code is found in the file **sparql.hy** and also provides support for using both DBPedia and WikiData. We only use DBPedia in this chapter but you start incorporating SPARQL queries into applications that you write, you will also probably want to use WikiData.
 
-{lang="hylang",linenos=on}
+The function **do-query-helper** contains generic code for SPARQL queries and is used in functions **wikidata-sparql** and **dbpedia-sparql**:
+
+{lang="hylang",linenos=off}
 ~~~~~~~~
 (import json)
 (import requests)
@@ -159,8 +167,26 @@ TBD
 (defn dbpedia-sparql [query]
   (do-query-helper dbpedia-endpoint query))
 ~~~~~~~~
-                      
-This caching layer greatly speeds up my own personal use of KGN. Without caching, queries that contain many entity references simply take too long to run. The UI for the KGN application has a menu option for clearing the local cache but I almost never use this option because growing a large cache that is tailored for the types of information I search for makes the entire system much more responsive.
+          
+Here is an example query (manually formatted for page width):
+
+{lang="hylang",linenos=off}
+~~~~~~~~
+$ hy
+hy 0.18.0 using CPython(default) 3.7.4 on Darwin
+=> (import sparql)
+table dbpedia already exists
+=> (sparql.dbpedia-sparql
+     "select ?s ?p ?o { ?s ?p ?o } limit 1")
+[[['s', 'http://www.openlinksw.com/virtrdf-data-formats#default-iid'],
+  ['p', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type'],
+  ['o', 'http://www.openlinksw.com/schemas/virtrdf#QuadMapFormat']]]
+=> 
+~~~~~~~~
+
+This is a wild-card SPARQL query that will match any of the 9.5 billion RDF triples in DBPedia and return just one result.
+        
+This caching layer greatly speeds up my own personal use of KGN. Without caching, queries that contain many entity references simply take too long to run.
 
 ## Utilities to Colorize SPARQL and Generated Output
 
@@ -168,7 +194,7 @@ When I first had the basic functionality of KGN working, I was disappointed by h
 
 The code in the following listing is in the file **colorize.hy**.
 
-{lang="hylang",linenos=on}
+{lang="hylang",linenos=off}
 ~~~~~~~~
 (require [hy.contrib.walk [let]])
 (import [io [StringIO]])
@@ -209,12 +235,16 @@ The code in the following listing is in the file **colorize.hy**.
     (.read ret)))
 ~~~~~~~~
 
+You have seen colorized SPARQL in the two screen shots at the beginning of this chapter.
 
 ## Text Utilities for Queries and Results
 
-The application low level utility functions are in the file **kgn-utils.hy**.
+The application low level utility functions are in the file **kgn-utils.hy**. The function **dbpedia-get-entities-by-name** requires two arguments:
 
-TBD
+- The name of an entity to search for.
+- A URI representing the entity type that we are looking for.
+
+We embed a SPARQL query that has placeholders for the entity name and type. The filter expression specifies that we only want triple results with comment values in the English language by using **(lang(?comment) = 'en')**:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -232,39 +262,21 @@ TBD
     (print "Generated SPARQL to get DBPedia entity URIs from a name:")
     (print (colorize-sparql sparql))
     (dbpedia-sparql sparql)))
-
-;;(pprint (dbpedia-get-entities-by-name "Bill Gates" "<http://dbpedia.org/ontology/Person>"))
 ~~~~~~~~
 
 Here is an example:
 
-{width=70%}
+{width=92%}
 ![Getting entities by name with colorized SPARL query script](images/kgnutils.png)
 
 ## Finishing the Main Function for KGN
 
 We already looked at the NLP code near the beginning of the file **kgn.hy**. Let's look at the remainder of the implementation.
 
+We need a dictionary (or hash table) to convert **spaCy** entity type names to DBPedia type URIs:
+
 {lang="hylang",linenos=on}
 ~~~~~~~~
-(import spacy)
-
-(setv nlp-model (spacy.load "en"))
-
-(defn entities-in-text [s]
-  (setv doc (nlp-model s))
-  (setv ret {})
-  (for
-    [[ename etype] (lfor entity doc.ents [entity.text entity.label_])]
-    
-    (if (in etype ret)
-        (setv (get ret etype) (+ (get ret etype) [ename]))
-        (assoc ret etype [ename])))
-  ret)
-        
-
-;;(print (entities-in-text "Bill Clinton, Canada, IBM, San Diego, Florida, Great Lakes, Bill Gates, Pepsi, John Smith, Google"))
-
 (setv entity-type-to-type-uri
       {"PERSON" "<http://dbpedia.org/ontology/Person>"
        "GPE" "<http://dbpedia.org/ontology/Place>"
@@ -283,8 +295,12 @@ When we get entity results from DBPedia, the comments describing entities can be
   (assoc short-comment-to-uri sc uri)
   sc)
 ~~~~~~~~
-  
-Finally, let's look at the main application loop:
+
+In line 5, we use the function **assoc** to add a key and value pair to an existing dictionary **short-comment-to-uri**.
+
+Finally, let's look at the main application loop. In line 4 we are using the function **get-query** (defined in file **textui.hy**) to get a list of entity names from the user. In line 7 we use the function **entities-in-text** that we saw earlier to map text to entity types and names. In the nested loops in lines 13-26 we build one line descriptions of people, place, and organizations that we will use to show the user a menu for selecting entities found in DBPedia from the original query. We are giving the use a chance to select only the discovered entities that they are interested in.
+
+In lines 33-35 we are converting the shortened comment strings the user selected back to DBPedia entity URIs. Finally in line 36 we use the function **entity-results->relationship-links** to find relationships between the user selected entities.
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -326,9 +342,11 @@ Finally, let's look at the main application loop:
       (print "\nDiscovered relationship links:")
       (pprint relation-data))))
 ~~~~~~~~
-  
+
+If you have not already done so, I hope you experiment running this example application. The first time you specify an entity name expect some delay while DBPedia is accessed. Thereafter the cache will make the application more responsive when you use the same name again in a different query.
+
 ## Wrap-up
 
-If you enjoy running and experimenting with this example and want to modify it for your own projects then I hope that I provided a sufficient road map for you to do so.
+If you enjoyed running and experimenting with this example and want to modify it for your own projects then I hope that I provided a sufficient road map for you to do so.
 
-I got the idea for the KGN application because I was spending quite a bit of time manually setting up SPARQL queries for DBPedia (and other public sources like WikiData) and I wanted to experiment with partially automating this process.
+I got the idea for the KGN application because I was spending quite a bit of time manually setting up SPARQL queries for DBPedia (and other public sources like WikiData) and I wanted to experiment with partially automating this exploration process.
