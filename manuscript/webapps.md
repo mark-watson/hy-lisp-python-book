@@ -213,7 +213,7 @@ inside of a **with-decorator** form. The value for **request** is defined in the
 (app.run)
 ~~~~~~~~
 
-Run this example setting a few different names.
+I suggest that you not only try running this example as-is but also try changing the template, and generally experiment with the code. Making even simple code changes helps to understand the code better.
 
 ## Wrap-up
 
