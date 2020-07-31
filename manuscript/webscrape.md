@@ -41,11 +41,11 @@ b'<!DOCTYPE html><html><head><title>KnowledgeBooks.com - research on the Knowled
 => 
 ~~~~~~~~
 
-This REPL session shows the the function **get-raw-data-from-web** defined in the previous listing returns a web page as a string. Now we will, in the next listing, show how to parse and process the string contents of a web pages. Note: you will need to install the **lxml** library for this example (using pip or pip3 depending on your Python configuration):
+This REPL session shows the the function **get-raw-data-from-web** defined in the previous listing returns a web page as a string. In line 9 we use a function **get-page-html-elements** to find all elements in a string containing HTML. This function is defined in the next listing and shows how to parse and process the string contents of a web pages. Note: you will need to install the **lxml** library for this example (using pip or pip3 depending on your Python configuration):
 
     pip install lxml
 
-The following listing of file **get_page_data.hy** uses the Beautiful Soup library to parse the string data for HTML text from a web site. The function **get-page-html-elements** returns names and associated data with each element in HTML represented as a string:
+The following listing of file **get_page_data.hy** uses the Beautiful Soup library to parse the string data for HTML text from a web site. The function **get-page-html-elements** returns names and associated data with each element in HTML represented as a string (the extra code on lines 20-24 is just debug example code):
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -94,7 +94,7 @@ Here is the output (with many lines removed for brevity):
 
 ## Getting HTML Links from the DemocracyNow.org News Web Site
 
-I financially support and rely on both NPR.org and DemocracyNow.org News as my main sources of news so I will use their news sites for examples here and in the next section. Web sites differ so much in format that it is often necessary to build highly customized web scrapers for individual web sites and to maintain the web scraping code as the format of the site changes in time.
+I financially support and rely on both NPR.org and DemocracyNow.org news as my main sources of news so I will use their news sites for examples here and in the next section. Web sites differ so much in format that it is often necessary to build highly customized web scrapers for individual web sites and to maintain the web scraping code as the format of the site changes in time.
 
 Before working through this example and/or the example in the next section use the file **Makefile** to fetch data:
 
@@ -132,7 +132,9 @@ The following listing shows **democracynow_front_page.hy**
     (print uri ":" text)))
 ~~~~~~~~
 
-This simply prints our URIs and text (separated with the string ":") for each link on the home page. On line 14, the comma character at the start of the return list indicates that we are constructing a tuple. A few lines of output from today's front page is:
+This simply prints our URIs and text (separated with the string ":") for each link on the home page. On line 13 we discard any anchor elements that do not contain text. On line 14 the comma character at the start of the return list indicates that we are constructing a tuple. Lines 16-18 define a main function that is used when running this file art the command line. This is similar to how main functions can be defined in Python to allow a library file to also be run as a command line tool.
+
+A few lines of output from today's front page is:
 
 {linenos=off}
 ~~~~~~~~
