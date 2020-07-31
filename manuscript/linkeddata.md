@@ -8,7 +8,7 @@ In the same way that the web allows links between related web pages, linked data
 
 While the "web" describes information for human readers, the semantic web is meant to provide structured data for ingestion by software agents. This distinction will be clear as we compare WikiPedia, made for human readers, with DBPedia which uses the info boxes on WikiPedia topics to automatically extract RDF data describing WikiPedia topics. Let's look at the WikiPedia topic for the town I live in, Sedona Arizona, and show how the info box on the English version of the [WikiPedia topic page for Sedona https://en.wikipedia.org/wiki/Sedona,_Arizona](https://en.wikipedia.org/wiki/Sedona,_Arizona) maps to the [DBPedia page http://dbpedia.org/page/Sedona,_Arizona](http://dbpedia.org/page/Sedona,_Arizona). Please open both of these WikiPedia and DBPedia URIs in two browser tabs and keep them open for reference.
 
-I assume that the format of the WikiPedia page is familiar so let's look at the DBPedia page for Sedona that in human readble form shows the RDF statements with Sedona Arizona as the subject. RDF is used to model and represent data. RDF is defined by three values so an instance of an RDF statement is called a *triple* with three parts:
+I assume that the format of the WikiPedia page is familiar so let's look at the DBPedia page for Sedona that in human readable form shows the RDF statements with Sedona Arizona as the subject. RDF is used to model and represent data. RDF is defined by three values so an instance of an RDF statement is called a *triple* with three parts:
 
 - subject: a URI (also referred to as a "Resource")
 - property: a URI (also referred to as a "Resource")
@@ -18,7 +18,7 @@ The subject for each Sedona related triple is the above URI for the DBPedia huma
 
 The following two figures show an abstract representation of linked data and then a sample of linked data with actual web URIs for resources and properties:
 
-{width=50%}
+{width=40%}
 ![Abstract RDF representation with 2 Resources, 2 literal values, and 3 Properties](images/rdf1.png)
 
 {width=75%}
