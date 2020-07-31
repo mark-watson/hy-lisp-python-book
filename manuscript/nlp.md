@@ -1,14 +1,31 @@
 # Natural Language Processing
 
-I have been working in the field of Natural Language Processing (NLP) since 1985 so I 'lived through' the revolutionary change in NLP that has occurred since 2014: Deep Learning results out-classed results from previous symbolic methods.
+I have been working in the field of Natural Language Processing (NLP) since 1985 so I 'lived through' the revolutionary change in NLP that has occurred since 2014: deep learning results out-classed results from previous symbolic methods.
 
-I will not cover older symbolic methods of NLP here, rather I refer you to my previous books [Practical Artificial Intelligence Programming With Java](https://leanpub.com/javaai), [Loving Common Lisp, or the Savvy Programmer's Secret Weapon](https://leanpub.com/lovinglisp), and [Haskell Tutorial and Cookbook](https://leanpub.com/haskell-cookbook) for examples. We get better results using Deep Learning (DL) for NLP and the library **spaCy** that we use in this chapter provides near state of the art performance and the authors of **spaCy** frequently update it to use the latest breakthroughs in the field.
+I will not cover older symbolic methods of NLP here, rather I refer you to my previous books [Practical Artificial Intelligence Programming With Java](https://leanpub.com/javaai), [Loving Common Lisp, [The Savvy Programmer's Secret Weapon](https://leanpub.com/lovinglisp), and [Haskell Tutorial and Cookbook](https://leanpub.com/haskell-cookbook) for examples. We get better results using Deep Learning (DL) for NLP and the library **spaCy** ([https://spacy.io](https://spacy.io/)) that we use in this chapter provides near state of the art performance. The authors of **spaCy** frequently update it to use the latest breakthroughs in the field.
 
 You will learn how to apply both DL and NLP by using the state-of-the-art full-feature library [spaCy](https://spacy.io/). This chapter concentrates on how to use spaCy in the Hy language for solutions to a few selected problems in NLP that I use in my own work. I urge you to also review the "Guides" section of the [spaCy documentation](https://spacy.io/usage) where examples are in Python but after experimenting with the examples in this chapter you should have no difficulty in translating any spaCy Python examples to the Hy language.
 
+If you have not already done so install the **spaCy** library and the full English language model:
+
+{lang="bash",linenos=off}
+~~~~~~~~
+pip install spacy
+python -m spacy download en
+~~~~~~~~
+
+You can use a smaller model (which requires loading "en_core_web_sm" instead of "en" in the following examples):
+
+{lang="bash",linenos=off}
+~~~~~~~~
+pip install spacy
+python -m spacy download en_core_web_sm
+~~~~~~~~
+
+
 ## Exploring the spaCy Library
 
-We will use the Hy REPL to experiment with spaCy, Lisp style. The following REPL listings are all from the same session:
+We will use the Hy REPL to experiment with spaCy, Lisp style. The following REPL listings are all from the same session, split into separate listings so that I can talk you through the examples:
 
 {lang="hy",linenos=on}
 ~~~~~~~~
@@ -216,7 +233,6 @@ The following list shows the definitions for the part of speech (POS) tags:
 -  X: other
 
 
-
 ## Implementing a HyNLP Wrapper for the Python spaCy Library
 
 We will generate two libraries (in files **nlp_lib.hy** and **coref_nlp_lib.hy**). The first is a general NLP library and the second specifically solves the anaphora resolution, or coreference, problem. There are test programs for each library in the files **nlp_example.hy** and **coref_example.hy**.
@@ -281,7 +297,22 @@ Marks-MacBook:nlp $ ./nlp_example.hy
   ..LOTS OF OUTPUT NOT SHOWN..
 ~~~~~~~~
 
+## Coreference (Anaphora Resolution)
+
 Another common NLP task is coreference (or anaphora resolution) which is the process of resolving pronouns in text (e.g., he, she, it, etc.) with preceding proper nouns that pronouns refer to. A simple example would be translating "John ran fast and he fell" to "John ran fast and John fell." This is an easy example, but often proper nouns that pronouns refer to are in previous sentences and resolving coreference can be ambiguous and require knowledge of common word use and grammar. This problem is now handled by deep learning transfer models like [BERT](https://github.com/google-research/bert).
+
+In addition to installing **spaCy** you also need the library **neuralcoref**. Only specific versions of **spaCy** and **neuralcoref** are compatible with each other. As of July 31, 2020 the following works to get dependencies and run the example for this section:
+
+{lang="bash",linenos=off}
+~~~~~~~~
+pip uninstall spacy neuralcoref
+pip install spacy==2.1.3
+python -m spacy download en
+pip install neuralcoref==4.0.0
+./coref_example.hy 
+~~~~~~~~
+
+Please note that version 2.1.3 of **spaCy** is older than the default version that pip installs. You might want to create a new Python virtual environment for this example or if you use Anaconda then use separate Anaconda environment.
 
 Listing of coref_nlp_lib.hy contains a wrapper for spaCy's coreference model:
 
@@ -301,7 +332,7 @@ Listing of coref_nlp_lib.hy contains a wrapper for spaCy's coreference model:
 ~~~~~~~~
 
 
-Listing of coref_example.hy shows code to test the Hy spaCy coref wrapper:
+Listing of **coref_example.hy** shows code to test the Hy spaCy and coreference wrapper:
 
 
 {lang="hylang",linenos=on}

@@ -1,6 +1,8 @@
- Linked Data and the Semantic Web
+# Linked Data and the Semantic Web
 
 Tim Berners Lee, James Hendler, and Ora Lassila wrote in 2001 an article for Scientific American where they introduced the term Semantic Web. Here I do not capitalize semantic web and use the similar term linked data somewhat interchangeably with semantic web.
+
+I assume that you read the section [RDF Data Using the "rdflib" Library](#rdflibintro) in the last chapter.
 
 In the same way that the web allows links between related web pages, linked data supports linking associated data on the web together. I view linked data as a relatively simple way to specify relationships between data sources on the web while the semantic web has a much larger vision: the semantic web has the potential to be the entirety of human knowledge represented as data on the web in a form that software agents can work with to answer questions, perform research, and to infer new data from existing data.
 
@@ -24,20 +26,20 @@ The following two figures show an abstract representation of linked data and the
 
 We saw a SPARQL Query (SPARQL for RDF data is similar to SQL for relational database queries) in the last chapter. Let's look at another example using the RDF in the last figure:
 
-        "select ?v where { <http://markwatson.com/index.rdf#Sun_ONE>
+        select ?v where {  <http://markwatson.com/index.rdf#Sun_ONE>
                            <http://www.ontoweb.org/ontology/1#booktitle>
                            ?v }
 
 This query should return the result "Sun ONE Services - J2EE". If you wanted to query for all URI resources that are books with the literal value of their titles, then you can use:
 
-        "select ?s ?v where { ?s
+        select ?s ?v where {  ?s
                               <http://www.ontoweb.org/ontology/1#booktitle>
                               ?v }
 
 
 Note that **?s** and **?v** are arbitrary query variable names, here standing for "subject" and "value". You can use more descriptive variable names like:
 
-        "select ?bookURI ?bookTitle where 
+        select ?bookURI ?bookTitle where 
             { ?bookURI
               <http://www.ontoweb.org/ontology/1#booktitle>
               ?bookTitle }

@@ -4,9 +4,11 @@ A Knowledge Graph, that I often abbreviate as **KG**, is a graph database using 
 
 The application we develop here, the Knowledge Graph Creator (which I often refer to as KGCreator) is a utility that I use to generate small Knowledge Graphs from input text.
 
-Knowledge Engineering is a discipline from the 1990s for organizing data and in-house knowledge. I view KGs as an extension of this earlier work.
+Knowledge engineering and knowledge representation are disciplines that started in the 1980s and are still both current research topics and used in industry. I view linked data, the semantic web, and KGs as extensions of this earlier work.
 
-There are two general types of KGs that are widely used in industry and that we will cover here. Property graphs, as used in Neo4J, are general graphs that place no restrictions on the number of links a graph node may have and allow general data structures to be stored as node data and for the property links between nodes. Semantic web data as represented by subject/property/value RDF triples are more constrained but support powerful logic inferencing to better use data that is implicit in a graph but not explicitly stated (i.e., data is more easily inferred).
+We base our work here on RDF. There is a general type of KGs that are also widely used in industry and that we will not cover here: property graphs, as used in Neo4J. Property graphs are general graphs that place no restrictions on the number of links a graph node may have and allow general data structures to be stored as node data and for the property links between nodes. Property links can have attributes, like nodes in the graph.
+
+Semantic web data as represented by subject/property/value RDF triples are more constrained than property graphs but support powerful logic inferencing to better use data that is implicit in a graph but not explicitly stated (i.e., data is more easily inferred).
 
 We covered RDF data in some detail in the last chapter. Here we will implement a toolset for converting unstructured text into RDF data using a few schema definitions from [schema.org](https://schema.org/). I believe in both the RDF and the general graph database approaches but here we will just use RDF.
 
@@ -64,7 +66,9 @@ The *.txt files contain plain text for analysis and the *.meta files contain the
 {width=70%}
 ![Overview of the Knowledge Graph Creator script](images/kg1.png)
 
-Using only the spaCy NLP library that we used earlier and the built in Hy/Python libraries, this example is implemented in just 58 lines of Hy code that is seen in the following three code listings:
+We will develop two versions of the Knowledge Graph Creator. The first generates RDF that uses string values for the object part of generated RDF statements. The second implementation attempts to resolve these string values to DBPedia URIs.
+
+Using only the spaCy NLP library that we used earlier and the built in Hy/Python libraries, this first example (uses strings a object values) is implemented in just 58 lines of Hy code that is seen in the following three code listings:
 
 
 {lang="hylang",linenos=on}
@@ -168,7 +172,7 @@ Using the Hy script in the last section, let's look at some of the generated RDF
 <https://newsshop.com/may/a1023.html>
   <https://schema.org/Organization>	"Banco Espirito Santo SA" .
 <https://newsshop.com/may/a1023.html>
-  <https://schema.org/Person>	"John Evans" .
+  <https://schema.org/Person>	      "John Evans" .
 <https://newsshop.com/may/a1023.html>
   <https://schema.org/Organization>	"Banco Espirito" .
 <https://newsshop.com/may/a1023.html>
@@ -212,7 +216,7 @@ $ git clone https://github.com/fatestigma/ontology-visualization
 $ cd ontology-visualization
 $ chmod +x ontology_viz.py
 $ ./ontology_viz.py -o test.dot output.rdf  -O ontology.ttl
-$ # copy the file output.rdf from the examples repo directory hy-lisp-python/kgcreator
+$ # copy the file output.rdf from examples repo directory hy-lisp-python/kgcreator
 $ dot -Tpng -o test.png test.dot
 $ open test.png
 ~~~~~~~~
