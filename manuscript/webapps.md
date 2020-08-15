@@ -2,14 +2,17 @@
 
 Python has good libraries and frameworks for building web applications and here we will use the **Flask** library and framework "under the hood" and write two simple Hy Language web applications. We will start with a simple "Hello World" example in Python, see how to reformulate it in Hy, and then proceed with more complex examples that will show how to use HTML generating templates, sessions, and cookies to store user data for the next time they visit your web site. In a later chapter we will cover use of the SQLite and PostgreSQL databases which are commonly used to persistent data for users in web applications. This pattern involves letting a user login and store a unique token for the user in a web browser cookie. In principle, you can do the same with web browser cookies but if a user visits your web site with a different browser or device then they will not have access to the data stored in cookies on a previous visit.
 
-I like light-weight web frameworks. In Ruby I use Sinatra, in Haskell I use Spock, and when I built Java web apps I liked light-weight tools like JSP. Flask is simple but capable and using it from Hy is productive and fun. In addition to using light weight frameworks I like to deploy web apps in the simplest way possible. We will close this chapter by discussing how to use the Heroku and Google Cloud Platform AppEngine platforms.
+I like lightweight web frameworks. In Ruby I use Sinatra, in Haskell I use Spock, and when I built Java web apps I liked lightweight tools like JSP. Flask is simple but capable and using it from Hy is productive and fun. In addition to using lightweight frameworks I like to deploy web apps in the simplest way possible. We will close this chapter by discussing how to use the Heroku and Google Cloud Platform AppEngine platforms.
 
 
 ## Getting Started With Flask: Using Python Decorators in Hy
 
 You will need to install Flask using:
 
-        pip install flask
+linenos=off}
+~~~~~~~~
+pip install flask
+~~~~~~~~
 
 We will use the Hy macro **with-decorator** to replace Python code with annotations. Here the decorator **@app.route** is used to map a URI pattern with a Python callback function. In the following case we define the behavior when the index page of a web app is accessed:
 
@@ -357,9 +360,9 @@ heroku create
 git push heroku master
 ~~~~~~~~
 
-Hopefully, if you have your Heroku account setup these commands will deploy this simple example.
+If you have your Heroku account setup these commands will deploy this example.
 
-You can look at the Heroku log fies for your application using:
+You can look at the Heroku log files for your application using:
 
 {linenos=off}
 ~~~~~~~~
@@ -376,7 +379,7 @@ heroku open
 By default, your Hello World app will run on the free Heroku mode. You should still remove it when you are done:
 
 - login to:  https://dashboard.heroku.com/apps
-- click on your applicartion name
+- click on your application name
 - click on the Settings tab
 - scroll to the bottom of the page and use the option to delete the app
 
@@ -395,6 +398,6 @@ The Heroku platform has a wide variety of supported services, including many thi
 
 ## Wrap-up
 
-I like to be able to implement simple things simply, without a lot of ceremony. Once you work through these examples I hope you feel like you can generate Hy and Flask based web apps quickly and with very little code required.
+I like to be able to implement simple things simply, without a lot of ceremony. Once you work through these examples I hope you feel that you can generate Hy and Flask based web apps quickly and with very little code required.
 
-To return to the theme of bottom-up programming, I find that starting with short low level utility functions and placing them in a separate file makes reuse simple and makes future similar projects even easier. For each language I work with, I collect snippets of useful code and short utilities kept in separate files. When writing code I start looking in my snippets directory for the language I am using to implement low level functionality even before doing a web search. When I work in Common Lisp I keep all low level code that I ever writen in small libraries contained a single Quicklisp source root directory and for Python and Hy I use Python's setuptools to generate libraries that are installed globally on my laptop for easy reuse. It is worth some effort to organize your work for future reuse.
+To return to the theme of bottom-up programming, I find that starting with short low level utility functions and placing them in a separate file makes reuse simple and makes future similar projects even easier. For each language I work with, I collect snippets of useful code and short utilities kept in separate files. When writing code I start looking in my snippets directory for the language I am using to implement low level functionality even before doing a web search. When I work in Common Lisp I keep all low level code that I have written in small libraries contained a single Quicklisp source root directory and for Python and Hy I use Python's **setuptools** library to generate libraries that are installed globally on my laptop for easy reuse. It is worth some effort to organize your work for future reuse.
