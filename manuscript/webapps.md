@@ -2,7 +2,7 @@
 
 Python has good libraries and frameworks for building web applications and here we will use the **Flask** library and framework "under the hood" and write two simple Hy Language web applications. We will start with a simple "Hello World" example in Python, see how to reformulate it in Hy, and then proceed with more complex examples that will show how to use HTML generating templates, sessions, and cookies to store user data for the next time they visit your web site. In a later chapter we will cover use of the SQLite and PostgreSQL databases which are commonly used to persistent data for users in web applications. This pattern involves letting a user login and store a unique token for the user in a web browser cookie. In principle, you can do the same with web browser cookies but if a user visits your web site with a different browser or device then they will not have access to the data stored in cookies on a previous visit.
 
-I like light-weight web frameworks. In Ruby I use Sinatra, in Haskell I use Spock, and when I built Java web apps I liked light-weight tools like JSP. Flask is simple but capable and using it from Hy is productive and fun. In addition to using light weight frameworks I like to deploy web apps in the simplest way possible. We will close this chapter by discussing how to use the Heroku and Googe Cloud Platform AppEngine platforms.
+I like light-weight web frameworks. In Ruby I use Sinatra, in Haskell I use Spock, and when I built Java web apps I liked light-weight tools like JSP. Flask is simple but capable and using it from Hy is productive and fun. In addition to using light weight frameworks I like to deploy web apps in the simplest way possible. We will close this chapter by discussing how to use the Heroku and Google Cloud Platform AppEngine platforms.
 
 
 ## Getting Started With Flask: Using Python Decorators in Hy
@@ -217,7 +217,7 @@ I suggest that you not only try running this example as-is but also try changing
 
 ## Deploying Hy Language Flask Apps to Google Cloud Platform AppEngine
 
-The example for this section is in a [sparate github repository](https://github.com/mark-watson/hy-lisp-gcp-starter-project) that you should clone or otherwise use a starter project if you intend to deploy to AppEngine.
+The example for this section is in a [sparate github repository](https://github.com/mark-watson/hy-lisp-gcp-starter-project) that you should clone or copy to a new project for a starter project if you intend to deploy to AppEngine.
 
 This AppEngine example is very similar to that in the last section except that it also serves a static asset and has a small Python stub main program to load the Hy language library and import the Hy language code.
 
@@ -235,7 +235,7 @@ if __name__ == '__main__':
     app.run(host='localhost', port=9090, debug=True)
 ~~~~~~~~
 
-Te Hy app is slightly differnt. On line 6 we specify the location of static assets and we do not call the **run()** method on the **app** object.
+The Hy app is slightly different than we saw in the last section. On line 6 we specify the location of static assets and we do not call the **run()** method on the **app** object.
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -253,33 +253,44 @@ Te Hy app is slightly differnt. On line 6 we specify the location of static asse
 (with-decorator (app.route "/response" :methods ["POST"])
   (defn response []
     (setv name (request.form.get "name"))
-    (print name)
     (render_template "template1.j2" :name name)))
 ~~~~~~~~
 
 I assume that you have some experience with GCP and have the following:
 
-- GCP command line tools installed
-- you have created a new project on the GCP AppEngine console named something like hy-gcp-test (if you choose a name already in use, you wil get a warning)
+- GCP command line tools installed.
+- You have created a new project on the GCP AppEngine console named something like hy-gcp-test (if you choose a name already in use, you wil get a warning).
 
-On the command line:
+After cloning or otherwise copying this project, you use the command line tools to deploy and test your Flask app:
 
-    gcloud auth login
-    gcloud config set project hy-gcp-test
-    gcloud app deploy
-    gcloud app browse
+{linenos=off}
+~~~~~~~~
+gcloud auth login
+gcloud config set project hy-gcp-test
+gcloud app deploy
+gcloud app browse
+~~~~~~~~
 
 If you have problems, look at your logs:
 
-    gcloud app logs tail -s default
+{linenos=off}
+~~~~~~~~
+gcloud app logs tail -s default
+~~~~~~~~
 
 You can edit changes localling and test locally using:
 
-    python main.py
+{linenos=off}
+~~~~~~~~
+python main.py
+~~~~~~~~
 
 Any changes can be tested by deploying again:
 
-    gcloud app deploy
+{linenos=off}
+~~~~~~~~
+gcloud app deploy
+~~~~~~~~
 
 Please note that everytime you deploy, a new instance is created. You will want to use the GCP AppEngine console to remove old instances, and remove all instances when you are done.
 
@@ -294,20 +305,20 @@ You can make a copy of this example, create a github repo, and follow the above 
 
 ## Deploying Hy Language Flask Apps to the Heroku Platform
 
-The example for this section is in a [sparate github repository](https://github.com/mark-watson/hy-lisp-heroku-starter-project) that you should clone or otherwise use a starter project if you intend to deploy to the Heroku platform.
+The example for this section is in a [sparate github repository](https://github.com/mark-watson/hy-lisp-heroku-starter-project) that you should clone or otherwise use as starter project if you intend to deploy to the Heroku platform.
 
 We use a Python stub program **wsgi.python** to make our Flask app work with the WSGI interface that Heroku uses:
 
-{lang="hylang",linenos=on}
+{lang="hylang",linenos=off}
 ~~~~~~~~
 import hy
 import flask_test
 from flask_test import app
 ~~~~~~~~
 
-The Heroku platform will call the **run()** method on the imported **app** object b ecause of the settings in the Heroku **Proc** file for this project:
+The Heroku platform will call the **run()** method on the imported **app** object because of the settings in the Heroku **Proc** file for this project:
 
-{lang="hylang",linenos=on}
+{lang="hylang",linenos=off}
 ~~~~~~~~
 web: gunicorn 'wsgi:app' --log-file -
 ~~~~~~~~
@@ -339,19 +350,28 @@ You need to install the Heroku command line tools:
 
 After checking out this repo, do the following from this directory:
 
-    heroku login
-    heroku create
-    git push heroku master
+{linenos=off}
+~~~~~~~~
+heroku login
+heroku create
+git push heroku master
+~~~~~~~~
 
 Hopefully, if you have your Heroku account setup these commands will deploy this simple example.
 
 You can look at the Heroku log fies for your application using:
 
-    heroku logs --tail
+{linenos=off}
+~~~~~~~~
+heroku logs --tail
+~~~~~~~~
 
 You can open this Hello World app in your default web browser using:
 
-    heroku open
+{linenos=off}
+~~~~~~~~
+heroku open
+~~~~~~~~
 
 By default, your Hello World app will run on the free Heroku mode. You should still remove it when you are done:
 
@@ -366,7 +386,10 @@ You can make a copy of this example, create a github repo, and follow the above 
 
 To test your Heroku setup locally or for development, you can use:
 
-    heroku local
+{linenos=off}
+~~~~~~~~
+heroku local
+~~~~~~~~
 
 The Heroku platform has a wide variety of supported services, including many third party services like [data services](https://www.heroku.com/managed-data-services) and [Heroku and third party addons](https://elements.heroku.com/addons).
 
