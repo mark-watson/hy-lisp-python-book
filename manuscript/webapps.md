@@ -1,6 +1,6 @@
 # Writing Web Applications
 
-Python has good libraries and frameworks for building web applications and here we will use the **Flask** library and framework "under the hood" and write two simple Hy Language web applications. We will start with a simple "Hello World" example in Python, see how to reformulate it in Hy, and then proceed with more complex examples that will show how to use HTML generating templates, sessions, and cookies to store user data for the next time they visit your web site. In a later chapter we will cover use of the SQLite and PostgreSQL databases which are commonly used to persistent data for users in web applications. This pattern involves letting a user login and store a unique token for the user in a web browser cookie. In principle, you can do the same with web browser cookies but if a user visits your web site with a different browser or device then they will not have access to the data stored in cookies on a previous visit.
+Python has good libraries and frameworks for building web applications and here we will use the **Flask** library and framework "under the hood" and write two simple Hy Language web applications. We will start with a simple "Hello World" example in Python, see how to reformulate it in Hy, and then proceed with more complex examples that will show how to use HTML generating templates, sessions, and cookies to store user data for the next time they visit your web site. In a later chapter we will cover use of the SQLite and PostgreSQL databases which are commonly used to persist data for users in web applications. This pattern involves letting a user login and store a unique token for the user in a web browser cookie. In principle, you can do the same with web browser cookies but if a user visits your web site with a different browser or device then they will not have access to the data stored in cookies on a previous visit.
 
 I like lightweight web frameworks. In Ruby I use Sinatra, in Haskell I use Spock, and when I built Java web apps I liked lightweight tools like JSP. Flask is simple but capable and using it from Hy is productive and fun. In addition to using lightweight frameworks I like to deploy web apps in the simplest way possible. We will close this chapter by discussing how to use the Heroku and Google Cloud Platform AppEngine platforms.
 
@@ -9,7 +9,7 @@ I like lightweight web frameworks. In Ruby I use Sinatra, in Haskell I use Spock
 
 You will need to install Flask using:
 
-linenos=off}
+{linenos=off}
 ~~~~~~~~
 pip install flask
 ~~~~~~~~
@@ -220,7 +220,7 @@ I suggest that you not only try running this example as-is but also try changing
 
 ## Deploying Hy Language Flask Apps to Google Cloud Platform AppEngine
 
-The example for this section is in a [sparate github repository](https://github.com/mark-watson/hy-lisp-gcp-starter-project) that you should clone or copy to a new project for a starter project if you intend to deploy to AppEngine.
+The example for this section is in a [separate github repository](https://github.com/mark-watson/hy-lisp-gcp-starter-project) that you should clone or copy to a new project for a starter project if you intend to deploy to AppEngine.
 
 This AppEngine example is very similar to that in the last section except that it also serves a static asset and has a small Python stub main program to load the Hy language library and import the Hy language code.
 
@@ -281,7 +281,7 @@ If you have problems, look at your logs:
 gcloud app logs tail -s default
 ~~~~~~~~
 
-You can edit changes localling and test locally using:
+You can edit changes locally and test locally using:
 
 {linenos=off}
 ~~~~~~~~
@@ -308,7 +308,7 @@ You can make a copy of this example, create a github repo, and follow the above 
 
 ## Deploying Hy Language Flask Apps to the Heroku Platform
 
-The example for this section is in a [sparate github repository](https://github.com/mark-watson/hy-lisp-heroku-starter-project) that you should clone or otherwise use as starter project if you intend to deploy to the Heroku platform.
+The example for this section is in a [separate github repository](https://github.com/mark-watson/hy-lisp-heroku-starter-project) that you should clone or otherwise use as starter project if you intend to deploy to the Heroku platform.
 
 We use a Python stub program **wsgi.python** to make our Flask app work with the WSGI interface that Heroku uses:
 
@@ -326,7 +326,7 @@ The Heroku platform will call the **run()** method on the imported **app** objec
 web: gunicorn 'wsgi:app' --log-file -
 ~~~~~~~~
 
-Here we are stating to the Heroku platform that we want the production-friendly **gunicorn** server to call the **run()** method on the **app** object that is defined in the **wsgi** module (here the module name is the prefix name of the Python WSGI hadler file).
+Here we are stating to the Heroku platform that we want the production-friendly **gunicorn** server to call the **run()** method on the **app** object that is defined in the **wsgi** module (here the module name is the prefix name of the Python WSGI handler file).
 
 The Hy Flask app has a few changes from earlier examples. All changes are in line 3:
 
