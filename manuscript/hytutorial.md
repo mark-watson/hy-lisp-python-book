@@ -67,7 +67,7 @@ a_tags = soup.find_all("a")
 print("a tags:", a_tags)
 ~~~~~~~~
 
-In the following listing notice how we import other code and libraries in Hy. The special form **setv** is used to define variables in a local context. Since the **setv** statements in lines 3, 5, and 6 are used at the top level, they are global in the Python/Hy module named after the root name of the source file.
+In the following listing notice how we import other code and libraries in Hy. The special form **setv** is used to define variables in a local context. Since the **setv** statements in lines 4, 6, and 7 are used at the top level, they are global in the Python/Hy module named after the root name of the source file.
 
 {lang="hylang",linenos=on}
 ~~~~~~~~

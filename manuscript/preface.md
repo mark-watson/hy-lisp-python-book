@@ -78,4 +78,4 @@ I enjoy writing and your support helps me write new editions and updates for my 
 
 I thank my wife Carol for editing this manuscript, finding typos, and suggesting improvements.
 
-I would like to thank Pascal (Reddit user chuchana) for corrections and suggestions. I would like to thank Carlos Ungil for catching a typo and reporting it. I would like to thank Jud Taylor for finding several typo errors.
+I would like to thank Pascal (Reddit user chuchana) for corrections and suggestions. I would like to thank Carlos Ungil for catching a typo and reporting it. I would like to thank Jud Taylor for finding several typo errors. I would like to thank Dave Smythe for finding some typos.
