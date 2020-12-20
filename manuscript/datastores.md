@@ -294,11 +294,16 @@ I use PostgreSQL more than any other datastore and taking the time to learn how 
 
 ## RDF Data Using the "rdflib" Library  {#rdflibintro}
 
-While the last two sections on Sqlite and PostgreSQL provided examples that you are likely to use in your own work, we will now turn to something more esoteric but still useful, the RDF notations for using data schema and RDF triple graph data in semantic web and linked data applications. I used graph databases working with Google's Knowledge Graph when I worked there and I have had several consulting projects using linked data. You will need to understand the material in this section for the two chapters that take a deeper dive into the semantic web and linked data and also develop an example that automatically creates Knowledge Graphs.
+While the last two sections on Sqlite and PostgreSQL provided examples that you are likely to use in your own work, we will now turn to something more esoteric but still useful, the RDF notations for using data schema and RDF triple graph data in semantic web, linked data, and Knowledge Graph applications. I used graph databases working with Google's Knowledge Graph when I worked there and I have had several consulting projects using linked data. I currently work on the Knowledge Graph team at Olive AI. You will need to understand the material in this section for the two chapters that take a deeper dive into the semantic web and linked data and also develop an example that automatically creates Knowledge Graphs.
 
 In my work I use RDF as a notation for graph data, RDFS (RDF Schema) to define formally data types and relationship types in RDF data, and occasionally OWL (Web Ontology Language) for reasoning about RDF data and inferring new graph triple data from data explicitly defined. Here we will only cover RDF since it is the most practical linked data tool and I refer you to my other semantic web books for deeper coverage of RDF as well as RDFS and OWL.
 
 We will go into some detail on using semantic web and linked data resources in the next chapter. Here we will study the use of library **rdflib** as a data store, reading RDF data from disk and from web resources, adding RDF statements (which are triples containing a subject, predicate, and object) and for serializing an in-memory graph to a file in one of the standard RDF XML, turtle, or NT formats.
+
+You need to install both the **rdflib** library and the plugin for using the JSON-LD format:
+
+    pip install rdflib
+    pip install rdflib-jsonld
 
 The following REPL session shows importing the **rdflib** library, fetching RDF (in XML format) from my personal web site, printing out the triples in the graph in NT format, and showing how the graph can be queried. I added most of this RDF to my web site in 2005, with a few updates since then. The following REPL session is split up into several listings (with some long output removed) so I can explain how the **rdflib** is being used. In the first REPL listing I load an RDF file in XML format from my web site and print it in NT format. NT format can have either subject/predicate/object all on one line separated by spaces and terminated by a period or as shown below, the subject is on one line with predicate and objects printed indented on two additional lines. In both cases a period character "." is used to terminate search RDF NT statement. The statements are displayed in arbitrary order.
 
@@ -388,6 +393,28 @@ http://markwatson.com/index.rdf#Sun_ONE
 => 
 ~~~~~~~~
 
+There are several available formats for serializing RDF data. Here we will serialize using the JSON-LD format (later we will also see examples for serializing in NT and Turtle formats):
+
+```hy
+=> (import [rdflib [plugin]])
+=> (import [rdflib.serializer [Serializer]])
+=> (print (graph.serialize :format "json-ld" :indent 2))
+[
+   {
+      "@id": "https://markwatson.com/index.rdf#Sun_ONE",
+      "@type": ["http://www.ontoweb.org/ontology/1#Book" ],
+      "http://www.ontoweb.org/ontology/1#author": [
+         { "@id": "https://markwatson.com/index.rdf#mark_watson" }
+      ],
+      "http://www.ontoweb.org/ontology/1#booktitle": [
+         { "@value": "Sun ONE Services - J2EE" }
+      ],
+      
+      ...  
+```
+
+JSON-LD is convenient for implementing APIs that are intended for use by developers who are not familiar with RDF technology.
+
 We will cover the SPARQL query language in more detail in the next chapter but for now, notice that SPARQL is similar to SQL queries. SPARQL queries can find triples in a graph matching simple patterns, match complex patterns, and update and delete triples in a graph. The following simple SPARQL query finds all triples with the predicate equal to <http://www.w3.org/2000/10/swap/pim/contact#company> and prints out the subject and object of any matching triples:
 
 {lang="hy",linenos=on, number-from=84}
@@ -423,7 +450,8 @@ http://markwatson.com/index.rdf#mark_watson  contact company:  Capital One
 => 
 => (graph.serialize :format "pretty-xml")
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF\n  xmlns:dc="http://purl.org/dc/elements/1.1/"
+<rdf:RDF
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#"
   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   xmlns:ow="http://www.ontoweb.org/ontology/1#"
@@ -431,7 +459,7 @@ http://markwatson.com/index.rdf#mark_watson  contact company:  Capital One
 
     LOTS OF STUFF NOT SHOWN
 
-</rdf:Description>\n</rdf:RDF>
+</rdf:RDF>
 ~~~~~~~~
 
 I like Turtle RDF notation better than the XML notation because Turtle is easier to read and understand. Here, on line 118 we serialize the graph (with new nodes added above in lines 90 to 96) to Turtle:
@@ -508,17 +536,7 @@ In addition to the Turtle format I also use the simpler NT format that puts URI 
 => 
 ~~~~~~~~
 
-### Using Relational Database as a Backend for rdflib
-
-I am not going to cover using a non-default rdflib backend, but if you want to be able to load large RDF data sets and persist the data then you can use the SQLAlchemy plugin extension.
-
-First, install the Python SQLAlchemy RDF library:
-
-        pip install rdflib_sqlalchemy
-
-Then, follow the test examples at the [rdflib-sqlalchemy](https://github.com/RDFLib/rdflib-sqlalchemy) github repository.
-
-If I need to use large RDF data sets I prefer to not use rdflib and instead use SPARQL to access a free or open source standalone RDF data store like [OpenLink Virtuoso](https://en.wikipedia.org/wiki/Virtuoso_Universal_Server) or [GraphDB™ Free Edition](https://www.ontotext.com/products/graphdb/graphdb-free/). I also like and recommend the commercial AllegroGraph and Stardog RDF server products.
+Using RDFLIB with in-memoery RDF triple storage is very convenient with small or mid-size RDF data sets as long as initializing the data store by reading a local file containing RDF triples is a fast operation. If I need to use large RDF data sets I prefer to not use rdflib and instead use SPARQL to access a free or open source standalone RDF data store like [OpenLink Virtuoso](https://en.wikipedia.org/wiki/Virtuoso_Universal_Server) or [GraphDB™ Free Edition](https://www.ontotext.com/products/graphdb/graphdb-free/). I also like and recommend the commercial AllegroGraph and Stardog RDF server products.
 
 
 ## Wrap-up

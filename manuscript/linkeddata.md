@@ -1,6 +1,6 @@
-# Linked Data and the Semantic Web
+# Linked Data, the Semantic Web, and Knowledge Graphs
 
-Tim Berners Lee, James Hendler, and Ora Lassila wrote in 2001 an article for Scientific American where they introduced the term Semantic Web. Here I do not capitalize semantic web and use the similar term linked data somewhat interchangeably with semantic web.
+Tim Berners Lee, James Hendler, and Ora Lassila wrote in 2001 an article for Scientific American where they introduced the term Semantic Web. Here I do not capitalize semantic web and use the similar term linked data somewhat interchangeably with semantic web. Most work using these technologies now is building corporate Knowledge Graphs. I currently work on the Knowledge Graph team at [Olive AI](https://oliveai.com).
 
 I assume that you read the section [RDF Data Using the "rdflib" Library](#rdflibintro) in the last chapter.
 
