@@ -349,37 +349,6 @@ Here I did not install the library **nlp_lib.hy** using Python setuptools (which
 On line 6 I am inserting the library directory into the Python system load path so the import statement on line 8 can find the **nlp-lib** library and on line 13 can find the **coref-nlp-lib** library.
 
 
-## Using Closures
-
-Function definitions can capture values defined outside of a function and even change the captured value as seen in this example (file **closure_example.hy** in the directory **hy-lisp-python/misc**):
-
-{lang="hylang",linenos=on}
-~~~~~~~~
-#!/usr/bin/env hy
-
-(require [hy.contrib.walk [let]])
-
-(let [x 1]
-  (defn increment []
-    (setv x (+ x 1))
-    x))
-
-(print (increment))
-(print (increment))
-(print (increment))
-~~~~~~~~
-
-That produces:
-
-{linenos=off}
-~~~~~~~~
-2
-3
-4
-~~~~~~~~
-
-Using closures is often a good alternative to object oriented programming for maintaining private state that only one or a few functions (that are defined inside the closure) are allowed to access and modify. In the last example the **let** statement could have defined more than one variable with initial values and many functions could have been defined to perform various calculations with the values of these captured variables and/or change the values of captured variables. This effectively hides the variables defined in the **let** statement from code outside of the let statement but the functions are accessible from outside the **let** statement.
-
 ## Hy Looks Like Clojure: How Similar Are They?
 
 [Clojure](https://clojure.org/) is a dynamic general purpose Lisp language for the JVM. One of the great Clojure features is support of immutable data (read only after creation) that makes multi-threaded code easier to write and maintain.
