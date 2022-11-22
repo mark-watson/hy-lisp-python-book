@@ -67,10 +67,9 @@ Usually I use photographs that I take myself for covers of my LeanPub books. Alt
 
 ## A Request from the Author
 
-I spent time writing this book to help you, dear reader. I release this book under the Creative Commons "share and share alike, no modifications, no commercial reuse" license and set the minimum purchase price to $5.00 in order to reach the most readers. You can also download a free copy from [my website](https://markwatson.com/books). Under this license you can share a PDF version of this book with your friends and coworkers. If you found this book on the web (or it was given to you) and if it provides value to you then please consider doing one of the following to support my future writing efforts and also to support future updates to this book:
+I spent time writing this book to help you, dear reader. I release this book under the Creative Commons "share and share alike, no modifications, no commercial reuse" license and set the minimum purchase price to $8.00 in order to reach the most readers. You can also read this book (and all of my books) for free on my [my website](https://markwatson.com/books).
 
-- Purchase a copy of this book or any other of my leanpub books at [https://leanpub.com/u/markwatson](https://leanpub.com/u/markwatson)
-- [Hire me as a consultant](https://markwatson.com/)
+If you would like to support my work please consider purchasing my books on [Leanpub](https://leanpub.com/u/markwatson) and star my git repositories that you find useful on [GitHub](https://github.com/mark-watson?tab=repositories&q=&type=public). You can also interact with me on social media on [Mastodon](https://mastodon.social/@mark_watson) and [Twitter](https://twitter.com/mark_l_watson).
 
 I enjoy writing and your support helps me write new editions and updates for my books and to develop new book projects. Thank you!
 
