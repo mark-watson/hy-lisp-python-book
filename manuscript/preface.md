@@ -1,3 +1,13 @@
+# Cover Material, Copyright, and License
+
+Copyright 2020-2023 Mark Watson. All rights reserved. This book may be shared using the Creative Commons “share and share alike, no modifications, no commercial reuse” license.
+
+This eBook will be updated occasionally so please periodically check the [leanpub.com web page for this book](https://leanpub.com/hy-lisp-python) for updates.
+
+This is the eighth edition released August 2022.
+
+Please visit the [author's website](http://markwatson.com).
+
 # Preface
 
 While this is a book on the Hy Lisp language, we have a wider theme here. In an age where artificial intelligence (AI) is a driver of the largest corporations and government agencies, the question is how do individuals and small organizations take advantage of AI technologies given disadvantages of small scale. The material I chose to write about here is selected to help you, dear reader, survive as a healthy small fish in a big bond.
@@ -22,9 +32,7 @@ Some of the examples are very simple (e.g., the web app examples) while some are
 
 This is a hands-on book! I expect you, dear reader, to follow along with the examples as you read this book. I assume that you know some Python and know how to use the command line tools **python** and **pip** and use a virtual Python environment like [Anaconda (**conda**)](https://www.anaconda.com/) or [**virtualenv**](https://virtualenv.pypa.io/en/latest/). Personally I prefer **conda** but you can use any Python 3.x setup you like as long as you have a few packages installed.
 
-You can install the current stable version of **Hy** using:
-
-        pip install git+https://github.com/hylang/hy.git
+Please follow the README directions for the GitHub repository for this book [https://github.com/mark-watson/hy-lisp-python](https://github.com/mark-watson/hy-lisp-python) because a specific version of the Hy language is required.
 
 Depending on which examples you run and experiment with you will also need to install some of the following libraries:
 
