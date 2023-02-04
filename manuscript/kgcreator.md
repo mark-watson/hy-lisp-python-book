@@ -223,10 +223,13 @@ $ open test.png
 
 Edited to fit on the page, the output looks like:
 
+{width: "90%"}
 ![](images/1dot1.png)
 
+{width: "90%"}
 ![](images/1dot2.png)
 
+{width: "90%"}
 ![](images/1dot3.png)
 
 Because we used literal values, notice how for example the node for the entity **IBM** is not shared and thus a software agent using this RDF data cannot, for example, infer relationships between two news sources that both have articles about IBM. We will work on a solution to this problem in the next section.

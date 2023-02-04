@@ -61,6 +61,7 @@ I liked this example and after experimenting with the code, I then started using
 
 Open [http://127.0.0.1:5000/](http://127.0.0.1:5000/) in your web browser:
 
+{width: "80%"}
 ![Hello world Flask web app](images/flask1.jpg)
 
 
@@ -137,8 +138,10 @@ Please note that there is nothing special about the names inside the **with-deco
 
 Open [http://127.0.0.1:5000/](http://127.0.0.1:5000/) in your web browser:
 
+{width: "80%"}
 ![Flask web app using a Jinja2 Template](images/flask2.jpg)
 
+{width: "80%"}
 ![Flask web app using a Jinja2 Template after entering my name and submitting the HTML input form](images/flask3.jpg)
 
 

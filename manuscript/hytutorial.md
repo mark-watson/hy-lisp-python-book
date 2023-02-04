@@ -408,6 +408,7 @@ The git repository directory **hy-lisp-python/matplotlib** contains two similar 
 
 The generated plot looks like this on macOS (Matplotlib is portable and also works on Windows and Linux):
 
+{width: "70%"}
 ![Sigmoid Function](images/sigmoid.png)
 
 ## Bonus Points: Configuration for macOS and ITerm2 for Generating Plots Inline in a Hy REPL and Shell
@@ -422,10 +423,12 @@ The add the following to your .profile, .bash_profile, or .zshrc (depending on y
 
 Here we run an example from the last section in a zsh shell (bash, etc. also should work):
 
+{width: "80%"}
 ![Inline matplotlib use in zsh shell in an ITerm on macOS](images/mac-inline-matplotlib.png)
 
 The best part of generating inline plots is during interactive REPL-based coding sessions:
 
+{width: "80%"}
 ![Inline matplotlib use in a Hy REPL on macOS](images/mac-inline-matplotlib2.png)
 
 If you use a Mac laptop to SSH into a remote Linux server you need to install **itermplot** and set the environment variable **MPLBACKEND** on the remote server.
