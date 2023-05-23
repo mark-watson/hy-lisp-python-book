@@ -10,4 +10,6 @@ datastores.md
 linkeddata.md
 kgcreator.md
 kgn.md
+openai.md
+llamaindex.md
 wrapup.md
