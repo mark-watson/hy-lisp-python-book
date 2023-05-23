@@ -261,7 +261,7 @@ Listing for hy-lisp-python/nlp/nlp_lib.hy:
 ~~~~~~~~
 (import spacy)
 
-(setv nlp-model (spacy.load "en"))
+(setv nlp-model (spacy.load "en_core_web_sm"))
 
 (defn nlp [some-text]
   (setv doc (nlp-model some-text))
@@ -278,7 +278,7 @@ Listing for hy-lisp-python/nlp/nlp_example.hy:
 ~~~~~~~~
 #!/usr/bin/env hy
 
-(import [nlp-lib [nlp]])
+(import nlp-lib [nlp])
 
 (print
   (nlp "President George Bush went to Mexico and he had a very good meal"))
@@ -297,66 +297,6 @@ Marks-MacBook:nlp $ ./nlp_example.hy
   ..LOTS OF OUTPUT NOT SHOWN..
 ~~~~~~~~
 
-## Coreference (Anaphora Resolution)
-
-Another common NLP task is coreference (or anaphora resolution) which is the process of resolving pronouns in text (e.g., he, she, it, etc.) with preceding proper nouns that pronouns refer to. A simple example would be translating "John ran fast and he fell" to "John ran fast and John fell." This is an easy example, but often proper nouns that pronouns refer to are in previous sentences and resolving coreference can be ambiguous and require knowledge of common word use and grammar. This problem is now handled by deep learning transfer models like [BERT](https://github.com/google-research/bert).
-
-In addition to installing **spaCy** you also need the library **neuralcoref**. Only specific versions of **spaCy** and **neuralcoref** are compatible with each other. As of July 31, 2020 the following works to get dependencies and run the example for this section:
-
-{lang="bash",linenos=off}
-~~~~~~~~
-pip uninstall spacy neuralcoref
-pip install spacy==2.1.3
-python -m spacy download en
-pip install neuralcoref==4.0.0
-./coref_example.hy 
-~~~~~~~~
-
-Please note that version 2.1.3 of **spaCy** is older than the default version that pip installs. You might want to create a new Python virtual environment for this example or if you use Anaconda then use separate Anaconda environment.
-
-Listing of coref_nlp_lib.hy contains a wrapper for spaCy's coreference model:
-
-{lang="hylang",linenos=on}
-~~~~~~~~
-(import argparse os)
-(import spacy neuralcoref)
-
-(setv nlp2 (spacy.load "en"))
-(neuralcoref.add_to_pipe nlp2)
-
-(defn coref-nlp [some-text]
-  (setv doc (nlp2 some-text))
-  { "corefs" doc._.coref_resolved
-    "clusters" doc._.coref_clusters
-    "scores" doc._.coref_scores})
-~~~~~~~~
-
-
-Listing of **coref_example.hy** shows code to test the Hy spaCy and coreference wrapper:
-
-
-{lang="hylang",linenos=on}
-~~~~~~~~
-#!/usr/bin/env hy
-
-(import [coref-nlp-lib [coref-nlp]])
-
-;; tests:
-(print (coref-nlp "President George Bush went to Mexico and he had a very good meal"))
-(print (coref-nlp "Lucy threw a ball to Bill and he caught it"))
-~~~~~~~~
-
-The output will look like:
-
-{lang="hylang",linenos=on}
-~~~~~~~~
-Marks-MacBook:nlp $ ./coref_example.hy 
-{'corefs': 'President George Bush went to Mexico and President George Bush had a very good meal', 'clusters': [President George Bush: [President George Bush, he]], 'scores': {President George Bush: {President George Bush: 1.5810412168502808}, George Bush: {George Bush: 4.11817741394043, President George Bush: -1.546141266822815}, Mexico: {Mexico: 1.4138349294662476, President George Bush: -4.650205612182617, George Bush: -3.666614532470703}, he: {he: -0.5704692006111145, President George Bush: 9.38597583770752, George Bush: -1.4178757667541504, Mexico: -3.6565260887145996}, a very good meal: {a very good meal: 1.652894377708435, President George Bush: -2.5543758869171143, George Bush: -2.13267183303833, Mexico: -1.6889561414718628, he: -2.7667927742004395}}}
-
-{'corefs': 'Lucy threw a ball to Bill and Bill caught a ball', 'clusters': [a ball: [a ball, it], Bill: [Bill, he]], 'scores': {Lucy: {Lucy: 0.41820740699768066}, a ball: {a ball: 1.8033190965652466, Lucy: -2.721518039703369}, Bill: {Bill: 1.5611814260482788, Lucy: -2.8222298622131348, a ball: -1.806389570236206}, he: {he: -0.5760076642036438, Lucy: 3.054243326187134, a ball: -1.818403720855713, Bill: 3.077427625656128}, it: {it: -1.0269954204559326, Lucy: -3.4972281455993652, a ball: -0.31290221214294434, Bill: -2.5343685150146484, he: -3.6687228679656982}}}
-~~~~~~~~
-
-Anaphora resolution, also called coreference, refers to two or more words or phrases in an input text refer to the same noun. This analysis usually entails identifying which noun phrases that pronouns refer to.
 
 ## Wrap-up
 

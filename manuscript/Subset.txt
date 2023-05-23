@@ -1,7 +1,6 @@
 preface.md
 hytutorial.md
 whylisp.md
-jupyter.md
 webapps.md
 webscrape.md
 bingsearch.md

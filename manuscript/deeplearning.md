@@ -107,23 +107,27 @@ The function **main** (lines 35-45) loads training and test (evaluation of model
 ~~~~~~~~
 #!/usr/bin/env hy
 
-(import argparse os)
-(import keras
-        keras.utils.data-utils)
+(import argparse)
+(import os)
+(import tensorflow [keras])
+(import tensorflow.keras [layers])
 
-(import [pandas [read-csv]])
+(import pandas [read-csv])
+(import pandas)
 
 (defn build-model []
   (setv model (keras.models.Sequential))
-  (.add model (keras.layers.core.Dense 9
+  (.add model (keras.layers.Dense 9
                  :activation "relu"))
-  (.add model (keras.layers.core.Dense 12
+  (.add model (keras.layers.Dense 12
                  :activation "relu"))
-  (.add model (keras.layers.core.Dense 1
+  (.add model (keras.layers.Dense 1
                  :activation "sigmoid"))
   (.compile model :loss      "binary_crossentropy"
                   :optimizer (keras.optimizers.RMSprop))
   model)
+
+(defn first [x] (get x 0))
 
 (defn train [batch-size model x y]
   (for [it (range 50)]
@@ -134,9 +138,9 @@ The function **main** (lines 35-45) loads training and test (evaluation of model
 
 (defn load-data [file-name]
   (setv all-data (read-csv file-name :header None))
-  (setv x-data10 (. all-data.iloc [(, (slice 0 10) [0 1 2 3 4 5 6 7 8])] values))
+  (setv x-data10 (. all-data.iloc [#((slice 0 10) [0 1 2 3 4 5 6 7 8])] values))
   (setv x-data (* 0.1 x-data10))
-  (setv y-data (. all-data.iloc [(, (slice 0 10) [9])] values))
+  (setv y-data (. all-data.iloc [#((slice 0 10) [9])] values))
   [x-data y-data])
 
 (defn main []
@@ -187,14 +191,13 @@ There are a few things that make the following example code more complex than th
 {lang="hylang",linenos=on}
 ~~~~~~~~
 $ hy
-hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
-=> (import [keras.callbacks [LambdaCallback]])
+=> (import keras.callbacks [LambdaCallback])
 Using TensorFlow backend.
-=> (import [keras.models [Sequential]])
-=> (import [keras.layers [Dense LSTM]])
-=> (import [keras.optimizers [RMSprop]])
-=> (import [keras.utils.data_utils [get_file]])
-=> (import [numpy :as np]) ;; note the syntax for aliasing a module name
+=> (import keras.models [Sequential])
+=> (import keras.layers [Dense LSTM])
+=> (import keras.optimizers [RMSprop])
+=> (import keras.utils.data_utils [get_file])
+=> (import numpy :as np) ;; note the syntax for aliasing a module name
 => (import random sys io)
 => (with [f (io.open "/Users/markw/.keras/datasets/nietzsche.txt" :encoding "utf-8")]
 ... (setv text (.read f)))
@@ -241,27 +244,29 @@ This is a powerful technique that I used to model JSON with complex deeply neste
 ;; The original Python file LSTM.py is included in the directory
 ;; hy-lisp-python/deeplearning for reference.
 
-(import [keras.callbacks [LambdaCallback]])
-(import [keras.models [Sequential]])
-(import [keras.layers [Dense LSTM]])
-(import [keras.optimizers [RMSprop]])
-(import [keras.utils.data_utils [get_file]])
-(import [numpy :as np]) ;; note the syntax for aliasing a module name
+(import keras.callbacks [LambdaCallback])
+(import keras.models [Sequential])
+(import keras.layers [Dense LSTM])
+(import keras.optimizers [RMSprop])
+(import keras [utils])
+;;(import keras.utils.data_utils [get_file])
+(import numpy :as np) ;; note the syntax for aliasing a module name
 (import random sys io)
 
 (setv path
-      (get_file        ;; this saves a local copy in ~/.keras/datasets
+      (utils.get_file        ;; this saves a local copy in ~/.keras/datasets
         "nietzsche.txt"
         :origin "https://s3.amazonaws.com/text-datasets/nietzsche.txt"))
 
 (with [f (io.open path :encoding "utf-8")]
   (setv text (.read f))) ;; note: sometimes we use (.lower text) to
-;;       convert text to all lower case
+                         ;;       convert text to all lower case
 (print "corpus length:" (len text))
 
 (setv chars (sorted (list (set text))))
 (print "total chars (unique characters in input text):" (len chars))
-(setv char_indices (dict (lfor i (enumerate chars) (, (last i) (first i)))))
+;;(setv char_indices (dict (lfor i (enumerate chars) (, (last i) (first i)))))
+(setv char_indices (dict (lfor i (enumerate chars) #((get i -1) (get i 0)))))
 (setv indices_char (dict (lfor i (enumerate chars) i)))
 
 ;; cut the text in semi-redundant sequences of maxlen characters
@@ -300,7 +305,7 @@ This is a powerful technique that I used to model JSON with complex deeply neste
   (setv probas (np.random.multinomial 1 preds 1))
   (np.argmax probas))
 
-(defn on_epoch_end [epoch &optional not-used]
+(defn on_epoch_end [epoch [not-used None]]
   (print)
   (print "----- Generating text after Epoch:" epoch)
   (setv start_index (random.randint 0 (- (len text) maxlen 1)))
@@ -315,7 +320,9 @@ This is a powerful technique that I used to model JSON with complex deeply neste
       (setv x_pred (np.zeros [1 maxlen (len chars)]))
       (for [[t char] (lfor j (enumerate sentence) j)]
         (setv (get x_pred 0 t (get char_indices char)) 1))
-      (setv preds (first (model.predict x_pred :verbose 0)))
+;;      (setv preds (first (model.predict x_pred :verbose 0)))
+      (setv preds (get (model.predict x_pred :verbose 0) 0))
+      ;;;(print "** preds=" preds)
       (setv next_index (sample preds diversity))
       (setv next_char (get indices_char next_index))
       (setv sentence (+ (cut sentence 1) next_char))
@@ -367,7 +374,6 @@ We prepare the input and target output data in lines 43-48 in the last code list
 {lang="bash",linenos=on}
 ~~~~~~~~
 Marks-MacBook:deeplearning $ hy
-hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 => (setv text "0123456789abcdefg")
 => (setv maxlen 4)
 => (setv i 3)

@@ -11,45 +11,6 @@ Please start by installing Hy in your current Python environment:
 pip install git+https://github.com/hylang/hy.git
 ~~~~~~~~
 
-## We Will Often Use the Contributed **let** Macro in Book Example Code
-
-In Scheme, Clojure, and Common Lisp languages the **let** special form is used to define blocks of code with local variables and functions. I will require (or import) the contributed **let** macro, that substitutes for a built-in special form in most examples in this book, but I might not include the **require** in short code listings. Always assume that the following lines start each example:
-
-{lang="hylang",linenos=on}
-~~~~~~~~
-#!/usr/bin/env hy
-
-(require [hy.contrib.walk [let]])
-~~~~~~~~
-
-Line 1 is similar to how we make Python scripts into runnable programs. Here we run **hy** instead of **python**. Line 3 imports the **let** macro. We will occasionally use **let** for code blocks with local variable and function definitions and also for using closures (I will cover closures at the end of this chapter):
-
-{lang="hylang",linenos=on}
-~~~~~~~~
-#!/usr/bin/env hy
-
-(require [hy.contrib.walk [let]])
-
-(let [x 1]
-  (print x)
-  (let [x 33]
-    (print x)
-    (setv x 44)
-    (print x))
-  (print x))
-~~~~~~~~
-
-The output is:
-
-{linenos=off}
-~~~~~~~~
-1
-33
-44
-1
-~~~~~~~~
-
-Notice that setting a new value for **x** in the inner **let** expression does not change the value bound to the variable **x** in the outer **let** expression.
 
 ## Using Python Libraries
 
@@ -73,7 +34,7 @@ In the following listing notice how we import other code and libraries in Hy. Th
 ~~~~~~~~
 $ hy
 hy 0.18.0 using CPython(default) 3.7.4 on Darwin
-=> (import [bs4 [BeautifulSoup]])
+=> (import bs4 [BeautifulSoup])
 => (setv raw-data "<html><body><a href=\"http://markwatson.com\">Mark</a></body></html>")
 => (setv soup (BeautifulSoup raw-data "lxml"))
 => (setv a (.find-all soup "a"))
@@ -89,7 +50,7 @@ Notice in lines 3 and 6 that we can have "-" characters inside of variable and f
 
 ## Global vs. Local Variables
 
-Although I don't generally recommend it, sometimes it is convenient to export local variables defined with **setv** or in a **let** macro expansion to be global variables in the context of the current module (that is defined by the current source file). As an example:
+Although I don't generally recommend it, sometimes it is convenient to export local variables defined with **setv** to be global variables in the context of the current module (that is defined by the current source file). As an example:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -156,7 +117,7 @@ If we only wanted to import **BeautifulSoup** from the Python BeautifulSoup libr
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-(import [bs4 [BeautifulSoup]])
+(import bs4 [BeautifulSoup])
 ~~~~~~~~
 
 ## Using Hy Libraries in Python Programs
@@ -168,10 +129,10 @@ There is nothing special about importing and using Hy library code or your own H
 {lang="hylang",linenos=on}
 ~~~~~~~~
 (import argparse os)
-(import [urllib.request [Request urlopen]])
+(import urllib.request [Request urlopen])
 
-(defn get-raw-data-from-web [aUri &optional [anAgent
-                                            {"User-Agent" "HyLangBook/1.0"}]]
+(defn get-raw-data-from-web [aUri [anAgent
+                                   {"User-Agent" "HyLangBook/1.0"}]]
   (setv req (Request aUri :headers anAgent))
   (setv httpResponse (urlopen req))
   (setv data (.read httpResponse))
@@ -306,7 +267,7 @@ I suggest using the Python **format** method when you need to format output. In 
 {lang="hylang",linenos=off}
 ~~~~~~~~
 $ hy
-hy 0.18.0 using CPython(default) 3.7.4 on Darwin
+hy 0.26.0 using CPython(default) 3.11.1 on Darwin
 => (.format "first: {} second: {}" "cat" 3.14159)
 'first: cat second: 3.14159'
 => (.format "first: {:>15} second: {:>15}" "cat" 3.14159)
@@ -333,7 +294,7 @@ Marks-MacBook:webscraping $ hy
 hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 => (import sys)
 => (sys.path.insert 1 "../nlp")
-=> (import [nlp-lib [nlp]])
+=> (import nlp-lib [nlp])
 => (nlp "President George Bush went to Mexico and he had a very good meal")
 {'text': 'President George Bush went to Mexico and he had a very good meal', 
   ...
@@ -359,7 +320,7 @@ The original Hy language developer Paul Tagliamonte was clearly inspired by Cloj
 
 The book **Serious Python** by Julien Danjou has an entire chapter (chapter 9) on the Python AST (abstract syntax tree), an introduction to Hy, and an interview with Paul Tagliamonte. Recommended!
 
-[This podcast](https://www.pythonpodcast.com/episode-23-hylang-core-developers/) in 2015 interviews Hy developers Paul Tagliamonte, Tuukka Turto, and Morten Linderud. You can see the [current Hy contributer list on github](https://github.com/hylang/hy/graphs/contributors).
+[This podcast](https://www.pythonpodcast.com/episode-23-hylang-core-developers/) in 2015 interviews Hy developers Paul Tagliamonte, Tuukka Turto, and Morten Linderud. You can see the [current Hy contributor list on github](https://github.com/hylang/hy/graphs/contributors).
 
 ## Plotting Data Using the Numpy and the Matplotlib Libraries
 
@@ -370,9 +331,8 @@ The Numpy library supports what is called "broadcasting" in Python. In the funct
 {lang="hylang",linenos=on}
 ~~~~~~~~
 $ hy
-hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
-=> (import [numpy :as np])
-=> (import [matplotlib.pyplot :as plt])
+=> (import numpy :as np)
+=> (import matplotlib.pyplot :as plt)
 => 
 => (defn sigmoid [x]
 ...   (/ 1.0 (+ 1.0 (np.exp (- x)))))
@@ -391,8 +351,8 @@ The git repository directory **hy-lisp-python/matplotlib** contains two similar 
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-(import [numpy :as np])
-(import [matplotlib.pyplot :as plt])
+(import numpy :as np)
+(import matplotlib.pyplot :as plt)
 
 (defn sigmoid [x]
   (/ 1.0 (+ 1.0 (np.exp (- x)))))

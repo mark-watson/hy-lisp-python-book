@@ -20,17 +20,17 @@ Let's start with putting common code for using Sqlite into a reusable library in
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-(import [sqlite3 [connect version Error ]])
+(import sqlite3)
 
 (defn create-db [db-file-path] ;; db-file-path can also be ":memory:"
-  (setv conn (connect db-file-path))
+  (setv conn (sqlite3.connect db-file-path))
   (print version)
   (conn.close))
 
 (defn connection [db-file-path] ;; db-file-path can also be ":memory:"
-  (connect db-file-path))
+  (sqlite3.connect db-file-path))
 
-(defn query [conn sql &optional variable-bindings]
+(defn query [conn sql [variable-bindings None]]
   (setv cur (conn.cursor))
   (if variable-bindings
     (cur.execute sql variable-bindings)
@@ -47,12 +47,10 @@ The following listing of file **sqlite_example.hy**shows how to use this simple 
 ~~~~~~~~
 #!/usr/bin/env hy
 
-(import [sqlite-lib [create-db connection query]])
+(import sqlite-lib [create-db connection query])
 
 (defn test_sqlite-lib []
-  (setv dbpath ":memory:")
-  (create-db dbpath)
-  (setv conn (connection ":memory:"))
+  (setv conn (connection ":memory:")) ;; "test.db"))
   (query conn "CREATE TABLE people (name TEXT, email TEXT);")
   (print
     (query conn "INSERT INTO people VALUES ('Mark', 'mark@markwatson.com')"))
@@ -93,7 +91,7 @@ $ ./sqlite_example.hy
 [('Mark Watson', 'mark@markwatson.com')]
 ~~~~~~~~
 
-Line 2 shows the version of SQlist we are using. The lists in lines 1-2, 4, and 6 are empty because the functions to create a table, insert data into a table, update a row in a table, and delete rows do not return values.
+Line 2 shows the version of SQlite we are using. The lists in lines 1-2, 4, and 6 are empty because the functions to create a table, insert data into a table, update a row in a table, and delete rows do not return values.
 
 In the next section we will see how PostgreSQL treats JSON data as a native data type. For sqlite, you can store JSON data as a "dumped" string value but you can't query by key/value pairs in the data. You can encode JSON as a string and then decode it back to JSON (or as a dictionary) using:
 
@@ -202,7 +200,6 @@ When using Hy (or any other Lisp language and also for Haskell), I usually start
 {lang="hy",linenos=on}
 ~~~~~~~~
 Marks-MacBook:datastores $ hy
-hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
 => (import json psycopg2)
 => (setv conn (psycopg2.connect :dbname "hybook" :user "markw"))
 => (setv cur (conn.cursor))
@@ -234,14 +231,12 @@ The file **postgres_lib.hy** wraps commonly used functionality for accessing a d
 
 {lang="hy",linenos=on}
 ~~~~~~~~
-(import [psycopg2 [connect]])
-
 (defn connection-and-cursor [dbname username]
   (setv conn (connect :dbname dbname :user username))
   (setv cursor (conn.cursor))
   [conn cursor])
 
-(defn query [cursor sql &optional variable-bindings]
+(defn query [cursor sql [variable-bindings None]]
   (if variable-bindings
     (cursor.execute sql variable-bindings)
     (cursor.execute sql)))
@@ -255,13 +250,13 @@ The following file **postgres_example.hy** contains examples for using the libra
 ~~~~~~~~
 #!/usr/bin/env hy
 
-(import [postgres-lib [connection-and-cursor query]])
+(import postgres-lib [connection-and-cursor query])
 
 (defn test-postgres-lib []
   (setv [conn cursor] (connection-and-cursor "hybook" "markw"))
   (query cursor "CREATE TABLE people (name TEXT, email TEXT);")
   (conn.commit)
-  (query cursor "INSERT INTO people VALUES ('Mark', 'mark@markwatson.com')")
+  (query cursor "INSERT INTO people VALUES ('Mark',  'mark@markwatson.com')")
   (query cursor "INSERT INTO people VALUES ('Kiddo', 'kiddo@markwatson.com')")
   (conn.commit)
   (query cursor "SELECT * FROM people")
@@ -310,107 +305,65 @@ The following REPL session shows importing the **rdflib** library, fetching RDF 
 {lang="hy",linenos=on}
 ~~~~~~~~
 Marks-MacBook:datastores $ hy
-hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
-=> (import [rdflib [Graph]])
+=> (import rdflib [Graph])
 => (setv graph (Graph))
-=> (graph.load "http://markwatson.com/index.rdf")
+=> (graph.parse "https://www.w3.org/2000/10/rdf-tests/RDF-Model-Syntax_1.0/ms_4.1_1.rdf")
 => (for [[subject predicate object] graph]
 ... (print subject "\n  " predicate "\n  " object " ."))
-http://markwatson.com/index.rdf#mark_watson_consulting_services 
-   http://www.w3.org/1999/02/22-rdf-syntax-ns#label 
-   Mark Watson Consulting Services  .
-http://markwatson.com/index.rdf#mark_watson 
-   http://www.w3.org/2000/10/swap/pim/contact#firstName 
-   Mark  .
-http://markwatson.com/index.rdf#mark_watson 
-   http://www.ontoweb.org/ontology/1#name 
-   Mark Watson  .
-http://www.markwatson.com/ 
-   http://purl.org/dc/elements/1.1/language 
-   en-us  .
-http://markwatson.com/index.rdf#mark_watson 
-   http://www.ontoweb.org/ontology/1#researchTopic 
-   Semantic Web  .
-http://www.markwatson.com/ 
-   http://purl.org/dc/elements/1.1/date 
-   2005-7-10  .
-http://markwatson.com/index.rdf#mark_watson 
-   http://www.ontoweb.org/ontology/1#researchTopic 
-   RDF and RDF Schema  .
-http://markwatson.com/index.rdf#mark_watson 
-   http://www.ontoweb.org/ontology/1#researchTopic 
-   ontologies  .
-http://www.markwatson.com/ 
-   http://purl.org/dc/elements/1.1/title 
-   Mark Watson's Home Page  .
-http://markwatson.com/index.rdf#mark_watson 
-   http://www.w3.org/2000/10/swap/pim/contact#mailbox 
-   mailto:markw@markwatson.com  .
-http://markwatson.com/index.rdf#mark_watson 
-   http://www.w3.org/2000/10/swap/pim/contact#homepage 
-   http://www.markwatson.com/  .
-http://markwatson.com/index.rdf#mark_watson 
-   http://www.w3.org/2000/10/swap/pim/contact#fullName 
-   Mark Watson  .
-http://markwatson.com/index.rdf#mark_watson_consulting_services 
-   http://www.ontoweb.org/ontology/1#name 
-   Mark Watson Consulting Services  .
-http://markwatson.com/index.rdf#mark_watson 
-   http://www.w3.org/2000/10/swap/pim/contact#company 
-   Mark Watson Consulting Services  .
-http://markwatson.com/index.rdf#mark_watson 
+<Graph identifier=N2b392c0f8bf443e6ae48dd8b7cf5e949 (<class 'rdflib.graph.Graph'>)>
+=> (for [[subject predicate object] graph] (print subject "\n  " predicate "\n  " object " ."))
+N0606a4fc1dce4d79843ead3a26db6c76 
    http://www.w3.org/1999/02/22-rdf-syntax-ns#type 
-   http://www.w3.org/2000/10/swap/pim/contact#Person  .
-http://markwatson.com/index.rdf#mark_watson 
-   http://www.w3.org/1999/02/22-rdf-syntax-ns#value 
-   Mark Watson  .
-http://www.markwatson.com/ 
-   http://purl.org/dc/elements/1.1/creator 
-   http://markwatson.com/index.rdf#mark_watson  .
-http://www.markwatson.com/ 
-   http://purl.org/dc/elements/1.1/description 
-   
-      Mark Watson is the author of 16 published books and a consultant specializing in artificial intelligence and Java technologies.
-      .
-http://markwatson.com/index.rdf#mark_watson 
-   http://www.w3.org/1999/02/22-rdf-syntax-ns#type 
-   http://www.ontoweb.org/ontology/1#Person  .
-http://markwatson.com/index.rdf#mark_watson 
-   http://www.w3.org/2000/10/swap/pim/contact#motherTongue 
-   en  .
-http://markwatson.com/index.rdf#mark_watson 
-   http://www.w3.org/1999/02/22-rdf-syntax-ns#type 
-   http://markwatson.com/index.rdf#Consultant  .
-http://markwatson.com/index.rdf#mark_watson_consulting_services 
-   http://www.w3.org/1999/02/22-rdf-syntax-ns#type 
-   http://www.ontoweb.org/ontology/1#Organization  .
-http://markwatson.com/index.rdf#mark_watson 
-   http://www.w3.org/1999/02/22-rdf-syntax-ns#label 
-   Mark Watson  .
-http://markwatson.com/index.rdf#Sun_ONE 
-   http://www.w3.org/1999/02/22-rdf-syntax-ns#type 
-   http://www.ontoweb.org/ontology/1#Book  .
+   http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement  .
+N0606a4fc1dce4d79843ead3a26db6c76 
+   http://description.org/schema/attributedTo 
+   Ralph Swick  .
+N0606a4fc1dce4d79843ead3a26db6c76 
+   http://www.w3.org/1999/02/22-rdf-syntax-ns#object 
+   Ora Lassila  .
+N0606a4fc1dce4d79843ead3a26db6c76 
+   http://www.w3.org/1999/02/22-rdf-syntax-ns#subject 
+   http://www.w3.org/Home/Lassila  .
+N0606a4fc1dce4d79843ead3a26db6c76 
+   http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate 
+   http://description.org/schema/Creator  .
 => 
 ~~~~~~~~
 
 There are several available formats for serializing RDF data. Here we will serialize using the JSON-LD format (later we will also see examples for serializing in NT and Turtle formats):
 
 ```hy
-=> (import [rdflib [plugin]])
-=> (import [rdflib.serializer [Serializer]])
+=> (import rdflib [plugin])
+=> (import rdflib.serializer [Serializer])
 => (print (graph.serialize :format "json-ld" :indent 2))
 [
-   {
-      "@id": "https://markwatson.com/index.rdf#Sun_ONE",
-      "@type": ["http://www.ontoweb.org/ontology/1#Book" ],
-      "http://www.ontoweb.org/ontology/1#author": [
-         { "@id": "https://markwatson.com/index.rdf#mark_watson" }
-      ],
-      "http://www.ontoweb.org/ontology/1#booktitle": [
-         { "@value": "Sun ONE Services - J2EE" }
-      ],
-      
-      ...  
+  {
+    "@id": "_:N0606a4fc1dce4d79843ead3a26db6c76",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"
+    ],
+    "http://description.org/schema/attributedTo": [
+      {
+        "@value": "Ralph Swick"
+      }
+    ],
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": [
+      {
+        "@value": "Ora Lassila"
+      }
+    ],
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate": [
+      {
+        "@id": "http://description.org/schema/Creator"
+      }
+    ],
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": [
+      {
+        "@id": "http://www.w3.org/Home/Lassila"
+      }
+    ]
+  }
+]
 ```
 
 JSON-LD is convenient for implementing APIs that are intended for use by developers who are not familiar with RDF technology.
@@ -419,124 +372,39 @@ We will cover the SPARQL query language in more detail in the next chapter but f
 
 {lang="hy",linenos=on, number-from=84}
 ~~~~~~~~
-=> (for [[subject object
+=> (for [[subject object]
 ... (graph.query
-...   "select ?s ?o where { ?s <http://www.w3.org/2000/10/swap/pim/contact#company> ?o }")]
-... (print subject "\n contact company: " object))
-http://markwatson.com/index.rdf#mark_watson
-  contact company:  Mark Watson Consulting Services
+...  "select ?subject ?object where { ?subject <http://description.org/schema/attributedTo> ?object }")]
+... (print subject "attributedTo: " object))
+N0606a4fc1dce4d79843ead3a26db6c76 attributedTo:  Ralph Swick
 ~~~~~~~~
 
 We will see more examples of the SPARQL query language in the next chapter. For now, notice that the general form of a **select** query statement is a list of query variables (names beginning with a question mark) and a **where** clause in curly brackets that contains matching patterns. This SPARQL query is simple, but like SQL queries, SPARQL queries can get very complex. I only lightly cover SPARQL in this book. You can get PDF copies of my two older semantic web books for free: [Practical Semantic Web and Linked Data Applications, Java, Scala, Clojure, and JRuby Edition](https://markwatson.com/opencontentdata/book_java.pdf) and [Practical Semantic Web and Linked Data Applications, Common Lisp Edition](https://markwatson.com/opencontentdata/book_lisp.pdf). There are links to relevant git repos and other information on my [book web page](https://markwatson.com/books/).
 
-As I mentioned, the RDF data on my web site has been essentially unchanged since 2005. What if I wanted to update it noting that more recently I worked as a contractor at Google and as a Deep Learning engineering manager at Capital One? In the following listing, continuing the same REPL session, I will add two RDF statements indicating additional jobs and show how to serialize the new updated graph in three formats: XML, turtle (my favorite RDF notation) and NT:
-
-{lang="hy",linenos=on, number-from=89}
-~~~~~~~~
-=> (import rdflib)
-=> (setv mark-node (rdflib.URIRef  "http://markwatson.com/index.rdf#mark_watson"))
-=> mark-node
-rdflib.term.URIRef('http://markwatson.com/index.rdf#mark_watson')
-=> (setv company-node (rdflib.URIRef "http://www.w3.org/2000/10/swap/pim/contact#company"))
-=> (graph.add [mark-node company-node (rdflib.Literal "Google")])
-=> (graph.add [mark-node company-node (rdflib.Literal "Capital One")])
-=> (for [[subject object]
-...       (graph.query
-...         "select ?s ?o where { ?s <http://www.w3.org/2000/10/swap/pim/contact#company> ?o }")]
-... (print subject " contact company: " object))
-http://markwatson.com/index.rdf#mark_watson  contact company:  Mark Watson Consulting Services
-http://markwatson.com/index.rdf#mark_watson  contact company:  Google
-http://markwatson.com/index.rdf#mark_watson  contact company:  Capital One
-=> 
-=> (graph.serialize :format "pretty-xml")
-<?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF
-  xmlns:dc="http://purl.org/dc/elements/1.1/"
-  xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#"
-  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-  xmlns:ow="http://www.ontoweb.org/ontology/1#"
-  xmlns:ns1="http://markwatson.com/index.rdf#">
-
-    LOTS OF STUFF NOT SHOWN
-
-</rdf:RDF>
-~~~~~~~~
-
-I like Turtle RDF notation better than the XML notation because Turtle is easier to read and understand. Here, on line 118 we serialize the graph (with new nodes added above in lines 90 to 96) to Turtle:
-
-{lang="hy",linenos=on, number-from=118}
-~~~~~~~~
-=> (graph.serialize :format "turtle")
-@prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .
-@prefix dc: <http://purl.org/dc/elements/1.1/> .
-@prefix ns1: <http://markwatson.com/index.rdf#> .
-@prefix ow: <http://www.ontoweb.org/ontology/1#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
-ns1:mark_watson_consulting_services a ow:Organization ;
-    ow:name "Mark Watson Consulting Services" ;
-    rdf:label "Mark Watson Consulting Services" .
-<http://www.markwatson.com/> 
-    dc:creator ns1:mark_watson ;
-    dc:date "2005-7-10" ;
-    dc:description 
-          "Mark Watson is the author of 16 published books and a consultant
-          specializing in artificial intelligence and Java technologies." ;
-     dc:format "text/html" ;
-     dc:language "en-us" ;
-     dc:title "Mark Watson\'s Home Page" ;
-     dc:type "Consultant Homepage" .
-ns1:mark_watson a ns1:Consultant,
-                  ow:Person,
-                  contact:Person ;
-                ow:name "Mark Watson" ;
-                ow:researchTopic "RDF and RDF Schema",
-                                 "Semantic Web",
-                                 "ontologies" ;
-                rdf:label "Mark Watson" ;
-                rdf:value "Mark Watson" ;
-                contact:company "Capital One",
-                                "Google",
-                                "Mark Watson Consulting Services" ;
-                contact:familyName "Watson" ;
-                contact:firstName "Mark" ;
-                contact:fullName "Mark Watson" ;
-                contact:homepage <http://www.markwatson.com/> ;
-                contact:mailbox <mailto:markw@markwatson.com> ;
-                contact:motherTongue "en" .
-~~~~~~~~
 
 In addition to the Turtle format I also use the simpler NT format that puts URI prefixes inline and unlike Turtle does not use prefix abrieviations. Here in line 159 we serialize to NT format:
 
 {lang="hy",linenos=on, number-from=159}
 ~~~~~~~~
 => (graph.serialize :format "nt")
-<http://markwatson.com/index.rdf#Sun_ONE> <http://www.ontoweb.org/ontology/1#booktitle> "Sun ONE Services - J2EE" .
-<http://www.markwatson.com/> <http://purl.org/dc/elements/1.1/language> "en-us" .
-<http://markwatson.com/index.rdf#Sun_ONE> <http://www.ontoweb.org/ontology/1#author> <http://markwatson.com/index.rdf#mark_watson> .
-<http://www.markwatson.com/> <http://purl.org/dc/elements/1.1/date> "2005-7-10" .
-<http://markwatson.com/index.rdf#mark_watson> <http://www.ontoweb.org/ontology/1#researchTopic> "ontologies" .
-<http://www.markwatson.com/> <http://purl.org/dc/elements/1.1/type> "Consultant Homepage" .
-<http://markwatson.com/index.rdf#mark_watson> <http://www.w3.org/2000/10/swap/pim/contact#homepage> <http://www.markwatson.com/> .
-<http://markwatson.com/index.rdf#mark_watson> <http://www.w3.org/2000/10/swap/pim/contact#company> "Google" .
-<http://markwatson.com/index.rdf#mark_watson> <http://www.w3.org/2000/10/swap/pim/contact#company> "Capital One" .
-<http://markwatson.com/index.rdf#mark_watson> <http://www.ontoweb.org/ontology/1#researchTopic> "Semantic Web" .
-<http://markwatson.com/index.rdf#mark_watson> <http://www.ontoweb.org/ontology/1#researchTopic> "RDF and RDF Schema" .
-<http://www.markwatson.com/> <http://purl.org/dc/elements/1.1/title> "Mark Watson\'s Home Page" .
-<http://markwatson.com/index.rdf#mark_watson> <http://www.w3.org/2000/10/swap/pim/contact#mailbox> <mailto:markw@markwatson.com> .
-<http://www.markwatson.com/> <http://purl.org/dc/elements/1.1/format> "text/html" .
-<http://markwatson.com/index.rdf#mark_watson> <http://www.w3.org/2000/10/swap/pim/contact#fullName> "Mark Watson" .
-<http://markwatson.com/index.rdf#mark_watson> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/10/swap/pim/contact#Person> .
-<http://www.markwatson.com/> <http://purl.org/dc/elements/1.1/creator> <http://markwatson.com/index.rdf#mark_watson> .
-
-      LOTS OF STUFF NOT SHOWN
+_:N0606a4fc1dce4d79843ead3a26db6c76
+  <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+  <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement> .
+_:N0606a4fc1dce4d79843ead3a26db6c76
+  <http://description.org/schema/attributedTo>
+  "Ralph Swick\" .
+_:N0606a4fc1dce4d79843ead3a26db6c76
+  <http://www.w3.org/1999/02/22-rdf-syntax-ns#object>
+  "Ora Lassila\" .
+_:N0606a4fc1dce4d79843ead3a26db6c76
+  <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject>
+  <http://www.w3.org/Home/Lassila> .
+_:N0606a4fc1dce4d79843ead3a26db6c76
+  <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://description.org/schema/Creator> .
 => 
 ~~~~~~~~
 
-Using RDFLIB with in-memoery RDF triple storage is very convenient with small or mid-size RDF data sets as long as initializing the data store by reading a local file containing RDF triples is a fast operation. If I need to use large RDF data sets I prefer to not use rdflib and instead use SPARQL to access a free or open source standalone RDF data store like [OpenLink Virtuoso](https://en.wikipedia.org/wiki/Virtuoso_Universal_Server) or [GraphDB™ Free Edition](https://www.ontotext.com/products/graphdb/graphdb-free/). I also like and recommend the commercial AllegroGraph and Stardog RDF server products.
+Using RDFLIB with in-memory RDF triple storage is very convenient with small or mid-size RDF data sets as long as initializing the data store by reading a local file containing RDF triples is a fast operation. If I need to use large RDF data sets I prefer to not use rdflib and instead use SPARQL to access a free or open source standalone RDF data store like [OpenLink Virtuoso](https://en.wikipedia.org/wiki/Virtuoso_Universal_Server) or [GraphDB™ Free Edition](https://www.ontotext.com/products/graphdb/graphdb-free/). I also like and recommend the commercial AllegroGraph and Stardog RDF server products.
 
 
 ## Wrap-up

@@ -1,6 +1,6 @@
 # Linked Data, the Semantic Web, and Knowledge Graphs
 
-Tim Berners Lee, James Hendler, and Ora Lassila wrote in 2001 an article for Scientific American where they introduced the term Semantic Web. Here I do not capitalize semantic web and use the similar term linked data somewhat interchangeably with semantic web. Most work using these technologies now is building corporate Knowledge Graphs. I currently work on the Knowledge Graph team at [Olive AI](https://oliveai.com).
+Tim Berners Lee, James Hendler, and Ora Lassila wrote in 2001 an article for Scientific American where they introduced the term Semantic Web. Here I do not capitalize semantic web and use the similar term linked data somewhat interchangeably with semantic web. Most work using these technologies now is building corporate Knowledge Graphs. I worked at Google with their Knowledge Graph in 2013 and I worked with the Knowledge Graph team at Olive AI during 2020-2021.
 
 I assume that you read the section [RDF Data Using the "rdflib" Library](#rdflibintro) in the last chapter.
 
@@ -125,7 +125,7 @@ You now have seen a few common Schemas for RDF data. Another Schema that is wide
 ~~~~~~~~
 Marks-MacBook:database $ hy
 hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
-=> (import [rdflib.namespace [FOAF]])
+=> (import rdflib.namespace [FOAF])
 => FOAF
 Namespace('http://xmlns.com/foaf/0.1/')
 => FOAF.name
@@ -136,7 +136,7 @@ rdflib.term.URIRef('http://xmlns.com/foaf/0.1/title')
 => (setv graph (rdflib.Graph))
 => (setv mark (rdflib.BNode))
 => (graph.bind "foaf" FOAF)
-=> (import [rdflib [RDF]])
+=> (import rdflib [RDF])
 => (graph.add [mark RDF.type FOAF.Person])
 => (graph.add [mark FOAF.nick (rdflib.Literal "Mark" :lang "en")])
 => (graph.add [mark FOAF.name (rdflib.Literal "Mark Watson" :lang "en")])

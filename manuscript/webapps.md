@@ -33,18 +33,14 @@ I first used Flask with the Hy language after seeing a post of code from HN user
 ~~~~~~~~
 #!/usr/bin/env hy
 
-;; snippet by HN user volent:
+;; snippet by HN user volent and modifed for
+;; Hy 0.26.0 with a comment from stackoverflow user plokstele:
 
-(import [flask [Flask]])
-
+(import flask [Flask])
 (setv app (Flask "Flask test"))
-(with-decorator (app.route "/")
-  (defn index []
-    "Hello World !"))
+(defn [(.route app "/")] index [] "Hello World !")
 (app.run)
 ~~~~~~~~
-
-The Hy macro **with-decorator** macro is used to use Python style decorators in Hy applications.
 
 I liked this example and after experimenting with the code, I then started using Hy and Flask. Please try running this example to make sure you are setup properly with Flask:
 
@@ -117,19 +113,19 @@ The following Flask web app defines behavior for rendering the template without 
 ~~~~~~~~
 #!/usr/bin/env hy
 
-(import [flask [Flask render_template request]])
+(import flask [Flask render_template request])
 
 (setv app (Flask "Flask and Jinja2 test"))
 
-(with-decorator (app.route "/")
-  (defn index []
-    (render_template "template1.j2")))
+(defn [(.route app "/")]
+  index []
+    (render_template "template1.j2"))
 
-(with-decorator (app.route "/response" :methods ["POST"])
-  (defn response []
+(defn [(.route app "/response" :methods ["POST"])]
+  response []
     (setv name (request.form.get "name"))
     (print name)
-    (render_template "template1.j2" :name name)))
+    (render_template "template1.j2" :name name))
 
 (app.run)
 ~~~~~~~~
@@ -174,14 +170,15 @@ In order to set the value of a named cookie, we can:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-(import [flask [Flask render_template request make_response]])
+(import flask [Flask render_template request make-response])
 
-(with-decorator (app.route "/response" :methods ["POST"])
-  (defn response []
+(defn [(.route app "/response" :methods ["POST"])]
+  response []
     (setv name (request.form.get "name"))
-    (setv resp (make_reponse (render_template "template1.j2" :name name)))
-    (resp.set_cookie "name" name)
-    resp))
+    (print name)
+    (setv a-response (make-response (render-template "template1.j2" :name name)))
+    (a-response.set-cookie "hy-cookie" name)
+    a-response)
 ~~~~~~~~
 
 Values of named cookies can be retrieved using:
@@ -191,30 +188,30 @@ Values of named cookies can be retrieved using:
 (request.cookies.get "name")
 ~~~~~~~~
 
-inside of a **with-decorator** form. The value for **request** is defined in the execution context by Flask when handling HTTP requests. Here is a complete example of handling cookies in the file *cookie_test.hy*:
+The value for **request** is defined in the execution context by Flask when handling HTTP requests. Here is a complete example of handling cookies in the file *cookie_test.hy*:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
 #!/usr/bin/env hy
 
-(import [flask [Flask render_template request make-response]])
+(import flask [Flask render_template request make-response])
 
 (setv app (Flask "Flask and Jinja2 test"))
 
-(with-decorator (app.route "/")
-  (defn index []
+(defn [(.route app "/")]
+  index []
     (setv cookie-data (request.cookies.get "hy-cookie"))
     (print "cookie-data:" cookie-data)
     (setv a-response (render_template "template1.j2" :name cookie-data))
-    a-response))
+    a-response)
 
-(with-decorator (app.route "/response" :methods ["POST"])
-  (defn response []
+(defn [(.route app "/response" :methods ["POST"])]
+  response []
     (setv name (request.form.get "name"))
     (print name)
     (setv a-response (make-response (render-template "template1.j2" :name name)))
     (a-response.set-cookie "hy-cookie" name)
-    a-response))
+    a-response)
 
 (app.run)
 ~~~~~~~~
@@ -245,27 +242,30 @@ The Hy app is slightly different than we saw in the last section. On line 6 we s
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-(import [flask [Flask render_template request]])
+(import flask [Flask render_template request])
 (import os)
 
 (setv port (int (os.environ.get "PORT" 5000)))
 
 (setv app (Flask "Flask test" :static_folder "./static" :static_url_path "/static"))
 
-(with-decorator (app.route "/")
-  (defn index []
-    (render_template "template1.j2")))
+(defn [(.route app "/")]
+  index []
+    (render_template "template1.j2"))
 
-(with-decorator (app.route "/response" :methods ["POST"])
-  (defn response []
+(defn [(.route app "/response" :methods ["POST"])]
+  response []
     (setv name (request.form.get "name"))
-    (render_template "template1.j2" :name name)))
+    (print name)
+    (render_template "template1.j2" :name name))
+    
+(app.run)
 ~~~~~~~~
 
 I assume that you have some experience with GCP and have the following:
 
 - GCP command line tools installed.
-- You have created a new project on the GCP AppEngine console named something like hy-gcp-test (if you choose a name already in use, you wil get a warning).
+- You have created a new project on the GCP AppEngine console named something like hy-gcp-test (if you choose a name already in use, you will get a warning).
 
 After cloning or otherwise copying this project, you use the command line tools to deploy and test your Flask app:
 
@@ -298,106 +298,15 @@ Any changes can be tested by deploying again:
 gcloud app deploy
 ~~~~~~~~
 
-Please note that everytime you deploy, a new instance is created. You will want to use the GCP AppEngine console to remove old instances, and remove all instances when you are done.
+Please note that every time you deploy, a new instance is created. You will want to use the GCP AppEngine console to remove old instances, and remove all instances when you are done.
 
 ### Going forward
 
-You can make a copy of this example, create a github repo, and follow the above directions as a first step to creating Hy language application on AppEngine. The Google Cloud Platform has many services that you can use in your app (using the Python APIs, called from your Hy program), including:
+You can make a copy of this example, create a GitHub repo, and follow the above directions as a first step to creating Hy language application on AppEngine. The Google Cloud Platform has many services that you can use in your app (using the Python APIs, called from your Hy program), including:
 
 - Storage and Databases.
 - Big Data.
 - Machine Learning.
-
-
-## Deploying Hy Language Flask Apps to the Heroku Platform
-
-The example for this section is in a [separate github repository](https://github.com/mark-watson/hy-lisp-heroku-starter-project) that you should clone or otherwise use as starter project if you intend to deploy to the Heroku platform.
-
-We use a Python stub program **wsgi.python** to make our Flask app work with the WSGI interface that Heroku uses:
-
-{lang="hylang",linenos=off}
-~~~~~~~~
-import hy
-import flask_test
-from flask_test import app
-~~~~~~~~
-
-The Heroku platform will call the **run()** method on the imported **app** object because of the settings in the Heroku **Proc** file for this project:
-
-{lang="hylang",linenos=off}
-~~~~~~~~
-web: gunicorn 'wsgi:app' --log-file -
-~~~~~~~~
-
-Here we are stating to the Heroku platform that we want the production-friendly **gunicorn** server to call the **run()** method on the **app** object that is defined in the **wsgi** module (here the module name is the prefix name of the Python WSGI handler file).
-
-The Hy Flask app has a few changes from earlier examples. All changes are in line 3:
-
-{lang="hylang",linenos=on}
-~~~~~~~~
-(import [flask [Flask render_template request]])
-
-(setv app (Flask "Flask test" :static_folder "./static" :static_url_path "/"))
-
-(with-decorator (app.route "/")
-  (defn index []
-    (render_template "template1.j2")))
-
-(with-decorator (app.route "/response" :methods ["POST"])
-  (defn response []
-    (setv name (request.form.get "name"))
-    (print name)
-    (render_template "template1.j2" :name name)))
-~~~~~~~~
-
-You need to install the Heroku command line tools:
-
-[https://devcenter.heroku.com/categories/command-line](https://devcenter.heroku.com/categories/command-line)
-
-After checking out this repo, do the following from this directory:
-
-{linenos=off}
-~~~~~~~~
-heroku login
-heroku create
-git push heroku master
-~~~~~~~~
-
-If you have your Heroku account setup these commands will deploy this example.
-
-You can look at the Heroku log files for your application using:
-
-{linenos=off}
-~~~~~~~~
-heroku logs --tail
-~~~~~~~~
-
-You can open this Hello World app in your default web browser using:
-
-{linenos=off}
-~~~~~~~~
-heroku open
-~~~~~~~~
-
-By default, your Hello World app will run on the free Heroku mode. You should still remove it when you are done:
-
-- login to:  https://dashboard.heroku.com/apps
-- click on your application name
-- click on the Settings tab
-- scroll to the bottom of the page and use the option to delete the app
-
-### Going forward
-
-You can make a copy of this example, create a github repo, and follow the above directions.
-
-To test your Heroku setup locally or for development, you can use:
-
-{linenos=off}
-~~~~~~~~
-heroku local
-~~~~~~~~
-
-The Heroku platform has a wide variety of supported services, including many third party services like [data services](https://www.heroku.com/managed-data-services) and [Heroku and third party addons](https://elements.heroku.com/addons).
 
 ## Wrap-up
 

@@ -66,54 +66,6 @@ Here is an example use of this function:
 
 The entity type "GPE" indicates that the entity is some type of location.
 
-## Developing Low-Level Caching SPARQL Utilities
-
-While developing KGN and also using it as an end user, many SPARQL queries to DBPedia contain repeated entity names so it makes sense to write a caching layer.  We use a SQLite database "~/.kgn_hy_cache.db" to store queries and responses. We covered using SQLite in some detail in the chapter on datastores.
-
-The caching layer is implemented in the file **cache.hy**:
-
-{lang="hylang",linenos=on}
-~~~~~~~~
-(import [sqlite3 [connect version Error ]])
-(import json)
-
-(setv *db-path* "kgn_hy_cache.db")
-
-(defn create-db []
-  (try
-    (setv conn (connect *db-path*))
-    (print version)
-    (setv cur (conn.cursor))
-    (cur.execute "CREATE TABLE dbpedia (query string  PRIMARY KEY ASC, data json)")
-    (conn.close)
-    (except [e Exception] (print e))))
-
-(defn save-query-results-dbpedia [query result]
-  (try
-    (setv conn (connect *db-path*))
-    (setv cur (conn.cursor))
-    (cur.execute "insert into dbpedia (query, data) values (?, ?)" 
-                 [query (json.dumps result)])
-    (conn.commit)
-    (conn.close)
-    (except [e Exception] (print e))))
- 
-(defn fetch-result-dbpedia [query]
-  (setv results [])
-  (setv conn (connect *db-path*))
-  (setv cur (conn.cursor))
-  (cur.execute "select data from dbpedia where query = ? limit 1" [query])
-  (setv d (cur.fetchall))
-  (if (> (len d) 0)
-      (setv results (json.loads (first (first d)))))
-  (conn.close)
-  results)
- 
-(create-db)
-~~~~~~~~
-
-Here we store structured data from SPARQL queries as JSON data serialized as string values.
-
 ### SPARQL Utilities
 
 We will use the caching code from the last section and also the standard Python library **requests** to access the DBPedia servers. The following code is found in the file **sparql.hy** and also provides support for using both DBPedia and WikiData. We only use DBPedia in this chapter but when you start incorporating SPARQL queries into applications that you write, you will also probably want to use WikiData.
@@ -124,42 +76,32 @@ The function **do-query-helper** contains generic code for SPARQL queries and is
 ~~~~~~~~
 (import json)
 (import requests)
-(require [hy.contrib.walk [let]])
-
-(import [cache [fetch-result-dbpedia save-query-results-dbpedia]])
 
 (setv wikidata-endpoint "https://query.wikidata.org/bigdata/namespace/wdq/sparql")
 (setv dbpedia-endpoint "https://dbpedia.org/sparql")
 
 (defn do-query-helper [endpoint query]
-  ;; check cache:
-  (setv cached-results (fetch-result-dbpedia query))
-  (if (> (len cached-results) 0)
-      (let ()
-        (print "Using cached query results")
-        (eval cached-results))
-      (let ()
-        ;; Construct a request
-        (setv params { "query" query "format" "json"})
+  ;; Construct a request
+  (setv params { "query" query "format" "json"})
         
-        ;; Call the API
-        (setv response (requests.get endpoint :params params))
+  ;; Call the API
+  (setv response (requests.get endpoint :params params))
         
-        (setv json-data (response.json))
+  (setv json-data (response.json))
         
-        (setv vars (get (get json-data "head") "vars"))
+  (setv vars (get (get json-data "head") "vars"))
         
-        (setv results (get json-data "results"))
+  (setv results (get json-data "results"))
         
-        (if (in "bindings" results)
-            (let [bindings (get results "bindings")
-                  qr
-                  (lfor binding bindings
-                        (lfor var vars
-                              [var (get (get binding var) "value")]))]
-              (save-query-results-dbpedia query qr)
-              qr)
-            []))))
+  (if (in "bindings" results)
+    (do
+      (setv bindings (get results "bindings"))
+      (setv qr
+            (lfor binding bindings
+                (lfor var vars
+                   [var (get (get binding var) "value")])))
+      qr)
+    []))
 
 (defn wikidata-sparql [query]
   (do-query-helper wikidata-endpoint query))
@@ -173,9 +115,7 @@ Here is an example query (manually formatted for page width):
 {lang="hylang",linenos=off}
 ~~~~~~~~
 $ hy
-hy 0.18.0 using CPython(default) 3.7.4 on Darwin
 => (import sparql)
-table dbpedia already exists
 => (sparql.dbpedia-sparql
      "select ?s ?p ?o { ?s ?p ?o } limit 1")
 [[['s', 'http://www.openlinksw.com/virtrdf-data-formats#default-iid'],
@@ -213,26 +153,26 @@ The code in the following listing is in the file **colorize.hy**.
   (.split s))
 
 (defn colorize-sparql [s]
-  (let [tokens
+  (setv tokens
         (tokenize-keep-uris
-          (.replace (.replace (.replace s "{" " { ") "}" " } ") "." " . "))
-        ret (StringIO)] ;; ret is an output stream for a string buffer
-    (for [token tokens]
-      (if (> (len token) 0)
-          (if (= (get token 0) "?")
-              (.write ret (red token))
-              (if (in
-                    token
-                    ["where" "select" "distinct" "option" "filter"
-                     "FILTER" "OPTION" "DISTINCT" "SELECT" "WHERE"])
-                  (.write ret (blue token))
-                  (if (= (get token 0) "<")
-                      (.write ret (bold token))
-                      (.write ret token)))))
-      (if (not (= token "?"))
-          (.write ret " ")))
-    (.seek ret 0)
-    (.read ret)))
+          (.replace (.replace s "{" " { ") "}" " } ")))
+  (setv ret (StringIO)) ;; ret is an output stream for a string buffer
+  (for [token tokens]
+    (when (> (len token) 0)
+        (if (= (get token 0) "?")
+            (.write ret (red token))
+            (if (in
+                  token
+                  ["where" "select" "distinct" "option" "filter"
+                    "FILTER" "OPTION" "DISTINCT" "SELECT" "WHERE"])
+                (.write ret (blue token))
+                (if (= (get token 0) "<")
+                    (.write ret (bold token))
+                    (.write ret token)))))
+    (when (not (= token "?"))
+        (.write ret " ")))
+  (.seek ret 0)
+  (.read ret))
 ~~~~~~~~
 
 You have seen colorized SPARQL in the two screen shots at the beginning of this chapter.
@@ -250,18 +190,25 @@ We embed a SPARQL query that has placeholders for the entity name and type. The 
 ~~~~~~~~
 #!/usr/bin/env hy
 
-(import [sparql [dbpedia-sparql]])
-(import [colorize [colorize-sparql]])
+(import sparql [dbpedia-sparql])
+(import colorize [colorize-sparql])
 
-(import [pprint [pprint]])
-(require [hy.contrib.walk [let]])
+(import pprint [pprint])
 
 (defn dbpedia-get-entities-by-name [name dbpedia-type]
-  (let [sparql
-        (.format "select distinct ?s ?comment {{ ?s ?p \"{}\"@en . ?s <http://www.w3.org/2000/01/rdf-schema#comment>  ?comment  . FILTER  (lang(?comment) = 'en') . ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {} . }} limit 15" name dbpedia-type)]
-    (print "Generated SPARQL to get DBPedia entity URIs from a name:")
-    (print (colorize-sparql sparql))
-    (dbpedia-sparql sparql)))
+  (setv sparql
+        (.format "select distinct ?s ?comment {{ ?s ?p \"{}\"@en . ?s <http://www.w3.org/2000/01/rdf-schema#comment>  ?comment  . FILTER  (lang(?comment) = 'en') . ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {} . }} limit 15" name dbpedia-type))
+  (print "Generated SPARQL to get DBPedia entity URIs from a name:")
+  (print (colorize-sparql sparql))
+  (dbpedia-sparql sparql))
+
+;;(pprint (dbpedia-get-entities-by-name "Bill Gates" "<http://dbpedia.org/ontology/Person>"))
+
+(defn first [a-list]
+  (get a-list 0))
+
+(defn second [a-list]
+  (get a-list 1))
 ~~~~~~~~
 
 Here is an example:
@@ -307,42 +254,39 @@ In lines 33-35 we are converting the shortened comment strings the user selected
 (defn kgn []
   (while
     True
-    (let [query (get-query)
-          emap {}]
-      (if (or (= query "quit") (= query "q"))
-          (break))
-      (setv elist (entities-in-text query))
-      (setv people-found-on-dbpedia [])
-      (setv places-found-on-dbpedia [])
-      (setv organizations-found-on-dbpedia [])
-      (global short-comment-to-uri)
-      (setv short-comment-to-uri {})
-      (for [key elist]
-        (setv type-uri (get entity-type-to-type-uri key))
-        (for [name (get elist key)]
-          (setv dbp (dbpedia-get-entities-by-name name type-uri))
-          (for [d dbp]
-            (setv short-comment (shorten-comment (second (second d)) 
-            (second (first d))))
-            (if (= key "PERSON")
-                (.extend people-found-on-dbpedia [(+ name  " || " short-comment)]))
-            (if (= key "GPE")
-                (.extend places-found-on-dbpedia [(+ name  " || " short-comment)]))
-            (if (= key "ORG")
-                (.extend organizations-found-on-dbpedia 
-                [(+ name  " || " short-comment)])))))
-      (setv user-selected-entities
-            (select-entities
-              people-found-on-dbpedia
-              places-found-on-dbpedia
-              organizations-found-on-dbpedia))
-      (setv uri-list [])
-      (for [entity (get user-selected-entities "entities")]
-        (setv short-comment (cut entity (+ 4 (.index entity " || "))))
-        (.extend uri-list [(get short-comment-to-uri short-comment)]))
-      (setv relation-data (entity-results->relationship-links uri-list))
-      (print "\nDiscovered relationship links:")
-      (pprint relation-data))))
+    (setv query (get-query))
+    (when (or (= query "quit") (= query "q"))
+        (break))
+    (setv elist (entities-in-text query))
+    (setv people-found-on-dbpedia [])
+    (setv places-found-on-dbpedia [])
+    (setv organizations-found-on-dbpedia [])
+    (global short-comment-to-uri)
+    (setv short-comment-to-uri {})
+    (for [key elist]
+      (setv type-uri (get entity-type-to-type-uri key))
+      (for [name (get elist key)]
+        (setv dbp (dbpedia-get-entities-by-name name type-uri))
+        (for [d dbp]
+          (setv short-comment (shorten-comment (second (second d)) (second (first d))))
+          (when (= key "PERSON")
+              (.extend people-found-on-dbpedia [(+ name  " || " short-comment)]))
+          (when (= key "GPE")
+              (.extend places-found-on-dbpedia [(+ name  " || " short-comment)]))
+          (when (= key "ORG")
+              (.extend organizations-found-on-dbpedia [(+ name  " || " short-comment)])))))
+    (setv user-selected-entities
+          (select-entities
+            people-found-on-dbpedia
+            places-found-on-dbpedia
+            organizations-found-on-dbpedia))
+    (setv uri-list [])
+    (for [entity (get user-selected-entities "entities")]
+      (setv short-comment (cut entity (+ 4 (.index entity " || ")) (len entity)))
+      (.extend uri-list [(get short-comment-to-uri short-comment)]))
+    (setv relation-data (entity-results->relationship-links uri-list))
+    (print "\nDiscovered relationship links:")
+    (pprint relation-data)))
 ~~~~~~~~
 
 If you have not already done so, I hope you experiment running this example application. The first time you specify an entity name expect some delay while DBPedia is accessed. Thereafter the cache will make the application more responsive when you use the same name again in a different query.

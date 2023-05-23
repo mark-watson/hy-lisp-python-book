@@ -10,7 +10,7 @@ Get started by going to the web page [https://azure.microsoft.com/en-us/try/cogn
 
 {lang="bash",linenos=off}
 ~~~~~~~~
-export BING_SEARCH_V7_SUBSCRIPTION_KEY=4e97234341d9891191c772b7371ad5b1
+export BING_SEARCH_V7_SUBSCRIPTION_KEY=4e97234341d9211191c772b7371ad5b1
 ~~~~~~~~
 
 That is not my real subscription key!
@@ -20,10 +20,9 @@ After adding this to your **.profile** file (or **.zshrc**, or **.bashrc**, or e
 {lang="hylang",linenos=off}
 ~~~~~~~~
 $ hy
-hy 0.18.0 using CPython(default) 3.7.4 on Darwin
 => (import os)
 => (get os.environ "BING_SEARCH_V7_SUBSCRIPTION_KEY")
-'4e97234341d9891191c772b7371ad5b1'
+'4e97234341d9891191c837371ad5b1'
 => 
 ~~~~~~~~
 
@@ -39,16 +38,16 @@ It takes very little Hy code to access the Bing search APIs. We will look at a l
 (import json)
 (import os)
 (import sys)
-(import [pprint [pprint]])
+(import pprint [pprint])
 (import requests)
 
-;; Add your Bing Search V7 subscription key and 
-;; the endpoint to your environment variables.
+;; Add your Bing Search V7 subscription key and endpoint to your environment variables.
 (setv subscription_key (get os.environ "BING_SEARCH_V7_SUBSCRIPTION_KEY"))
-(setv endpoint "https://api.cognitive.microsoft.com/bing/v7.0/search")
 
 ;; Query term(s) to search for. 
-(setv query (get sys.argv 1)) ;; an example: "site:wikidata.org Sedona Arizona"
+(setv query (get sys.argv 1)) ;;  "site:wikidata.org Sedona Arizona"
+
+(setv endpoint "https://api.cognitive.microsoft.com/bing/v7.0/search")
 
 ;; Construct a request
 (setv mkt "en-US")
@@ -71,28 +70,25 @@ It takes very little Hy code to access the Bing search APIs. We will look at a l
 (print "\nDetailed printout from the first search result:\n")
 
 (setv result-list (get results "value"))
-(setv first-result (first result-list))
+
+(print "\nResults for key 'value':\n")
+(pprint result-list)
+
+(setv first-result (get result-list 0))
 
 (print "\nFirst result, all data:\n")
 (pprint first-result)
 
 (print "\nSummary of first search result:\n")
+
 (pprint (get first-result "displayUrl"))
 
-(if (in "displayUrl" first-result)
-    (print
-     (.format
-       " key: {:15} \t:\t {}" "displayUrl"
-       (get first-result "displayUrl"))))
-(if (in "language" first-result)
-    (print
-      (.format " key: {:15} \t:\t {}" "language" 
-      (get first-result "language"))))
-(if (in "name" first-result)
-    (print 
-      (.format 
-        " key: {:15} \t:\t {}" "name" 
-        (get first-result "name"))))
+(when (in "displayUrl" first-result)
+    (print (.format " key: {:15} \t:\t {}" "displayUrl" (get first-result "displayUrl"))))
+(when (in "language" first-result)
+    (print (.format " key: {:15} \t:\t {}" "language" (get first-result "language"))))
+(when (in "name" first-result)
+    (print (.format " key: {:15} \t:\t {}" "name" (get first-result "name"))))
 ~~~~~~~~
 
 You can use search hints like "site:wikidata.org" to only search specific web sites. In the following example I use the search query:

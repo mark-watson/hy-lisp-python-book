@@ -14,10 +14,9 @@ In line 4 for the following listing of file **get_web_page.hy**, I am setting th
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-(import [urllib.request [Request urlopen]])
+(import urllib.request [Request urlopen])
 
-(defn get-raw-data-from-web [aUri
-                             &optional [anAgent {"User-Agent" "HyLangBook/1.0"}]]
+(defn get-raw-data-from-web [aUri [anAgent {"User-Agent" "HyLangBook/1.0"}]]
   (setv req (Request aUri :headers anAgent))
   (setv httpResponse (urlopen req))
   (setv data (.read httpResponse))
@@ -29,12 +28,11 @@ Let's test this function in a REPL:
 {lang="hylang",linenos=on}
 ~~~~~~~~
 $ hy
-hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
-=> (import [get-page-data [get-raw-data-from-web]])
+=> (import get-page-data [get-raw-data-from-web])
 => (get-raw-data-from-web "http://knowledgebooks.com")
 b'<!DOCTYPE html><html><head><title>KnowledgeBooks.com - research on the Knowledge Management, and the Semantic Web ...'
 => 
-=> (import [get-page-data [get-page-html-elements]])
+=> (import get-page-data [get-page-html-elements])
 => (get-page-html-elements "http://knowledgebooks.com")
 {'title': [<title>KnowledgeBooks.com - research on the Knowledge Management, and the Semantic Web </title>],
 'a': [<a class="brand" href="#">KnowledgeBooks.com  </a>,  ...
@@ -49,9 +47,9 @@ The following listing of file **get_page_data.hy** uses the Beautiful Soup libra
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-(import [get_web_page [get-raw-data-from-web]])
+(import get_web_page [get-raw-data-from-web])
 
-(import [bs4 [BeautifulSoup]])
+(import bs4 [BeautifulSoup])
 
 (defn get-element-data [anElement]
   {"text" (.getText anElement)
@@ -75,7 +73,7 @@ The following listing of file **get_page_data.hy** uses the Beautiful Soup libra
 (for [ta (get elements "a")] (print (get-element-data ta)))
 ~~~~~~~~
 
-The function **get-element-data** defined in lines 5-9 accepts as an argument an HTML element object (as defined in the Beautiful soup library) and extracts data, if available, for text, name, class, and href values. The function **get-page-html-elements** defied in lines 11-18 accepts as an argument a string containing a URI and returns a dictionary (or map, or hashtable) containing lists of all **a**, **h1**, **h2**, and **title** elements in the web page pointed to by the input URI. You can modify **get-page-html-elements** to add additional HTML element types, as needed.
+The function **get-element-data** defined in lines 5-9 accepts as an argument an HTML element object (as defined in the Beautiful soup library) and extracts data, if available, for text, name, class, and href values. The function **get-page-html-elements** defied in lines 11-18 accepts as an argument a string containing a URI and returns a dictionary (or map, or hash table) containing lists of all **a**, **h1**, **h2**, and **title** elements in the web page pointed to by the input URI. You can modify **get-page-html-elements** to add additional HTML element types, as needed.
 
 Here is the output (with many lines removed for brevity):
 
@@ -114,8 +112,8 @@ The following listing shows **democracynow_front_page.hy**
 ~~~~~~~~
 #!/usr/bin/env hy
 
-(import [get-web-page [get-web-page-from-disk]])
-(import [bs4 [BeautifulSoup]])
+(import get-web-page [get-web-page-from-disk])
+(import bs4 [BeautifulSoup])
 
 ;; you need to run 'make data' to fetch sample HTML data for dev and testing
 
@@ -127,7 +125,7 @@ The following listing shows **democracynow_front_page.hy**
           :if (> (len (.get-text e)) 0)
           (, (.get e "href") (.get-text e))))
 
-(if (= __name__ "__main__")
+(when (= __name__ "__main__")
   (for [[uri text] (get-democracy-now-links)]
     (print uri ":" text)))
 ~~~~~~~~
@@ -156,13 +154,12 @@ This example is similar to the example in the last section except that text from
 
 The following listing shows **npr_front_page_summary.hy**
 
-
 {lang="hylang",linenos=on}
 ~~~~~~~~
 #!/usr/bin/env hy
 
-(import [get-web-page [get-web-page-from-disk]])
-(import [bs4 [BeautifulSoup]])
+(import get-web-page [get-web-page-from-disk])
+(import bs4 [BeautifulSoup])
 
 ;; you need to run 'make data' to fetch sample HTML data for dev and testing
 
@@ -173,7 +170,7 @@ The following listing shows **npr_front_page_summary.hy**
   (setv filtered-a
     (lfor e all-anchor-elements
           :if (> (len (.get-text e)) 0)
-          (, (.get e "href") (.get-text e))))
+          #((.get e "href") (.get-text e))))
   filtered-a)
 
 (defn create-npr-summary []
@@ -181,7 +178,7 @@ The following listing shows **npr_front_page_summary.hy**
   (setv filtered-links (lfor [uri text] links :if (> (len (.strip text)) 40) (.strip text)))
   (.join "\n\n" filtered-links))
 
-(if (= __name__ "__main__")
+(when (= __name__ "__main__")
   (print (create-npr-summary)))
 ~~~~~~~~
 

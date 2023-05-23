@@ -75,8 +75,8 @@ Using only the spaCy NLP library that we used earlier and the built in Hy/Python
 ~~~~~~~~
 #!/usr/bin/env hy
 
-(import [os [scandir]])
-(import [os.path [splitext exists]])
+(import os [scandir])
+(import os.path [splitext exists])
 (import spacy)
 
 (setv nlp-model (spacy.load "en"))
@@ -280,7 +280,7 @@ Here is some of the generated RDF that has changed:
   <http://dbpedia.org/page/Banco_Esp%C3%ADrito_Santo> .
 ~~~~~~~~
 
-Now when we visualize generated RDF, we share nodes for The Wallstreet Journal and IBM:
+Now when we visualize generated RDF, we share nodes for The Wall Street Journal and IBM:
 
 {width=90%}
 ![Part of the RDF graph that shows shared nodes when URIs are used for RDF values instead of literal strings](images/2dot1.png)
@@ -289,4 +289,4 @@ While literal values sometimes are useful in generated RDF, using literals for t
 
 ## Wrap-up
 
-In the field of Artificial Intelligence there are two topics that get me the most excited and I have been fortunate to be paid to work on both: Deep Learning and Knowledge Graphs. Here we have just touched the surface for creating data for Knowledge Graphs but I hope that between this chapter and the material on RDF in the chapter **Datastores** that you have enough information and experience playing with the examples to get started prototyping a Knowledge Graph in your organizartion. My advice is to "start small" by picking a problem that your organization has that can be solved by not moving data around, but rather, by creating a custom Knowledge Graph for metadata for existing information in your organization.
+In the field of Artificial Intelligence there are two topics that get me the most excited and I have been fortunate to be paid to work on both: Deep Learning and Knowledge Graphs. Here we have just touched the surface for creating data for Knowledge Graphs but I hope that between this chapter and the material on RDF in the chapter **Datastores** that you have enough information and experience playing with the examples to get started prototyping a Knowledge Graph in your organization. My advice is to "start small" by picking a problem that your organization has that can be solved by not moving data around, but rather, by creating a custom Knowledge Graph for metadata for existing information in your organization.

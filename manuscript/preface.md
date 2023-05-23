@@ -14,6 +14,10 @@ While this is a book on the Hy Lisp language, we have a wider theme here. In an 
 
 I have been using Lisp languages professionally since 1982 and have written books covering the Common Lisp and Scheme languages. Most of my career has involved working on AI projects so tools for developing AI applications will be a major theme. In addition to covering the Hy language, you will get experience with AI tools and techniques that will help you craft your own AI platforms regardless of whether you are a consultant, work at a startup, or a corporation.
 
+The latest version of this book (updated in May 2023) has major code changes that were required to support changes in the Hy language version 0.26.0.
+
+The code examples can be found in my GitHub repository [https://github.com/mark-watson/hy-lisp-python](https://github.com/mark-watson/hy-lisp-python).
+
 This book covers many programming topics using the Lisp language **Hy** that compiles to Python AST and is compatible with code, libraries, and frameworks written in Python. The main topics we will cover and write example applications for are:
 
 - Relational and graph databases
@@ -75,7 +79,7 @@ Usually I use photographs that I take myself for covers of my LeanPub books. Alt
 
 ## A Request from the Author
 
-I spent time writing this book to help you, dear reader. I release this book under the Creative Commons "share and share alike, no modifications, no commercial reuse" license and set the minimum purchase price to $8.00 in order to reach the most readers. You can also read this book (and all of my books) for free on my [my website](https://markwatson.com/books).
+I spent time writing this book to help you, dear reader. I release this book under the Creative Commons "share and share alike, no modifications, no commercial reuse" license and set the minimum purchase price to $8.00 in order to reach the most readers. You can read this book for free online or purchase it by visiting [https://leanpub.com/hy-lisp-python](https://leanpub.com/hy-lisp-python).
 
 If you would like to support my work please consider purchasing my books on [Leanpub](https://leanpub.com/u/markwatson) and star my git repositories that you find useful on [GitHub](https://github.com/mark-watson?tab=repositories&q=&type=public). You can also interact with me on social media on [Mastodon](https://mastodon.social/@mark_watson) and [Twitter](https://twitter.com/mark_l_watson).
 
