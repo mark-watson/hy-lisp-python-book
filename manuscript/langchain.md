@@ -189,7 +189,7 @@ Hy 0.26.0 using CPython(main) 3.11.0 on Darwin
 
 Notice that the **doc_embeddings** is a list where each list element is the embeddings for one input text document. The **query_embedding** is a single embedding. Please read the above linked embedding documentation.
 
-We will use vector stores to store calculated embeddings for future use. In the next chapter we will see a document database search example using LangChain and Llama-Index.
+We will use vector stores to store calculated embeddings for future use.
 
 ## Using LangChain Vector Stores to Query Documents
 
@@ -199,37 +199,47 @@ We will reference the [LangChain Vector Stores documentation](https://python.lan
     pip install chromadb
     pip install unstructured pdf2image pytesseract
 
-The example script is **doc_search.py**:
+The example script is **doc_search.hy**:
 
-```python
-from langchain.text_splitter import CharacterTextSplitter
-from langchain.vectorstores import Chroma
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.document_loaders import DirectoryLoader
-from langchain import OpenAI, VectorDBQA
+```hy
+(import langchain.text_splitter [CharacterTextSplitter])
+(import langchain.vectorstores [Chroma])
+(import langchain.embeddings [OpenAIEmbeddings])
+(import langchain.document_loaders [DirectoryLoader])
+(import langchain [OpenAI VectorDBQA])
 
-embeddings = OpenAIEmbeddings()
+(setv embeddings (OpenAIEmbeddings))
 
-loader = DirectoryLoader('../data/', glob="**/*.txt")
-documents = loader.load()
-text_splitter = CharacterTextSplitter(chunk_size=2500, chunk_overlap=0)
+(setv loader (DirectoryLoader "./data/" :glob "**/*.txt"))
+(setv documents (loader.load))
 
-texts = text_splitter.split_documents(documents)
+(setv
+  text_splitter
+  (CharacterTextSplitter :chunk_size 2500 :chunk_overlap 0))
 
-docsearch = Chroma.from_documents(texts, embeddings)
+(setv
+  texts
+  (text_splitter.split_documents documents))
 
-qa = VectorDBQA.from_chain_type(llm=OpenAI(),
-                                chain_type="stuff",
-                                vectorstore=docsearch)
+(setv
+  docsearch
+  (Chroma.from_documents texts  embeddings))
 
-def query(q):
-    print(f"Query: {q}")
-    print(f"Answer: {qa.run(q)}")
+(setv
+  qa
+  (VectorDBQA.from_chain_type
+    :llm (OpenAI)
+    :chain_type "stuff"
+    :vectorstore docsearch))
 
-query("What kinds of equipment are in a chemistry laboratory?")
-query("What is Austrian School of Economics?")
-query("Why do people engage in sports?")
-query("What is the effect of body chemistry on exercise?")
+(defn query [q]
+  (print "Query: " q)
+  (print "Answer: " (qa.run q)))
+
+(query "What kinds of equipment are in a chemistry laboratory?")
+(query "What is Austrian School of Economics?")
+(query "Why do people engage in sports?")
+(query "What is the effect of body chemistry on exercise?")
 ```
 
 The **DirectoryLoader** class is useful for loading a directory full of input documents. In this example we specified that we only want to process text files, but the file matching pattern could have also specified PDF files, etc.
@@ -237,22 +247,19 @@ The **DirectoryLoader** class is useful for loading a directory full of input do
 The output is:
 
 ```console
-$ python doc_search.py      
-Created a chunk of size 1055, which is longer than the specified 1000
-Running Chroma using direct local API.
-Using DuckDB in-memory for database. Data will be transient.
-Query: What kinds of equipment are in a chemistry laboratory?
-Answer:  A chemistry lab would typically include glassware, such as beakers, flasks, and test tubes, as well as other equipment such as scales, Bunsen burners, and thermometers.
-Query: What is Austrian School of Economics?
-Answer:  The Austrian School is a school of economic thought that emphasizes the spontaneous organizing power of the price mechanism. Austrians hold that the complexity of subjective human choices makes mathematical modelling of the evolving market extremely difficult and advocate a "laissez faire" approach to the economy. Austrian School economists advocate the strict enforcement of voluntary contractual agreements between economic agents, and hold that commercial transactions should be subject to the smallest possible imposition of forces they consider to be (in particular the smallest possible amount of government intervention). The Austrian School derives its name from its predominantly Austrian founders and early supporters, including Carl Menger, Eugen von Bohm-Bawerk and Ludwig von Mises.
-Query: Why do people engage in sports?
-Answer:  People engage in sports for leisure and entertainment, as well as for physical exercise and athleticism.
-Query: What is the effect of body chemistry on exercise?
-Answer:  Body chemistry can affect the body's response to exercise, as certain hormones and enzymes produced by the body can affect the energy levels and muscle performance. Chemicals in the body, such as adenosine triphosphate (ATP) and urea, can affect the body's energy production and muscle metabolism during exercise. Additionally, the body's levels of electrolytes, vitamins, and minerals can affect exercise performance.
-Exiting: Cleaning up .chroma directory
+$ hy doc_search.hy
+Using embedded DuckDB without persistence: data will be transient
+Query:  What kinds of equipment are in a chemistry laboratory?
+Answer:   A chemistry laboratory typically contains various glassware, as well as other equipment such as beakers, flasks, test tubes, Bunsen burners, hot plates, and other materials used for conducting experiments.
+Query:  What is Austrian School of Economics?
+Answer:   The Austrian School of economics is a school of economic thought that emphasizes the spontaneous organizing power of the price mechanism. Austrians hold that the complexity of subjective human choices makes mathematical modelling of the evolving market extremely difficult and advocate a "laissez faire" approach to the economy. Austrian School economists advocate the strict enforcement of voluntary contractual agreements between economic agents, and hold that commercial transactions should be subject to the smallest possible imposition of forces they consider to be (in particular the smallest possible amount of government intervention). The Austrian School derives its name from its predominantly Austrian founders and early supporters, including Carl Menger, Eugen von Böhm-Bawerk and Ludwig von Mises.
+Query:  Why do people engage in sports?
+Answer:   People engage in sports because they are enjoyable activities that involve physical athleticism or dexterity, and are governed by rules to ensure fair competition and consistent adjudication of the winner.
+Query:  What is the effect of body chemistry on exercise?
+Answer:   Body chemistry can affect the transfer of energy from one chemical substance to another, as well as the efficiency of energy-producing systems that do not rely on oxygen, such as anaerobic exercise. It can also affect the body's ability to produce enough moisture, which can lead to dry eye and other symptoms.
 ```
 
 
 ## LangChain Wrap Up
 
-I wrote a Python book that goes into greater detail on both LangChain and also the library LlamaIndex that are often used together. You can my book [LangChain and LlamaIndex Projects Lab Book: Hooking Large Language Models Up to the Real World](https://leanpub.com/langchain) for free online using the *Free To Read Online Link*.
+I wrote a Python book that goes into greater detail on both LangChain and also the library LlamaIndex that are often used together. You can buy my book [LangChain and LlamaIndex Projects Lab Book: Hooking Large Language Models Up to the Real World](https://leanpub.com/langchain) or read it for free online using the *Free To Read Online Link*.
