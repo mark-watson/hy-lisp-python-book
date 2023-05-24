@@ -1,6 +1,6 @@
 # Using OpenAI GPT and Hugging Face APIs
 
-I use both the OpenAI and Hugging Face Large Language Models (LLMs) and APIs in my work. In this chapter we use the GPT-3.5 API since it works well for our examples. Using GTP-4 and ChatGPT is more expensive. We will also use a free Hugging Face API.
+I use both the OpenAI and Hugging Face Large Language Models (LLMs) and APIs in my work. In this chapter we use the GPT-3.5 API since it works well for our examples. Using GTP-4 and ChatGPT is more expensive. We will also use a free Hugging Face API and a local Hugging Face model on our laptops.
 
 ## OpenAI Text Completion API
 
@@ -126,6 +126,7 @@ Ultimately, the choice of programming language will depend on the specific requi
 =>
 ```
 
+This completion API is very general purpose. If you use the ChatGPT web app try some of the same prompts with this code example. In the function **completion** the messages just had a single interaction but if you follow the OpenAI documentation you can use the same code, with a different value of **:messages** implement interactive chat.
 
 ## Coreference: Resolve Pronouns to Proper Nouns in Text Using Hugging Face APIs
 
@@ -192,7 +193,7 @@ Hy 0.26.0 using CPython(main) 3.11.0 on Darwin
 
 ### Summarizing Text Using a Pre-trained Hugging Face Model on Your Laptop
 
-For most Hugging Face pre-trained models you can either use them running on Hugging Face servers via an API call or use the **transformers** library to download and run the model on your laptop. The downloaded model and associated files are a little less than two gigabytes of data. Once a model is downloaded to **~/.cache/huggingface** on your local filesystem you can use the model again without re-downloading it.
+For most Hugging Face pre-trained models you can either use them running on Hugging Face servers via an API call or use the **transformers** library to download and run the model on your laptop. The downloaded model we use here and associated files are a little less than two gigabytes of data. Once a model is downloaded to **~/.cache/huggingface** on your local filesystem you can use the model again without re-downloading it. The download process is automatic the first time you call the function **pipeline**:
 
 ```hy
 (import transformers [pipeline])
@@ -219,3 +220,4 @@ Here is some sample output:
 The President sent a request for changing the debt ceiling to Congress. The Congress was not oblivious of what the Supreme Court's majority had ruled on budget matters. Even four Justices had found nothing to criticize in the President's requirement that the Federal Government's four-year spending plan be changed
 ```
 
+Although the OpenAI and Hugging Face APIs are convenient to use I like to also run models locally on my laptop or on Google Colab.

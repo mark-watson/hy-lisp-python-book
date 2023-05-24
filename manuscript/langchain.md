@@ -2,7 +2,7 @@
 
 Harrison Chase started the LangChain project in October 2022 and as I write this chapter in May 2023 the GitHub repository for LangChain [https://github.com/hwchase17/langchain](https://github.com/hwchase17/langchain) has over 200 contributors.
 
-The material in this chapter is a very small subset of material in my recent Python book [LangChain and LlamaIndex Projects Lab Book: Hooking Large Language Models Up to the Real World
+The material in this chapter is a very small subset of material in my recent Python book [LangChain and LlamaIndex Projects Lab Book: Hooking Large Language Models Up to the Real World.
 Using GPT-3, ChatGPT, and Hugging Face Models in Applications.](https://leanpub.com/langchain) that you can read for free online by using the link *Free To Read Online*.
 
 [LangChain](https://langchain.readthedocs.io/en/latest/index.html) is a framework for building applications with large language models (LLMs) through chaining different components together. Some of the applications of LangChain are chatbots, generative question-answering, summarization, data-augmented generation and more. LangChain can save time in building chatbots and other systems by providing a standard interface for chains, agents and memory, as well as integrations with other tools and end-to-end examples. We refer to "chains" as sequences of calls (to an LLMs and a different program utilities, cloud services, etc.) that go beyond just one LLM API call. LangChain provides a standard interface for chains, many integrations with other tools, and end-to-end chains for common applications. Often you will find existing chains already written that meet the requirements for your applications.
@@ -22,23 +22,20 @@ For the purposes of examples in this chapter, you might want to create a new Ana
 
     pip install langchain openai
 
-## Creating a New LangChain Project
-
-Simple LangChain projects are often just a very short Python script file. As you read this book, when any example looks interesting or useful, I suggest copying the requirements.txt and Python source files to a new directory and making your own GitHub private repository to work in. Please make the examples in this book "your code," that is, freely reuse any code or ideas you find here.
 
 ## Basic Usage and Examples
 
-While I try to make the material in this book independent, something you can enjoy with no external references, you should also take advantage of the high quality [documentation](Langchain Quickstart Guide) and the individual detailed guides for prompts, chat, document loading, indexes, etc.
+While I try to make the material in this book independent, something you can enjoy with no external references, you should also take advantage of the high quality [documentation](LangChain Quickstart Guide) and the individual detailed guides for prompts, chat, document loading, indexes, etc.
 
-As we work through some examples please keep in mind what it is like to use the ChatGPT web application: you enter text and get repsponses. The way you prompt ChatGPT is obviously important if you want to get useful responses. In code examples we automate and formalize this manual process.
+As we work through some examples please keep in mind what it is like to use the ChatGPT web application: you enter text and get respponses. The way you prompt ChatGPT is obviously important if you want to get useful responses. In code examples we automate and formalize this manual process.
 
 You need to choose a LLM to use. We will usually choose the GPT-3.5 API from OpenAI because it is general purpose and much less expensive than OpenAI's previous model APIs. You will need to [sign up](https://platform.openai.com/account/api-keys) for an API key and set it as an environment variable:
 
     export OPENAI_API_KEY="YOUR KEY GOES HERE"
 
-Both the libraries **openai** and **langchain** will look for this environment variable and use it. We will look at a few simple examples in a Hy REPL. We will start by just using OpenAI's text prediction API:
+Both the libraries **openai** and **langchain** will look for this environment variable and use it. We will look at a few simple examples in a Hy REPL. We will start by just using OpenAI's text prediction API that accepts a prompt and then continues generating text from that prompt:
 
-```hy
+```console
 $ hy
 Hy 0.26.0 using CPython(main) 3.11.0 on Darwin
 => (import langchain.llms [OpenAI])
@@ -168,7 +165,18 @@ Population: 83 million
 => 
 ```
 
+We print the generated prompt and you can try copying this text (here for Canada) into the ChatGPT web app:
 
+```console
+Predict the capital and population of a country.
+
+Country:Canada
+Capital:
+Population:
+```
+
+So there is no magic here. We are simply generating prompts that contain context data.
+ 
 ## Creating Embeddings
 
 We will reference the [LangChain embeddings documentation](https://python.langchain.com/en/latest/reference/modules/embeddings.html). We can use a Hy REPL to see what text to vector space embeddings might look like:
@@ -189,7 +197,7 @@ Hy 0.26.0 using CPython(main) 3.11.0 on Darwin
 
 Notice that the **doc_embeddings** is a list where each list element is the embeddings for one input text document. The **query_embedding** is a single embedding. Please read the above linked embedding documentation.
 
-We will use vector stores to store calculated embeddings for future use.
+We will use vector stores to store calculated embeddings for future use in the next example.
 
 ## Using LangChain Vector Stores to Query Documents
 
@@ -199,7 +207,7 @@ We will reference the [LangChain Vector Stores documentation](https://python.lan
     pip install chromadb
     pip install unstructured pdf2image pytesseract
 
-The example script is **doc_search.hy**:
+The next document query example is contained in a single script **hy-lisp-python/langchain/doc_search.hy** with three document queries at the end of the script. In this example we read the text file documents in the directory **hy-lisp-python/langchain/data** and create a local embeddings datastore we use for natural language queries:
 
 ```hy
 (import langchain.text_splitter [CharacterTextSplitter])
@@ -259,6 +267,7 @@ Query:  What is the effect of body chemistry on exercise?
 Answer:   Body chemistry can affect the transfer of energy from one chemical substance to another, as well as the efficiency of energy-producing systems that do not rely on oxygen, such as anaerobic exercise. It can also affect the body's ability to produce enough moisture, which can lead to dry eye and other symptoms.
 ```
 
+If you use this example to index a large number of documents you will want to use a separate script to load the documents, call the OpenAI text embedding API to store the index for future use. Then any application can reuse your local index. If you add documents to your data directory then re-run the script to create the local index. You can see examples of persistent vector stores in [my LangChain book](https://leanpub.com/langchain/read).
 
 ## LangChain Wrap Up
 
