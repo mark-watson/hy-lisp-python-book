@@ -1,6 +1,9 @@
 # Using LangChain to Chain Together Large Language Models
 
-Harrison Chase started the LangChain project in October 2022 and as I write this book in February 2023 the GitHub repository for LangChain [https://github.com/hwchase17/langchain](https://github.com/hwchase17/langchain) has 171 contributors.
+Harrison Chase started the LangChain project in October 2022 and as I write this chapter in May 2023 the GitHub repository for LangChain [https://github.com/hwchase17/langchain](https://github.com/hwchase17/langchain) has over 200 contributors.
+
+The material in this chapter is a very small subset of material in my recent Python book [LangChain and LlamaIndex Projects Lab Book: Hooking Large Language Models Up to the Real World
+Using GPT-3, ChatGPT, and Hugging Face Models in Applications.](https://leanpub.com/langchain) that you can read for free online by using the link *Free To Read Online*.
 
 [LangChain](https://langchain.readthedocs.io/en/latest/index.html) is a framework for building applications with large language models (LLMs) through chaining different components together. Some of the applications of LangChain are chatbots, generative question-answering, summarization, data-augmented generation and more. LangChain can save time in building chatbots and other systems by providing a standard interface for chains, agents and memory, as well as integrations with other tools and end-to-end examples. We refer to "chains" as sequences of calls (to an LLMs and a different program utilities, cloud services, etc.) that go beyond just one LLM API call. LangChain provides a standard interface for chains, many integrations with other tools, and end-to-end chains for common applications. Often you will find existing chains already written that meet the requirements for your applications.
 
@@ -10,18 +13,14 @@ While LLMs are very general in nature which means that while they can perform ma
 
 LangChain Memory is the concept of persisting state between calls of a chain or agent. LangChain provides a standard interface for memory, a collection of memory implementations, and examples of chains/agents that use memory². LangChain provides a large collection of common utils to use in your application. Chains go beyond just a single LLM call, and are sequences of calls (whether to an LLM or a different utility). LangChain provides a standard interface for chains, lots of integrations with other tools, and end-to-end chains for common applications.
 
-LangChain can be integrated with one or more model providers, data stores, APIs, etc. LangChain can be used for in-depth question-and-answer chat sessions, API interaction, or action-taking. LangChain can be integrated with Zapier's platform through a natural language API interface (we have an entire chapter dedicated to Zapier integrations).
+LangChain can be integrated with one or more model providers, data stores, APIs, etc.
 
 
 ## Installing Necessary Packages
 
-For the purposes of examples in this book, you might want to create a new Anaconda or other Python environment and install:
+For the purposes of examples in this chapter, you might want to create a new Anaconda or other Python environment and install:
 
-    pip install langchain llama_index openai
-    pip install kor pydrive pandas rdflib 
-    pip install google-search-results SPARQLWrapper
-
-For the rest of this chapter we will use the subdirectory **langchain_getting_started** and in the next chapter use **llama-index_case_study** in the GitHub repository for this book.
+    pip install langchain openai
 
 ## Creating a New LangChain Project
 
@@ -31,152 +30,161 @@ Simple LangChain projects are often just a very short Python script file. As you
 
 While I try to make the material in this book independent, something you can enjoy with no external references, you should also take advantage of the high quality [documentation](Langchain Quickstart Guide) and the individual detailed guides for prompts, chat, document loading, indexes, etc.
 
-As we work through some examples please keep in mind what it is like to use the ChatGPT web application: you enter text and get repsonses. The way you prompt ChatGPT is obviously important if you want to get useful responses. In code examples we automate and formalize this manual process.
+As we work through some examples please keep in mind what it is like to use the ChatGPT web application: you enter text and get repsponses. The way you prompt ChatGPT is obviously important if you want to get useful responses. In code examples we automate and formalize this manual process.
 
 You need to choose a LLM to use. We will usually choose the GPT-3.5 API from OpenAI because it is general purpose and much less expensive than OpenAI's previous model APIs. You will need to [sign up](https://platform.openai.com/account/api-keys) for an API key and set it as an environment variable:
 
     export OPENAI_API_KEY="YOUR KEY GOES HERE"
 
-Both the libraries **openai** and **langchain** will look for this environment variable and use it. We will look at a few simple examples in a Python REPL. We will start by just using OpenAI's text prediction API:
+Both the libraries **openai** and **langchain** will look for this environment variable and use it. We will look at a few simple examples in a Hy REPL. We will start by just using OpenAI's text prediction API:
+
+```hy
+$ hy
+Hy 0.26.0 using CPython(main) 3.11.0 on Darwin
+=> (import langchain.llms [OpenAI])
+=> (setv llm (OpenAI :temperature 0.8))
+=> (llm "John got into his new sports car, and he drove it")
+" to work. He felt really proud that he was able to afford the car and even parked it in a prime spot so everyone could see. He felt like he had really made it."
+=> 
+```
+
+The temperature should have a value between 0 and 1. Use a small temperature value to get repeatable results and a large temperature value is you want very different completions each time you pass the same prompt text.
+
+Our next example is in the source file **directions_template.hy** and uses the **PromptTemplate** class. A prompt template is a reproducible way to generate a prompt. It contains a text string (“the template”), that can take in a set of parameters from the end user and generate a prompt. The prompt template may contain language model instructions, few-shot examples to improve the model’s response, or specific questions for the model to answer.
+
+
+```hy
+(import langchain.prompts [PromptTemplate])
+(import langchain.llms [OpenAI])
+
+(setv llm (OpenAI :temperature 0.9))
+
+(defn get_directions [thing_to_do]
+   (setv
+     prompt
+     (PromptTemplate
+       :input_variables ["thing_to_do"]
+       :template "How do I {thing_to_do}?"))
+    (setv
+      prompt_text
+      (prompt.format :thing_to_do thing_to_do))
+    ;; Print out generated prompt when you are getting started:
+    (print "\n" prompt_text ":")
+    (llm prompt_text))
+```
+
+You could just write Hy string manipulation code to create a prompt but using the utility class **PromptTemplate** is more legible and works with any number of prompt input variables. In this example, the prompt template is really simple. For more complex Python examples see the [LangChain prompt documentation](https://python.langchain.com/en/latest/modules/prompts/prompt_templates/examples/few_shot_examples.html). We will later see a more complex prompt example.
+
+Let's change directory to **hy-lisp-python/langchain** and run two examples in a Hy REPL:
 
 ```console
-$ python
->>> from langchain.llms import OpenAI
->>> llm = OpenAI(temperature=0.8)
->>> s = llm("John got into his new sports car, and he drove it")
->>> s
-' to work\n\nJohn started up his new sports car and drove it to work. He had a huge smile on his face as he drove, excited to show off his new car to his colleagues. The wind blowing through his hair, and the sun on his skin, he felt a sense of freedom and joy as he cruised along the road. He arrived at work in no time, feeling refreshed and energized.'
->>> s = llm("John got into his new sports car, and he drove it")
->>> s
-" around town\n\nJohn drove his new sports car around town, enjoying the feeling of the wind in his hair. He stopped to admire the view from a scenic lookout, and then sped off to the mall to do some shopping. On the way home, he took a detour down a winding country road, admiring the scenery and enjoying the feel of the car's powerful engine. By the time he arrived back home, he had a huge smile on his face."
+$ hy
+Hy 0.26.0 using CPython(main) 3.11.0 on Darwin
+=> (import directions_template [get_directions])
+=> (print (get_directions "hang a picture on the wall"))
+
+ How do I hang a picture on the wall? :
+
+
+1. Gather necessary items: picture, level, appropriate hardware for your wall type (nails, screws, anchors, etc).
+
+2. Select the location of the picture on the wall. Use a level to ensure that the picture is hung straight. 
+
+3. Mark the wall where the hardware will be placed.
+
+4. Securely attach the appropriate hardware to the wall. 
+
+5. Hang the picture and secure with the hardware. 
+
+6. Stand back and admire your work!
+=> (print (get_directions "get to the store"))
+
+ How do I get to the store? :
+
+
+The best way to get to the store depends on your location. If you are using public transportation, you can use a bus or train to get there. If you are driving, you can use a GPS or maps app to find the fastest route.
+=> 
 ```
 
-Notice how when we ran the same input text prompt twice that we see different results.Setting the temperature in line 3 to a higher value increases the randomness.
+The next example in the file **country_information.hy** is derived from an example in the LangChain documentation. In this example we use  **PromptTemplate** that contains the pattern we would like the LLM to use when returning a response.
 
-Our next example is in the source file **directions_template.py** and uses the **PromptTemplate** class. A prompt template is a reproducible way to generate a prompt. It contains a text string (“the template”), that can take in a set of parameters from the end user and generate a prompt. The prompt template may contain language model instructions, few-shot examples to improve the model’s response, or specific questions for the model to answer.
+```hy
+(import langchain.prompts [PromptTemplate])
+(import langchain.llms [OpenAI])
 
+(setv llm (OpenAI :temperature 0.9))
 
-```python
-from langchain.prompts import PromptTemplate
-from langchain.llms import OpenAI
-llm = OpenAI(temperature=0.9)
+(setv
+  template
+  "Predict the capital and population of a country.\n\nCountry: {country_name}\nCapital:\nPopulation:\n")
 
-def get_directions(thing_to_do):
-    prompt = PromptTemplate(
-        input_variables=["thing_to_do"],
-        template="How do I {thing_to_do}?",
-    )
-    prompt_text = prompt.format(thing_to_do=thing_to_do)
-    print(f"\n{prompt_text}:")
-    return llm(prompt_text)
-
-print(get_directions("get to the store"))
-print(get_directions("hang a picture on the wall"))
-```
-
-You could just write Python string manipulation code to create a prompt but using the utiltiy class **PromptTemplate** is more legible and works with any number of prompt input variables.
-
-The output is:
-
-```console
-$ python directions_template.py
-
-How do I get to the store?:
-
-To get to the store, you will need to use a mode of transportation such as walking, driving, biking, or taking public transportation. Depending on the location of the store, you may need to look up directions or maps to determine the best route to take.
-
-How do I hang a picture on the wall?:
-
-1. Find a stud in the wall, or use two or three wall anchors for heavier pictures.
-2. Measure and mark the wall where the picture hanger will go. 
-3. Pre-drill the holes and place wall anchors if needed.
-4. Hammer the picture hanger into the holes.
-5. Hang the picture on the picture hanger.
-```
-
-The next example in the file **country_information.py** is derived from an example in the LangChain documentation. In this example we use  **PromptTemplate** that contains the pattern we would like the LLM to use when returning a response.
-
-```python
-from langchain.prompts import PromptTemplate
-from langchain.llms import OpenAI
-llm = OpenAI(temperature=0.9)
-
-def get_country_information(country_name):
-    print(f"\nProcessing {country_name}:")
-    global prompt
-    if "prompt" not in globals():
-        print("Creating prompt...")
-        prompt = PromptTemplate(
-            input_variables=["country_name"],
-            template = """
-Predict the capital and population of a country.
-
-Country: {country_name}
-Capital:
-Population:""",
-        )
-    prompt_text = prompt.format(country_name=country_name)
-    print(prompt_text)
-    return llm(prompt_text)
-
-print(get_country_information("Canada"))
-print(get_country_information("Germany"))
+(defn get_country_information [country_name]
+  (print "Processing " country_name ":")
+  (setv
+     prompt
+     (PromptTemplate
+       :input_variables ["country_name"]
+       :template template))
+  (setv
+      prompt_text
+      (prompt.format :country_name country_name))
+  ;; Print out generated prompt when you are getting started:
+  (print "\n" prompt_text ":")
+  (llm prompt_text))
 ```
 
 You can use the ChatGPT web interface to experiment with prompts and when you find a pattern that works well then write a Python script like the last example, but changing the data you supply in the **PromptTemplate** instance.
 
-The output of the last example is:
+Here are two examples of this code for getting information about  Canada and Germany:
 
 ```console
- $ python country_information.py
+$ hy
+Hy 0.26.0 using CPython(main) 3.11.0 on Darwin
+=> (import country_information [get_country_information])
+=> (print (get_country_information "Canada"))
+Processing  Canada :
 
-Processing Canada:
-Creating prompt...
-
-Predict the capital and population of a country.
+ Predict the capital and population of a country.
 
 Country: Canada
 Capital:
 Population:
-
+ :
 
 Capital: Ottawa
-Population: 37,058,856 (as of July 2020)
+Population: 37,592,000 (as of 2019)
+=> (print (get_country_information "Germany"))
+Processing  Germany :
 
-Processing Germany:
-
-Predict the capital and population of a country.
+ Predict the capital and population of a country.
 
 Country: Germany
 Capital:
 Population:
-
+ :
 
 Capital: Berlin
-Population: 83,02 million (est. 2019)
+Population: 83 million
+=> 
 ```
 
 
 ## Creating Embeddings
 
-We will reference the [LangChain embeddings documentation](https://python.langchain.com/en/latest/reference/modules/embeddings.html). We can use a Python REPL to see what text to vector space embeddings might look like:
+We will reference the [LangChain embeddings documentation](https://python.langchain.com/en/latest/reference/modules/embeddings.html). We can use a Hy REPL to see what text to vector space embeddings might look like:
 
 ```console
-$ python
-Python 3.10.8 (main, Nov 24 2022, 08:08:27) [Clang 14.0.6 ] on darwin
-Type "help", "copyright", "credits" or "license" for more information.
->>> from langchain.embeddings import OpenAIEmbeddings
->>> embeddings = OpenAIEmbeddings()
->>> text = "Mary has blond hair and John has brown hair. Mary lives in town and John lives in the country."
->>> doc_embeddings = embeddings.embed_documents([text])
->>> doc_embeddings
-[[0.007727328687906265, 0.0009025644976645708, -0.0033224383369088173, -0.01794492080807686, -0.017969949170947075, 0.028506645932793617, -0.013414892368018627, 0.0046676816418766975, -0.0024965214543044567, -0.02662956342101097,
-...]]
->>> query_embedding = embeddings.embed_query("Does John live in the city?")
->>> query_embedding
-[0.028048301115632057, 0.011499025858938694, -0.00944007933139801, -0.020809611305594444, -0.023904507979750633, 0.018750663846731186, -0.01626438833773136, 0.018129095435142517,
-...]
->>>
+ $ hy
+Hy 0.26.0 using CPython(main) 3.11.0 on Darwin
+=> (import langchain.embeddings [OpenAIEmbeddings])
+=> (setv embeddings (OpenAIEmbeddings))
+=> (setv text "Mary has blond hair and John has brown hair. Mary lives in town and John lives in the country.")
+=> (setv doc_embeddings (embeddings.embed_documents [text]))
+=> doc_embeddings
+[[0.007754440331396565 0.0008957661819527747 -0.003335848878474548 -0.01803736554483232 -0.017987297643789046 0.028564378295111985 -0.013368429464419828 0.004709617646993997..]]
+=> (setv query_embedding (embeddings.embed_query "Does John live in the city?"))
+=> query_embedding
+[0.028118159621953964 0.011476404033601284 -0.009456867352128029 ...]
 ```
 
 Notice that the **doc_embeddings** is a list where each list element is the embeddings for one input text document. The **query_embedding** is a single embedding. Please read the above linked embedding documentation.

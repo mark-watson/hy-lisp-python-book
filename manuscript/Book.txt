@@ -11,5 +11,5 @@ linkeddata.md
 kgcreator.md
 kgn.md
 openai.md
-llamaindex.md
+langchain.md
 wrapup.md
