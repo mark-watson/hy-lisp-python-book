@@ -130,7 +130,7 @@ The following listing shows **democracynow_front_page.hy**
     (print uri ":" text)))
 ~~~~~~~~
 
-This simply prints our URIs and text (separated with the string ":") for each link on the home page. On line 13 we discard any anchor elements that do not contain text. On line 14 the comma character at the start of the return list indicates that we are constructing a tuple. Lines 16-18 define a main function that is used when running this file art the command line. This is similar to how main functions can be defined in Python to allow a library file to also be run as a command line tool.
+This simply prints our URIs and text (separated with the string ":") for each link on the home page. On line 13 we discard any anchor elements that do not contain text. On line 14 the comma character at the start of the return list indicates that we are constructing a tuple. Lines 16-18 define a main function that is used when running this file at the command line. This is similar to how main functions can be defined in Python to allow a library file to also be run as a command line tool.
 
 A few lines of output from today's front page is:
 

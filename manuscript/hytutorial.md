@@ -318,7 +318,7 @@ Unfortunately, Clojure's immutable  data structures cannot be easily implemented
 
 The original Hy language developer Paul Tagliamonte was clearly inspired by Clojure.
 
-The book **Serious Python** by Julien Danjou has an entire chapter (chapter 9) on the Python AST (abstract syntax tree), an introduction to Hy, and an interview with Paul Tagliamonte. Recommended!
+The book **Serious Python** by Julien Danjou has an entire chapter (Chapter 9) on the Python AST (abstract syntax tree), an introduction to Hy, and an interview with Paul Tagliamonte. Recommended!
 
 [This podcast](https://www.pythonpodcast.com/episode-23-hylang-core-developers/) in 2015 interviews Hy developers Paul Tagliamonte, Tuukka Turto, and Morten Linderud. You can see the [current Hy contributor list on github](https://github.com/hylang/hy/graphs/contributors).
 

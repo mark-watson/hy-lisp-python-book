@@ -1,6 +1,6 @@
 # Using the Microsoft Bing Search APIs
 
-You will need to register with Microsoft's Azure search service to use the material in this chapter. It is likely that you view search as a manual human-centered activity. I hope to expand your thinking to considering applications that automate search, finding information on the web, and automatically organizing information.
+You will need to register with Microsoft's Azure search service to use the material in this chapter. It is likely that you view search as a manual human-centered activity. I hope to expand your thinking to considering applications that include automated search, finding information on the web, and automatically organizing information.
 
 ## Getting an Access Key for Microsoft Bing Search APIs
 
