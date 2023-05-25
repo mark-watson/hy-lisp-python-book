@@ -4,13 +4,13 @@ I use both the OpenAI and Hugging Face Large Language Models (LLMs) and APIs in 
 
 ## OpenAI Text Completion API
 
-OpenAI GPT (Generative Pre-trained Transformer 3) models like GPT-3.5, GPT-4, and ChatGPT are advanced language processing model developed by OpenAI. There are three general classes of OpenAI API services:
+OpenAI GPT (Generative Pre-trained Transformer 3) models like GPT-3.5, GPT-4, and ChatGPT are advanced language processing models developed by OpenAI. There are three general classes of OpenAI API services:
 
 - GPT which performs a variety of natural language tasks.
 - Codex which translates natural language to code.
 - DALL·E which creates and edits original images.
 
-GPT-3.5 and GPT-4 are capable of generating human-like text, completing tasks such as language translation, summarization, and question answering, and much more. OpenAI offers GPT-3 APIs, which allow developers to easily integrate GPT's capabilities into their applications.
+GPT-3.5 and GPT-4 are capable of generating human-like text, completing tasks such as language translation, summarization, and question answering, and much more. OpenAI offers GPT-3 APIs, which allows developers to easily integrate GPT's capabilities into their applications.
 
 The GPT-3.5 API provides a simple and flexible interface for developers to access GPT-3.5's capabilities such as text completion, language translation, and text generation. The API can be accessed using a simple API call, and can be integrated into a wide range of applications such as chatbots, language translation services, and text summarization.
 
@@ -220,4 +220,4 @@ Here is some sample output:
 The President sent a request for changing the debt ceiling to Congress. The Congress was not oblivious of what the Supreme Court's majority had ruled on budget matters. Even four Justices had found nothing to criticize in the President's requirement that the Federal Government's four-year spending plan be changed
 ```
 
-Although the OpenAI and Hugging Face APIs are convenient to use I like to also run models locally on my laptop or on Google Colab.
+Although the OpenAI and Hugging Face APIs are convenient to use I also like to run models locally on my laptop or on Google Colab.

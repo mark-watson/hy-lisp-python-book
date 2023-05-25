@@ -45,7 +45,7 @@ Hy 0.26.0 using CPython(main) 3.11.0 on Darwin
 => 
 ```
 
-The temperature should have a value between 0 and 1. Use a small temperature value to get repeatable results and a large temperature value is you want very different completions each time you pass the same prompt text.
+The temperature should have a value between 0 and 1. Use a small temperature value to get repeatable results and a large temperature value if you want very different completions each time you pass the same prompt text.
 
 Our next example is in the source file **directions_template.hy** and uses the **PromptTemplate** class. A prompt template is a reproducible way to generate a prompt. It contains a text string (“the template”), that can take in a set of parameters from the end user and generate a prompt. The prompt template may contain language model instructions, few-shot examples to improve the model’s response, or specific questions for the model to answer.
 
@@ -130,7 +130,7 @@ The next example in the file **country_information.hy** is derived from an examp
   (llm prompt_text))
 ```
 
-You can use the ChatGPT web interface to experiment with prompts and when you find a pattern that works well then write a Python script like the last example, but changing the data you supply in the **PromptTemplate** instance.
+You can use the ChatGPT web interface to experiment with prompts. When you find a pattern that works well then write a Python script like the last example, changing the data you supply in the **PromptTemplate** instance.
 
 Here are two examples of this code for getting information about  Canada and Germany:
 
@@ -267,8 +267,8 @@ Query:  What is the effect of body chemistry on exercise?
 Answer:   Body chemistry can affect the transfer of energy from one chemical substance to another, as well as the efficiency of energy-producing systems that do not rely on oxygen, such as anaerobic exercise. It can also affect the body's ability to produce enough moisture, which can lead to dry eye and other symptoms.
 ```
 
-If you use this example to index a large number of documents you will want to use a separate script to load the documents, call the OpenAI text embedding API to store the index for future use. Then any application can reuse your local index. If you add documents to your data directory then re-run the script to create the local index. You can see examples of persistent vector stores in [my LangChain book](https://leanpub.com/langchain/read).
+If you use this example to index a large number of documents you will want to store the index for future use. Then any application can reuse your local index. If you add documents to your data directory then re-run the script to create the local index. You can see examples of persistent vector stores in [my LangChain book](https://leanpub.com/langchain/read).
 
 ## LangChain Wrap Up
 
-I wrote a Python book that goes into greater detail on both LangChain and also the library LlamaIndex that are often used together. You can buy my book [LangChain and LlamaIndex Projects Lab Book: Hooking Large Language Models Up to the Real World](https://leanpub.com/langchain) or read it for free online using the *Free To Read Online Link*.
+I wrote a Python book that goes into greater detail on both LangChain as well as the library LlamaIndex that are often used together. You can buy my book [LangChain and LlamaIndex Projects Lab Book: Hooking Large Language Models Up to the Real World](https://leanpub.com/langchain) or read it free online using the *Free To Read Online Link*.
