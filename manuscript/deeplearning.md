@@ -41,7 +41,7 @@ Each non-input neuron has an activation value that is calculated from the activa
 
 Simple neural network architectures with just one or two hidden layers are easy to train using backpropagation and I have examples of from-scratch code for this several of my previous books. You can see Java and Common Lisp from-scratch implementations in two of my books that you can read online: [Practical Artificial Intelligence Programming With Java](https://leanpub.com/javaai) and [Loving Common Lisp, or the Savvy Programmer's Secret Weapon](https://leanpub.com/lovinglisp). However, here we are using Hy to write models using the TensorFlow framework which has the huge advantage that small models you experiment with on your laptop can be scaled to more parameters (usually this means more neurons in hidden layers which increases the number of weights in a model) and run in the cloud using multiple GPUs.
 
-Except for pendantic purposes, I now never write neural network code from scratch, instead I take advantage of the many person-years of engineering work put into the development of frameworks like TensorFlow, PyTorch, mxnet, etc. We now move on to two examples built with TensorFlow.
+Except for pedantic purposes, I now never write neural network code from scratch, instead I take advantage of the many person-years of engineering work put into the development of frameworks like TensorFlow, PyTorch, mxnet, etc. We now move on to two examples built with TensorFlow.
 
 ## Deep Learning
 
@@ -58,18 +58,42 @@ Once again, I recommend that you consider taking two online Deep Learning course
 
 ## Using Keras and TensorFlow to Model The Wisconsin Cancer Data Set
 
-The University of Wisconsin cancer database has 646 samples. Each sample has 9 input values and one output value, the target output class (0 for benign, 1 for cancer):
+The University of Wisconsin cancer database has 646 samples. Each sample has 9 input values and one output value:
 
-- 0 Clump Thickness               1 - 10
-- 1 Uniformity of Cell Size       1 - 10
-- 2 Uniformity of Cell Shape      1 - 10
-- 3 Marginal Adhesion             1 - 10
-- 4 Single Epithelial Cell Size   1 - 10
-- 5 Bare Nuclei                   1 - 10
-- 6 Bland Chromatin               1 - 10
-- 7 Normal Nucleoli               1 - 10
-- 8 Mitoses                       1 - 10
-- 9 Class (0 for benign, 1 for malignant)
+- Cl.thickness: Clump Thickness
+- Cell.size: Uniformity of Cell Size
+- Cell.shape: Uniformity of Cell Shape
+- Marg.adhesion: Marginal Adhesion
+- Epith.c.size: Single Epithelial Cell Size
+- Bare.nuclei: Bare Nuclei
+- Bl.cromatin: Bland Chromatin
+- Normal.nucleoli: Normal Nucleoli
+- Mitoses: Mitoses
+- Class: Class (0 for benign, 1 for malignant)
+
+Each row represents a sample with different measurements related to cell properties, and the final column 'Class' indicates whether the sample is benign (0) or malignant (1).
+
+Let's perform some basic analysis on this data:
+
+- Check for missing values.
+- Get the summary statistics of the dataset.
+- Check the balance of the classes (benign and malignant).
+
+Here's the analysis:
+
+- Missing Values: There are no missing values in the dataset. Each column has complete data.
+- Summary Statistics: The mean and median (50%) values of most features are quite different, indicating that the data distribution for these features might be skewed.
+- The range (min to max) for all features is from 1 to 10, indicating that the measurements are likely based on a scale or ranking system of 1 to 10.
+- Class Balance: The dataset is somewhat imbalanced. Approximately 65% of the samples are benign (0) and 35% are malignant (1). This imbalance might influence the performance of machine learning models trained on this data.
+
+Now, it would be beneficial to visualize the data to get a better understanding of the distribution of each feature and the relationship between different features:
+
+![Histogram Plots](images/wisconsin_plots.png)
+
+Here are histograms of each feature, broken down by class (benign or malignant). Some observations:
+
+Cl.thickness, Cell.size, Cell.shape, Marg.adhesion, Epith.c.size, Bare.nuclei, Bl.cromatin, Normal.nucleoli: For these features, higher values seem to be associated with the malignant class. This might suggest that these characteristics are significant in the determination of malignancy.
+Mitoses: This feature shows a different trend, with a majority of both benign and malignant cases having low mitoses values. However, there are more malignant cases with higher mitoses values than benign cases.
 
 We will use separate training and test files **hy-lisp-python/deeplearning/train.csv** and **hy-lisp-python/deeplearning/test.csv**. Here are a few samples from the training file:
 
@@ -162,10 +186,18 @@ The following listing shows the output:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-$ hy wisconsin.hy 
-Using TensorFlow backend.
-* predictions (calculated, expected):
-[(0.9759052, 1), (0.99994254, 1), (0.8564741, 1), (0.95866203, 1), (0.03042546, 0), (0.21845636, 0), (0.99662805, 1), (0.08626339, 0), (0.045683343, 0), (0.9992156, 1)]
+$ hy country_information.hy
+Processing  Germany :
+
+ Predict the capital and population of a country.
+
+Country: Germany
+Capital:
+Population:
+ :
+
+Capital: Berlin
+Population: 83 million
 ~~~~~~~~
 
 Let's look at the first test case: the "real" output from the training data is a value of 1 and the calculated predicted value (using the trained model) is 0.9759052. In making predictions, we can choose a cutoff value, 0.5 for example, and interpret any calculated prediction value less than the cutoff as a Boolean *false* prediction and calculated prediction value greater to or equal to the cutoff value is a Boolean *true* prediction.
