@@ -186,18 +186,8 @@ The following listing shows the output:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-$ hy country_information.hy
-Processing  Germany :
-
- Predict the capital and population of a country.
-
-Country: Germany
-Capital:
-Population:
- :
-
-Capital: Berlin
-Population: 83 million
+* predictions (calculated, expected):
+[(0.9998953, 1), (0.9999737, 1), (0.9172243, 1), (0.9975936, 1), (0.38985246, 0), (0.4301587, 0), (0.99999213, 1), (0.855, 0), (0.3810781, 0), (0.9999431, 1)]
 ~~~~~~~~
 
 Let's look at the first test case: the "real" output from the training data is a value of 1 and the calculated predicted value (using the trained model) is 0.9759052. In making predictions, we can choose a cutoff value, 0.5 for example, and interpret any calculated prediction value less than the cutoff as a Boolean *false* prediction and calculated prediction value greater to or equal to the cutoff value is a Boolean *true* prediction.
