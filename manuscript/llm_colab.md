@@ -4,7 +4,7 @@ In addition to using OpenAI, Cohere, etc. LLM APIs, you can also run smaller LLM
 
 We will use the Hugging Face tiiuae/falcon-7b model. You can read the [Hugging Face documentation for the tiiuae/falcon-7b model](https://huggingface.co/tiiuae/falcon-7b-instruct).
 
-Google Colab only directly supports the Python and R languages. We can use Hy by using the **%%writefile** script magic to write the contents of a cell to a local file, in this case Hy language source code. For interactive development we will use the script magic **%%script bash** to run **hy test.hy** because this will use the same process when we re-evaluate the notebook cell. If we would run our Hy script using **!hy test.hy** then each time we evaluate the cell we would get a fresh Linux process, so the previous caching of model files, etc. would be repeated.
+Google Colab only directly supports the Python and R languages. We can use Hy by using the **%%writefile test.hy** script magic to write the contents of a cell to a local file, in this case Hy language source code. For interactive development we will use the script magic **%%script bash** to run **hy test.hy** because this will use the same process when we re-evaluate the notebook cell. If we would run our Hy script using **!hy test.hy** then each time we evaluate the cell we would get a fresh Linux process, so the previous caching of model files, etc. would be repeated.
 
 Here we use the [Colab notebook](https://colab.research.google.com/drive/1pHBa-8TaajsBEiZ-dEydeL1FyLn5nvnW?usp=sharing) that is shown here:
 
@@ -38,3 +38,5 @@ The generated text varies for each run. Here is example output:
 ```
 Sam bought a new sports car and wanted to see Mary. Sam got in his sports car and drove the 20 miles to Mary’s house. The weather was perfect and the road was nice and smooth. It didn’t take long to get there and Sam had a lot of time to relax on his way. The car was a lot of fun to drive because it had all kinds of new safety features, and Sam really felt in control of his sports car.
 ```
+
+As I write this chapter in September 2023 more small LLM models are being released that can run on laptops. If you use M1 or M2 Macs and you have at least 16G of shared memory, it is now also easier to run LLMs locally. Macs with 64G or more shared memory are very capable of both local self-hosted fine tuning and inference. While it is certainly simpler to use APIs from OpenAI and other vendors there are privacy and control advantages to running self-hosted models.
