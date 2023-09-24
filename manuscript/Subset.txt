@@ -1,16 +1,3 @@
-preface.md
-hytutorial.md
-whylisp.md
-webapps.md
-webscrape.md
-bingsearch.md
-deeplearning.md
-nlp.md
-llm.md
-datastores.md
-linkeddata.md
-kgcreator.md
-kgn.md
 openai.md
 langchain.md
-wrapup.md
+llm_colab.md

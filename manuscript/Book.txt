@@ -13,4 +13,5 @@ kgcreator.md
 kgn.md
 openai.md
 langchain.md
+llm_colab.md
 wrapup.md
