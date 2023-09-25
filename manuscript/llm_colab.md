@@ -1,6 +1,6 @@
 # Large Language Models Experiments Using Google Colab
 
-In addition to using OpenAI, Cohere, LLM APIs, etc. you can also run smaller LLMs locally on your laptop if you have enough memory (and optionally a good GPU). When I experiment with self-hosted LLMs I usually run them in the cloud using either Google Colab or a leased GPU server from Lambda Labs.
+In addition to using LLM APIs from OpenAI, Cohere, etc. you can also run smaller LLMs locally on your laptop if you have enough memory (and optionally a good GPU). When I experiment with self-hosted LLMs I usually run them in the cloud using either Google Colab or a leased GPU server from Lambda Labs.
 
 We will use the Hugging Face tiiuae/falcon-7b model. You can read the [Hugging Face documentation for the tiiuae/falcon-7b model](https://huggingface.co/tiiuae/falcon-7b-instruct).
 
