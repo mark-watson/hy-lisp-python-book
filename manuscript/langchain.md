@@ -49,10 +49,9 @@ The temperature should have a value between 0 and 1. Use a small temperature val
 
 Our next example is in the source file **directions_template.hy** and uses the **PromptTemplate** class. A prompt template is a reproducible way to generate a prompt. It contains a text string (“the template”), that can take in a set of parameters from the end user and generate a prompt. The prompt template may contain language model instructions, few-shot examples to improve the model’s response, or specific questions for the model to answer.
 
-
 ```hy
 (import langchain.prompts [PromptTemplate])
-(import langchain.llms [OpenAI])
+(import langchain_openai.llms [OpenAI])
 
 (setv llm (OpenAI :temperature 0.9))
 
@@ -107,7 +106,7 @@ The next example in the file **country_information.hy** is derived from an examp
 
 ```hy
 (import langchain.prompts [PromptTemplate])
-(import langchain.llms [OpenAI])
+(import langchain_openai.llms [OpenAI])
 
 (setv llm (OpenAI :temperature 0.9))
 
@@ -211,14 +210,15 @@ The next document query example is contained in a single script **hy-lisp-python
 
 ```hy
 (import langchain.text_splitter [CharacterTextSplitter])
-(import langchain.vectorstores [Chroma])
-(import langchain.embeddings [OpenAIEmbeddings])
-(import langchain.document_loaders [DirectoryLoader])
-(import langchain [OpenAI VectorDBQA])
+(import langchain_community.vectorstores [Chroma])
+(import langchain_openai.embeddings [OpenAIEmbeddings])
+(import langchain_community.document_loaders [DirectoryLoader UnstructuredMarkdownLoader])
+(import langchain.chains [VectorDBQA])
+(import langchain_openai.llms [OpenAI])
 
 (setv embeddings (OpenAIEmbeddings))
 
-(setv loader (DirectoryLoader "./data/" :glob "**/*.txt"))
+(setv loader (DirectoryLoader "./data/" :glob "**/*.txt" :loader_cls UnstructuredMarkdownLoader))
 (setv documents (loader.load))
 
 (setv
