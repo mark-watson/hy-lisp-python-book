@@ -4,6 +4,8 @@ Copyright 2020-2023 Mark Watson. All rights reserved. This book may be shared us
 
 This eBook will be updated occasionally so please periodically check the [leanpub.com web page for this book](https://leanpub.com/hy-lisp-python) for updates.
 
+If you read my eBooks free online then please consider tipping me [https://markwatson.com/#tip](https://markwatson.com/#tip).
+
 This is the eighth edition released August 2022.
 
 Please visit the [author's website](http://markwatson.com).
