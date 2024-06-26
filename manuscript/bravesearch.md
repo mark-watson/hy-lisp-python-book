@@ -2,7 +2,7 @@
 
 *Note: I started using the Brave search APIs in June 2024 and replaced the Microsoft Bing search chapter in previous editions with the following material.*
 
-You will need to get a free API key at [https://brave.com/search/api/](https://brave.com/search/api/) to use the follwoing code examples. You can use the search API 2000 times a month for free or pay $5/month to get 20 million API calls a month.
+You will need to get a free API key at [https://brave.com/search/api/](https://brave.com/search/api/) to use the following code examples. You can use the search API 2000 times a month for free or pay $5/month to get 20 million API calls a month.
 
 
 ## Setting an Environment Variable for the Access Key for Brave Search APIs
