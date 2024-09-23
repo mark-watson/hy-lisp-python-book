@@ -1,12 +1,12 @@
 # Cover Material, Copyright, and License
 
-Copyright 2020-2023 Mark Watson. All rights reserved. This book may be shared using the Creative Commons “share and share alike, no modifications, no commercial reuse” license.
+Copyright 2020-2024 Mark Watson. All rights reserved. This book may be shared using the Creative Commons “share and share alike, no modifications, no commercial reuse” license.
 
 This eBook will be updated occasionally so please periodically check the [leanpub.com web page for this book](https://leanpub.com/hy-lisp-python) for updates.
 
-If you read my eBooks free online then please consider tipping me [https://markwatson.com/#tip](https://markwatson.com/#tip).
+If you read my eBooks free online then please consider hiring me for consulting work [https://markwatson.com](https://markwatson.com).
 
-This is the eighth edition released August 2022.
+This is this edition released September 2024.
 
 Please visit the [author's website](http://markwatson.com).
 
@@ -36,17 +36,46 @@ Some of the examples are very simple (e.g., the web app examples) while some are
 
 ## Setting Up Your Development Environment
 
-This is a hands-on book! I expect you, dear reader, to follow along with the examples as you read this book. I assume that you know some Python and know how to use the command line tools **python** and **pip** and use a virtual Python environment like [Anaconda (**conda**)](https://www.anaconda.com/) or [**virtualenv**](https://virtualenv.pypa.io/en/latest/). Personally I prefer **conda** but you can use any Python 3.x setup you like as long as you have a few packages installed.
+In September 2024 I changed the way that I build and run both Hy language and Python scripts and programs. I now use **venv** and install dependencies in each Hy or Python project directory. I use a shell script **venv_setup.sh** that I keep on my **PATH** to create a directory **venv**. Please note that this method uses more disk space but keeps the dependencies of each small of large project separate.
 
-Please follow the README directions for the GitHub repository for this book [https://github.com/mark-watson/hy-lisp-python](https://github.com/mark-watson/hy-lisp-python) because a specific version of the Hy language is required.
+```shell
+#!/bin/zsh
 
-Depending on which examples you run and experiment with you will also need to install some of the following libraries:
+# Check if the directory has a requirements.txt file
+if [ ! -f "requirements.txt" ]; then
+    echo "No requirements.txt file found in the current directory."
+    exit 1
+fi
 
-        pip install beautifulsoup4 Flask Jinja2 Keras psycopg2
-        pip install rdflib rdflib-sqlite spacy tensorflow
-        pip install PyInquirer
+# Create a virtual environment in the .venv directory
+python3 -m venv venv
 
-The Hy language is under active development and it is not unusual for libraries and frameworks created more than a few months before the current Hy release to break. As a result of this, I have been careful in the selection of book material to leave out interesting functionality and libraries from the Hy ecosystem that I feel might not work with new releases. Here we stick with a few popular Python libraries like Keras, TensorFlow, and spaCy and otherwise we will work with mostly pure Hy language code in the examples.
+# Activate the virtual environment
+source venv/bin/activate
+
+# Upgrade pip to the latest version
+pip3 install --upgrade pip
+
+# Install dependencies from requirements.txt
+pip3 install -r requirements.txt
+
+# Display installed packages
+pip3 list
+
+echo "Virtual environment setup complete. Activate it with:"
+echo "source venv/bin/activate"
+echo ""
+```
+
+You will find **requirements.txt** files in most example subdirectories for this book.
+
+To free disk space for the **venv** directories, I define a top level **Makefile** in the GitGub repository for the example programs [https://github.com/mark-watson/hy-lisp-python](https://github.com/mark-watson/hy-lisp-python):
+
+```
+clean:
+	rm -rf */__pycache__ */venv
+```
+
 
 ## What is Lisp Programming Style?
 
