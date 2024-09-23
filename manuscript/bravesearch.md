@@ -22,7 +22,7 @@ That is not my real subscription key!
 
 The following shows the file **brave.hy**:
 
-It takes very little Hy code to access the Brave search APIs. Here we define a function named **brave_search** that takes one parameter **query**. We get the API subscription ket from an enironment variable, define the URI for the Brave search endpoint, and set up an HTTP request to this endpoint. I encourgae you, dear reader, to experiment with printing out the HTTP response to see all data returned from the Brave search API. Here we only collect the tile, URL, and description for each search result:
+It takes very little Hy code to access the Brave search APIs. Here we define a function named **brave_search** that takes one parameter **query**. We get the API subscription ket from an environment variable, define the URI for the Brave search endpoint, and set up an HTTP request to this endpoint. I encourage you, dear reader, to experiment with printing out the HTTP response to see all data returned from the Brave search API. Here we only collect the tile, URL, and description for each search result:
 
 {lang="hylang",linenos=off}
 ~~~~~~~~
