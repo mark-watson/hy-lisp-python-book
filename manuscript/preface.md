@@ -34,6 +34,16 @@ The topics were chosen because of my work experience and the theme of this book 
 
 Some of the examples are very simple (e.g., the web app examples) while some are more complex (e.g., Deep Learning and knowledge graph examples). Regardless of the simplicity or complexity of the examples I hope that you find the code interesting, useful in your projects, and fun to experiment with.
 
+## Requests from the Author
+
+This book will always be available to read free online at [https://leanpub.com/hy-lisp-python/read](https://leanpub.com/hy-lisp-python/read).
+
+That said, I appreciate it when readers purchase my books because the income enables me to spend more time writing.
+
+### Hire the Author as a Consultant
+
+I am available for short consulting projects. Please see [https://markwatson.com](https://markwatson.com).
+
 ## Setting Up Your Development Environment
 
 In September 2024 I changed the way that I build and run both Hy language and Python scripts and programs. I now use **venv** and install dependencies in each Hy or Python project directory. I use a shell script **venv_setup.sh** that I keep on my **PATH** to create a directory **venv**. Please note that this method uses more disk space but keeps the dependencies of each small of large project separate.
