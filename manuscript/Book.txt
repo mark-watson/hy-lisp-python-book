@@ -12,6 +12,7 @@ linkeddata.md
 kgcreator.md
 kgn.md
 openai.md
+google-gemini.md
 langchain.md
 llm_colab.md
 wrapup.md
