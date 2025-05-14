@@ -13,6 +13,7 @@ kgcreator.md
 kgn.md
 openai.md
 google-gemini.md
+perplexity.md
 langchain.md
 llm_colab.md
 wrapup.md

@@ -1,1 +1,2 @@
 google-gemini.md
+perplexity.md
