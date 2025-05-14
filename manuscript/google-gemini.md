@@ -1,6 +1,6 @@
 # Using Google Gemini API
 
-As I write this chapter in May 2025, I primarily Google Gemini when I use commercial LLM APIs (most of my work involves running local LLM models using Ollama).
+As I write this chapter in May 2025, I primarily choose Google Gemini when I use commercial LLM APIs (most of my work involves running local LLM models using Ollama).
 
 Overall, the Google Gemini APIs provide a powerful and easy-to-use tool for developers to integrate advanced language processing capabilities into their applications, and can be a game changer for developers looking to add natural language processing capabilities to their projects.
 
