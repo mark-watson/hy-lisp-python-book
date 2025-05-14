@@ -125,3 +125,9 @@ This code will:
 You: 
 
 ```
+
+## Wrap Up for Using the Gemini APIs
+
+There are many good commercial LLM APIs (and I have used all of them) but I currently most frequently use Gemini for two reasons: supports a one million token context size and very low cost.
+
+I discuss Gemini in more detail in another book that you can read online: [https://leanpub.com/solo-ai/read](https://leanpub.com/solo-ai/read).
