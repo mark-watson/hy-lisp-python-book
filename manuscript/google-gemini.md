@@ -1,17 +1,17 @@
 # Using Google Gemini API
 
-I use Google Gemini in my work. 
+As I write this chapter in May 2025, I primarily Google Gemini when I use commercial LLM APIs (most of my work involves running local LLM models using Ollama).
 
 Overall, the Google Gemini APIs provide a powerful and easy-to-use tool for developers to integrate advanced language processing capabilities into their applications, and can be a game changer for developers looking to add natural language processing capabilities to their projects.
 
-Google Gemini offers two features that set it apart form other commercial APIs:
+Google Gemini offers two features that set it apart from other commercial APIs:
 
 - Supports a one million token context size.
 - Very low cost.
 
-The following examples are derived from the official set of cookbook examples at [https://github.com/openai/openai-cookbook](https://github.com/openai/openai-cookbook). The first example calls the OpenAI gpt-4o-mini Completion API with a sample of input text and the model completes the text.
+The following example calls the Gemini completion API and stores user chat in a persistent context.
 
-Here is a listing or the source file **google-gemini/tchat.hy**:
+Here is a listing or the source file **google-gemini/chat.hy**:
 
 
 ```hy
@@ -109,8 +109,19 @@ print(X + 3)
 
 This code will:
 
+1. **Calculate:** Take the current value of X (which is 8) and add 3 to it, resulting in 11.
+2. **Print:** Display the result (11) on the console.
+
+You: print the value of X + 3
+Assistant: python
+X = 1 + 7  # Make sure X is defined as 8
+print(X + 3)
+
+This code will:
+
 1. **Calculate:** Take the current value of `X` (which is 8) and add 3 to it, resulting in 11.
 2. **Print:** Display the result (11) on the console.
 
 You: 
+
 ```
