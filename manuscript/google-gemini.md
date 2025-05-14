@@ -92,9 +92,9 @@ Here is a sample output showing how the user chat complex is used:
 ```text
 $ venv/bin/hy completion.hy                     
 You: set the value of the variable X to 1 + 7
-Assistant: ```python
+Assistant: python
 X = 1 + 7
-```
+
 
 This code will:
 
@@ -102,10 +102,10 @@ This code will:
 2. **Assign:** Assign the value 8 to the variable named `X`.
 
 You: print the value of X + 3
-Assistant: ```python
+Assistant: python
 X = 1 + 7  # Make sure X is defined as 8
 print(X + 3)
-```
+
 
 This code will:
 
