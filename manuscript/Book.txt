@@ -10,7 +10,6 @@ llm.md
 datastores.md
 linkeddata.md
 kgcreator.md
-kgn.md
 openai.md
 google-gemini.md
 perplexity.md

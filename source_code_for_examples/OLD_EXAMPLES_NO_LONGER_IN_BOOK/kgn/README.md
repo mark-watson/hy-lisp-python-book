@@ -2,6 +2,29 @@
 
 Run the program:
 
+## Initial setup
+
+```
+$ uv init
+$ uv venv
+$ source .venv/bin/activate
+$ rm -f hello.py
+$ uv add hy spacy pip
+uv run python -m spacy download en_core_web_sm
+```
+
+Installing **pip** into local **uv** enviroment is required for **uv run python -m spacy download en_core_web_sm**.
+
+## Running two examples
+
+```
+$ uv run hy kgcreator.hy
+$ uv run hy kgcreator_uri.hy
+```
+
+
+
+
 One time only, install requirements PyInquirer (for text based menu system: arrow keys up down, spade to select options, enter or return to exit menu with selections):
 
     pip install -r requirements.txt

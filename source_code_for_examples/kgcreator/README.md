@@ -7,6 +7,7 @@ Start with the code in kgcreator.hy, reading the minor limitations in the book, 
 ```
 $ uv init
 $ uv venv
+$ source .venv/bin/activate
 $ rm -f hello.py
 $ uv add hy spacy pip
 uv run python -m spacy download en_core_web_sm

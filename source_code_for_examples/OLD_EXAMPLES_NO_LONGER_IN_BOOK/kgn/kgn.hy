@@ -3,7 +3,6 @@
 (import os)
 (import sys)
 (import pprint [pprint])
-(require hyrule [assoc])
 
 (import textui [select-entities get-query])
 (import kgnutils [dbpedia-get-entities-by-name first second])
@@ -21,7 +20,8 @@
     
     (if (in etype ret)
         (setv (get ret etype) (+ (get ret etype) [ename]))
-        (assoc ret etype [ename])))
+        (setv (get ret etype) [ename])))
+;;;        (assoc ret etype [ename])
   ret)
 
 
@@ -37,7 +37,8 @@
 
 (defn shorten-comment [comment uri]
   (setv sc (+ (cut comment 0 70) "..."))
-  (assoc short-comment-to-uri sc uri)
+  (setv (get short-comment-to-uri sc) uri)
+;;  (assoc short-comment-to-uri sc uri)
   sc)
 
 (setv query "")
