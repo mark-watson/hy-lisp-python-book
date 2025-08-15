@@ -34,5 +34,14 @@ data
 - LangChain for chaining Large Language Model operations
 - 
 
-Please note that this repo mal also occasionally contain examples that are a work in progress (these directories conatin a file named **NOT_YET_IN_BOOK.md**).
+Please note that this repo may also occasionally contain examples that are a work in progress (these directories conatin a file named **NOT_YET_IN_BOOK.md**).
 
+## Support My Work
+
+If you would like to support my work please consider:
+
+- Hire me as a consultant: [https://markwatson.com](https://markwatson.com).
+- Purchasing my books on Leanpub: [https://leanpub.com/u/markwatson](https://leanpub.com/u/markwatson).
+- Star my git repositories that you find useful on GitHub: [https://github.com/mark-watson?tab=repositories](https://github.com/mark-watson?tab=repositories).
+
+You can also interact with me on social media: Mastodon [https://mastodon.social/@mark_watson](https://mastodon.social/@mark_watson) and X/Twitter [https://x.com/mark_l_watson](https://x.com/mark_l_watson).
