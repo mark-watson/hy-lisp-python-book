@@ -159,6 +159,15 @@ In lines 28-39 we open an output file for writing generated RDF data and loop th
 (process-directory "test_data" "output.rdf")
 ~~~~~~~~
 
+Run using:
+
+{lang="hylang",linenos=on, number-from=40}
+~~~~~~~~
+$ uv sync
+$ uv run hy kgcreator.hy
+~~~~~~~~
+
+
 We will look at generated output, problems with it, and how to fix these problems in the next section.
 
 ## Problems with using Literal Values in RDF
@@ -278,6 +287,14 @@ Here is some of the generated RDF that has changed:
 <https://newsshop.com/may/a1023.html>
   <https://schema.org/Organization>
   <http://dbpedia.org/page/Banco_Esp%C3%ADrito_Santo> .
+~~~~~~~~
+
+Run using:
+
+{lang="hylang",linenos=on, number-from=40}
+~~~~~~~~
+$ uv sync
+$ uv run hy kgcreator_uri.hy
 ~~~~~~~~
 
 Now when we visualize generated RDF, we share nodes for The Wall Street Journal and IBM:

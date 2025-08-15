@@ -11,5 +11,7 @@ dependencies = [
     "langchain-community>=0.3.27",
     "langchain-openai>=0.3.30",
     "markdown>=3.8.2",
+    "pdf2image>=1.17.0",
+    "pytesseract>=0.3.13",
     "unstructured>=0.18.13",
 ]

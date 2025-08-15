@@ -1,7 +1,5 @@
 # Using the Brave Search APIs
 
-*Note: I started using the Brave search APIs in June 2024 and replaced the Microsoft Bing search chapter in previous editions with the following material.*
-
 You will need to get a free API key at [https://brave.com/search/api/](https://brave.com/search/api/) to use the following code examples. You can use the search API 2000 times a month for free or pay $5/month to get 20 million API calls a month.
 
 
@@ -71,8 +69,12 @@ The example call:
 
 produces the output (edited for brevity):
 
-{lang="hylang",linenos=off}
+{linenos=off}
 ~~~~~~~~
+```
+$ uv run hy -i brave.hy 
+Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
+=> (brave-search "site:wikidata.org Sedona Arizona")
 [['Sedona - Wikidata',
   'https://m.wikidata.org/wiki/Q80041',
   'city in counties of Yavapai and Coconino, <strong>Arizona</strong>, United '
@@ -92,6 +94,8 @@ produces the output (edited for brevity):
 
  ...
 ~~~~~~~~
+
+Running Hy using **uv** with the **-i** parameter loads the file and then puts the user into a Hy REPL.
 
 ## Wrap-up
 

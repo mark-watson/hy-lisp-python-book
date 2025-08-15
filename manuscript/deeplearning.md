@@ -133,22 +133,23 @@ The function **main** (lines 35-45) loads training and test (evaluation of model
 
 (import argparse)
 (import os)
-(import tensorflow [keras])
-(import tensorflow.keras [layers])
+(import keras.models [Sequential])
+(import keras.layers [Dense])
+(import keras.optimizers [RMSprop])
 
 (import pandas [read-csv])
 (import pandas)
 
 (defn build-model []
-  (setv model (keras.models.Sequential))
-  (.add model (keras.layers.Dense 9
+  (setv model (Sequential))
+  (.add model (Dense 9
                  :activation "relu"))
-  (.add model (keras.layers.Dense 12
+  (.add model (Dense 12
                  :activation "relu"))
-  (.add model (keras.layers.Dense 1
+  (.add model (Dense 1
                  :activation "sigmoid"))
   (.compile model :loss      "binary_crossentropy"
-                  :optimizer (keras.optimizers.RMSprop))
+                  :optimizer (RMSprop))
   model)
 
 (defn first [x] (get x 0))
@@ -179,6 +180,7 @@ The function **main** (lines 35-45) loads training and test (evaluation of model
     (list
       (zip predictions expected))))
 
+
 (main)
 ~~~~~~~~
 
@@ -186,6 +188,7 @@ The following listing shows the output:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
+$ uv run hy wisconsin.hy
 * predictions (calculated, expected):
 [(0.9998953, 1), (0.9999737, 1), (0.9172243, 1), (0.9975936, 1), (0.38985246, 0), (0.4301587, 0), (0.99999213, 1), (0.855, 0), (0.3810781, 0), (0.9999431, 1)]
 ~~~~~~~~
@@ -215,10 +218,11 @@ There are a few things that make the following example code more complex than th
 $ hy
 => (import keras.callbacks [LambdaCallback])
 Using TensorFlow backend.
-=> (import keras.models [Sequential])
-=> (import keras.layers [Dense LSTM])
-=> (import keras.optimizers [RMSprop])
-=> (import keras.utils.data_utils [get_file])
+=> (import keras.src.callbacks [LambdaCallback])
+=> (import keras.src.models [Sequential])
+=> (import keras.src.layers [Dense LSTM])
+=> (import keras.src.optimizers [RMSprop])
+=> (import keras.src.utils [get_file])
 => (import numpy :as np) ;; note the syntax for aliasing a module name
 => (import random sys io)
 => (with [f (io.open "/Users/markw/.keras/datasets/nietzsche.txt" :encoding "utf-8")]
@@ -262,21 +266,21 @@ This is a powerful technique that I used to model JSON with complex deeply neste
 #!/usr/bin/env hy
 
 ;; This example was translated from the Python example in the Keras
-;; documentation at: https://keras.io/examples/lstm_text_generation/
-;; The original Python file LSTM.py is included in the directory
-;; hy-lisp-python/deeplearning for reference.
+;; documentation at: https://keras.io/examples/lstm_text_generation/ that
+;; was written with very old versions of tensorflow and keras.
+;; This Hy version is translated to use current versions of keras and
+;; tensorflow:
 
-(import keras.callbacks [LambdaCallback])
-(import keras.models [Sequential])
-(import keras.layers [Dense LSTM])
-(import keras.optimizers [RMSprop])
-(import keras [utils])
-;;(import keras.utils.data_utils [get_file])
+(import keras.src.callbacks [LambdaCallback])
+(import keras.src.models [Sequential])
+(import keras.src.layers [Dense LSTM])
+(import keras.src.optimizers [RMSprop])
+(import keras.src.utils [get_file])
 (import numpy :as np) ;; note the syntax for aliasing a module name
 (import random sys io)
 
 (setv path
-      (utils.get_file        ;; this saves a local copy in ~/.keras/datasets
+      (get_file        ;; this saves a local copy in ~/.keras/datasets
         "nietzsche.txt"
         :origin "https://s3.amazonaws.com/text-datasets/nietzsche.txt"))
 
@@ -303,8 +307,8 @@ This is a powerful technique that I used to model JSON with complex deeply neste
   (.append next_chars (get text (+ i maxlen))))
 
 (print "Vectorization...")
-(setv x (np.zeros [(len sentences) maxlen (len chars)] :dtype np.bool))
-(setv y (np.zeros [(len sentences) (len chars)] :dtype np.bool))
+(setv x (np.zeros [(len sentences) maxlen (len chars)] :dtype bool))
+(setv y (np.zeros [(len sentences) (len chars)] :dtype bool))
 (for [[i sentence] (lfor j (enumerate sentences) j)]
   (for [[t char] (lfor j (enumerate sentence) j)]
     (setv (get x i t (get char_indices char)) 1))
@@ -357,6 +361,10 @@ This is a powerful technique that I used to model JSON with complex deeply neste
 (model.fit x y :batch_size 128 :epochs 60 :callbacks [print_callback])
 ~~~~~~~~
 
+We run this example using:
+
+    uv run hy lstm.hy
+
 In lines 52-54 we defined a model using the Keras APIs and in lines 56-57 compiled the model using a [categorical crossentropy loss function with an RMSprop optimizer](https://keras.io/optimizers/).
 
 In lines 59-65 we define a function **sample** that takes a first required argument **preds** which is a one-hot predicted encoded character that might look like (maxlen or 40 values):
@@ -395,7 +403,7 @@ We prepare the input and target output data in lines 43-48 in the last code list
 
 {lang="bash",linenos=on}
 ~~~~~~~~
-Marks-MacBook:deeplearning $ hy
+$ uv run hy
 => (setv text "0123456789abcdefg")
 => (setv maxlen 4)
 => (setv i 3)
@@ -417,6 +425,7 @@ This script pauses during each training epoc to generate text given diversity va
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
+$ uv run hy wisconsin.hy
 ----- Generating text after Epoch: 0
 ----- diversity: 0.2
 ----- Generating with seed: ocity. Equally so, gratitude.--Justice r

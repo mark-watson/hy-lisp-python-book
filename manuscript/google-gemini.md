@@ -90,7 +90,8 @@ This example differs from the OpenAI API example in the previous chapter in two 
 Here is a sample output showing how the user chat complex is used:
 
 ```text
-$ venv/bin/hy completion.hy                     
+$ uv sync
+$ uv run hy chat.hy                    
 You: set the value of the variable X to 1 + 7
 Assistant: python
 X = 1 + 7

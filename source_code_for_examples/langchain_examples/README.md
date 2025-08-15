@@ -5,10 +5,11 @@ Requirements:
 Install **uv** if not already installed on your system.
 
 ```
+$ uv sync
 $ uv run hy country_information.hy
 $ uv run hy directions_template.hy
 $ uv run hy doc_search.hy
-
+```
 
 See book for:
 

@@ -1,9 +1,12 @@
 # Using LangChain to Chain Together Large Language Models
 
-Harrison Chase started the LangChain project in October 2022 and as I write this chapter in May 2023 the GitHub repository for LangChain [https://github.com/hwchase17/langchain](https://github.com/hwchase17/langchain) has over 200 contributors.
+Harrison Chase started the LangChain project in October 2022 and as I write the first version of this chapter back in May 2023 the GitHub repository for LangChain [https://github.com/hwchase17/langchain](https://github.com/hwchase17/langchain) has over 200 contributors.
+
+*Note: this chapter and material last updated August 15, 2025.*
+
 
 The material in this chapter is a very small subset of material in my recent Python book [LangChain and LlamaIndex Projects Lab Book: Hooking Large Language Models Up to the Real World.
-Using GPT-3, ChatGPT, and Hugging Face Models in Applications.](https://leanpub.com/langchain) that you can read for free online by using the link *Free To Read Online*.
+Using GPT-5, ChatGPT, and Hugging Face Models in Applications.](https://leanpub.com/langchain) that you can read for free online by using the link *Free To Read Online*.
 
 [LangChain](https://langchain.readthedocs.io/en/latest/index.html) is a framework for building applications with large language models (LLMs) through chaining different components together. Some of the applications of LangChain are chatbots, generative question-answering, summarization, data-augmented generation and more. LangChain can save time in building chatbots and other systems by providing a standard interface for chains, agents and memory, as well as integrations with other tools and end-to-end examples. We refer to "chains" as sequences of calls (to an LLMs and a different program utilities, cloud services, etc.) that go beyond just one LLM API call. LangChain provides a standard interface for chains, many integrations with other tools, and end-to-end chains for common applications. Often you will find existing chains already written that meet the requirements for your applications.
 
@@ -18,9 +21,15 @@ LangChain can be integrated with one or more model providers, data stores, APIs,
 
 ## Installing Necessary Packages
 
-For the purposes of examples in this chapter, you might want to create a new Anaconda or other Python environment and install:
+We are using **uv** as a package manager and to run the examples. Run using:
 
-    pip install langchain openai
+```console
+$ cd hy-lisp-python-book/source_code_for_examples/langchain_examples
+$ uv sync
+$ uv run hy country_information.hy
+$ uv run hy directions_template.hy
+$ uv run hy doc_search.hy
+```
 
 
 ## Basic Usage and Examples
@@ -36,9 +45,9 @@ You need to choose a LLM to use. We will usually choose the GPT-3.5 API from Ope
 Both the libraries **openai** and **langchain** will look for this environment variable and use it. We will look at a few simple examples in a Hy REPL. We will start by just using OpenAI's text prediction API that accepts a prompt and then continues generating text from that prompt:
 
 ```console
-$ hy
-Hy 0.26.0 using CPython(main) 3.11.0 on Darwin
-=> (import langchain.llms [OpenAI])
+$ uv run hy
+Hy 1.1.0 using CPython(main)  3.12.0 on Darwin
+=> (import langchain_openai.llms [OpenAI])
 => (setv llm (OpenAI :temperature 0.8))
 => (llm "John got into his new sports car, and he drove it")
 " to work. He felt really proud that he was able to afford the car and even parked it in a prime spot so everyone could see. He felt like he had really made it."
@@ -67,6 +76,9 @@ Our next example is in the source file **directions_template.hy** and uses the *
     ;; Print out generated prompt when you are getting started:
     (print "\n" prompt_text ":")
     (llm prompt_text))
+
+(print (get_directions "get to the store"))
+(print (get_directions "hang a picture on the wall"))
 ```
 
 You could just write Hy string manipulation code to create a prompt but using the utility class **PromptTemplate** is more legible and works with any number of prompt input variables. In this example, the prompt template is really simple. For more complex Python examples see the [LangChain prompt documentation](https://python.langchain.com/en/latest/modules/prompts/prompt_templates/examples/few_shot_examples.html). We will later see a more complex prompt example.
@@ -74,8 +86,8 @@ You could just write Hy string manipulation code to create a prompt but using th
 Let's change directory to **hy-lisp-python/langchain** and run two examples in a Hy REPL:
 
 ```console
-$ hy
-Hy 0.26.0 using CPython(main) 3.11.0 on Darwin
+$ uv run hy
+Hy 1.1.0 using CPython(main)  3.12.0 on Darwin
 => (import directions_template [get_directions])
 => (print (get_directions "hang a picture on the wall"))
 
@@ -127,6 +139,9 @@ The next example in the file **country_information.hy** is derived from an examp
   ;; Print out generated prompt when you are getting started:
   (print "\n" prompt_text ":")
   (llm prompt_text))
+
+(print (get_country_information "Germany"))
+;; (print (get_country_information "Canada"))
 ```
 
 You can use the ChatGPT web interface to experiment with prompts. When you find a pattern that works well then write a Python script like the last example, changing the data you supply in the **PromptTemplate** instance.
@@ -134,8 +149,8 @@ You can use the ChatGPT web interface to experiment with prompts. When you find 
 Here are two examples of this code for getting information about  Canada and Germany:
 
 ```console
-$ hy
-Hy 0.26.0 using CPython(main) 3.11.0 on Darwin
+$ uv run hy
+Hy 1.1.0 using CPython(main)  3.12.0 on Darwin
 => (import country_information [get_country_information])
 => (print (get_country_information "Canada"))
 Processing  Canada :
@@ -181,9 +196,9 @@ So there is no magic here. We are simply generating prompts that contain context
 We will reference the [LangChain embeddings documentation](https://python.langchain.com/en/latest/reference/modules/embeddings.html). We can use a Hy REPL to see what text to vector space embeddings might look like:
 
 ```console
- $ hy
-Hy 0.26.0 using CPython(main) 3.11.0 on Darwin
-=> (import langchain.embeddings [OpenAIEmbeddings])
+$ uv run hy
+Hy 1.1.0 using CPython(main)  3.12.0 on Darwin
+=> (import langchain_openai [OpenAIEmbeddings])
 => (setv embeddings (OpenAIEmbeddings))
 => (setv text "Mary has blond hair and John has brown hair. Mary lives in town and John lives in the country.")
 => (setv doc_embeddings (embeddings.embed_documents [text]))
@@ -200,11 +215,13 @@ We will use vector stores to store calculated embeddings for future use in the n
 
 ## Using LangChain Vector Stores to Query Documents
 
-We will reference the [LangChain Vector Stores documentation](https://python.langchain.com/en/latest/reference/modules/vectorstore.html). You need to install a few libraries:
+We will reference the [LangChain Vector Stores documentation](https://python.langchain.com/en/latest/reference/modules/vectorstore.html). Weneed to install a few libraries that are pre-configured in the file **pyproject.toml** that **uv** uses:
 
-    pip install chroma
-    pip install chromadb
-    pip install unstructured pdf2image pytesseract
+- chroma
+- chromadb
+- unstructured
+- pdf2image
+- pytesseract
 
 The next document query example is contained in a single script **hy-lisp-python/langchain/doc_search.hy** with three document queries at the end of the script. In this example we read the text file documents in the directory **hy-lisp-python/langchain/data** and create a local embeddings datastore we use for natural language queries:
 

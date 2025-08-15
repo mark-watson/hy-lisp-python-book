@@ -80,8 +80,7 @@ Running the example program produces the following output:
 
 {lang="bash",linenos=on}
 ~~~~~~~~
-$ ./sqlite_example.hy
-2.6.0
+$ uv run hy sqlite_example.hy
 []
 []
 [('Mark', 'mark@markwatson.com'), ('Kiddo', 'kiddo@markwatson.com')]

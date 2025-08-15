@@ -18,6 +18,7 @@ Installing **pip** into local **uv** enviroment is required for **uv run python 
 ## Running two examples
 
 ```
+$ uv sync
 $ uv run hy kgcreator.hy
 $ uv run hy kgcreator_uri.hy
 ```
