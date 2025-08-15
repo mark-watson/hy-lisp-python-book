@@ -1,0 +1,15 @@
+[project]
+name = "langchain-examples"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "chromadb>=1.0.17",
+    "hy>=1.1.0",
+    "langchain>=0.3.27",
+    "langchain-community>=0.3.27",
+    "langchain-openai>=0.3.30",
+    "markdown>=3.8.2",
+    "unstructured>=0.18.13",
+]
