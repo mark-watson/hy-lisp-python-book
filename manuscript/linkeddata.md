@@ -2,7 +2,15 @@
 
 Tim Berners Lee, James Hendler, and Ora Lassila wrote in 2001 an article for Scientific American where they introduced the term Semantic Web. Here I do not capitalize semantic web and use the similar term linked data somewhat interchangeably with semantic web. Most work using these technologies now is building corporate Knowledge Graphs. I worked at Google with their Knowledge Graph in 2013 and I worked with the Knowledge Graph team at Olive AI during 2020-2021.
 
-I assume that you read the section [RDF Data Using the "rdflib" Library](#rdflibintro) in the last chapter.
+In ths chapter we will only be using the Hy REPL in the directory **hy-lisp-python-book/source_code_for_examples/rdf**:
+
+```
+$ cd hy-lisp-python-book/source_code_for_examples/rdf
+$ uv sync
+$ uv run hy
+Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
+=>
+```
 
 In the same way that the web allows links between related web pages, linked data supports linking associated data on the web together. I view linked data as a relatively simple way to specify relationships between data sources on the web while the semantic web has a much larger vision: the semantic web has the potential to be the entirety of human knowledge represented as data on the web in a form that software agents can work with to answer questions, perform research, and to infer new data from existing data.
 
@@ -123,8 +131,8 @@ You now have seen a few common Schemas for RDF data. Another Schema that is wide
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-Marks-MacBook:database $ hy
-hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
+Marks-MacBook:database $ uv run hy
+Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
 => (import rdflib.namespace [FOAF])
 => FOAF
 Namespace('http://xmlns.com/foaf/0.1/')
@@ -186,14 +194,4 @@ The Apache Foundation has a [good introduction to SPARQL](https://jena.apache.or
 
 I hope that I have provided you with enough motivation to explore RDF data sources and consider the use of linked data/semantic web technologies for your projects.
 
-You can install using the [source code for **rdflib**](https://github.com/RDFLib/rdflib) or using:
-
-{lang="bash",linenos=off}
-~~~~~~~~
-pip install rdflib
-~~~~~~~~
-
 If I depend on a library, regardless of the programming language, I like to keep an up-to-date copy of the source code ready at hand. There is sometimes no substitute for having library code available to read.
-
-In the next chapter we will use natural language processing to extract structured information from raw text and automatically generate RDF data.
-

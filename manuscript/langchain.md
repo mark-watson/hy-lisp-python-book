@@ -223,7 +223,7 @@ We will reference the [LangChain Vector Stores documentation](https://python.lan
 - pdf2image
 - pytesseract
 
-The next document query example is contained in a single script **hy-lisp-python/langchain/doc_search.hy** with three document queries at the end of the script. In this example we read the text file documents in the directory **hy-lisp-python/langchain/data** and create a local embeddings datastore we use for natural language queries:
+The next document query example is contained in a single script **hy-lisp-python-book/source_code_for_examples/langchain/doc_search.hy** with three document queries at the end of the script. In this example we read the text file documents in the directory **hy-lisp-python-book/source_code_for_examples/langchain/data** and create a local embeddings datastore we use for natural language queries:
 
 ```hy
 (import langchain.text_splitter [CharacterTextSplitter])
@@ -237,6 +237,7 @@ The next document query example is contained in a single script **hy-lisp-python
 
 (setv loader (DirectoryLoader "./data/" :glob "**/*.txt" :loader_cls UnstructuredMarkdownLoader))
 (setv documents (loader.load))
+(print documents)
 
 (setv
   text_splitter
@@ -272,7 +273,8 @@ The **DirectoryLoader** class is useful for loading a directory full of input do
 The output is:
 
 ```console
-$ hy doc_search.hy
+$ uv sync
+$ uv run hy doc_search.hy
 Using embedded DuckDB without persistence: data will be transient
 Query:  What kinds of equipment are in a chemistry laboratory?
 Answer:   A chemistry laboratory typically contains various glassware, as well as other equipment such as beakers, flasks, test tubes, Bunsen burners, hot plates, and other materials used for conducting experiments.
