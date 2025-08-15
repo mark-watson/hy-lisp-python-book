@@ -6,12 +6,12 @@ webscrape.md
 bravesearch.md
 deeplearning.md
 nlp.md
-llm.md
 datastores.md
 linkeddata.md
 kgcreator.md
 openai.md
 google-gemini.md
+ollama.md
 perplexity.md
 langchain.md
 llm_colab.md
