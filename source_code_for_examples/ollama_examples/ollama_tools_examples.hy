@@ -16,7 +16,9 @@
 })
 
 ; User prompt
-(setv user-prompt "Please list the contents of the current directory, read the 'requirements.txt' file, and convert 'https://markwatson.com' to markdown.")
+(setv
+  user-prompt
+  "Please list the contents of the current directory, read the 'requirements.txt' file, and convert 'https://markwatson.com' to markdown.")
 
 ; Initiate chat with the model
 (setv response (ollama.chat
@@ -30,14 +32,18 @@
 ;;(print (get response.message.tool_calls 0).name)
 
 ; Process the model's response
-(for [tool-call (or response.message.tool_calls [])]
-  (setv function-to-call (.get available-functions (.name tool-call.function)))
-  (print (f "{function-to-call=}"))
+(for [tool-call (or response.message.tool_calls {"name" "none"})]
+  (print tool-call)
+  (print tool-call.function)
+  (setv function-to-call (.get available-functions tool-call.function.name))
+  (setv arguments tool-call.function.arguments)
+  (print arguments)
+  (print function-to-call)
   (if function-to-call
     (do
-      (setv result (function-to-call **(.arguments tool-call.function)))
-      (print (f "\n\n** Output of {(.name tool-call.function)}: {result}"))
+      (setv result (function-to-call)) ;;  **tool-call.function.arguments))
+      (print f"\n\n** Output of {tool-call.function.name}: {result}")
     )
-    (print (f "\n\n** Function {(.name tool-call.function)} not found."))
+    (print f"\n\n** Function {(.name tool-call.function)} not found.")
   )
 )

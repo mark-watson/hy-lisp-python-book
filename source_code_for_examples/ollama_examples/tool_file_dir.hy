@@ -6,19 +6,10 @@
   ;   None
   ; Returns:
   ;   string containing the current directory name, followed by list of files in the directory
-  (try
-    (setv current-dir (os.path.cwd))
-    (setv files (list (.glob current-dir "*")))
+  (setv current-dir (os.path.realpath "."))
+  (setv files (.listdir os))
 
-    ; Convert Path objects to strings and sort
-    (setv file-list (sorted [(.name (str f)) for f in files]))
-
-    (setv file-list [file for file in file-list if (not (.endswith file "~"))])
-    (setv file-list [file for file in file-list if (not (.startswith file "."))])
-
-    (return (f "Contents of current directory {current-dir} is: [{(', '.join file-list)}]" ))
-    (except [Error e]
-      (return (f "Error listing directory: {(str e)}")))))
+  (return f"Contents of current directory {current-dir} is: {files}"))
 
 
 ; Function metadata for Ollama integration (Hy doesn't have function metadata like Python)
