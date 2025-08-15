@@ -1,0 +1,5 @@
+hy
+PyInquirer
+requests
+spacy
+
