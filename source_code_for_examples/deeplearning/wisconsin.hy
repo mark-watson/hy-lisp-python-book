@@ -2,22 +2,23 @@
 
 (import argparse)
 (import os)
-(import tensorflow [keras])
-(import tensorflow.keras [layers])
+(import keras.models [Sequential])
+(import keras.layers [Dense])
+(import keras.optimizers [RMSprop])
 
 (import pandas [read-csv])
 (import pandas)
 
 (defn build-model []
-  (setv model (keras.models.Sequential))
-  (.add model (keras.layers.Dense 9
+  (setv model (Sequential))
+  (.add model (Dense 9
                  :activation "relu"))
-  (.add model (keras.layers.Dense 12
+  (.add model (Dense 12
                  :activation "relu"))
-  (.add model (keras.layers.Dense 1
+  (.add model (Dense 1
                  :activation "sigmoid"))
   (.compile model :loss      "binary_crossentropy"
-                  :optimizer (keras.optimizers.RMSprop))
+                  :optimizer (RMSprop))
   model)
 
 (defn first [x] (get x 0))

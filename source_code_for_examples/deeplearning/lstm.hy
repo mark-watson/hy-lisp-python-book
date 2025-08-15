@@ -1,19 +1,21 @@
 #!/usr/bin/env hy
 
 ;; This example was translated from the Python example in the Keras
-;; documentation at: https://keras.io/examples/lstm_text_generation/
+;; documentation at: https://keras.io/examples/lstm_text_generation/ that
+;; was written with very old versions of tensorflow and keras.
+;; This Hy version is translated to use current versions of keras and
+;; tensorflow:
 
-(import keras.callbacks [LambdaCallback])
-(import keras.models [Sequential])
-(import keras.layers [Dense LSTM])
-(import keras.optimizers [RMSprop])
-(import keras [utils])
-;;(import keras.utils.data_utils [get_file])
+(import keras.src.callbacks [LambdaCallback])
+(import keras.src.models [Sequential])
+(import keras.src.layers [Dense LSTM])
+(import keras.src.optimizers [RMSprop])
+(import keras.src.utils [get_file])
 (import numpy :as np) ;; note the syntax for aliasing a module name
 (import random sys io)
 
 (setv path
-      (utils.get_file        ;; this saves a local copy in ~/.keras/datasets
+      (get_file        ;; this saves a local copy in ~/.keras/datasets
         "nietzsche.txt"
         :origin "https://s3.amazonaws.com/text-datasets/nietzsche.txt"))
 
