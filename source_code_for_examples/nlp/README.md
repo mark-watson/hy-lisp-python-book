@@ -1,15 +1,15 @@
 # Notes for running the natural language processing (NLP) examples
 
-Make sure that spacy and neuralcoref are installed in your current Python environment. Follow
-directions at:
+Install **uv** if it is not already on your system.
 
-        https://github.com/huggingface/neuralcoref
+One time setup:
 
-Note: the neuralcoref library is outdated and only can be installed with the older version of spaCy 2.1
+```
+$ uv run python -m spacy download en_core_web_sm
+```
 
-## Misc. to install spaCy on M1 MacBook
+Run example:
 
-pip install -U pip setuptools wheel
-pip install -U 'spacy[apple]'
-python -m spacy download en_core_web_sm
-
+```
+$ uv run hy nlp_example.hy
+```
