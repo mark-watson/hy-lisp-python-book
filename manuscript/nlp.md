@@ -235,7 +235,7 @@ The following list shows the definitions for the part of speech (POS) tags:
 
 ## Implementing a HyNLP Wrapper for the Python spaCy Library
 
-We will generate two libraries (in files **nlp_lib.hy** and **coref_nlp_lib.hy**). The first is a general NLP library and the second specifically solves the anaphora resolution, or coreference, problem. There are test programs for each library in the files **nlp_example.hy** and **coref_example.hy**.
+We will generate two libraries (in the file **nlp_lib.hy**). The first is a general NLP library. The test program is in the file **nlp_example.hy**.
 
 For an example in a later chapter, we will use the library developed here to automatically generate Knowledge Graphs from text data. We will need the ability to find person, company, location, etc. names in text. We use spaCy here to do this. The types of named entities on which spaCy is pre-trained includes:
 
