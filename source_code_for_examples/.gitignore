@@ -1,5 +1,7 @@
 __pycache__
 
+uv.lock
+
 *~
 *.pyc
 .DS_Store

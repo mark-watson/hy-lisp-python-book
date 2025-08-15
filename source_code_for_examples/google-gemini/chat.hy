@@ -1,12 +1,13 @@
 (import os)
 (import requests)
 (import json) ;; Explicitly import json for dumps
+(import pprint [pprint])
 
 ;; Get API key from environment variable (standard practice)
 (setv api-key (os.getenv "GOOGLE_API_KEY"))
 
 ;; Gemini API endpoint
-(setv api-url f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api-key}")
+(setv api-url f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api-key}")
 
 ;; Initialize the chat history (Note: Gemini uses 'user' and 'model')
 (setv chat-history [])
@@ -55,10 +56,12 @@
   (setv candidates (get response-data "candidates"))
   (setv first-candidate (get candidates 0))
   (setv content (get first-candidate "content"))
-  
-  (setv parts (get content "parts"))
+  (pprint content)
+  (setv parts (.get content "parts" []))
 
-  (setv assistant-message (get (get parts 0) "text"))
+  (if parts ; This check is True only if `parts` is NOT empty
+    (setv assistant-message (get (get parts 0) "text"))
+    [])
   (print "Assistant:" assistant-message)
 
   ;; Append BOTH user and assistant messages to chat history (important for context)
