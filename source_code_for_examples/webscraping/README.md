@@ -1,5 +1,8 @@
 # Requirements
 
-    pip install BeautifulSoup4
-    pip install lxml
+Run examples using **uv**:
+
+```
+uv run hy get_page_data.hy
+```
 
