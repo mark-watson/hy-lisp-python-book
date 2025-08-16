@@ -2,19 +2,30 @@
 
 The [Hy programming language](http://docs.hylang.org/en/stable/) is a Lisp language that inter-operates smoothly with Python. We start with a few interactive examples that I encourage you to experiment with as you read. Then we will look at Hy data types and commonly used built-in functions that are used in the remainder of this book.
 
-I assume that you know at least a little Python and more importantly the Python ecosystem and general tools like **pip**.
+I assume that you know at least a little Python and more importantly the Python ecosystem and general tools like **uv** and **pip**.
 
-Please start by installing Hy in your current Python environment:
+Please start by installing **uv** on your laptop or server. Use either of the following commands on macOS or Linux:
 
 {lang="bash",linenos=off}
 ~~~~~~~~
-pip install git+https://github.com/hylang/hy.git
+pip install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ~~~~~~~~
+
+On Windows use one of these commands:
+
+{lang="bash",linenos=off}
+~~~~~~~~
+irm https://astral.sh/uv/install.ps1 | iex
+~~~~~~~~
+
 
 
 ## Using Python Libraries
 
 Using Python libraries like TensorFlow, Keras, BeautifulSoup, etc. are the reason I use the Hy language. Importing Python code and libraries and calling out to Python is simple and here we look at sufficient examples so that you will understand example code that we will look at later.
+
+*Note: starting in August 2025 the example programs in the GitHub repository XX are in individual directores, each pre-configured for use with **uv***
 
 For example, in the chapter **Responsible Web Scraping** we will use the BeautifulSoup library. We will look at some Python code snippets and the corresponding Hy language versions of these snippets. Let's first look at a Python example that we will then convert to Hy:
 
@@ -32,8 +43,9 @@ In the following listing notice how we import other code and libraries in Hy. Th
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-$ hy
-hy 0.18.0 using CPython(default) 3.7.4 on Darwin
+$ cd hy-lisp-python-book/source_code_for_examples/webscraping
+$ uv run hy
+Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
 => (import bs4 [BeautifulSoup])
 => (setv raw-data "<html><body><a href=\"http://markwatson.com\">Mark</a></body></html>")
 => (setv soup (BeautifulSoup raw-data "lxml"))
@@ -54,8 +66,8 @@ Although I don't generally recommend it, sometimes it is convenient to export lo
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-Marks-MacBook:deeplearning $ hy
-hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
+$ uv run hy
+Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
 => (defn foo []
 ... (global x)
 ... (setv x 1)
@@ -104,8 +116,8 @@ Running this interactively in Hy:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-$ hy
-hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
+$ uv run hy
+Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
 => (import test)
 => test
 <module 'test' from '/Users/markw/GITHUB/hy-lisp-python/test.py'>
@@ -122,7 +134,7 @@ If we only wanted to import **BeautifulSoup** from the Python BeautifulSoup libr
 
 ## Using Hy Libraries in Python Programs
 
-There is nothing special about importing and using Hy library code or your own Hy scripts in Python programs. The directory **hy-lisp-python/use_hy_in_python** in the [git repository for this book https://github.com/mark-watson/hy-lisp-python](https://github.com/mark-watson/hy-lisp-python) contains an example Hy script **get_web_page.hy** that is a slightly modified version of code we will explain and use in the later chapter on web scraping and a short Python script **use_hy_stuff.py** that uses a function defined in Hy:
+There is nothing special about importing and using Hy library code or your own Hy scripts in Python programs. The directory **hy-lisp-python-book/source_code_for_examples/use_hy_in_python** in the [git repository for this book https://github.com/mark-watson/hy-lisp-python-book](https://github.com/mark-watson/hy-lisp-python-book) contains an example Hy script **get_web_page.hy** that is a slightly modified version of code we will explain and use in the later chapter on web scraping and a short Python script **use_hy_stuff.py** that uses a function defined in Hy:
 
 **get_web_page.hy:**
 
@@ -165,8 +177,9 @@ In Python we use a special notation for extracting sub-sequences from lists or s
 
 {lang="python",linenos=off}
 ~~~~~~~~
-$ python
-Python 3.7.3 (default, Mar 27 2019, 16:54:48) 
+$ uv run python
+Python 3.12.0 (main, Oct  2 2023, 20:56:14) [Clang 16.0.3 ] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
 >>> s = '0123456789'
 >>> s[2:4]
 '23'
@@ -181,8 +194,8 @@ In Hy this would be:
 
 {lang="hylang",linenos=off}
 ~~~~~~~~
-$ hy
-hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
+$ uv run hy    
+Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
 => (setv s "0123456789")
 => (cut s 2 4)
 '23'

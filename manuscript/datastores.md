@@ -296,20 +296,37 @@ We will go into some detail on using semantic web and linked data resources in t
 
 You need to install both the **rdflib** library and the plugin for using the JSON-LD format:
 
-    pip install rdflib
-    pip install rdflib-jsonld
+- rdflib
+- rdflib-jsonld
+
+These libraries and Hy are confiured for the **uv** environment in the directory **hy-lisp-python-book/source_code_for_examples/rdf**.
 
 The following REPL session shows importing the **rdflib** library, fetching RDF (in XML format) from my personal web site, printing out the triples in the graph in NT format, and showing how the graph can be queried. I added most of this RDF to my web site in 2005, with a few updates since then. The following REPL session is split up into several listings (with some long output removed) so I can explain how the **rdflib** is being used. In the first REPL listing I load an RDF file in XML format from my web site and print it in NT format. NT format can have either subject/predicate/object all on one line separated by spaces and terminated by a period or as shown below, the subject is on one line with predicate and objects printed indented on two additional lines. In both cases a period character "." is used to terminate search RDF NT statement. The statements are displayed in arbitrary order.
 
 {lang="hy",linenos=on}
 ~~~~~~~~
-Marks-MacBook:datastores $ hy
+datastores $ uv run hy
+Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
 => (import rdflib [Graph])
 => (setv graph (Graph))
 => (graph.parse "https://www.w3.org/2000/10/rdf-tests/RDF-Model-Syntax_1.0/ms_4.1_1.rdf")
 => (for [[subject predicate object] graph]
 ... (print subject "\n  " predicate "\n  " object " ."))
-<Graph identifier=N2b392c0f8bf443e6ae48dd8b7cf5e949 (<class 'rdflib.graph.Graph'>)>
+N4836630a0d1b4585ab03d381011c092d 
+   http://description.org/schema/attributedTo 
+   Ralph Swick  .
+N4836630a0d1b4585ab03d381011c092d 
+   http://www.w3.org/1999/02/22-rdf-syntax-ns#subject 
+   http://www.w3.org/Home/Lassila  .
+N4836630a0d1b4585ab03d381011c092d 
+   http://www.w3.org/1999/02/22-rdf-syntax-ns#type 
+   http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement  .
+N4836630a0d1b4585ab03d381011c092d 
+   http://www.w3.org/1999/02/22-rdf-syntax-ns#object 
+   Ora Lassila  .
+N4836630a0d1b4585ab03d381011c092d 
+   http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate 
+   http://description.org/schema/Creator  .
 => (for [[subject predicate object] graph] (print subject "\n  " predicate "\n  " object " ."))
 N0606a4fc1dce4d79843ead3a26db6c76 
    http://www.w3.org/1999/02/22-rdf-syntax-ns#type 
