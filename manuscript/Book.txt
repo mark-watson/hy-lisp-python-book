@@ -12,6 +12,7 @@ kgcreator.md
 openai.md
 google-gemini.md
 ollama.md
+agents_agno_ollama.md
 perplexity.md
 langchain.md
 llm_colab.md
