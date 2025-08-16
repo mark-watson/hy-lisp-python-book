@@ -1,10 +1,19 @@
 # Running Local LLMs Using Ollama
 
-TBD
+We saw in previus chapters how to use LLMs from commercial proders, for example GPT-5 from OpenAI and Gemini-2.5-flaf from Google. Here we run smaller models on our own laptops or servers. You need to install Ollama: [https://ollama.com](ttps://ollama.com).
+
+Install Ollama and then download a model we will experiment with:
+
+```
+$ ollama pull llama3.2:latest
+$ ollama serve
+```
+
+The first line is run one time to download a model. The second line is run whenever you want to call the local Ollama service.
 
 ## Completions
 
-Here we look at a "hello world" type simple example: we pass a text prompt to a local Ollama server instance.
+Here we look at a "hello world" type simple example: we pass a text prompt to a local Ollama server instance. This is similar to previous examples for GPT-5 and Gemini-2.5.
 
 The example code is in the file **completion.hy**:
 
@@ -35,7 +44,6 @@ The example code is in the file **completion.hy**:
 
 The output looks like:
 
-
 {linenos=off}
 ~~~~~~~~
 $ uv run hy completion.hy
@@ -51,7 +59,11 @@ Here are the pairwise age differences:
 
 ## Tool Use
 
-TBD
+Use of Python docstrings at runtime:
+
+The Ollama Python SDK leverages docstrings as a crucial part of its runtime function calling mechanism. When defining functions that will be called by the LLM, the docstrings serve as structured metadata that gets parsed and converted into a JSON schema format. This schema describes the function's parameters, their types, and expected behavior, which is then used by the model to understand how to properly invoke the function. The docstrings follow a specific format that includes parameter descriptions, type hints, and return value specifications, allowing the SDK to automatically generate the necessary function signatures that the LLM can understand and work with.
+
+During runtime execution, when the LLM determines it needs to call a function, it first reads these docstring-derived schemas to understand the function's interface. The SDK parses these docstrings using Python's introspection capabilities (through the inspect module) and matches the LLM's intended function call with the appropriate implementation. This system allows for a clean separation between the function's implementation and its interface description, while maintaining human-readable documentation that serves as both API documentation and runtime function calling specifications. The docstring parsing is done lazily at runtime when the function is first accessed, and the resulting schema is typically cached to improve performance in subsequent calls.
 
 Here is the sample tools library defined in **tools.hy**:
 
@@ -90,6 +102,7 @@ Here is the sample tools library defined in **tools.hy**:
   (return f"# Content from {uri}\n\n{md}"))
 ~~~~~~~~
 
+In the next example we will configure a LLM to call the tools (or functions) defined in the last code listing.
 
 Example in **ollama_tools_examples.hy**:
 
@@ -152,29 +165,12 @@ Example in **ollama_tools_examples.hy**:
 ~~~~~~~~
 
 
-TBD
+This Hy script demonstrates how to integrate a large language model with external tools using the Ollama library. It begins by importing three functions: **list-directory**, **read-file-contents**, and **uri-to-markdown** from the local file **tools.hy** that we saw earlier. These functions are then mapped by their string names to the actual function objects in a dictionary called **available-functions**. This mapping serves as a registry, allowing the program to dynamically call a function based on a name provided by the language model. A user prompt is defined, asking the model to perform a task that requires one of the available tools.
 
+The core of the script involves sending the prompt and the list of available tools to the Llama 3.2 model via the **chat** function. The model analyzes the request and, instead of generating a text-only reply, it returns a response object containing a "tool call" instruction. The script then iterates through any tool calls in the response. For each call, it retrieves the function name and arguments, looks up the corresponding function in the available-functions dictionary, and executes it with the provided arguments. The final result from the tool is then printed to the console, completing the request.
 
+## Wrap Up for Running Local LLMs Using Ollama
 
+I spend most of my development time working with smaller LLMs running on Ollama (LM Studio is another good choice for running locally).
 
-
-
-
-
-{lang="hylang",linenos=off}
-~~~~~~~~
-
-~~~~~~~~
-
-
-
-
-
-
-
-
-{lang="hylang",linenos=off}
-~~~~~~~~
-
-~~~~~~~~
-
+There are obvious privacy and security advantages running LLMs locally and very interesting and useful engineering problems can sometimes be solved with smaller models.

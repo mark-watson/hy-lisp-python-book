@@ -1,12 +1,12 @@
 # Cover Material, Copyright, and License
 
-Copyright 2020-2024 Mark Watson. All rights reserved. This book may be shared using the Creative Commons “share and share alike, no modifications, no commercial reuse” license.
+Copyright 2020-2025 Mark Watson. All rights reserved. This book may be shared using the Creative Commons “share and share alike, no modifications, no commercial reuse” license.
 
 This eBook will be updated occasionally so please periodically check the [leanpub.com web page for this book](https://leanpub.com/hy-lisp-python) for updates.
 
 If you read my eBooks free online then please consider hiring me for consulting work [https://markwatson.com](https://markwatson.com).
 
-This is this edition released September 2024.
+This is this edition released August 2025.
 
 Please visit the [author's website](http://markwatson.com).
 
@@ -16,18 +16,23 @@ While this is a book on the Hy Lisp language, we have a wider theme here. In an 
 
 I have been using Lisp languages professionally since 1982 and have written books covering the Common Lisp and Scheme languages. Most of my career has involved working on AI projects so tools for developing AI applications will be a major theme. In addition to covering the Hy language, you will get experience with AI tools and techniques that will help you craft your own AI platforms regardless of whether you are a consultant, work at a startup, or a corporation.
 
-The latest version of this book (updated in May 2023) has major code changes that were required to support changes in the Hy language version 0.26.0.
+The latest version of this book (updated in August 2025) has major code changes:
 
-The code examples can be found in my GitHub repository [https://github.com/mark-watson/hy-lisp-python](https://github.com/mark-watson/hy-lisp-python).
+- Code examples modified to work with the latest Hy version 1.1.0.
+- The README files for the code examples and book text now reflect the author's use of the **uv** Python utility to run Hy scripts.
+- Addition of a chapter to run LLMs locally using Ollama.
+
+The code examples can be found in my GitHub repository [https://github.com/mark-watson/hy-lisp-python-book](https://github.com/mark-watson/hy-lisp-python-book) that contains code examples in the directory **source_code_for_examples** and the Markdown manuscript files for this book in the directory **manuscript**.
 
 This book covers many programming topics using the Lisp language **Hy** that compiles to Python AST and is compatible with code, libraries, and frameworks written in Python. The main topics we will cover and write example applications for are:
 
+- Deep Learning
+- Large Langauge Models (LLMS)
 - Relational and graph databases
 - Web app development
 - Web scraping
 - Accessing semantic web and linked data sources like Wikipedia, DBpedia, and Wikidata
 - Automatically constructing Knowledge Graphs from text documents, semantic web and linked data
-- Deep Learning
 - Natural Language Processing (NLP) using Deep Learning
 
 The topics were chosen because of my work experience and the theme of this book is  how to increase programmer productivity and happiness using a Lisp language in a bottom-up development style. This style relies heavily on the use of an interactive REPL for exploring APIs and writing new code. I chose the above topics based on my experience working as a developer and researcher. Please note: you will see the term REPL frequently in this book. REPL stands for *Read Eval Print Loop*.
@@ -46,40 +51,9 @@ I am available for short consulting projects. Please see [https://markwatson.com
 
 ## Setting Up Your Development Environment
 
-In September 2024 I changed the way that I build and run both Hy language and Python scripts and programs. I now use **venv** and install dependencies in each Hy or Python project directory. I use a shell script **venv_setup.sh** that I keep on my **PATH** to create a directory **venv**. Please note that this method uses more disk space but keeps the dependencies of each small of large project separate.
+In August 2025 I changed the way that I build and run both Hy language and Python scripts and programs. I now use **uv** and install dependencies in each Hy or Python project directory. 
 
-```shell
-#!/bin/zsh
-
-# Check if the directory has a requirements.txt file
-if [ ! -f "requirements.txt" ]; then
-    echo "No requirements.txt file found in the current directory."
-    exit 1
-fi
-
-# Create a virtual environment in the .venv directory
-python3 -m venv venv
-
-# Activate the virtual environment
-source venv/bin/activate
-
-# Upgrade pip to the latest version
-pip3 install --upgrade pip
-
-# Install dependencies from requirements.txt
-pip3 install -r requirements.txt
-
-# Display installed packages
-pip3 list
-
-echo "Virtual environment setup complete. Activate it with:"
-echo "source venv/bin/activate"
-echo ""
-```
-
-You will find **requirements.txt** files in most example subdirectories for this book.
-
-To free disk space for the **venv** directories, I define a top level **Makefile** in the GitGub repository for the example programs [https://github.com/mark-watson/hy-lisp-python](https://github.com/mark-watson/hy-lisp-python):
+To free disk space for the **venv** directories, I define a top level **Makefile** in the GitGub repository for the example programs [https://github.com/mark-watson/hy-lisp-python-book](https://github.com/mark-watson/hy-lisp-python-book):
 
 ```
 clean:
@@ -117,16 +91,6 @@ The official Hy Language logo is an octopus:
 ![The Hy Language logo Cuddles by Karen Rustad](images/hylisplogo.jpg)
 
 Usually I use photographs that I take myself for covers of my LeanPub books. Although I have SCUBA dived since I was 13 years old, sadly I have no pictures of an octopus that I have taken myself. I did find a public domain picture I liked (that is the cover of this book) on Wikimedia. **Cover Credit**: Thanks to Wikimedia user Pseudopanax for placing the cover image in the public domain.
-
-## A Request from the Author
-
-I spent time writing this book to help you, dear reader. I release this book under the Creative Commons "share and share alike, no modifications, no commercial reuse" license and set the minimum purchase price to $8.00 in order to reach the most readers. You can read this book for free online or purchase it by visiting [https://leanpub.com/hy-lisp-python](https://leanpub.com/hy-lisp-python).
-
-If you would like to support my work please consider purchasing my books on [Leanpub](https://leanpub.com/u/markwatson) and star my git repositories that you find useful on [GitHub](https://github.com/mark-watson?tab=repositories&q=&type=public). You can also interact with me on social media on [Mastodon](https://mastodon.social/@mark_watson) and [Twitter](https://twitter.com/mark_l_watson).
-
-I enjoy writing and your support helps me write new editions and updates for my books and to develop new book projects. Thank you!
-
-## Acknowledgements
 
 I thank my wife Carol for editing this manuscript, finding typos, and suggesting improvements.
 

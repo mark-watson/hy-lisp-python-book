@@ -2,26 +2,22 @@
 
 I have been working in the field of Natural Language Processing (NLP) since 1985 so I 'lived through' the revolutionary change in NLP that has occurred since 2014: deep learning results out-classed results from previous symbolic methods.
 
+We won't be Large Language Models (LLMs) in this chapter, we will cover LLMs in six chapters at the end of this book. Here we use the **spaCy** NLP library that is simple to use and provides good results.
+
 I will not cover older symbolic methods of NLP here, rather I refer you to my previous books [Practical Artificial Intelligence Programming With Java](https://leanpub.com/javaai), [Loving Common Lisp, [The Savvy Programmer's Secret Weapon](https://leanpub.com/lovinglisp), and [Haskell Tutorial and Cookbook](https://leanpub.com/haskell-cookbook) for examples. We get better results using Deep Learning (DL) for NLP and the library **spaCy** ([https://spacy.io](https://spacy.io/)) that we use in this chapter provides near state-of-the-art performance. The authors of **spaCy** frequently update it to use the latest breakthroughs in the field.
 
 You will learn how to apply both DL and NLP by using the state-of-the-art full-feature library [spaCy](https://spacy.io/). This chapter concentrates on how to use spaCy in the Hy language for solutions to a few selected problems in NLP that I use in my own work. I urge you to also review the "Guides" section of the [spaCy documentation](https://spacy.io/usage) where examples are in Python but after experimenting with the examples in this chapter you should have no difficulty in translating any spaCy Python examples to the Hy language.
 
 If you have not already done so install the **spaCy** library and the full English language model:
 
-{lang="bash",linenos=off}
-~~~~~~~~
-pip install spacy
-python -m spacy download en
-~~~~~~~~
+Install **uv** if it is not already on your system.
 
-You can use a smaller model (which requires loading "en_core_web_sm" instead of "en" in the following examples):
+One time setup:
 
-{lang="bash",linenos=off}
-~~~~~~~~
-pip install spacy
-python -m spacy download en_core_web_sm
-~~~~~~~~
-
+```
+$ cd hy-lisp-python-book/source_code_for_examples/nlp
+$ uv run python -m spacy download en_core_web_sm
+```
 
 ## Exploring the spaCy Library
 
@@ -29,10 +25,10 @@ We will use the Hy REPL to experiment with spaCy, Lisp style. The following REPL
 
 {lang="hy",linenos=on}
 ~~~~~~~~
-Marks-MacBook:nlp $ hy
-hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
+Marks-MacBook:nlp $ uv run hy
+Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
 => (import spacy)
-=> (setv nlp-model (spacy.load "en"))
+=> (setv nlp-model (spacy.load "enen_core_web_sm"))
 => (setv doc (nlp-model "President George Bush went to Mexico and he had a very good meal"))
 => doc
 President George Bush went to Mexico and he had a very good meal
@@ -46,10 +42,7 @@ In lines 23-26 we use the **dir** function again to see the attributes and metho
 
 {lang="hy",linenos=on, number-from=23}
 ~~~~~~~~
-=> (lfor
-... x (dir doc)
-... :if (not (.startswith x "__"))
-... x)
+=> (lfor x (dir doc) :if (not (.startswith x "__")) x)
 ['_', '_bulk_merge', '_py_tokens', '_realloc', '_vector', '_vector_norm', 'cats', 'char_span', 'count_by', 'doc', 'ents', 'extend_tensor', 'from_array', 'from_bytes', 'from_disk', 'get_extension', 'get_lca_matrix', 'has_extension', 'has_vector', 'is_nered', 'is_parsed', 'is_sentenced', 'is_tagged', 'lang', 'lang_', 'mem', 'merge', 'noun_chunks', 'noun_chunks_iterator', 'print_tree', 'remove_extension', 'retokenize', 'sentiment', 'sents', 'set_extension', 'similarity', 'tensor', 'text', 'text_with_ws', 'to_array', 'to_bytes', 'to_disk', 'to_json', 'user_data', 'user_hooks', 'user_span_hooks', 'user_token_hooks', 'vector', 'vector_norm', 'vocab']
 =>
 ~~~~~~~~
@@ -276,8 +269,6 @@ Listing for hy-lisp-python/nlp/nlp_example.hy:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-#!/usr/bin/env hy
-
 (import nlp-lib [nlp])
 
 (print
@@ -291,8 +282,14 @@ Listing for hy-lisp-python/nlp/nlp_example.hy:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-Marks-MacBook:nlp $ ./nlp_example.hy
-{'text': 'President George Bush went to Mexico and he had a very good meal', 'ents': [{'start': 10, 'end': 21, 'label': 'PERSON'}, {'start': 30, 'end': 36, 'label': 'GPE'}], 'sents': [{'start': 0, 'end': 64}], 'tokens': 
+Marks-MacBook:nlp $ uv run hy nlp_example.hy 
+{'text': 'President George Bush went to Mexico and he had a very good meal', 'ents': [{'start': 10, 'end': 21, 'label': 'PERSON'}, {'start': 30, 'end': 36, 'label': 'GPE'}], 'sents': [{'start': 0, 'end': 64}], 'tokens': [{'id': 0, 'start': 0, 'end': 9, 'tag': 'NNP', 'pos': 'PROPN', 'morph'
+
+ ...
+
+{'text': 'Lucy threw a ball to Bill and he caught it', 'ents': [{'start': 0, 'end': 4, 'label': 'PERSON'}, {'start': 21, 'end': 25, 'label': 'PERSON'}], 'sents': [{'start': 0, 'end': 42}], 'tokens': [{'id': 0, 'start': 0, 'end': 4, 'tag': 'NNP', 'pos': 'PROPN', 'morph': 'Number=Sing', 'lemma': 'Lucy', 'dep': 'nsubj', 'head': 1}, {'id': 1, 'start': 5, 'end': 10, 'tag': 'VBD', 'pos': 'VERB', 'morph': 'Tense=Past|VerbForm=Fin', 'lemma': 'throw', 'dep': 'ROOT', 'head': 1}, {'id': 2, 'start': 11, 'end': 12, 'tag
+
+ ...
 
   ..LOTS OF OUTPUT NOT SHOWN..
 ~~~~~~~~
@@ -300,6 +297,6 @@ Marks-MacBook:nlp $ ./nlp_example.hy
 
 ## Wrap-up
 
-I spent several years of development time during the period from  1984 through 2015 working on natural language processing technology and as a personal side project I sold commercial NLP libraries that I wrote on my own time in Ruby and Common Lisp. The state-of-the-art of Deep Learning enhanced NLP is very good and the open source spaCy library makes excellent use of both conventional NLP technology and pre-trained Deep Learning models. I no longer spend very much time writing my own NLP libraries and instead use spaCy.
+I spent several years of development time during the period from  1984 through 2015 working on natural language processing technology and as a personal side project I sold commercial NLP libraries that I wrote on my own time in Ruby and Common Lisp. The state-of-the-art of Deep Learning enhanced NLP is very good and the open source spaCy library makes excellent use of both conventional NLP technology and pre-trained Deep Learning models. I no longer spend very much time writing my own NLP libraries and instead use spaCy or more recently LLMs that we cover later.
 
 I urge you to read through the [spaCy documentation](https://spacy.io/api/doc) because we covered just basic functionality here that we will also need in the later chapter on automatically generating data for Knowledge Graphs. After working through the interactive REPL sessions and the examples in this chapter, you should be able to translate any Python API example code to Hy.
