@@ -1,6 +1,7 @@
-# Agents Using Agno Agent Framework Running On Local Ollama Model
+# Agents Using the Agno Agent Framework Running On a Local Ollama Model
 
-The example in this chapter uses a local LLM running on Ollama. The examples for this chapter are found in the directory **agents_agno**.
+The example in this chapter uses a local LLM running on Ollama. The examples for this chapter are found in the directory **agents_agno**. If yuo skipped reading the previous chapter, please review the opening material for running the Ollama service.
+
 
 ## An Agent For Answering Questions About A Specific Web Site
 
@@ -100,7 +101,7 @@ The first part is the definition of the **scrape-website-content** function acts
 
 The second part initializes the Agent from the agno library. This is where the AI's behavior is defined. It's configured to use a specific Ollama model and is given access to the scrape-website-content tool we defined. The description and instructions parameters are crucial; they act as a system prompt that programs the agent's workflow, forcing it into a strict sequence of scraping, analyzing, and then answering. By specifying expected_output, we enforce a consistent structure on the agent's final response. The main execution block demonstrates a practical example, asking the agent to find information about musical instruments from a specific website, which triggers the entire scrape-and-answer process.
 
-*Note: The AGno framework prints beautiful colored bounding boxes around blocks of output text. In the following listing the bounding boxes, represented by four specific Unicode characters, just show up here as tiny box-characters.*
+*Note: The Agno framework prints beautiful colored bounding boxes around blocks of output text. In the following listing these bounding boxes, represented by four specific Unicode characters, just show up here as tiny box-characters.*
 
 ```text
 $ uv run hy web_site_qa.hy
