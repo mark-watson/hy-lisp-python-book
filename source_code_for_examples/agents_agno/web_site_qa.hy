@@ -8,13 +8,15 @@
 (tool ;; in Python this would be a @tool annotation
   (defn scrape-website-content [url]
     "Fetches and extracts the clean, textual content from a given webpage URL.
-    Use this tool when you need to read the contents of a specific web page to answer a question.
+    Use this tool when you need to read the contents of a specific web page to
+    answer a question.
     
     Args:
-        url (str): The full, valid URL of the webpage to be scraped (e.g., 'https://example.com').
+        url (str): The full, valid URL of the webpage to be scraped
+        (e.g., 'https://example.com').
         
     Returns:
-        str: The extracted text content of the webpage, or a descriptive error message if scraping fails.
+        str: The extracted text content of the webpage.
     "
     (try
       ;; Set a User-Agent header to mimic a real browser.
@@ -29,7 +31,7 @@
             (.decompose tag))
           (let [text (.get_text soup :separator "\n" :strip True)]
             (if (not text)
-              f"Successfully connected to {url}, but no text content could be extracted."
+              f"Connected to {url}, but no text content could be extracted."
               f"Successfully scraped content from {url}:\n\n{text}")))))))
 
 ;; Initialize the web scraping and analysis agent
@@ -39,9 +41,11 @@
   :description (dedent
     "You are an expert web scraping and analysis agent. You follow a strict process:
 
-    - Given a URL in a prompt, you will first use the appropriate tool to scrape its content.
+    - Given a URL in a prompt, you will first use the appropriate tool to scrape
+      its content.
     - You will then carefully read the scraped content to understand it thoroughly.
-    - Finally, you will answer the user's question based *only* on the information contained within that specific URL's content.")
+    - Finally, you will answer the user's question based *only* on the information
+      contained within that specific URL's content.")
   
   ;; The instructions are refined to provide a clear, step-by-step reasoning process.
   :instructions (dedent
@@ -51,14 +55,17 @@
 
     2. Analysis Phase 📊
        - Carefully read the entire content returned by the `scrape` tool.
-       - Systematically extract the specific information required to answer the user's question.
+       - Systematically extract the specific information required to answer the
+         user's question.
 
     3. Answering Phase ✍️
-       - Formulate a concise and accurate answer based exclusively on the scraped information.
+       - Formulate a concise and accurate answer based exclusively on the scraped
+         information.
        - If the information is not present, state that clearly.
 
     4. Quality Control ✓
-       - Reread the original query and your answer to ensure it is accurate and relevant.")
+       - Reread the original query and your answer to ensure it is accurate
+         and relevant.")
   
   :expected_output (dedent
     "# {Answer based on website content}
