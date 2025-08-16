@@ -27,7 +27,8 @@ Let's test this function in a REPL:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-$ hy
+$ uv run hy                 
+Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
 => (import get-page-data [get-raw-data-from-web])
 => (get-raw-data-from-web "http://knowledgebooks.com")
 b'<!DOCTYPE html><html><head><title>KnowledgeBooks.com - research on the Knowledge Management, and the Semantic Web ...'
@@ -110,8 +111,6 @@ The following listing shows **democracynow_front_page.hy**
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-#!/usr/bin/env hy
-
 (import get-web-page [get-web-page-from-disk])
 (import bs4 [BeautifulSoup])
 
@@ -156,8 +155,6 @@ The following listing shows **npr_front_page_summary.hy**
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-#!/usr/bin/env hy
-
 (import get-web-page [get-web-page-from-disk])
 (import bs4 [BeautifulSoup])
 

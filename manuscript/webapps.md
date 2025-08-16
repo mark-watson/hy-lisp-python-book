@@ -7,12 +7,7 @@ I like lightweight web frameworks. In Ruby I use Sinatra, in Haskell I use Spock
 
 ## Getting Started With Flask: Using Python Decorators in Hy
 
-You will need to install Flask using:
-
-{linenos=off}
-~~~~~~~~
-pip install flask
-~~~~~~~~
+You will need the Python Flask library but it is pre-configured in the **uv** environment in the directory **hy-lisp-python-book/source_code_for_examples/webapp**.
 
 We will use the Hy macro **with-decorator** to replace Python code with annotations. Here the decorator **@app.route** is used to map a URI pattern with a Python callback function. In the following case we define the behavior when the index page of a web app is accessed:
 
@@ -27,12 +22,10 @@ from flask import Flask
 app.run()
 ~~~~~~~~
 
-I first used Flask with the Hy language after seeing a post of code from HN user "volent", seen in the file **flask_test.hy** in the directory **hy-lisp-python/webapp** that is functionally equivalent to the above Python code snippet:
+I first used Flask with the Hy language after seeing a post of code from HN user "volent", seen in the file **flask_test.hy** in the directory **hy-lisp-python-book/source_code_for_examples/webapp** that is functionally equivalent to the above Python code snippet:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-#!/usr/bin/env hy
-
 ;; snippet by HN user volent and modifed for
 ;; Hy 0.26.0 with a comment from stackoverflow user plokstele:
 
@@ -46,13 +39,12 @@ I liked this example and after experimenting with the code, I then started using
 
 {lang="bash",linenos=off}
 ~~~~~~~~
-(base) Marks-MacBook:webapp $ ./flask_test.hy 
- * Serving Flask app "Flask test" (lazy loading)
- * Environment: production
-   WARNING: This is a development server. Do not use it in a production deployment.
-   Use a production WSGI server instead.
+$ uv run hy flask_test.hy
+ * Serving Flask app 'Flask test'
  * Debug mode: off
- * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
 ~~~~~~~~
 
 Open [http://127.0.0.1:5000/](http://127.0.0.1:5000/) in your web browser:
@@ -111,8 +103,6 @@ The following Flask web app defines behavior for rendering the template without 
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-#!/usr/bin/env hy
-
 (import flask [Flask render_template request])
 
 (setv app (Flask "Flask and Jinja2 test"))
@@ -192,8 +182,6 @@ The value for **request** is defined in the execution context by Flask when hand
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-#!/usr/bin/env hy
-
 (import flask [Flask render_template request make-response])
 
 (setv app (Flask "Flask and Jinja2 test"))
@@ -300,7 +288,7 @@ gcloud app deploy
 
 Please note that every time you deploy, a new instance is created. You will want to use the GCP AppEngine console to remove old instances, and remove all instances when you are done.
 
-### Going forward
+### Going Forward
 
 You can make a copy of this example, create a GitHub repo, and follow the above directions as a first step to creating Hy language application on AppEngine. The Google Cloud Platform has many services that you can use in your app (using the Python APIs, called from your Hy program), including:
 
@@ -308,7 +296,7 @@ You can make a copy of this example, create a GitHub repo, and follow the above 
 - Big Data.
 - Machine Learning.
 
-## Wrap-up
+## Wrap Up
 
 I like to be able to implement simple things simply, without a lot of ceremony. Once you work through these examples I hope you feel that you can generate Hy and Flask based web apps quickly and with very little code required.
 

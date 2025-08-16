@@ -279,8 +279,8 @@ I suggest using the Python **format** method when you need to format output. In 
 
 {lang="hylang",linenos=off}
 ~~~~~~~~
-$ hy
-hy 0.26.0 using CPython(default) 3.11.1 on Darwin
+$ uv run hy    
+Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
 => (.format "first: {} second: {}" "cat" 3.14159)
 'first: cat second: 3.14159'
 => (.format "first: {:>15} second: {:>15}" "cat" 3.14159)
@@ -300,11 +300,11 @@ I usually write applications by first implementing simpler low-level utility lib
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-Marks-MacBook:hy-lisp-python $ pwd
-/Users/markw/GITHUB/hy-lisp-python
-Marks-MacBook:hy-lisp-python $ cd webscraping 
-Marks-MacBook:webscraping $ hy
-hy 0.17.0+108.g919a77e using CPython(default) 3.7.3 on Darwin
+$ pwd
+/Users/markw/GITHUB/hhy-lisp-python-book
+$ cd webscraping 
+$ uv run hy    
+Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
 => (import sys)
 => (sys.path.insert 1 "../nlp")
 => (import nlp-lib [nlp])
@@ -343,7 +343,8 @@ The Numpy library supports what is called "broadcasting" in Python. In the funct
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-$ hy
+$ uv run hy    
+Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
 => (import numpy :as np)
 => (import matplotlib.pyplot :as plt)
 => 
