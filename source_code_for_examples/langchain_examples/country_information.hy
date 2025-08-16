@@ -19,7 +19,7 @@
       (prompt.format :country_name country_name))
   ;; Print out generated prompt when you are getting started:
   (print "\n" prompt_text ":")
-  (llm prompt_text))
+  (llm.invoke prompt_text))
 
 (print (get_country_information "Germany"))
 ;; (print (get_country_information "Canada"))

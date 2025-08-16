@@ -14,7 +14,7 @@
       (prompt.format :thing_to_do thing_to_do))
     ;; Print out generated prompt when you are getting started:
     (print "\n" prompt_text ":")
-    (llm prompt_text))
+    (llm.invoke prompt_text))
 
 (print (get_directions "get to the store"))
 (print (get_directions "hang a picture on the wall"))
