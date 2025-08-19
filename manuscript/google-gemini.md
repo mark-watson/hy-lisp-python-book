@@ -9,6 +9,13 @@ Google Gemini offers two features that set it apart from other commercial APIs:
 - Supports a one million token context size.
 - Very low cost.
 
+We will look at two ways to access Gemini and we will look at examples for each technique:
+
+- Use the Python **requests** library to use Gemini's REST style interface.
+- Use Google's Python **google-genai** package (and we will look at tool use in the same example).
+
+## REST Interface
+
 The following example calls the Gemini completion API and stores user chat in a persistent context.
 
 Here is a listing or the source file **google-gemini/chat.hy**:
@@ -127,8 +134,54 @@ You:
 
 ```
 
+## Using Google's Python Package to Access Gemini
+
+We use the package **google-genai** in the example **context_url.hy**:
+
+```hy
+(import os)
+(import google [genai])
+(import json) ;; Explicitly import json for dumps
+(import pprint [pprint])
+
+;; Get API key from environment variable (standard practice)
+(setv api-key (os.getenv "GOOGLE_API_KEY"))
+
+(setv client (genai.Client api-key))
+      
+(defn context_qa [prompt]
+  "Calls the Gemini API using url_context tool with a prompt containing both a URI and user question"
+
+  (setv
+    response
+    (client.models.generate_content
+      :model "gemini-2.5-flash"
+      :contents prompt
+      :config {"tools" [{"url_context" {}}]}))
+
+  (return response.text))
+
+(when (= __name__ "__main__")
+  (print
+    (context_qa
+      "https://markwatson.com What musical instruments does Mark Watson play?")))
+```
+
+The tool **url_context** is called automatically when a URI is present in a user prompt. A prompt can also contain multiple URIs and they are all used in generating text from the input prompt.
+
+The output for this example is:
+
+```
+$ uv run hy context_url.hy                                    
+Mark Watson plays the guitar, didgeridoo, and American Indian flute.
+```
+
+If you want to reuse this example without using tools, just remove the option **:config {"tools" [{"url_context" {}}]}**.
+
+The GitHub repository for the this Google package also contains useful examples and documentation links: [https://github.com/googleapis/python-genai](https://github.com/googleapis/python-genai).
+
 ## Wrap Up for Using the Gemini APIs
 
-There are many good commercial LLM APIs (and I have used all of them) but I currently most frequently use Gemini for two reasons: supports a one million token context size and very low cost.
+There are many good commercial LLM APIs (and I have most of them) but I currently most frequently use Gemini for two reasons: supports a one million token context size and is very low cost.
 
 I discuss Gemini in more detail in another book that you can read online: [https://leanpub.com/solo-ai/read](https://leanpub.com/solo-ai/read).
