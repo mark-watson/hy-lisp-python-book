@@ -3,8 +3,7 @@
 (import json) ;; Explicitly import json for dumps
 (import pprint [pprint])
 
-;; Get API key from environment variable (standard practice)
-(setv api-key (os.getenv "GOOGLE_API_KEY"))
+;; Set enviroment variable: "GOOGLE_API_KEY"
 
 (setv client (genai.Client))
       

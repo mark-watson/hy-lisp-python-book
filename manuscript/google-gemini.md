@@ -144,10 +144,9 @@ We use the package **google-genai** in the example **context_url.hy**:
 (import json) ;; Explicitly import json for dumps
 (import pprint [pprint])
 
-;; Get API key from environment variable (standard practice)
-(setv api-key (os.getenv "GOOGLE_API_KEY"))
+;; Set enviroment variable: "GOOGLE_API_KEY"
 
-(setv client (genai.Client api-key))
+(setv client (genai.Client))
       
 (defn context_qa [prompt]
   "Calls the Gemini API using url_context tool with a prompt containing both a URI and user question"
