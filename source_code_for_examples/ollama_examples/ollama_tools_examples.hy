@@ -1,14 +1,13 @@
+(import ollama)
+
 (import tools  [list-directory])
 (import tools  [read-file-contents])
 (import tools  [uri-to-markdown])
 
 ; (print (list-directory))
 ; (print (read-file-contents "requirements.txt"))
-(print (uri-to-markdown "https://markwatson.com"))
+; (print (uri-to-markdown "https://markwatson.com"))
 
-(exit 0)
-
-(import ollama)
 
 ; Map function names to function objects
 (setv available-functions {

@@ -1,6 +1,6 @@
 # Running Local LLMs Using Ollama
 
-We saw in previus chapters how to use LLMs from commercial proders, for example GPT-5 from OpenAI and Gemini-2.5-flaf from Google. Here we run smaller models on our own laptops or servers. You need to install Ollama: [https://ollama.com](ttps://ollama.com).
+We saw in previus chapters how to use LLMs from commercial providers, for example GPT-5 from OpenAI and Gemini-2.5-flash from Google. Here we run smaller models on our own laptops or servers. You need to install Ollama: [https://ollama.com](https://ollama.com).
 
 Install Ollama and then download a model we will experiment with:
 
@@ -59,9 +59,11 @@ Here are the pairwise age differences:
 
 ## Tool Use
 
-Use of Python docstrings at runtime:
+In the context of this book using tools means that we define functions in the Hy language and configure a Large Language Model to use these tools.
 
-The Ollama Python SDK leverages docstrings as a crucial part of its runtime function calling mechanism. When defining functions that will be called by the LLM, the docstrings serve as structured metadata that gets parsed and converted into a JSON schema format. This schema describes the function's parameters, their types, and expected behavior, which is then used by the model to understand how to properly invoke the function. The docstrings follow a specific format that includes parameter descriptions, type hints, and return value specifications, allowing the SDK to automatically generate the necessary function signatures that the LLM can understand and work with.
+Integrating tool use with Ollama represents a pivotal step in the evolution of local AI, bridging the gap between offline language models and interactive, real-world applications. This capability, often referred to as function calling, allows LLMs running on your own hardware to execute external code and query APIs, breaking the confines of their static training data. By equipping a local model with tools, developers can empower applications using LLMs to, for example, fetch live weather data, search a database, or control other software services. This transforms the LLM from a simple text-generation engine into a dynamic agent capable of performing complex, multi-step tasks and interacting directly with its environment, all while maintaining the privacy and control inherent to the Ollama ecosystem.
+
+Use of Python docstrings at runtime: the Ollama Python SDK leverages docstrings as a crucial part of its runtime function calling mechanism. When defining functions that will be called by the LLM, the docstrings serve as structured metadata that gets parsed and converted into a JSON schema format. This schema describes the function's parameters, their types, and expected behavior, which is then used by the model to understand how to properly invoke the function. The docstrings follow a specific format that includes parameter descriptions, type hints, and return value specifications, allowing the SDK to automatically generate the necessary function signatures that the LLM can understand and work with.
 
 During runtime execution, when the LLM determines it needs to call a function, it first reads these docstring-derived schemas to understand the function's interface. The SDK parses these docstrings using Python's introspection capabilities (through the inspect module) and matches the LLM's intended function call with the appropriate implementation. This system allows for a clean separation between the function's implementation and its interface description, while maintaining human-readable documentation that serves as both API documentation and runtime function calling specifications. The docstring parsing is done lazily at runtime when the function is first accessed, and the resulting schema is typically cached to improve performance in subsequent calls.
 
@@ -109,17 +111,15 @@ Example in **ollama_tools_examples.hy**:
 
 {lang="hylang",linenos=off}
 ~~~~~~~~
+(import ollama)
+
 (import tools  [list-directory])
 (import tools  [read-file-contents])
 (import tools  [uri-to-markdown])
 
 ; (print (list-directory))
 ; (print (read-file-contents "requirements.txt"))
-(print (uri-to-markdown "https://markwatson.com"))
-
-(exit 0)
-
-(import ollama)
+; (print (uri-to-markdown "https://markwatson.com"))
 
 ; Map function names to function objects
 (setv available-functions {
