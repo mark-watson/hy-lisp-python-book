@@ -6,10 +6,12 @@ Please note that the example is a simplified version that I first wrote in Commo
 
 The code for this application is in the directory **kgn** and this example is pre-configured to use **uv**.
 
-One time only, you will need to download **spacy** language model that we used in the earlier chapter on natural language processing. Install these requirements in the directory **kgn**:
+One time only, you will need to download **spacy** language model that we used in the earlier chapter on natural language processing. Install this language model requirement in the directory **kgn** (edited to fit page width):
 
 {lang="bash",linenos=off}
 ~~~~~~~~
+$ pwd
+~/GITHUB/hy-lisp-python-book/source_code_for_examples/kgn
 $ uv run python -m spacy download en_core_web_sm
 ~~~~~~~~
 
@@ -24,17 +26,17 @@ select distinct ?s ?comment { ?s ?p "Bill Gates"@en . ?s <http://www.w3.org/2000
 Generated SPARQL to get DBPedia entity URIs from a name:
 select distinct ?s ?comment { ?s ?p "Microsoft"@en . ?s <http://www.w3.org/2000/01/rdf-schema#comment> ?comment . FILTER (lang(?comment) = 'en') . ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Organisation> . } limit 15 
 Please select entities from the list below:
-  1. Bill Gates || Cascade Investment, L.L.C. is an American holding company and private ...
-  2. Bill Gates || William Henry Gates III (born October 28, 1955) is an American busines...
-  3. Bill Gates || Simon Wood is a British cook and winner of the 2015 edition of MasterC...
-  4. Bill Gates || Harry Roy Lewis (born 1947) is an American computer scientist, mathe­m...
-  5. Bill Gates || Jerry P. Dyer (born May 3, 1959) is an American politician and former ...
-  6. Microsoft || Press Play ApS was a Danish video game development studio based in cen...
-  7. Microsoft || The AMD Professional Gamers League (PGL), founded around 1997, was one...
-  8. Microsoft || The CSS Working Group (Cascading Style Sheets Working Group) is a work...
-  9. Microsoft || Microsoft Corporation is an American multinational technology corporat...
-  10. Microsoft || Secure Islands Technologies Ltd. was an Israeli privately held technol...
-  11. Microsoft || Microsoft Innovation Centers (MICs) are local government organizations...
+  1. Bill Gates || Cascade Investment, L.L.C. is an American holding company...
+  2. Bill Gates || William Henry Gates III (born October 28, 1955) is an Ame...
+  3. Bill Gates || Simon Wood is a British cook and winner of the 2015 editi...
+  4. Bill Gates || Harry Roy Lewis (born 1947) is an American computer scien...
+  5. Bill Gates || Jerry P. Dyer (born May 3, 1959) is an American politicia...
+  6. Microsoft || Press Play ApS was a Danish video game development studio ...
+  7. Microsoft || The AMD Professional Gamers League (PGL), founded around 1...
+  8. Microsoft || The CSS Working Group (Cascading Style Sheets Working Grou...
+  9. Microsoft || Microsoft Corporation is an American multinational technol...
+  10. Microsoft || Secure Islands Technologies Ltd. was an Israeli privately...
+  11. Microsoft || Microsoft Innovation Centers (MICs) are local government ...
 
 Enter the numbers of the entities you want to process, separated by commas (e.g., 1, 3): 2,9
 []
@@ -81,7 +83,8 @@ Enter a list of entities:
 To select found entities of interest, type the entity index numbers you want analyzed. In the last example we chose indices 2 and 9:
 
 ```text
-Enter the numbers of the entities you want to process, separated by commas (e.g., 1, 3): 2,9
+Enter the numbers of the entities you want to process, separated
+by commas (e.g., 1, 3): 2,9
 ```
 
 *Note: in the last listing, if you run this example yourself you will see that generated SPARQL queries are colorized for better readability. This colorization does not appear in the last listing.*
@@ -304,7 +307,7 @@ In line 5, we use the function **assoc** to add a key and value pair to an exist
 
 Finally, let's look at the main application loop. In line 4 we are using the function **get-query** (defined in file **textui.hy**) to get a list of entity names from the user. In line 7 we use the function **entities-in-text** that we saw earlier to map text to entity types and names. In the nested loops in lines 13-26 we build one-line descriptions of people, place, and organizations that we will use to show the user a menu for selecting entities found in DBPedia from the original query. We are giving the use a chance to select only the discovered entities that they are interested in.
 
-In lines 33-35 we are converting the shortened comment strings the user selected back to DBPedia entity URIs. Finally in line 36 we use the function **entity-results->relationship-links** to find relationships between the user selected entities.
+In lines 34-36 we are converting the shortened comment strings the user selected back to DBPedia entity URIs. Finally in line 36 we use the function **entity-results->relationship-links** to find relationships between the user selected entities.
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -325,13 +328,16 @@ In lines 33-35 we are converting the shortened comment strings the user selected
       (for [name (get elist key)]
         (setv dbp (dbpedia-get-entities-by-name name type-uri))
         (for [d dbp]
-          (setv short-comment (shorten-comment (second (second d)) (second (first d))))
+          (setv
+            short-comment
+            (shorten-comment (second (second d)) (second (first d))))
           (when (= key "PERSON")
               (.extend people-found-on-dbpedia [(+ name  " || " short-comment)]))
           (when (= key "GPE")
               (.extend places-found-on-dbpedia [(+ name  " || " short-comment)]))
           (when (= key "ORG")
-              (.extend organizations-found-on-dbpedia [(+ name  " || " short-comment)])))))
+              (.extend organizations-found-on-dbpedia
+                       [(+ name  " || " short-comment)])))))
     (setv user-selected-entities
           (select-entities
             people-found-on-dbpedia
