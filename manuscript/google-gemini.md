@@ -141,7 +141,6 @@ We use the package **google-genai** in the example **context_url.hy**:
 ```hy
 (import os)
 (import google [genai])
-(import json) ;; Explicitly import json for dumps
 (import pprint [pprint])
 
 ;; Set enviroment variable: "GOOGLE_API_KEY"

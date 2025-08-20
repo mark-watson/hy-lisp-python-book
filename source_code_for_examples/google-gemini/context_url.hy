@@ -1,6 +1,5 @@
 (import os)
 (import google [genai])
-(import json) ;; Explicitly import json for dumps
 (import pprint [pprint])
 
 ;; Set enviroment variable: "GOOGLE_API_KEY"
