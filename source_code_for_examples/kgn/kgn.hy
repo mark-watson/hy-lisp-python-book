@@ -1,5 +1,3 @@
-#!/usr/bin/env hy
-
 (import os)
 (import sys)
 (import pprint [pprint])
@@ -21,7 +19,6 @@
     (if (in etype ret)
         (setv (get ret etype) (+ (get ret etype) [ename]))
         (setv (get ret etype) [ename])))
-;;;        (assoc ret etype [ename])
   ret)
 
 

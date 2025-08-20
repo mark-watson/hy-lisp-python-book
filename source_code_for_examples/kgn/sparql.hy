@@ -1,5 +1,3 @@
-#!/usr/bin/env hy
-
 (import json)
 (import requests)
 

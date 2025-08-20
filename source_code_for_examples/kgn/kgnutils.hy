@@ -1,5 +1,3 @@
-#!/usr/bin/env hy
-
 (import sparql [dbpedia-sparql])
 (import colorize [colorize-sparql])
 

@@ -2,38 +2,93 @@
 
 The Knowledge Graph Navigator (which I will often refer to as KGN) is a tool for processing a set of entity names and automatically exploring the public Knowledge Graph [DBPedia](http://dbpedia.org) using SPARQL queries. I wrote KGN in Common Lisp for my own use to automate some things I used to do manually when exploring Knowledge Graphs, and later thought that KGN might be useful also for educational purposes. KGN uses NLP code developed in earlier chapters and we will reuse that code with a short review of using the APIs.
 
-Please note that the example is a simplified version that I first wrote in Common Lisp and is also an example in my book [Loving Common Lisp, or the Savvy Programmer's Secret Weapon](https://leanpub.com/lovinglisp) that you can read free online. If you are interested you can see [screen shots of the Common Lisp version here](http://www.knowledgegraphnavigator.com/screen/).
+Please note that the example is a simplified version that I first wrote in Common Lisp and is also an example in my book [Loving Common Lisp, or the Savvy Programmer's Secret Weapon](https://leanpub.com/lovinglisp) that you can read free online.
 
-The following two screen shots show the text based user interface for this example. This example application asks the user for a list of entity names and uses SPARQL queries to discover potential matches in DBPedia. We use the python library [PyInquirer](https://github.com/CITGuru/PyInquirer) for requesting entity names and then to show the user a list of matches from DBPedia. The following screen shot shows these steps:
+The code for this application is in the directory **kgn** and this example is pre-configured to use **uv**.
 
-{width=92%}
-![Initial user interaction with Knowledge Graph Navigator example](images/kgnuserselect.png)
-
-To select the entities of interest, the user uses a space character to select or deselect an entity and the return (or enter) key to accept the list selections.
-
-After the user selects entities from the list, the list disappears. The next screen shot shows the output from this example after the user finishes selecting entities of interest:
-
-{width=92%}
-![After the user selects entities of interest](images/kgnafter.png)
-
-The code for this application is in the directory **kgn**. You will need to install the following Python library that supports console/text user interfaces:
+One time only, you will need to download **spacy** language model that we used in the earlier chapter on natural language processing. Install these requirements in the directory **kgn**:
 
 {lang="bash",linenos=off}
 ~~~~~~~~
-pip install PyInquirer
+$ uv run python -m spacy download en_core_web_sm
 ~~~~~~~~
 
-You will also need the **spacy** library and language model that we used in the earlier chapter on natural language processing. If you have not already done so, install these requirements:
 
-{lang="bash",linenos=off}
-~~~~~~~~
-pip install spacy
-python -m spacy download en_core_web_sm
-~~~~~~~~
+The following listing shows the text based user interface for this example. This example application asks the user for a list of entity names and uses SPARQL queries to discover potential matches in DBPedia.
+
+```text
+$ uv run hy kgn.hy
+Enter a list of entities: Bill Gates worked at Microsoft
+Generated SPARQL to get DBPedia entity URIs from a name:
+select distinct ?s ?comment { ?s ?p "Bill Gates"@en . ?s <http://www.w3.org/2000/01/rdf-schema#comment> ?comment . FILTER (lang(?comment) = 'en') . ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Person> . } limit 15 
+Generated SPARQL to get DBPedia entity URIs from a name:
+select distinct ?s ?comment { ?s ?p "Microsoft"@en . ?s <http://www.w3.org/2000/01/rdf-schema#comment> ?comment . FILTER (lang(?comment) = 'en') . ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Organisation> . } limit 15 
+Please select entities from the list below:
+  1. Bill Gates || Cascade Investment, L.L.C. is an American holding company and private ...
+  2. Bill Gates || William Henry Gates III (born October 28, 1955) is an American busines...
+  3. Bill Gates || Simon Wood is a British cook and winner of the 2015 edition of MasterC...
+  4. Bill Gates || Harry Roy Lewis (born 1947) is an American computer scientist, mathe­m...
+  5. Bill Gates || Jerry P. Dyer (born May 3, 1959) is an American politician and former ...
+  6. Microsoft || Press Play ApS was a Danish video game development studio based in cen...
+  7. Microsoft || The AMD Professional Gamers League (PGL), founded around 1997, was one...
+  8. Microsoft || The CSS Working Group (Cascading Style Sheets Working Group) is a work...
+  9. Microsoft || Microsoft Corporation is an American multinational technology corporat...
+  10. Microsoft || Secure Islands Technologies Ltd. was an Israeli privately held technol...
+  11. Microsoft || Microsoft Innovation Centers (MICs) are local government organizations...
+
+Enter the numbers of the entities you want to process, separated by commas (e.g., 1, 3): 2,9
+[]
+1
+Bill Gates || William Henry Gates III (born October 28, 1955) is an American busines...
+8
+Microsoft || Microsoft Corporation is an American multinational technology corporat...
+****** user-selected-entities
+['Bill Gates || William Henry Gates III (born October 28, 1955) is an American '
+ 'busines...',
+ 'Microsoft || Microsoft Corporation is an American multinational technology '
+ 'corporat...']
+Generated SPARQL to get relationships between two entities:
+SELECT DISTINCT ?p { <http://dbpedia.org/resource/Bill_Gates> ?p <http://dbpedia.org/resource/Microsoft> . FILTER (!regex(str(?p), 'wikiPage', 'i')) } LIMIT 5 
+Generated SPARQL to get relationships between two entities:
+SELECT DISTINCT ?p { <http://dbpedia.org/resource/Microsoft> ?p <http://dbpedia.org/resource/Bill_Gates> . FILTER (!regex(str(?p), 'wikiPage', 'i')) } LIMIT 5 
+Generated SPARQL to get relationships between two entities:
+SELECT DISTINCT ?p { <http://dbpedia.org/resource/Microsoft> ?p <http://dbpedia.org/resource/Bill_Gates> . FILTER (!regex(str(?p), 'wikiPage', 'i')) } LIMIT 5 
+Generated SPARQL to get relationships between two entities:
+SELECT DISTINCT ?p { <http://dbpedia.org/resource/Bill_Gates> ?p <http://dbpedia.org/resource/Microsoft> . FILTER (!regex(str(?p), 'wikiPage', 'i')) } LIMIT 5 
+
+Discovered relationship links:
+[['<http://dbpedia.org/resource/Bill_Gates>',
+  '<http://dbpedia.org/resource/Microsoft>',
+  [['p', 'http://dbpedia.org/ontology/knownFor']]],
+ ['<http://dbpedia.org/resource/Bill_Gates>',
+  '<http://dbpedia.org/resource/Microsoft>',
+  [['p', 'http://dbpedia.org/property/founders']]],
+ ['<http://dbpedia.org/resource/Bill_Gates>',
+  '<http://dbpedia.org/resource/Microsoft>',
+  [['p', 'http://dbpedia.org/ontology/foundedBy']]],
+ ['<http://dbpedia.org/resource/Microsoft>',
+  '<http://dbpedia.org/resource/Bill_Gates>',
+  [['p', 'http://dbpedia.org/property/founders']]],
+ ['<http://dbpedia.org/resource/Microsoft>',
+  '<http://dbpedia.org/resource/Bill_Gates>',
+  [['p', 'http://dbpedia.org/ontology/foundedBy']]],
+ ['<http://dbpedia.org/resource/Microsoft>',
+  '<http://dbpedia.org/resource/Bill_Gates>',
+  [['p', 'http://dbpedia.org/ontology/knownFor']]]]
+Enter a list of entities: 
+```
+
+To select found entities of interest, type the entity index numbers you want analyzed. In the last example we chose indices 2 and 9:
+
+```text
+Enter the numbers of the entities you want to process, separated by commas (e.g., 1, 3): 2,9
+```
+
+*Note: in the last listing, if you run this example yourself you will see that generated SPARQL queries are colorized for better readability. This colorization does not appear in the last listing.*
+
 
 After listing the generated SPARQL for finding information for the entities in the query, KGN searches for relationships between these entities. These discovered relationships can be seen at the end of the last screen shot. Please note that this step makes SPARQL queries on **O(n^2)** where **n** is the number of entities. Local caching of SPARQL queries to DBPedia helps make processing many entities possible.
 
-Every time KGN makes a SPARQL query web service call to DBPedia the query and response are cached in a SQLite database in **~/.kgn_hy_cache.db** which can greatly speed up the program, especially in development mode when testing a set of queries. This caching also takes some load off of the public DBPedia endpoint, which is a polite thing to do.
 
 ## Review of NLP Utilities Used in Application
 
@@ -41,18 +96,27 @@ We covered NLP in a previous chapter, so the following is just a quick review. T
 
 {lang="hylang",linenos=off}
 ~~~~~~~~
+(import os)
+(import sys)
+(import pprint [pprint])
+
+(import textui [select-entities get-query])
+(import kgnutils [dbpedia-get-entities-by-name first second])
+(import relationships [entity-results->relationship-links])
+
 (import spacy)
 
-(setv nlp-model (spacy.load "en"))
+(setv nlp-model (spacy.load "en_core_web_sm"))
 
 (defn entities-in-text [s]
   (setv doc (nlp-model s))
   (setv ret {})
   (for
-    [[ename etype] (lfor entity doc.ents [entity.text entity.label_])]   
+    [[ename etype] (lfor entity doc.ents [entity.text entity.label_])]
+    
     (if (in etype ret)
         (setv (get ret etype) (+ (get ret etype) [ename]))
-        (assoc ret etype [ename])))
+        (setv (get ret etype) [ename])))
   ret)
 ~~~~~~~~
 
@@ -175,7 +239,6 @@ The code in the following listing is in the file **colorize.hy**.
   (.read ret))
 ~~~~~~~~
 
-You have seen colorized SPARQL in the two screen shots at the beginning of this chapter.
 
 ## Text Utilities for Queries and Results
 
@@ -188,8 +251,6 @@ We embed a SPARQL query that has placeholders for the entity name and type. The 
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
-#!/usr/bin/env hy
-
 (import sparql [dbpedia-sparql])
 (import colorize [colorize-sparql])
 
@@ -211,10 +272,6 @@ We embed a SPARQL query that has placeholders for the entity name and type. The 
   (get a-list 1))
 ~~~~~~~~
 
-Here is an example:
-
-{width=92%}
-![Getting entities by name with colorized SPARL query script](images/kgnutils.png)
 
 ## Finishing the Main Function for KGN
 
