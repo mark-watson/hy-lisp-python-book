@@ -1,38 +1,26 @@
-;; from collections.abc import Mapping
-(import collections.abc [Mapping])
-
-(import PyInquirer [style_from_dict Token prompt Separator])
-
-(import pprint [pprint])
-
 (defn select-entities [people places organizations]
-  (setv choices [])
-  (.append choices (Separator "- People -"))
-  (for [person people]
-    (.append choices { "name" person }))
-  (.append choices (Separator "- Places -"))
-  (for [place places]
-    (.append choices { "name" place }))
-  (.append choices (Separator "- Organizations -"))
-  (for [org organizations]
-    (.append choices { "name" org }))
-  (setv questions
-        [
-         {
-          "type" "checkbox"
-          "qmark" "😃"
-          "message" "Select entitites to process"
-          "name" "entities"
-          "choices" choices
-          }
-         ]
-        )
-  (prompt.prompt questions))
+  (setv all-entities (+ people places organizations))
+  (print "Please select entities from the list below:")
+  (for [[i entity] (enumerate all-entities 1)]
+    (print f"  {i}. {entity}"))
+  (print "")
+
+  (setv selected-entities [])
+  (setv raw-input (input "Enter the numbers of the entities you want to process, separated by commas (e.g., 1, 3): "))
+
+  (if raw-input
+    (do
+      (setv selected-indices (lfor x (.split raw-input ",") (- (int x) 1)))
+      (print selected-entities)
+      (for [idx selected-indices]
+        (if (and (>= idx 0) (< idx (len all-entities)))
+            (do
+              (print idx)
+              (print (get all-entities idx))
+              (.append selected-entities (get all-entities idx)))
+            [])))
+    [])
+  selected-entities)
 
 (defn get-query []
-  (get
-    (prompt.prompt [{"type" "input"
-                     "name" "query"
-                     "message" "Enter a list of entities:"}])
-    "query"))
-
+  (input "Enter a list of entities: "))

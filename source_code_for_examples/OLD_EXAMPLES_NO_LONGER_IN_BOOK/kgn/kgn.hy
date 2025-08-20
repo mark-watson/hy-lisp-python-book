@@ -74,7 +74,7 @@
             organizations-found-on-dbpedia))
     (print "****** user-selected-entities") (pprint user-selected-entities)
     (setv uri-list [])
-    (for [entity (get user-selected-entities "entities")]
+    (for [entity user-selected-entities]
       (setv short-comment (cut entity (+ 4 (.index entity " || ")) (len entity)))
       (.extend uri-list [(get short-comment-to-uri short-comment)]))
     (setv relation-data (entity-results->relationship-links uri-list))

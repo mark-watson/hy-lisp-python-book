@@ -1,2 +1,3 @@
 clean:
-	rm -rf */__pycache__ */venv */.venv
+	rm -rf */__pycache__ */venv */.venv */*~
+ 

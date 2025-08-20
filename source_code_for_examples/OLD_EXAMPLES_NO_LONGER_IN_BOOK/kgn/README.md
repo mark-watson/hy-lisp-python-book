@@ -17,9 +17,11 @@ Installing **pip** into local **uv** enviroment is required for **uv run python 
 
 ## Running two examples
 
+Don't use **uv run hy**, instead use:
+
 ```
-$ uv run hy kgcreator.hy
-$ uv run hy kgcreator_uri.hy
+$ uv run python -m hy kgn.hy
+$ uv run python -m hy kgcreator_uri.hy
 ```
 
 
