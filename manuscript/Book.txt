@@ -17,4 +17,5 @@ agents_agno_ollama.md
 perplexity.md
 langchain.md
 llm_colab.md
+zvec_RAG.md
 wrapup.md
