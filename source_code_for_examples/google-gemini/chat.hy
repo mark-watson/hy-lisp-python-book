@@ -26,7 +26,7 @@
   (setv data {
               "contents" contents
               "generationConfig" {
-                                  "maxOutputTokens" 200
+                                  "maxOutputTokens" 2000
                                   "temperature" 1.2
                                   }})
 
