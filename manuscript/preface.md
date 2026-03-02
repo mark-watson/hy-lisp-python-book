@@ -1,12 +1,12 @@
 # Cover Material, Copyright, and License
 
-Copyright 2020-2025 Mark Watson. All rights reserved. This book may be shared using the Creative Commons “share and share alike, no modifications, no commercial reuse” license.
+Copyright 2020-2026 Mark Watson. All rights reserved. This book may be shared using the Creative Commons “share and share alike, no modifications, no commercial reuse” license.
 
 This eBook will be updated occasionally so please periodically check the [leanpub.com web page for this book](https://leanpub.com/hy-lisp-python) for updates.
 
 If you read my eBooks free online then please consider hiring me for consulting work [https://markwatson.com](https://markwatson.com).
 
-This is this edition released August 2025.
+This is this edition released March 2026.
 
 Please visit the [author's website](http://markwatson.com).
 
