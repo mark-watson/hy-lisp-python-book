@@ -1,6 +1,8 @@
 # Using Google Gemini API
 
-As I write this chapter in May 2025, I primarily choose Google Gemini when I use commercial LLM APIs (most of my work involves running local LLM models using Ollama).
+I primarily choose Google Gemini when I use commercial LLM APIs (most of my work involves running local LLM models using Ollama).
+
+**Note: I updated this chapter in March 2026 adding a section at the end of this chapter on the new experimental Gemini Interactions APIs.**
 
 Overall, the Google Gemini APIs provide a powerful and easy-to-use tool for developers to integrate advanced language processing capabilities into their applications, and can be a game changer for developers looking to add natural language processing capabilities to their projects.
 
@@ -177,6 +179,75 @@ Mark Watson plays the guitar, didgeridoo, and American Indian flute.
 If you want to reuse this example without using tools, just remove the option **:config {"tools" [{"url_context" {}}]}**.
 
 The GitHub repository for the this Google package also contains useful examples and documentation links: [https://github.com/googleapis/python-genai](https://github.com/googleapis/python-genai).
+
+## New Experimental Gemini Interactions APIs
+
+This code listing demonstrates the powerful synergy between Google's latest generative AI capabilities and the expressive, Lisp-like syntax of the Hy language. By leveraging the `google.genai` library, the script orchestrates a new experimental "Interaction" that bridges the gap between real-world web data and private, localized business logic. It begins by initializing a Gemini client and defining a structured schema for a custom tool, `check_inventory`, which simulates an internal database lookup. The core of the program lies in the `client.interactions.create` call, where a natural language prompt triggers a multi-step workflow: first, utilizing the built-in Google Search tool to identify current market trends, and subsequently, preparing to invoke the local inventory function for those specific items. This approach highlights how modern LLMs have evolved from simple text generators into central reasoning engines capable of coordinating complex tool-calling sequences across disparate data environments.
+
+```hy
+(import google [genai])
+
+;; Set environment variable: "GOOGLE_API_KEY"
+;; More info:
+;; https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tooling-updates/
+;; https://ai.google.dev/gemini-api/docs/interactions?ua=chat
+
+(setv client (genai.Client))
+
+;; Define a custom function tool that checks an internal inventory database
+(setv check-inventory
+  {"type" "function"
+   "name" "check_inventory"
+   "description" "Checks the internal inventory database for a specific product model."
+   "parameters"
+     {"type" "object"
+      "properties"
+        {"product_name"
+           {"type" "string"
+            "description" "The name or model of the product to check"}}
+      "required" ["product_name"]}})
+
+;; Create an interaction that combines a built-in Google Search tool with
+;; the custom check_inventory function tool
+(setv interaction
+  (client.interactions.create
+    :model "gemini-3-flash-preview"
+    :input (+ "Search the web for the top 3 trending noise-canceling headphones today, "
+              "and then check if we have those specific models in our internal inventory.")
+    :tools [{"type" "google_search"}   ; built-in tool
+            check-inventory]))         ; custom function tool
+
+;; Process each output from the interaction
+(for [output interaction.outputs]
+  (cond
+    (= output.type "function_call")
+      (do
+        (print f"Tool ID: {output.id}")
+        (print f"Calling: {output.name} with args: {output.arguments}"))
+    (= output.type "text")
+      (print output.text)))
+```
+
+The implementation uses Hy’s seamless interoperability with Python, allowing developers to define complex JSON-like tool schemas using native Hy dictionaries. This example was originally written in Python for the [Gemini online documentation](https://ai.google.dev/gemini-api/docs/interactions?ua=chat). By combining the Google Search built-in tool with the user defined `check_inventory` function, the code creates a unified execution context. The Gemini model intelligently determines when to use the live web versus when to request data from the local environment, returning a structured interaction object that contains both the model's reasoning and the specific tool calls required to fulfill the request.
+
+Processing the results is handled a **for loop** that iterates over the interaction's outputs, using a `cond` macro to differentiate between raw text responses and pending function calls. This pattern is useful for production workflows because it allows an application to capture the specific arguments such as product names discovered via search and pass them into actual database queries or call local functions. This example effectively illustrates the "agentic" workflow where the AI doesn't just provide an answer, but generates the necessary "Tool ID" and argument set to drive further programmatic action.
+
+Here is example output:
+
+```
+$ uv run hy gemini_interactions_api.hy 
+UserWarning: Interactions usage is experimental and may change in future versions.
+  (client.interactions.create
+Tool ID: 4uu76c87
+Calling: check_inventory with args: {'product_name': 'Sony WH-1000XM6'}
+Tool ID: wk8lh5fn
+Calling: check_inventory with args: {'product_name': 'Bose QuietComfort Ultra Headphones (2nd Gen)'}
+Tool ID: 3gkrxgyc
+Calling: check_inventory with args: {'product_name': 'Apple AirPods Pro 3'}
+```
+
+Dear reader, note that these APIs may change. Please check out the documentation [https://ai.google.dev/gemini-api/docs/interactions?ua=chat](https://ai.google.dev/gemini-api/docs/interactions?ua=chat) for more use cases of the Interactions APIs.
+
 
 ## Wrap Up for Using the Gemini APIs
 
