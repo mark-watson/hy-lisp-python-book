@@ -10,3 +10,6 @@ dependencies = [
     "markdownify>=1.2.0",
     "ollama>=0.5.3",
 ]
+
+[tool.uv]
+exclude-newer = "2 days"

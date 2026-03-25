@@ -8,3 +8,6 @@ dependencies = [
     "hy>=1.1.0",
     "openai>=1.99.9",
 ]
+
+[tool.uv]
+exclude-newer = "2 days"

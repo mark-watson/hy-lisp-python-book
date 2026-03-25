@@ -15,3 +15,6 @@ dependencies = [
     "pytesseract>=0.3.13",
     "unstructured>=0.18.13",
 ]
+
+[tool.uv]
+exclude-newer = "2 days"

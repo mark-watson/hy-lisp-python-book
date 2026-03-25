@@ -11,3 +11,5 @@ dependencies = [
     "ollama>=0.5.3",
     "requests>=2.32.4",
 ]
+[tool.uv]
+exclude-newer = "2 days"

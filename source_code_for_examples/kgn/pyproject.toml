@@ -13,3 +13,6 @@ dependencies = [
     "spacy>=3.8.7",
     "textui>=0.2",
 ]
+
+[tool.uv]
+exclude-newer = "2 days"
