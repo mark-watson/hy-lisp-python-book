@@ -1,18 +1,22 @@
+;; SQLite utility functions for Hy
 (import sqlite3)
 
-(defn create-db [db-file-path] ;; db-file-path can also be ":memory:"
+(defn create-db [db-file-path]
+  "Create and open a database connection, then close it.
+   Use ':memory:' for an in-memory database."
   (setv conn (sqlite3.connect db-file-path))
-  (print version)
   (conn.close))
 
-(defn connection [db-file-path] ;; db-file-path can also be ":memory:"
+(defn connection [db-file-path]
+  "Open and return a database connection.
+   Use ':memory:' for an in-memory database."
   (sqlite3.connect db-file-path))
 
-(defn query [conn sql [variable-bindings None]]
+(defn query [conn sql #* args]
+  "Execute SQL query with optional variable bindings.
+   Returns all matching rows."
   (setv cur (conn.cursor))
-  (if variable-bindings
-    (cur.execute sql variable-bindings)
-    (cur.execute sql))
+  (cur.execute sql #* args)
   (cur.fetchall))
 
   
