@@ -4,7 +4,7 @@
   ; Initiate chat with the model
   (setv response
         (ollama.chat
-          :model "llama3.2:latest"
+          :model "nemotron-3-nano:4b"
           :messages [{"role" "user" "content" user-prompt}]))
   (print response)
   (return response.message.content))
