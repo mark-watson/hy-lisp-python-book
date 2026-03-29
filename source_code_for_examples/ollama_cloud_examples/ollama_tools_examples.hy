@@ -12,15 +12,9 @@
 (import tools  [search-wikipedia])
 (import tools  [get-npr-news])
 
-; (print (list-directory))
-; (print (read-file-contents "requirements.txt"))
-; (print (uri-to-markdown "https://markwatson.com"))
-
-; Create client for Ollama Cloud API
-(setv client
-  (Client
-    :host "https://ollama.com"
-    :headers {"Authorization" (.get os.environ "OLLAMA_API_KEY")}))
+; Create client for local Ollama instance (which routes to cloud)
+(setv api-key (.get os.environ "OLLAMA_API_KEY"))
+(setv client (Client :host "http://127.0.0.1:11434"))
 
 ; Map function names to function objects
 (setv available-functions {
@@ -45,52 +39,85 @@
   "What are the latest news headlines from NPR?"
 ])
 
+(defn get-available-models []
+  (try
+    (do
+      (setv response (client.list))
+      (setv model-names (lfor r response.models r.model))
+      (if api-key
+          model-names
+          (lfor m model-names :if (not (or (.endswith m ":cloud") (.endswith m "-cloud"))) m)))
+    (except [e Exception]
+      (print "Error fetching models:" e)
+      [])))
+
 (while True
-  (print "\n--- Ollama Tools Test Menu ---")
-  (for [[i p] (enumerate prompts)]
-    (print f"{ (+ i 1) }. { p }"))
-  (print f"{ (+ (len prompts) 1) }. Exit")
+  (setv models (get-available-models))
+  (when (not models)
+      (print "No models found or error fetching models. Check your API key and connection.")
+      (break))
+
+  (print "\n--- Available Models ---")
+  (for [[i m] (enumerate models)]
+    (print f"{ (+ i 1) }. { m }"))
+  (print f"{ (+ (len models) 1) }. Exit")
 
   (try
     (do
-      (setv choice (input "\nSelect a prompt (number): "))
-      
-      (when (= choice (str (+ (len prompts) 1)))
-          (break))
+      (setv m-choice (input "\nSelect a model (number): "))
+      (if (= m-choice (str (+ (len models) 1)))
+          (break)
+          (do
+            (setv m-idx (- (int m-choice) 1))
+            (when (or (< m-idx 0) (>= m-idx (len models)))
+                (print "Invalid model choice.")
+                (continue))
+            (setv selected-model (get models m-idx))
 
-      (setv idx (- (int choice) 1))
-      (when (or (< idx 0) (>= idx (len prompts)))
-          (print "Invalid choice. Please select a number from the menu.")
-          (continue))
-      
-      (setv user-prompt (get prompts idx))
-      (print f"\n>>> Executing prompt: {user-prompt}\n")
+            (while True
+              (print f"\n--- Ollama Tools Test Menu (Model: {selected-model}) ---")
+              (for [[i p] (enumerate prompts)]
+                (print f"{ (+ i 1) }. { p }"))
+              (print f"{ (+ (len prompts) 1) }. Back to Model Selection")
 
-      ; Initiate chat with the model using Ollama Cloud API
-      (setv response (client.chat
-        "gpt-oss:20b"
-        :messages [{"role" "user" "content" user-prompt}]
-        :tools [list-directory 
-                read-file-contents 
-                uri-to-markdown 
-                write-file-contents 
-                get-current-datetime 
-                get-weather 
-                search-wikipedia 
-                get-npr-news]
-      ))
+              (setv choice (input "\nSelect a prompt (number): "))
+              
+              (when (= choice (str (+ (len prompts) 1)))
+                  (break))
 
-      ; Process the model's response
-      (if response.message.tool_calls
-          (for [tool-call response.message.tool_calls]
-            (print f"Tool Call: {tool-call.function.name}")
-            (setv function-to-call (.get available-functions tool-call.function.name))
-            (if function-to-call
-              (do
-                (setv result (function-to-call #** tool-call.function.arguments))
-                (print f"\n** Output of {tool-call.function.name}: {result}"))
-              (print f"\n** Function {tool-call.function.name} not found.")))
-          (print f"Model Response: {response.message.content}")))
+              (setv idx (- (int choice) 1))
+              (when (or (< idx 0) (>= idx (len prompts)))
+                  (print "Invalid choice. Please select a number from the menu.")
+                  (continue))
+              
+              (setv user-prompt (get prompts idx))
+              (print f"\n>>> Executing prompt: {user-prompt}\n")
+
+              ; Initiate chat with the model using Ollama Cloud API
+              (setv response (client.chat
+                selected-model
+                :messages [{"role" "user" "content" user-prompt}]
+                :tools [list-directory 
+                        read-file-contents 
+                        uri-to-markdown 
+                        write-file-contents 
+                        get-current-datetime 
+                        get-weather 
+                        search-wikipedia 
+                        get-npr-news]
+              ))
+
+              ; Process the model's response
+              (if response.message.tool_calls
+                  (for [tool-call response.message.tool_calls]
+                    (print f"Tool Call: {tool-call.function.name}")
+                    (setv function-to-call (.get available-functions tool-call.function.name))
+                    (if function-to-call
+                      (do
+                        (setv result (function-to-call #** tool-call.function.arguments))
+                        (print f"\n** Output of {tool-call.function.name}: {result}"))
+                      (print f"\n** Function {tool-call.function.name} not found.")))
+                  (print f"Model Response: {response.message.content}"))))))
 
     (except [e ValueError]
       (print "Please enter a valid number."))
