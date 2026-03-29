@@ -55,9 +55,9 @@ $ uv run hy completion_local.hy
 Using CPython 3.12.12
 Creating virtual environment at: .venv
 Installed 18 packages in 10ms
-Sally‑Bill: 45 years  
-Sally‑Alex: 33 years  
-Bill‑Alex: 12 years
+Sally-Bill: 45 years  
+Sally-Alex: 33 years  
+Bill-Alex: 12 years
 ~~~~~~~~
 
 ### Cloud Model Completion Example
