@@ -1,7 +1,7 @@
 (import ollama)
 
 (defn completion [prompt]
-  ; Initiate chat with the model
+  ;; Initiate chat with the model
   (setv response
         (ollama.chat
           :model "nemotron-3-nano:4b"
@@ -11,7 +11,7 @@
 
 ;;;; Test code:
 
-; User prompt
+;; User prompt
 (setv
   user-prompt
   "Sally is 77, Bill is 32, and Alex is 44 years old. Pairwise, what are their age differences? Be concise."
