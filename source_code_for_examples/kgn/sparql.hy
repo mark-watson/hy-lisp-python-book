@@ -10,7 +10,7 @@
         
   ;; Call the API
   (setv response (requests.get endpoint :params params))
-        
+  (print response)        
   (setv json-data (response.json))
         
   (setv vars (get (get json-data "head") "vars"))
