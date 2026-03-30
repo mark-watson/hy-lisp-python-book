@@ -20,12 +20,15 @@
   (if (in "bindings" results)
     (do
       (setv bindings (get results "bindings"))
+      (print f"  Found {(len bindings)} results")
       (setv qr
             (lfor binding bindings
                 (lfor var vars
                    [var (get (get binding var) "value")])))
       qr)
-    []))
+    (do
+      (print "  No results found (empty bindings)")
+      [])))
 
 (defn wikidata-sparql [query]
   (do-query-helper wikidata-endpoint query))
