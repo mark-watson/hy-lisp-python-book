@@ -11,9 +11,11 @@
 (defn bold [s] (.format "{}{}{}" "\033[1m" s "\033[0m"))
 
 (defn tokenize-keep-uris [s]
+  ;; Splits a string into tokens based on whitespace.
   (.split s))
 
 (defn colorize-sparql [s]
+  ;; Applies ANSI color codes to a SPARQL query string for terminal formatting.
   (setv tokens
         (tokenize-keep-uris
           (.replace (.replace s "{" " { ") "}" " } ")))

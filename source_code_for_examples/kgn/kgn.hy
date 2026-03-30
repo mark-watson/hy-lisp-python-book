@@ -1,3 +1,5 @@
+;; Main script for the Knowledge Graph Navigator (KGN)
+;; Handles user input, entity extraction, and relationship discovery.
 (import os)
 (import sys)
 (import pprint [pprint])
@@ -11,6 +13,7 @@
 (setv nlp-model (spacy.load "en_core_web_sm"))
 
 (defn entities-in-text [s]
+  ;; Extracts named entities (like PERSON, GPE, ORG) from a given string using spaCy.
   (setv doc (nlp-model s))
   (setv ret {})
   (for
@@ -33,6 +36,7 @@
 (setv short-comment-to-uri {})
 
 (defn shorten-comment [comment uri]
+  ;; Shortens a comment string to 70 characters and maintains a mapping to its URI.
   (setv sc (+ (cut comment 0 70) "..."))
   (setv (get short-comment-to-uri sc) uri)
 ;;  (assoc short-comment-to-uri sc uri)
@@ -41,6 +45,7 @@
 (setv query "")
 
 (defn kgn []
+  ;; Main interactive loop: gets user input, finds entities, searches DBpedia, and discovers relationships.
   (while
     True
     (setv query (get-query))

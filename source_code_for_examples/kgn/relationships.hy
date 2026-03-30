@@ -1,3 +1,4 @@
+;; Discovers relationships between entities using DBpedia queries.
 (import pprint [pprint])
 
 (import sparql [dbpedia-sparql])
@@ -10,6 +11,7 @@
   x)
 
 (defn dbpedia-get-relationships [s-uri o-uri]
+  ;; Queries DBpedia to find direct RDF relationships between two entity URIs.
   (setv query
         (.format
           "SELECT DISTINCT ?p {{  {} ?p {} . FILTER (!regex(str(?p), 'wikiPage', 'i')) }} LIMIT 5"
@@ -20,6 +22,7 @@
   (lfor r (flatten results) :if (not (= r "p")) r))
 
 (defn entity-results->relationship-links [uris]
+  ;; Finds all cross-relationships between a list of entity URIs.
   (setv uris (lfor uri uris (+ "<" uri ">")))
   (setv relationship-statements [])
   (for [e1 uris]

@@ -1,4 +1,6 @@
+;; Provides a text-based user interface for entity selection and data input.
 (defn select-entities [people places organizations]
+  ;; Prompts the user to select specific entities from lists of discovered people, places, and organizations.
   (setv all-entities (+ people places organizations))
   (print "Please select entities from the list below:")
   (for [[i entity] (enumerate all-entities 1)]
@@ -23,4 +25,5 @@
   selected-entities)
 
 (defn get-query []
+  ;; Prompts the user for a text query string.
   (input "Enter a list of entities: "))

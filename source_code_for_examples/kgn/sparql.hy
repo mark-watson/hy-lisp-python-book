@@ -1,3 +1,4 @@
+;; Provides helper functions to execute SPARQL queries against Wikidata and DBpedia endpoints.
 (import json)
 (import requests)
 
@@ -5,6 +6,7 @@
 (setv dbpedia-endpoint "https://dbpedia.org/sparql")
 
 (defn do-query-helper [endpoint query]
+  ;; Internal helper to send the SPARQL query to the given HTTP endpoint and process the JSON response.
   ;; Construct a request
   (setv params { "query" query "format" "json"})
         
@@ -31,9 +33,11 @@
       [])))
 
 (defn wikidata-sparql [query]
+  ;; Wrapper to execute a SPARQL query on the Wikidata endpoint.
   (do-query-helper wikidata-endpoint query))
 
 (defn dbpedia-sparql [query]
+  ;; Wrapper to execute a SPARQL query on the DBpedia endpoint.
   (do-query-helper dbpedia-endpoint query))
 
 ;;(print (dbpedia-sparql "select ?s ?p ?o { ?s ?p ?o } limit 4"))
