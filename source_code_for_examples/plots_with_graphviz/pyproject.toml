@@ -1,0 +1,11 @@
+[project]
+name = "plots-with-graphviz"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "argparse>=1.4.0",
+    "graphviz>=0.21",
+    "hy>=1.2.0",
+]
