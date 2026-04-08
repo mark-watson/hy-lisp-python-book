@@ -4,6 +4,7 @@ whylisp.md
 webapps.md
 webscrape.md
 bravesearch.md
+graphviz.md
 deeplearning.md
 nlp.md
 datastores.md

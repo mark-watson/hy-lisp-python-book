@@ -1,2 +1,3 @@
+graphviz.md
 ollama.md
 
