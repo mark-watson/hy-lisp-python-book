@@ -1,4 +1,4 @@
-# Knowledge Graph Visualization with Hy
+# Knowledge Graph Visualization with Hy and GraphViz
 
 This chapter demonstrates a practical Hy application that parses UMLS (Unified Medical Language System) RDF triples and generates visual knowledge graphs. You'll learn how to process structured data, build command-line interfaces, and create visualizations—all using Hy's elegant Lisp syntax.
 
@@ -22,9 +22,9 @@ subject	object	predicate
 Example from `test.triples`:
 
 ```
-steroid	eicosanoid	interacts_with
-clinical_attribute	conceptual_entity	isa
-neoplastic_process	disease_or_syndrome	isa
+steroid             eicosanoid          interacts_with
+clinical_attribute  conceptual_entity   isa
+neoplastic_process  disease_or_syndrome isa
 ```
 
 Each line represents a relationship: "steroid interacts_with eicosanoid", "clinical_attribute isa conceptual_entity", etc.
@@ -289,22 +289,22 @@ if __name__ == "__main__":
 
 ```bash
 # Using default settings
-hy UMLS_graph.hy test.triples
+uv run hy UMLS_graph.hy test.triples
 
 # Specify output file
-hy UMLS_graph.hy -o my_graph test.triples
+uv run hy UMLS_graph.hy -o my_graph test.triples
 
 # Limit to 50 triples
-hy UMLS_graph.hy -l 50 test.triples
+uv run hy UMLS_graph.hy -l 50 test.triples
 
 # Filter by predicate type
-hy UMLS_graph.hy --filter isa test.triples
+uv run hy UMLS_graph.hy --filter isa test.triples
 
 # Use different layout engine
-hy UMLS_graph.hy --engine neato test.triples
+uv run hy UMLS_graph.hy --engine neato test.triples
 
 # Auto-open the PDF
-hy UMLS_graph.hy -v test.triples
+uv run hy UMLS_graph.hy -v test.triples
 ```
 
 ### Layout Engine Options
