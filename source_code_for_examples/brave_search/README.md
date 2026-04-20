@@ -1,5 +1,7 @@
 # Using the Brave Search APIs
 
+**Book Chapter:** [Using the Brave Search APIs](https://leanpub.com/read/hy-lisp-python/leanpub-auto-using-the-brave-search-apis) — *A Lisp Programmer Living in Python-Land* (free to read online).
+
 You will need an API key - see book for details.
 
 ## Running an example

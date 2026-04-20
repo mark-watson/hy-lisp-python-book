@@ -1,5 +1,7 @@
 # Unified Medical Language System (UMLS) RDF Triple Data Graph Plot
 
+**Book Chapter:** [Knowledge Graph Visualization with Hy and GraphViz](https://leanpub.com/read/hy-lisp-python/leanpub-auto-knowledge-graph-visualization-with-hy-and-graphviz) — *A Lisp Programmer Living in Python-Land* (free to read online).
+
 ## This example is NOT in my book yet, but is useful for using GraphViz in Hy programs.
 
 The data file test.triples is a partial copy of a data file from the Salesforce Multi-Hop Deep Learning Graph Search project that you can find here:

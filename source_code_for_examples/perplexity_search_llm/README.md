@@ -1,5 +1,7 @@
 # Perplexity Sonar Combined Search and LLM Example
 
+**Book Chapter:** [Using Perplexity Sonar Model for Combined Web Search and LLM Based Reasoning](https://leanpub.com/read/hy-lisp-python/leanpub-auto-using-perplexity-sonar-model-for-combined-web-search-and-llm-based-reasoning) — *A Lisp Programmer Living in Python-Land* (free to read online).
+
 Install **uv** if it is not already on your system.
 
 Run the example:

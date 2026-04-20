@@ -1,3 +1,7 @@
+# Datastores
+
+**Book Chapter:** [Datastores](https://leanpub.com/read/hy-lisp-python/leanpub-auto-datastores) — *A Lisp Programmer Living in Python-Land* (free to read online).
+
 ```
 $ uv run hy sqlite_example.hy
 []
@@ -8,6 +12,3 @@ $ uv run hy sqlite_example.hy
 []
 [('Mark Watson', 'mark@markwatson.com')]
 ```
-
-
-

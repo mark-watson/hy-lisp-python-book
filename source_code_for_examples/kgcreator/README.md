@@ -1,5 +1,7 @@
 # Knowledge Graph Creator
 
+**Book Chapter:** [Knowledge Graph Creator](https://leanpub.com/read/hy-lisp-python/leanpub-auto-knowledge-graph-creator) — *A Lisp Programmer Living in Python-Land* (free to read online).
+
 Start with the code in kgcreator.hy, reading the minor limitations in the book, then experiment with the more complicated kgcreator_uri.hy.
 
 ## Initial setup

@@ -1,5 +1,7 @@
 # Run:
 
+**Book Chapter:** [Using Google Gemini API](https://leanpub.com/read/hy-lisp-python/leanpub-auto-using-google-gemini-api) — *A Lisp Programmer Living in Python-Land* (free to read online).
+
 ## chat
 
 ```

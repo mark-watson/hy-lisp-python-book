@@ -1,5 +1,7 @@
 # Implementing Knowledge Graph Navigator in Hy
 
+**Book Chapter:** [Knowledge Graph Navigator](https://leanpub.com/read/hy-lisp-python/kgn) — *A Lisp Programmer Living in Python-Land* (free to read online).
+
 Run the program:
 
 ## Initial setup

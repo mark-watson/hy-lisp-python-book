@@ -1,5 +1,7 @@
 # LangChain Getting Started Examples
 
+**Book Chapter:** [Using LangChain to Chain Together Large Language Models](https://leanpub.com/read/hy-lisp-python/leanpub-auto-using-langchain-to-chain-together-large-language-models) — *A Lisp Programmer Living in Python-Land* (free to read online).
+
 Requirements:
 
 Install **uv** if not already installed on your system.

@@ -1,5 +1,7 @@
 # Tool Use With Ollama Cloud API
 
+**Book Chapter:** [Running Local LLMs Using Ollama](https://leanpub.com/read/hy-lisp-python/leanpub-auto-running-local-llms-using-ollama) — *A Lisp Programmer Living in Python-Land* (free to read online).
+
 These examples use the Ollama Cloud API (https://ollama.com).
 
 ## Setup

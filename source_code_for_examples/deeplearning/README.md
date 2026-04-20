@@ -1,5 +1,7 @@
 # Hy deep learning examples
 
+**Book Chapter:** [Deep Learning](https://leanpub.com/read/hy-lisp-python/leanpub-auto-deep-learning) — *A Lisp Programmer Living in Python-Land* (free to read online).
+
 2025/08/15: updated code to work with tensorflow-2.20.0 and latest numpy.
 
 ```
