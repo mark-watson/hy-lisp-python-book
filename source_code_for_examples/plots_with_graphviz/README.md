@@ -1,16 +1,19 @@
-# Unified Medical Language System (UMLS) RDF Triple Data Graph Plot
+# Knowledge Graph Visualization with GraphViz
 
-**Book Chapter:** [Knowledge Graph Visualization with Hy and GraphViz](https://leanpub.com/read/hy-lisp-python/leanpub-auto-knowledge-graph-visualization-with-hy-and-graphviz) — *A Lisp Programmer Living in Python-Land* (free to read online).
+**Note:** This example is **not yet covered in the book** but is useful for learning to use GraphViz from Hy programs.
 
-## This example is NOT in my book yet, but is useful for using GraphViz in Hy programs.
+This script reads RDF-style triple data from `test.triples` (a subset from the [Salesforce MultiHopKG](https://github.com/salesforce/MultiHopKG) project containing UMLS medical-ontology relationships) and renders it as a graph using [GraphViz](https://graphviz.org/), producing a PDF visualization.
 
-The data file test.triples is a partial copy of a data file from the Salesforce Multi-Hop Deep Learning Graph Search project that you can find here:
+## Prerequisites
 
-[https://github.com/salesforce/MultiHopKG](https://github.com/salesforce/MultiHopKG)
+- [uv](https://docs.astral.sh/uv/) package manager
+- [GraphViz](https://graphviz.org/) installed on your system (`brew install graphviz` on macOS)
 
-Run the example:
+## Running the Example
 
-    uv run hy UMLS_graph.hy
+```bash
+uv sync
+uv run hy UMLS_graph.hy
+```
 
-This creates the PDF file  umls_graph.pdf
-
+This generates `umls_graph.pdf` in the current directory.

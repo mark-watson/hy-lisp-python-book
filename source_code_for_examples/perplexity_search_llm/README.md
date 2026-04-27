@@ -2,26 +2,18 @@
 
 **Book Chapter:** [Using Perplexity Sonar Model for Combined Web Search and LLM Based Reasoning](https://leanpub.com/read/hy-lisp-python/leanpub-auto-using-perplexity-sonar-model-for-combined-web-search-and-llm-based-reasoning) — *A Lisp Programmer Living in Python-Land* (free to read online).
 
-Install **uv** if it is not already on your system.
+This example uses the [Perplexity Sonar](https://docs.perplexity.ai/home) model to combine live web search with LLM-based reasoning in a single API call. The script sends a natural-language question, and Sonar searches the web and synthesizes a cited answer.
 
-Run the example:
+## Prerequisites
 
+- [uv](https://docs.astral.sh/uv/) package manager
+- A Perplexity API key set as the `PERPLEXITY_API_KEY` environment variable
+  - Get a key at [docs.perplexity.ai](https://docs.perplexity.ai/home)
+  - [Pricing info](https://docs.perplexity.ai/guides/pricing) — $5 of credits lasts a long time for casual use
+
+## Running the Example
+
+```bash
+uv sync
+uv run hy search_llm.hy
 ```
-$ uv run hy search_llm.hy 
-Consultant Mark Watson, the AI author, plays the **guitar, didgeridoo, and American Indian flute**[5]. 
-
-This is distinct from another Mark Watson, a musician and producer known for piano, organ, and keyboard instruments, who studied classical and jazz piano and played organ in church settings[1][3]. The Mark Watson who writes on AI and Lisp is associated with guitar, didgeridoo, and flute, according to his personal website and profile[5].
-```
-
-
-You need a Perplexity API key:
-
-    https://docs.perplexity.ai/home
-
-I buy $5 of credits at a time and that lasts me a long time, your mileage may vary.
-
-Pricing info:
-
-    https://docs.perplexity.ai/guides/pricing
-
-Set the env variable **PERPLEXITY_API_KEY"**.

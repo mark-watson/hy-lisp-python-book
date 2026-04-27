@@ -1,34 +1,34 @@
-# Implementing Knowledge Graph Navigator in Hy
+# Knowledge Graph Navigator
 
 **Book Chapter:** [Knowledge Graph Navigator](https://leanpub.com/read/hy-lisp-python/kgn) — *A Lisp Programmer Living in Python-Land* (free to read online).
 
-Run the program:
+An interactive tool that extracts named entities (people, places, organizations) from natural-language text using spaCy, looks them up on **DBpedia** via SPARQL queries, and lets you explore the linked data interactively. The project is split across several Hy modules:
 
-## Initial setup
+- **`kgn.hy`** — main entry point and interactive loop.
+- **`kgnutils.hy`** — utility functions for entity processing.
+- **`sparql.hy`** — SPARQL query helpers for DBpedia.
+- **`relationships.hy`** — relationship extraction between entities.
+- **`colorize.hy`** / **`textui.hy`** — terminal UI formatting.
 
-```
-$ uv init
-$ uv venv
-$ source .venv/bin/activate
-$ rm -f hello.py
-$ uv add hy spacy pip
+## Prerequisites
+
+- [uv](https://docs.astral.sh/uv/) package manager
+
+## Initial Setup
+
+```bash
+uv sync
 uv run python -m spacy download en_core_web_sm
 ```
 
-Installing **pip** into local **uv** enviroment is required for **uv run python -m spacy download en_core_web_sm**.
+## Running the Example
 
-## Running two examples
-
-Don't use **uv run hy**, instead use:
-
-```
-$ uv run hy kgn.hy
-$ uv run hy kgcreator_uri.hy
+```bash
+uv run hy kgn.hy
 ```
 
-
-Enter a list of people, place, organization names when prompted. You then see a list of entities found on DBPedia. Select the entities you want more information on. For example, try entering the following input:
+When prompted, enter a sentence containing people, places, or organizations. For example:
 
     Steve Jobs went to Microsoft in Seattle to visit Bill Gates
 
-
+The program will extract entities, query DBpedia for matches, and let you select which ones to explore further.

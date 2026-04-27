@@ -2,15 +2,16 @@
 
 **Book Chapter:** [Using OpenAI GPT](https://leanpub.com/read/hy-lisp-python/leanpub-auto-using-openai-gpt) — *A Lisp Programmer Living in Python-Land* (free to read online).
 
-Install OpenAI library:
+This example demonstrates calling the **OpenAI GPT chat completion API** from Hy using the [openai](https://pypi.org/project/openai/) Python package. The script `text_completion.hy` sends a prompt to the model and prints the response.
 
-Install **uv* if not already on your system, then:
+## Prerequisites
 
+- [uv](https://docs.astral.sh/uv/) package manager
+- An OpenAI API key set as the `OPENAI_API_KEY` environment variable
+
+## Running the Example
+
+```bash
+uv sync
+uv run hy text_completion.hy
 ```
-$ uv init
-$ uv venv
-$ source .venv/bin/activate
-$ uv add openai hy
-$ uv run hy text_completion.hy
-```
-

@@ -1,7 +1,18 @@
-# Convert PDF files to text for use in Audio Reader programs
+# Convert PDF Files to Text
 
-**Book Chapter:** [Natural Language Processing](https://leanpub.com/read/hy-lisp-python/leanpub-auto-natural-language-processing) — *A Lisp Programmer Living in Python-Land* (free to read online).
+**Note:** This example is a work in progress and is **not yet covered in the book**.
 
-I like to convert PDFs to text, removing some text artifacts, so that I can listen to papers while walking. The Audio reading app on my iPhone does a poor job reading through footnotes, tables, etc. so I would like to automatically clean up text as much as possible.
+This script uses [pdfminer](https://pdfminersix.readthedocs.io/) to extract plain text from PDF files. The original motivation is to convert academic papers to clean text suitable for text-to-speech (audio reading) apps, which tend to struggle with footnotes, tables, and other PDF artifacts.
 
-NOTE: this is very much a work in progress.
+## Prerequisites
+
+- [uv](https://docs.astral.sh/uv/) package manager
+
+## Running the Example
+
+```bash
+uv sync
+uv run hy p2t.hy
+```
+
+The script extracts text from the included sample PDF (`Sales force - Multi-Hop Knowledge Graph Reasoning with Reward Shaping.pdf`) and prints it to stdout.
