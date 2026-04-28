@@ -39,9 +39,18 @@ cat source_code_for_examples/AGENT_SKILLS_README.md >> /path/to/your/project/CLA
 2. Alternatively, create a `.claude/` directory and place the file there:
 
 ```bash
-mkdir -p /path/to/your/project/.claude
-cp source_code_for_examples/AGENT_SKILLS_README.md /path/to/your/project/.claude/hy-book-apis.md
+mkdir -p ~/.claude/skills/hylang-hy-dev
+cp source_code_for_examples/AGENT_SKILLS_README.md ~/.claude/skills/hylang-hy-dev/SKILL.md
 ```
+
+ $ mkdir -p ~/.claude/skills/hylang-hy-dev
+Marks-MacBook-Air:source_code_for_examples $ cp AGENT_SKILLS_README.md /.claude/skills/hylang-hy-dev
+cp: /.claude/skills/hylang-hy-dev: No such file or directory
+Marks-MacBook-Air:source_code_for_examples $ cp AGENT_SKILLS_README.md ~/.claude/skills/hylang-hy-dev
+Marks-MacBook-Air:source_code_for_examples $ cp AGENT_SKILLS_README.md ~/.claude/skills/hylang-hy-dev/SKILL.md
+Marks-MacBook-Air:source_code_for_examples $ 
+
+
 
 Claude Code will automatically read `CLAUDE.md` and any markdown files in `.claude/` at the start of each session.
 
