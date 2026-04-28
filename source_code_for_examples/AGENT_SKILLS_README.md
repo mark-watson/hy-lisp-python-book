@@ -73,16 +73,18 @@ Hy is a Lisp dialect that compiles to Python's AST. It gives you Lisp's expressi
 
 ### Control Flow
 
+CRITICAL: `if` in Hy REQUIRES exactly two branches (then and else). For a single branch, use `when`.
+
 ```hylang
-;; if (exactly two branches)
+;; if (REQUIRES exactly two branches: (if cond then else))
 (if (= x 1)
   (print "one")
   (print "not one"))
 
-;; when (single branch, no else)
+;; when (use for single branch, no else)
 (when (> x 0)
   (print "positive"))
-
+```
 ;; cond (multiple branches)
 (cond
   (< x 0) (print "negative")
@@ -258,31 +260,26 @@ uv run hy <script>.hy
 - **`context_url.hy`** — Answer questions about a web page using Gemini's `url_context` tool.
   - `(context_qa prompt)` — Prompt should contain a URL and a question. Returns text response.
 
-- **`chat.hy`** — Multi-turn chat using direct HTTP requests to the Gemini REST API.
-  - `(call-gemini chat-history user-input)` — Sends chat history + new input, returns JSON response.
-  - Maintains `chat-history` list between turns.
-
-- **`gemini_interactions_api.hy`** — Demonstrates Gemini Interactions API with custom function tools + Google Search.
+- **`chat.hy`** — Multi-turn chat using the `google-genai` SDK.
+  - `(setv chat (.create client.chats :model "gemini-3-flash-preview"))` — Starts a chat session.
+  - `(.send-message chat user-input)` — Sends message and returns response.
 
 ### Examples
 
 ```hylang
-;; Web search
+;; Chat session
 (import google [genai])
 (setv client (genai.Client))
-(setv response
-  (client.models.generate_content
-    :model "gemini-2.5-flash"
-    :contents "What is the latest news about Mars?"
-    :config {"tools" [{"google_search" {}}]}))
+(setv chat (.create client.chats :model "gemini-3-flash-preview"))
+(setv response (.send-message chat "Hello!"))
 (print response.text)
 
-;; URL context
+;; Web search
 (setv response
   (client.models.generate_content
-    :model "gemini-2.5-flash"
-    :contents "https://markwatson.com What does Mark Watson write about?"
-    :config {"tools" [{"url_context" {}}]}))
+    :model "gemini-3-flash-preview"
+    :contents "What is the latest news about Mars?"
+    :config {"tools" [{"google_search" {}}]}))
 (print response.text)
 ```
 
