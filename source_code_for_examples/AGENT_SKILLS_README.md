@@ -7,7 +7,13 @@ description: Hy language tutorial, idioms, and API reference for all examples in
 
 This document helps readers set up coding agent skills so that AI assistants can reference the Hy APIs and patterns from this book when generating code.
 
-**Setup:** See [AGENT_SKILLS_ONE_TIME_SETUP.md](AGENT_SKILLS_ONE_TIME_SETUP.md) for installation instructions (gemini-cli, Claude Code, Hermes Agent, Antigravity).
+## Source code for Gemini, OpenAI, Ollama), SPARQL queries, NLP, web scraping, RAG example code
+
+```bash
+git clone https://github.com/markwatson/hy-lisp-python-book.git
+```
+
+All the Hy examples are in `source_code_for_examples` directory.  Look in ~/GITHUB/hy-lisp-python-book/source_code_for_examples/ for code to reuse.
 
 ---
 
