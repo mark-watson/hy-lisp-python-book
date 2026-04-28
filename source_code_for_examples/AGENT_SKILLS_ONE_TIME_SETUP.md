@@ -7,7 +7,11 @@ This guide covers how to install the Hy book API skills for different coding age
 Symlink (recommended for local development): keep the skill in your book's repository but use it globally via the CLI:
 
 ```
-gemini skills link hy-book-apis
+mkdir -p ~/.gemini/skills/hylang-hy-dev
+cp source_code_for_examples/AGENT_SKILLS_README.md ~/.gemini/skills/hylang-hy-dev/SKILL.md
+pushd ~/.gemini/skills/
+gemini skills link
+popd
 ```
 
 Verify it is installed:
