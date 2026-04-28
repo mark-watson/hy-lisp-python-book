@@ -1,0 +1,13 @@
+[project]
+name = "knowledge-base-navigator"
+version = "0.1.0"
+description = "AI-powered Knowledge Base Navigator using Gemini"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "google-genai>=1.31.0",
+    "hy>=1.1.0",
+]
+
+[tool.uv]
+exclude-newer = "2 days"

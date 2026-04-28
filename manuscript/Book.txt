@@ -11,6 +11,7 @@ datastores.md
 linkeddata.md
 kgcreator.md
 kgn.md
+knowledge-navigator.md
 openai.md
 google-gemini.md
 ollama.md
