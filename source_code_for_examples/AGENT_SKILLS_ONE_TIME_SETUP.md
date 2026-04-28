@@ -54,10 +54,7 @@ mkdir ~/.hermes/skills/hylang-hy-dev
 cp source_code_for_examples/AGENT_SKILLS_README.md  ~/.hermes/skills/hylang-hy-dev/SKILL.md
 ```
 
-Hermes will automatically discover files in its `skills/` directory and use them as context when generating code. Verify with:
-
-```
-hermes tools
+Hermes will automatically discover files in its `skills/` directory and use them as context when generating code. You might need to one time ask Hermes a question like "what SKILLs do I have for Hy/hylang?"
 ```
 
 ## Google Antigravity
