@@ -51,7 +51,7 @@ Hermes Agent by Nous Research stores reusable skills in `~/.hermes/skills/`. Cop
 
 ```bash
 mkdir ~/.hermes/skills/hylang-hy-dev
-cp source_code_for_examples/AGENT_SKILLS_README.md  ~/.hermes/skills/hy-book-apis/SKILL.md
+cp source_code_for_examples/AGENT_SKILLS_README.md  ~/.hermes/skills/hylang-hy-dev/SKILL.md
 ```
 
 Hermes will automatically discover files in its `skills/` directory and use them as context when generating code. Verify with:
