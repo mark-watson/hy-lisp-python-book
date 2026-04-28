@@ -50,7 +50,7 @@ Claude Code will automatically read `CLAUDE.md` and any markdown files in `.clau
 Hermes Agent by Nous Research stores reusable skills in `~/.hermes/skills/`. Copy the API reference there:
 
 ```bash
-mkdir ~/.hermes/skills/hy-book-apis
+mkdir ~/.hermes/skills/hylang-hy-dev
 cp source_code_for_examples/AGENT_SKILLS_README.md  ~/.hermes/skills/hy-book-apis/SKILL.md
 ```
 
