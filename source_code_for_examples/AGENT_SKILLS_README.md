@@ -1,3 +1,8 @@
+---
+name: hylang-hy-dev
+description: Hy language tutorial, idioms, and API reference for all examples in Mark Watson's Hy book "A Lisp Programmer Living in Python-Land". Use this skill for writing Hy code that accesses LLMs (Gemini, OpenAI, Ollama), SPARQL queries, NLP, web scraping, RAG, and more.
+---
+
 # Notes for Using AGENT Skills with Hy Book Examples
 
 This document helps readers set up coding agent skills so that AI assistants can reference the Hy APIs and patterns from this book when generating code.
