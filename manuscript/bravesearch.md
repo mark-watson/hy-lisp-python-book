@@ -3,6 +3,9 @@
 You will need to get a free API key at [https://brave.com/search/api/](https://brave.com/search/api/) to use the following code examples. You can use the search API 2000 times a month for free or pay $5/month to get 20 million API calls a month.
 
 
+{width: "80%"}
+![Brave Search API integration architecture](images/FIG_brave_search.png)
+
 ## Setting an Environment Variable for the Access Key for Brave Search APIs
 
 Once you get a key for [https://brave.com/search/api/](https://brave.com/search/api/) set the following environment variable:

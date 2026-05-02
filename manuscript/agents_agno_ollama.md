@@ -3,6 +3,9 @@
 The example in this chapter uses a local LLM running on Ollama. The examples for this chapter are found in the directory **agents_agno**. If yuo skipped reading the previous chapter, please review the opening material for running the Ollama service.
 
 
+{width: "80%"}
+![Agno agent architecture with web scraping tool and local Ollama model](images/FIG_agents_agno.png)
+
 ## An Agent For Answering Questions About A Specific Web Site
 
 Here we construct a sophisticated web scraping agent using the agno library. This program defines a specialized tool, **scrape-website-content** which leverages the **requests** and **BeautifulSoup** libraries to fetch and parse the textual content from any given URL, stripping away common non-content elements like navigation bars and scripts. This tool is then integrated into an Agent powered by a local Ollama model. The agent is configured with a detailed description, a step-by-step instruction set, and a defined output format, guiding it to first scrape a user-provided URL and then answer a specific question based only on the extracted information, ensuring a focused and verifiable response.

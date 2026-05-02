@@ -16,6 +16,9 @@ The architecture follows a classic two-phase RAG pattern, adding an additional t
 - Retrieval & Generation: Embed the user query, perform a similarity search in zvec, and save the retrieved top-k chunks for processing by a local Ollama chat model.
 - Use a small LLM model (qwen3:1.7b) to process the retrieved chunks and  taking into account the user’s original query and then format a subset of the text in the returned chunks for the user to read.
 
+{width: "80%"}
+![RAG pipeline architecture using zvec vector datastore and local Ollama model](images/FIG_RAG_zvec.png)
+
 ## Design Analysis: Dependency Minimization
 
 A notable design choice in our implementation is the reliance on Python's standard library for network calls. By utilizing **urllib.request** instead of third-party libraries like **requests** or the official **ollama-python** client library, the dependency footprint is minimized exclusively to **zvec**. This reduces virtual environment overhead and potential version conflicts, prioritizing a lean deployment.

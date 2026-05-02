@@ -5,6 +5,9 @@ Python has good libraries and frameworks for building web applications and here 
 I like lightweight web frameworks. In Ruby I use Sinatra, in Haskell I use Spock, and when I built Java web apps I liked lightweight tools like JSP. Flask is simple but capable and using it from Hy is productive and fun. In addition to using lightweight frameworks I like to deploy web apps in the simplest way possible. We will close this chapter by discussing how to use the Heroku and Google Cloud Platform AppEngine platforms.
 
 
+{width: "80%"}
+![Flask web application architecture with Jinja2 templates and session management](images/FIG_webapp.png)
+
 ## Getting Started With Flask: Using Python Decorators in Hy
 
 You will need the Python Flask library but it is pre-configured in the **uv** environment in the directory **hy-lisp-python-book/source_code_for_examples/webapp**.

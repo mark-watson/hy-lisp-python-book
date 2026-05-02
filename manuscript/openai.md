@@ -2,6 +2,9 @@
 
 I use frequently use the OpenAI APIs in my work. In this chapter we use the GPT-5 API since it works well for our examples.
 
+{width: "80%"}
+![OpenAI GPT API integration architecture](images/FIG_openai_apis.png)
+
 ## OpenAI Text Completion API
 
 OpenAI GPT (Generative Pre-trained Transformer) models like gpt-4o, gpt-4o-mini, and gpt-5 are advanced language processing models developed by OpenAI. There are three general classes of OpenAI API services:

@@ -11,6 +11,9 @@ The `UMLS_graph.hy` script:
 3. **Color-codes edges** - Different predicates get different colors for easy identification
 4. **Generates PDF output** - Uses Graphviz for professional-quality renderings
 
+{width: "80%"}
+![GraphViz knowledge graph visualization architecture](images/FIG_plots_with_graphviz.png)
+
 ## The Input Data Format
 
 The program reads `.triples` files with this format:

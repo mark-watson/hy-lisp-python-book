@@ -6,6 +6,9 @@ The web scraping code we develop here uses the Python BeautifulSoup and URI libr
 
 For my work and research, I have been most interested in using web scraping to collect text data for natural language processing but other common applications include writing AI news collection and summarization assistants, trying to predict stock prices based on comments in social media which is what we did at Webmind Corporation in 2000 and 2001, etc.
 
+{width: "80%"}
+![Web scraping architecture using BeautifulSoup and urllib](images/FIG_webscraping.png)
+
 ## Using the Python BeautifulSoup Library in the Hy Language
 
 There are many good libraries for parsing HTML text and extracting both structure (headings, what is in bold font, etc.) and embedded raw text. I particularly like the Python Beautiful Soup library and we will use it here.

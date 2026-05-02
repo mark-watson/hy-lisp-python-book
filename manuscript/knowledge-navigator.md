@@ -17,6 +17,9 @@ The system follows a two-stage process:
 1. **Entity Extraction**: The user provides text, Gemini identifies potential entities (people, companies, countries, etc.) and returns them as a numbered list
 2. **Deep Retrieval**: The user selects entities by number, Gemini provides detailed facts and analyzes relationships between entities — grounded by live web search
 
+{width: "80%"}
+![Knowledge Base Navigator architecture: Gemini API with web search grounding](images/FIG_knowledge_base_navigator.png)
+
 ## Project Structure
 
 The Knowledge Base Navigator consists of just two files:

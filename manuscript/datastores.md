@@ -10,6 +10,9 @@ For graph data we will stick with RDF because it is a fairly widely used standar
 
 In one of my previous previous books [Loving Common Lisp, or the Savvy Programmer's Secret Weapon](https://leanpub.com/lovinglisp) I also covered the general purpose graph database Neo4j which I like to use for some use cases, but for the purposes of this book we stick with RDF.
 
+{width: "80%"}
+![Datastores architecture: Sqlite, PostgreSQL, and RDF with rdflib](images/FIG_datastores.png)
+
 ## Sqlite
 
 We will cover two relational databases: Sqlite and PostgreSQL. Sqlite is an embedded database. There are Sqlite libraries for many programming languages and here we use the Python library.

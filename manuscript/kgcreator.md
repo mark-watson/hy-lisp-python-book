@@ -53,6 +53,9 @@ The application that we develop next is one way to quickly bootstrap a new KG by
 
 ## Design of KGCreator Application
 
+{width: "80%"}
+![Knowledge Graph Creator architecture: text processing pipeline to RDF output](images/FIG_kgcreator.png)
+
 The example application developed here processes input text files in the sub-directory **test_data**. For each file with the extension **.txt** in **test_data**, there should be a matching file with the extension **.meta** that contains the origin URI for the corresponding text file. The git repository for this book has a few files in **test_data** that you can experiment with or replace with your own data:
 
 {lang="bash",linenos=off}

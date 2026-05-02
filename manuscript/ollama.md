@@ -4,6 +4,9 @@ We saw in previous chapters how to use LLMs from commercial providers, for examp
 
 The examples for this chapter are in the directory **hy-lisp-python-book/source_code_for_examples/ollama_examples**.
 
+{width: "80%"}
+![Ollama local LLM architecture: completions, tool use, and cloud API integration](images/FIG_ollama_examples.png)
+
 Install Ollama and then download a model we will experiment with:
 
 ```

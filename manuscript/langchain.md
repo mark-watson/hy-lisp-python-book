@@ -19,6 +19,9 @@ LangChain Memory is the concept of persisting state between calls of a chain or 
 LangChain can be integrated with one or more model providers, data stores, APIs, etc.
 
 
+{width: "80%"}
+![LangChain architecture: chaining LLMs with embeddings and vector stores](images/FIG_langchain_examples.png)
+
 ## Installing Necessary Packages
 
 We are using **uv** as a package manager and to run the examples. Run using:

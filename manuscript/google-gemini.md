@@ -16,6 +16,9 @@ We will look at two ways to access Gemini and we will look at examples for each 
 - Use the Python **requests** library to use Gemini's REST style interface.
 - Use Google's Python **google-genai** package (and we will look at tool use in the same example).
 
+{width: "80%"}
+![Google Gemini API integration architecture: REST and google-genai SDK](images/FIG_google-gemini.png)
+
 ## REST Interface
 
 The following example calls the Gemini completion API and stores user chat in a persistent context.
