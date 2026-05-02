@@ -2,6 +2,8 @@
 
 The code examples have been updated in August 2025 to run with Hy version 1.1 (hy-1.010)
 
+![Book Cover](manuscript/images/title_page.jpg)
+
 ## Code examples
 
 The examples are in the directory **hy-lisp-python-book/source_code_for_examples**.
