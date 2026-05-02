@@ -9,6 +9,8 @@ Two TensorFlow/Keras deep learning examples written in Hy:
 
 Updated to work with TensorFlow 2.20.0 and the latest NumPy.
 
+![Deep learning architecture: LSTM text generation and Wisconsin cancer classification with Keras](FIG_deeplearning.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

@@ -4,6 +4,8 @@
 
 This script reads RDF-style triple data from `test.triples` (a subset from the [Salesforce MultiHopKG](https://github.com/salesforce/MultiHopKG) project containing UMLS medical-ontology relationships) and renders it as a graph using [GraphViz](https://graphviz.org/), producing a PDF visualization.
 
+![Knowledge graph visualization architecture: triple file parsing, Graphviz rendering with color-coded edges](FIG_plots_with_graphviz.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

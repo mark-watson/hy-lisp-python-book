@@ -4,6 +4,8 @@
 
 This directory is set up for **interactive REPL experimentation** with RDF data using the [rdflib](https://rdflib.readthedocs.io/) Python library. The `pyproject.toml` includes `rdflib` and `rdflib-jsonld` as dependencies so you can follow along with the book's examples for creating, querying, and serializing RDF graphs in Hy.
 
+![Linked data architecture: rdflib RDF graph creation, SPARQL queries, and multi-format serialization](FIG_rdf.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

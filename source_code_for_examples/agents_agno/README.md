@@ -4,6 +4,8 @@
 
 This example shows how to build an **AI agent** in Hy using the [Agno](https://github.com/agno-agi/agno) agent framework backed by a local Ollama model. The agent is equipped with a custom `scrape-website-content` tool that fetches and extracts clean text from any web page, enabling it to answer questions about live web content.
 
+![Agno web scraping agent architecture: tool-calling flow with BeautifulSoup and Ollama LLM](FIG_agents_agno.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

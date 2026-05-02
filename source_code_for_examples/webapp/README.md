@@ -8,6 +8,8 @@ This directory contains three progressively richer [Flask](https://flask.pallets
 - **`jinja2_test.hy`** — adds Jinja2 HTML templates and a form that accepts user input.
 - **`cookie_test.hy`** — extends the Jinja2 example with cookie handling.
 
+![Flask web application architecture: routing, Jinja2 templates, and cookie handling](FIG_webapp.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

@@ -8,6 +8,8 @@ Examples demonstrating Ollama integration from Hy, including both cloud and loca
 - **`completion_local.hy`** — text completion using a locally running Ollama server.
 - **`ollama_tools_examples.hy`** — demonstrates **tool use** (function calling) with Ollama. The LLM can invoke custom tools defined in `tools.hy` (list directories, read files, fetch web pages, search Wikipedia, get weather/news, etc.).
 
+![Ollama integration architecture: local and cloud completions with 8-tool function calling](FIG_ollama_examples.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

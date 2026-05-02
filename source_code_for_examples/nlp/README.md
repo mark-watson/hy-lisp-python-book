@@ -4,6 +4,8 @@
 
 This example demonstrates **named entity recognition** using [spaCy](https://spacy.io/) from Hy. The `nlp_lib.hy` module provides a reusable `nlp` function that extracts people, places, and organizations from text. The `nlp_example.hy` script shows it in action on sample sentences.
 
+![Named Entity Recognition architecture: spaCy NER pipeline extracting entities to JSON output](FIG_nlp.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

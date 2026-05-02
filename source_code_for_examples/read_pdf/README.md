@@ -4,6 +4,8 @@
 
 This script uses [pdfminer](https://pdfminersix.readthedocs.io/) to extract plain text from PDF files. The original motivation is to convert academic papers to clean text suitable for text-to-speech (audio reading) apps, which tend to struggle with footnotes, tables, and other PDF artifacts.
 
+![PDF text extraction architecture: pdfminer parsing PDF structure to plain text output](FIG_read_pdf.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

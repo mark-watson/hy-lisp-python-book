@@ -8,6 +8,8 @@ This directory contains three examples that demonstrate using [LangChain](https:
 - **`directions_template.hy`** — uses a LangChain prompt template to generate step-by-step directions.
 - **`doc_search.hy`** — performs semantic search over a set of local documents using embeddings.
 
+![LangChain integration architecture: document QA with Chroma vector store and prompt templates](FIG_langchain_examples.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

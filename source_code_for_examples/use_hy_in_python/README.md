@@ -4,6 +4,8 @@
 
 This example demonstrates one of Hy's most powerful features: **seamless interop with Python**. The Hy module `get_web_page.hy` defines functions for fetching web pages, and the Python script `use_hy_stuff.py` imports and calls them directly — showing that Hy modules are first-class Python modules.
 
+![Hy/Python interop architecture: Hy compiler to Python AST enabling seamless cross-language imports](FIG_use_hy_in_python.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

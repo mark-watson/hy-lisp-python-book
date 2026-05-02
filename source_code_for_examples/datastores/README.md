@@ -9,6 +9,8 @@ This directory contains Hy wrappers and examples for two relational databases:
 
 Both examples demonstrate basic CRUD operations (create table, insert, update, query, delete) through a thin Hy wrapper library.
 
+![Database access architecture: SQLite and PostgreSQL dual-path Hy wrapper libraries](FIG_datastores.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

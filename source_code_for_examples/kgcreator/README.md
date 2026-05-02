@@ -7,6 +7,8 @@ This example automatically constructs **RDF-style knowledge graph triples** (sub
 - **`kgcreator.hy`** — generates triples with simple string labels. Start here.
 - **`kgcreator_uri.hy`** — generates triples using DBpedia URIs for entities, producing linked-data-friendly output. Read the minor limitations noted in the book before using this version.
 
+![Knowledge graph creator architecture: spaCy NER to schema.org entity mapping to RDF output](FIG_kgcreator.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

@@ -11,6 +11,8 @@ This directory contains web scraping examples using [BeautifulSoup](https://www.
 
 The cached-page examples require running `make data` first to download sample HTML files for offline development and testing.
 
+![Web scraping pipeline architecture: three-layer fetch, parse, and summarize modules](FIG_webscraping.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

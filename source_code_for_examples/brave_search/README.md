@@ -4,6 +4,8 @@
 
 This example demonstrates calling the [Brave Search API](https://brave.com/search/api/) from Hy. The `brave.hy` module provides a `brave-search` function that returns structured search results (title, URL, description). It is designed to be loaded interactively so you can experiment with different queries in the REPL.
 
+![Brave Search API client architecture: query flow through REST API to structured results](FIG_brave_search.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

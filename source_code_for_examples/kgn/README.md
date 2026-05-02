@@ -10,6 +10,8 @@ An interactive tool that extracts named entities (people, places, organizations)
 - **`relationships.hy`** — relationship extraction between entities.
 - **`colorize.hy`** / **`textui.hy`** — terminal UI formatting.
 
+![Knowledge Graph Navigator architecture: spaCy NER, SPARQL queries to DBpedia, and relationship discovery](FIG_kgn.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

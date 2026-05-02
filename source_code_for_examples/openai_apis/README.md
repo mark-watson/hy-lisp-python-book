@@ -4,6 +4,8 @@
 
 This example demonstrates calling the **OpenAI GPT chat completion API** from Hy using the [openai](https://pypi.org/project/openai/) Python package. The script `text_completion.hy` sends a prompt to the model and prints the response.
 
+![OpenAI chat completion architecture: Hy client to GPT API request and response flow](FIG_openai_apis.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

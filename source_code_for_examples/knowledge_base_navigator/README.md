@@ -6,6 +6,8 @@ An AI-powered interactive knowledge exploration tool. Uses Google's Gemini API w
 
 This is a modern evolution of the KGN (Knowledge Graph Navigator) example — replacing SPARQL/DBPedia queries with an AI-driven pipeline powered by Gemini.
 
+![Knowledge Base Navigator architecture: Gemini-powered entity extraction and encyclopedic exploration](FIG_knowledge_base_navigator.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

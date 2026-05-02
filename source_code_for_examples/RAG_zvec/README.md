@@ -4,6 +4,8 @@
 
 This example demonstrates a **Retrieval-Augmented Generation (RAG)** pipeline written entirely in Hy. It reads `.txt` files from the `../data` directory, generates embeddings with a local Ollama model, stores them in a [zvec](https://github.com/abusenius/zvec) vector database, and then answers questions by retrieving the most relevant chunks and feeding them as context to a local chat model.
 
+![RAG pipeline architecture: text chunking, Ollama embeddings, zvec vector DB, and LLM answer generation](FIG_RAG_zvec.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

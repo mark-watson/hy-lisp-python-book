@@ -9,6 +9,8 @@ These examples show how to use [Matplotlib](https://matplotlib.org/) and [NumPy]
 
 Each script opens an interactive Matplotlib window displaying the graph.
 
+![Scientific plotting architecture: NumPy data generation through Matplotlib visualization](FIG_matplotlib_examples.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

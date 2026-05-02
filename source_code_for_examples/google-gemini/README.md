@@ -10,6 +10,8 @@ Three examples demonstrating different ways to interact with Google Gemini from 
 
 The code demonstrates two architectural approaches: `chat.hy` uses raw HTTP requests for full control, while the other two use Google's Python SDK for simpler tool integration.
 
+![Gemini API integration architecture: web search, URL context, and multi-turn chat modes](FIG_google-gemini.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager

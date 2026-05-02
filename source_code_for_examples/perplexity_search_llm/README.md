@@ -4,6 +4,8 @@
 
 This example uses the [Perplexity Sonar](https://docs.perplexity.ai/home) model to combine live web search with LLM-based reasoning in a single API call. The script sends a natural-language question, and Sonar searches the web and synthesizes a cited answer.
 
+![Perplexity search architecture: OpenAI-compatible client to Sonar model for search-augmented answers](FIG_perplexity_search_llm.png)
+
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/) package manager
