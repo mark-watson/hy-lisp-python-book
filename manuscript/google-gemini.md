@@ -17,7 +17,7 @@ We will look at two ways to access Gemini and we will look at examples for each 
 - Use Google's Python **google-genai** package (and we will look at tool use in the same example).
 
 {width: "80%"}
-![Google Gemini API integration architecture: REST and google-genai SDK](images/FIG_google-gemini.png)
+![Google Gemini API integration architecture: REST and google-genai SDK](images/FIG_google-gemini.jpg)
 
 ## REST Interface
 

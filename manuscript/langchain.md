@@ -20,7 +20,7 @@ LangChain can be integrated with one or more model providers, data stores, APIs,
 
 
 {width: "80%"}
-![LangChain architecture: chaining LLMs with embeddings and vector stores](images/FIG_langchain_examples.png)
+![LangChain architecture: chaining LLMs with embeddings and vector stores](images/FIG_langchain_examples.jpg)
 
 ## Installing Necessary Packages
 

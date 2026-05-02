@@ -18,7 +18,7 @@ The system follows a two-stage process:
 2. **Deep Retrieval**: The user selects entities by number, Gemini provides detailed facts and analyzes relationships between entities — grounded by live web search
 
 {width: "80%"}
-![Knowledge Base Navigator architecture: Gemini API with web search grounding](images/FIG_knowledge_base_navigator.png)
+![Knowledge Base Navigator architecture: Gemini API with web search grounding](images/FIG_knowledge_base_navigator.jpg)
 
 ## Project Structure
 

@@ -6,7 +6,7 @@ I like lightweight web frameworks. In Ruby I use Sinatra, in Haskell I use Spock
 
 
 {width: "80%"}
-![Flask web application architecture with Jinja2 templates and session management](images/FIG_webapp.png)
+![Flask web application architecture with Jinja2 templates and session management](images/FIG_webapp.jpg)
 
 ## Getting Started With Flask: Using Python Decorators in Hy
 

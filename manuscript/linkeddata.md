@@ -25,7 +25,7 @@ I assume that the format of the WikiPedia page is familiar so let's look at the 
 The subject for each Sedona related triple is the above URI for the DBPedia human readable page. The subject and property references in an RDF triple will almost always be a URI that can ground an entity to information on the web. The human readable page for Sedona lists several properties and the values of these properties. One of the properties is "dbo:areaCode" where "dbo" is a name space reference (in this case for a [DatatypeProperty](http://www.w3.org/2002/07/owl#DatatypeProperty)).
 
 {width: "80%"}
-![RDF and linked data architecture: rdflib, SPARQL queries, and semantic web stack](images/FIG_rdf.png)
+![RDF and linked data architecture: rdflib, SPARQL queries, and semantic web stack](images/FIG_rdf.jpg)
 
 The following two figures show an abstract representation of linked data and then a sample of linked data with actual web URIs for resources and properties:
 

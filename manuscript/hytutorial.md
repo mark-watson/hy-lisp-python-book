@@ -133,7 +133,7 @@ If we only wanted to import **BeautifulSoup** from the Python BeautifulSoup libr
 ~~~~~~~~
 
 {width: "80%"}
-![Hy-Python interoperability architecture: importing and using Hy code in Python programs](images/FIG_use_hy_in_python.png)
+![Hy-Python interoperability architecture: importing and using Hy code in Python programs](images/FIG_use_hy_in_python.jpg)
 
 ## Using Hy Libraries in Python Programs
 
@@ -339,7 +339,7 @@ The book **Serious Python** by Julien Danjou has an entire chapter (Chapter 9) o
 [This podcast](https://www.pythonpodcast.com/episode-23-hylang-core-developers/) in 2015 interviews Hy developers Paul Tagliamonte, Tuukka Turto, and Morten Linderud. You can see the [current Hy contributor list on github](https://github.com/hylang/hy/graphs/contributors).
 
 {width: "80%"}
-![Matplotlib plotting architecture: Numpy data processing and visualization pipeline](images/FIG_matplotlib_examples.png)
+![Matplotlib plotting architecture: Numpy data processing and visualization pipeline](images/FIG_matplotlib_examples.jpg)
 
 ## Plotting Data Using the Numpy and the Matplotlib Libraries
 
