@@ -132,6 +132,9 @@ If we only wanted to import **BeautifulSoup** from the Python BeautifulSoup libr
 (import bs4 [BeautifulSoup])
 ~~~~~~~~
 
+{width: "80%"}
+![Hy-Python interoperability architecture: importing and using Hy code in Python programs](images/FIG_use_hy_in_python.png)
+
 ## Using Hy Libraries in Python Programs
 
 There is nothing special about importing and using Hy library code or your own Hy scripts in Python programs. The directory **hy-lisp-python-book/source_code_for_examples/use_hy_in_python** in the [git repository for this book https://github.com/mark-watson/hy-lisp-python-book](https://github.com/mark-watson/hy-lisp-python-book) contains an example Hy script **get_web_page.hy** that is a slightly modified version of code we will explain and use in the later chapter on web scraping and a short Python script **use_hy_stuff.py** that uses a function defined in Hy:
@@ -334,6 +337,9 @@ The original Hy language developer Paul Tagliamonte was clearly inspired by Cloj
 The book **Serious Python** by Julien Danjou has an entire chapter (Chapter 9) on the Python AST (abstract syntax tree), an introduction to Hy, and an interview with Paul Tagliamonte. Recommended!
 
 [This podcast](https://www.pythonpodcast.com/episode-23-hylang-core-developers/) in 2015 interviews Hy developers Paul Tagliamonte, Tuukka Turto, and Morten Linderud. You can see the [current Hy contributor list on github](https://github.com/hylang/hy/graphs/contributors).
+
+{width: "80%"}
+![Matplotlib plotting architecture: Numpy data processing and visualization pipeline](images/FIG_matplotlib_examples.png)
 
 ## Plotting Data Using the Numpy and the Matplotlib Libraries
 
