@@ -1,6 +1,6 @@
 # Symbolic Mathematics
 
-Dear reader, this chapter is a love letter to Lisp's roots in symbolic computation. My interest in symbolic math software started in the 1980s when I had the Reduce symbolic math package running on my Xerox 1108 Lisp Machine. We build a small but complete symbolic mathematics library in Hy—covering polynomial data structures, symbolic differentiation, and symbolic integration—ported from the Common Lisp version in my book *Loving Common Lisp, The Savvy Programmer's Secret Weapon*.
+Dear reader, this chapter is a love letter to Lisp's roots in symbolic computation. My interest in symbolic math software started in the 1980s when I had the Reduce symbolic math package running on my Xerox 1108 Lisp Machine. We build a small but complete symbolic mathematics library in Hy covering polynomial data structures, symbolic differentiation, and symbolic integration. I ported this example from the Common Lisp version in my book *Loving Common Lisp, The Savvy Programmer's Secret Weapon*.
 
 The beauty of this example is that Hy's Lisp syntax makes the mathematical transformations read almost like the textbook rules they implement. The power rule for differentiation, for instance, is a single `if` expression. The fundamental theorem of calculus is three lines. This is exactly the kind of problem where Lisp shines.
 
@@ -112,7 +112,7 @@ Note how the `to-string` method handles three cases: constant terms (exponent 0)
 
 ### Polynomials
 
-A polynomial is a list of terms in one variable, kept sorted in descending exponent order. The key design decision—following the Common Lisp original—is that the `make-polynomial` constructor automatically combines like terms and drops zero-coefficient terms:
+A polynomial is a list of terms in one variable, kept sorted in descending exponent order. The key design decision, following the Common Lisp original, is that the `make-polynomial` constructor automatically combines like terms and drops zero-coefficient terms:
 
 ```hy
 (defn %sort-and-combine-terms [terms]
@@ -128,7 +128,7 @@ A polynomial is a list of terms in one variable, kept sorted in descending expon
   (sorted result :key (fn [x] (get x 0)) :reverse True))
 ```
 
-This function uses a dictionary as an accumulator—keyed by exponent—to merge coefficients. The `%` prefix is a Lisp convention for internal/private helper functions.
+This function uses a dictionary as an accumulator (keyed by exponent) to merge coefficients. The `%` prefix is a Lisp convention for internal/private helper functions.
 
 With the normalizer in place, polynomial arithmetic becomes straightforward:
 
@@ -151,7 +151,7 @@ With the normalizer in place, polynomial arithmetic becomes straightforward:
                    :domain poly.domain))
 ```
 
-Addition simply concatenates the term lists and lets the normalizer handle merging. Subtraction negates then adds. This immutable, value-oriented approach means we never mutate a polynomial—every operation returns a fresh one.
+Addition simply concatenates the term lists and lets the normalizer handle merging. Subtraction negates then adds. This immutable, value oriented approach means we never mutate a polynomial and every operation returns a fresh one.
 
 Evaluation substitutes a numeric value for the variable:
 
@@ -421,13 +421,6 @@ Run it with:
 uv run hy main.hy
 ```
 
-## Practice Exercises
-
-1. **Polynomial multiplication** — Implement `polynomial-multiply` that distributes each term of one polynomial across the terms of another, then normalizes.
-2. **Pretty printing** — Modify `term->string` to suppress the coefficient when it is 1 or -1 (printing `x^2` instead of `1x^2` and `-x` instead of `-1x`).
-3. **Chain rule** — Extend differentiation to handle compositions like `(3x + 1)^4` by representing composite expressions as a new data type.
-4. **Numeric integration** — Implement Simpson's rule as an alternative to the exact antiderivative approach, and compare accuracy for different step sizes.
-
 ## Summary
 
 We built a symbolic mathematics library from scratch in Hy, porting the data structures and algorithms from a Common Lisp implementation. The library demonstrates:
@@ -439,3 +432,10 @@ We built a symbolic mathematics library from scratch in Hy, porting the data str
 - **The fundamental theorem of calculus** implemented in three lines of code
 
 This is the kind of problem that Lisp was born to solve. The symbolic transformations—differentiating a term, integrating a polynomial, evaluating a definite integral—read almost identically to the mathematical rules they implement. Hy gives us this expressiveness while staying inside Python's ecosystem.
+
+If you enjoy symbolic math software, you can try extending this example code:
+
+1. **Polynomial multiplication** — Implement `polynomial-multiply` that distributes each term of one polynomial across the terms of another, then normalizes.
+2. **Pretty printing** — Modify `term->string` to suppress the coefficient when it is 1 or -1 (printing `x^2` instead of `1x^2` and `-x` instead of `-1x`).
+3. **Chain rule** — Extend differentiation to handle compositions like `(3x + 1)^4` by representing composite expressions as a new data type.
+4. **Numeric integration** — Implement Simpson's rule as an alternative to the exact antiderivative approach, and compare accuracy for different step sizes.
