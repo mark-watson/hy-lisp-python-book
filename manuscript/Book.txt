@@ -9,6 +9,7 @@ deeplearning.md
 nlp.md
 datastores.md
 linkeddata.md
+rdf-sparql.md
 kgcreator.md
 kgn.md
 knowledge-navigator.md
