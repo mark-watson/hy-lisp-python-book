@@ -9,6 +9,7 @@ You can find the complete project source code in the `source_code_for_examples/r
 ## The Core Concept
 
 In Semantic Web technologies, data is represented as a directed graph made of **triples**:
+
 - **Subject**: The node we are describing (e.g., `"John"`).
 - **Predicate**: The directed relationship/edge (e.g., `"likes"`).
 - **Object**: The target node or value (e.g., `"pizza"`).
@@ -19,7 +20,7 @@ A collection of these triples forms a graph. To query this graph, we use **SPARQ
 
 ## Example Usage
 
-Let's look at how the datastore is used in practice. Below is the demonstration code from `main.hy`:
+Let's look at how the datastore is used in practice before we look at its implementation. Below is the demonstration code from `main.hy`:
 
 ```hylang
 ;; main.hy
@@ -212,7 +213,7 @@ Merging bindings uses Python 3.9's dictionary merge operator (`|`):
 
 ### 4. SPARQL Parsing
 
-Our SPARQL parser extracts the variables in the `SELECT` clause and splits the `WHERE` clause patterns by dots (`.`):
+Here we implement a subset of SPARQL. Our SPARQL parser extracts the variables in the `SELECT` clause and splits the `WHERE` clause patterns by dots (`.`):
 
 ```hylang
 (defn parse-sparql-query [query-string]
@@ -234,8 +235,7 @@ Our SPARQL parser extracts the variables in the `SELECT` clause and splits the `
   {"select-vars" select-vars "where-patterns" where-patterns})
 ```
 
-> [!IMPORTANT]
-> **Hy Slicing Gotcha:**
+> **IMPORTANT: Hy Slicing Gotcha:**
 > Lisp programmers are used to `subseq` or `slice` where providing one index parameter slices from that index to the end.
 > However, Hy's `(cut sequence start)` macro compiles to Python's `sequence[:start]`—slicing from the *beginning* up to the index. 
 > To slice from an index to the end of the collection (i.e. `sequence[start:]`), you must pass `None` as the stop parameter:
