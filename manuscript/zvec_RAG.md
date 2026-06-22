@@ -210,3 +210,14 @@ Dear reader, notice that there was no information in the indexed text to answer 
 In this chapter, we built a completely offline, privacy-preserving RAG architecture by bridging Alibaba’s recently released in-process vector database, zvec, with local Ollama inference. By intentionally minimizing external dependencies and utilizing a strictly typed, schema-driven datastore, we eliminated the network overhead and deployment bloat typical of client-server vector databases. The fixed-size overlapping chunking strategy, combined with the 768-dimensional embeddinggemma model, ensures high-fidelity semantic retrieval. Simultaneously, the compact qwen3:1.7b model demonstrates that a heavily constrained, prompt-engineered generation phase can effectively synthesize retrieved context without hallucination.
 
 The resulting pipeline serves as a robust, lightweight foundation for edge-deployable AI applications. Because the entire storage and inference stack executes locally within the same process, the pattern is exceptionally portable, fast, and secure. Moving forward, this baseline implementation can be extended to handle more complex retrieval requirements, such as integrating dynamic semantic chunking, implementing Reciprocal Rank Fusion (RRF) for hybrid multi-vector queries, or introducing multi-turn conversational memory. Ultimately, combining embedded vector storage with small-parameter LLMs proves that high-performance, domain-specific RAG does not require massive cloud infrastructure.
+
+## Optional Practice Problems
+
+1. **Source Attribution & Metadata Retrieval**:
+   Modify the schema in `build-index` to include a new string field `source_file`. Update the ingestion logic to populate this field with the base filename of the text file being processed. Then, update the `search` and `ask-ollama` functions so that when the assistant answers a question, it also prints or appends a list of the unique source files from which the retrieved chunks originated.
+
+2. **Semantic Paragraph Chunking**:
+   The current `chunk-text` function splits documents blindly by character limits, which can cut sentences in half. Rewrite the chunking logic to split the input text by paragraphs (e.g., using `\n\n` as a delimiter). Ensure that chunks are grouped so they do not exceed a certain character count (e.g., 500 characters) while still keeping paragraphs intact where possible.
+
+3. **Hybrid Search Configuration**:
+   Extend the command-line interface or configuration dictionary to support running different local embedding models (such as `nomic-embed-text` vs `embeddinggemma`). Note that different embedding models output different vector dimensions. Modify the `build-index` function to dynamically determine the correct vector dimension (e.g., 768 or 1024) depending on the active model, and set the `zvec.VectorSchema` dimension parameter programmatically.

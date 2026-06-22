@@ -342,3 +342,17 @@ Furthermore, the script provides an excellent look at how to manage state and co
 I spend most of my development time working with smaller LLMs running on Ollama (LM Studio is another good choice for running locally).
 
 There are obvious privacy and security advantages running LLMs locally and very interesting and useful engineering problems can sometimes be solved with smaller models.
+
+
+## Optional Practice Problems
+
+Here are a few optional practice problems to help you build a deeper understanding of local LLM tool use and structured outputs using the Hy language:
+
+1. **Implement a New API Tool**:
+   Modify [tools.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/ollama_examples/tools.hy) to add a new tool function, such as `get-github-user-bio` (which queries the public GitHub API for a user's bio) or `get-joke` (which fetches a programming joke from a public API like `https://icanhazdadjoke.com/`). Remember to provide a clear docstring explaining the parameters so that Ollama can parse the metadata schema correctly. Update the `available-functions` mapping and the `:tools` list in [ollama_tools_examples.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/ollama_examples/ollama_tools_examples.hy) to register and test your new tool.
+
+2. **Complete the Tool-Use Loop (Multi-Turn Chat)**:
+   In [ollama_tools_examples.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/ollama_examples/ollama_tools_examples.hy), when the model requests a tool call, the script executes the Hy function locally and prints its output to the console. However, it does not send the tool's response back to the LLM to generate a final answer. Modify the script to append the tool's output as a new message with the role `"tool"` (or `"user"`, depending on the model's specification) and send the entire conversation history back to the model using `client.chat` to receive the final synthesized response.
+
+3. **Enforce Structured JSON Outputs**:
+   Modify the completion function in [completion_local.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/ollama_examples/completion_local.hy) to request structured JSON output from Ollama. You can pass `:format "json"` to `ollama.chat` and instruct the model in your prompt to return the age differences as a JSON array of objects (e.g., `[{"person1": "Sally", "person2": "Bill", "difference": 45}]`). Use Python's `json` library to parse the returned content and print it as a Hy dictionary.

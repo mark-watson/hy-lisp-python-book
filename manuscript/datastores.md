@@ -429,3 +429,9 @@ Using RDFLIB with in-memory RDF triple storage is very convenient with small or 
 ## Wrap-up
 
 We will go into much more detail on practical uses of RDF and SPARQL in the next chapter. I hope that you worked through the REPL examples in this section because if you understand the basics of using the **rdflib** then you will have an easier time understanding the more abstract material in the next chapter.
+
+## Optional Practice Problems
+
+1. **Persistent SQLite Storage and Custom Columns**: The SQLite database in `sqlite_example.hy` currently uses `":memory:"` as a connection string, meaning all data is lost when the program exits. Modify the script to use a local file (e.g., `"contacts.db"`) to persist your data. Additionally, modify the database schema to add a new `age` column to the `people` table, and update the insertion queries and formatting to print this new field.
+2. **Parameterized SQLite Insertions**: In `sqlite_example.hy`, several of the `INSERT` statements are hardcoded as raw SQL strings without parameter bindings. Refactor all insertion queries to use SQLite parameter bindings (using `?` placeholders and passing parameters in a list to `query`) to prevent potential SQL injection and clean up the string construction code.
+3. **PostgreSQL JSON Queries**: While PostgreSQL supports native JSON/JSONB data types, our simplified `postgres_example.hy` script only uses text columns. Using a local PostgreSQL instance, create a table with a JSONB column (e.g., storing a structure like `{"status": "active", "roles": ["admin"]}`). Add code to insert sample records containing JSON-like dictionary structures, and query the records using PostgreSQL's json/jsonb query operators (such as `->>` or `@>`).

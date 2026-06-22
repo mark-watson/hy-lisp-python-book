@@ -412,3 +412,23 @@ The best part of generating inline plots is during interactive REPL-based coding
 ![Inline matplotlib use in a Hy REPL on macOS](images/mac-inline-matplotlib2.png)
 
 If you use a Mac laptop to SSH into a remote Linux server you need to install **itermplot** and set the environment variable **MPLBACKEND** on the remote server.
+
+## Optional Practice Problems
+
+To solidify your understanding of data visualization and Python-Hy interoperability, try completing the following exercises:
+
+### Data Visualization and Plotting
+
+1. **Plotting Multiple Curves**: Modify `plot_sigmoid.hy` (or create a new Hy script) to plot both the Sigmoid and ReLU functions on the same graph. Use `(plt.plot ... :label "Sigmoid")` and `(plt.plot ... :label "ReLU")`, and call `(plt.legend)` to render a legend.
+2. **Visual Reference Lines**: Add a horizontal dotted line at $y = 0.5$ on your Sigmoid plot to indicate the inflection point, and a vertical line at $x = 0$. In Matplotlib, this can be done using:
+   ```hylang
+   (plt.axhline :y 0.5 :color "red" :linestyle "--")
+   (plt.axvline :x 0.0 :color "gray" :linestyle "-.")
+   ```
+3. **Plotting Tanh**: Implement and plot the hyperbolic tangent activation function ($\tanh$). The equation is $f(x) = \tanh(x)$. *Hint: you can use numpy's built-in `(np.tanh x)`.* Compare its output range with the Sigmoid function.
+
+### Python Interoperability
+
+1. **Passing Parameters Across Languages**: Modify `get_web_page.hy` and `use_hy_stuff.py` so that instead of scraping a hardcoded URL, the Python script takes a URL as input from the user (or via command line using `sys.argv`) and passes it as an argument to the Hy function.
+2. **Overriding Default Parameters**: The function `get-raw-data-from-web` in `get_web_page.hy` defines an optional argument `anAgent` with a default dictionary value. Write Python code in `use_hy_stuff.py` to call `get_raw_data_from_web` directly, overriding the user agent to `{"User-Agent": "Custom-Agent-Python"}`. (Recall that kebab-case Hy names map to snake_case Python names, so `get-raw-data-from-web` becomes `get_raw_data_from_web`.)
+3. **Handling Interoperable Exceptions**: Wrap the network request in `use_hy_stuff.py` with Python's standard `try...except` exception handling block. Catch `urllib.error.URLError` to handle connection failures gracefully when an invalid URL is passed, demonstrating how exceptions flow seamlessly between Hy and Python.

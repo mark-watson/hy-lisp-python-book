@@ -358,13 +358,6 @@ uv sync
 | With statement | `(with [r (create)] body)` | `with create() as r: body` |
 | Conditionals | `(when condition body)` | `if condition: body` |
 
-## Practice Exercises
-
-1. **Add a new predicate color** - Extend `PREDICATE-COLORS` with a new mapping
-2. **Export to SVG** - Modify the format to support SVG output
-3. **Count statistics** - Add a summary showing predicate frequencies
-4. **Node filtering** - Add an option to filter by subject or object name
-
 ## Summary
 
 This chapter demonstrated a real-world Hy application that:
@@ -376,3 +369,10 @@ This chapter demonstrated a real-world Hy application that:
 - Uses idiomatic Hy patterns throughout
 
 The combination of Lisp's elegance and Python's ecosystem makes Hy ideal for data processing and visualization tasks. This example scales from dozens to thousands of triples while maintaining readable, maintainable code.
+
+## Optional Practice Problems
+
+1. **Extend Predicate Colors**: The current implementation defines a static dictionary of predicate colors `PREDICATE-COLORS` in [UMLS_graph.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/plots_with_graphviz/UMLS_graph.hy#L25-L41). Add a new mapping for a custom predicate (e.g. `"uses"` with a color like `"#FF00FF"`), and create or modify a line in [test.triples](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/plots_with_graphviz/test.triples) to use this new predicate. Verify that the generated output PDF reflects this custom color.
+2. **Interactive Node Filtering**: Currently, the program allows filtering the graph by predicate using the `-f`/`--filter` command-line argument. Extend the command-line parser in the `parse-args` function in [UMLS_graph.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/plots_with_graphviz/UMLS_graph.hy#L101-L121) to accept a new option `-n`/`--node`. Then, modify the list comprehension inside the `parse-triples` function in [UMLS_graph.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/plots_with_graphviz/UMLS_graph.hy#L47-L59) to only return triples where either the subject or the object matches the specified node name.
+3. **Support Alternative Formats (SVG/PNG Export)**: The `build-graph` function in [UMLS_graph.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/plots_with_graphviz/UMLS_graph.hy#L61-L90) initializes the `Digraph` constructor with a hardcoded format of `"pdf"`. Modify [UMLS_graph.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/plots_with_graphviz/UMLS_graph.hy) to accept a new command-line argument `-t`/`--type` (for example, with choices `"pdf"`, `"png"`, or `"svg"`) using `argparse`, and pass this format dynamically to `Digraph`.
+

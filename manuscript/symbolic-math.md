@@ -439,3 +439,26 @@ If you enjoy symbolic math software, you can try extending this example code:
 2. **Pretty printing** — Modify `term->string` to suppress the coefficient when it is 1 or -1 (printing `x^2` instead of `1x^2` and `-x` instead of `-1x`).
 3. **Chain rule** — Extend differentiation to handle compositions like `(3x + 1)^4` by representing composite expressions as a new data type.
 4. **Numeric integration** — Implement Simpson's rule as an alternative to the exact antiderivative approach, and compare accuracy for different step sizes.
+
+## Optional Practice Problems
+
+To solidify your understanding of symbolic mathematics in Hy, try implementing the following extensions to the codebase:
+
+### Problem 1: Sleek Polynomial Formatting
+Currently, polynomials print in a raw format (e.g., `3x^2 + -1x + 5` or `1x^3 + -1/2x^2 + 5x`).
+Modify the `to-string` method of the [SymTerm](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/symbolic-math/data.hy#L104-L130) class (or [term->string](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/symbolic-math/data.hy#L161-L162) function) and the [polynomial->string](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/symbolic-math/data.hy#L269-L273) function in [data.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/symbolic-math/data.hy) to:
+- Suppress printing coefficients of `1` or `-1` (e.g., print `x^2` instead of `1x^2`, and `-x` instead of `-1x`), unless the exponent is `0`.
+- Format subtraction cleanly (e.g., print `3x^2 - x + 5` instead of `3x^2 + -1x + 5`).
+
+### Problem 2: Polynomial Multiplication
+Implement polynomial multiplication in [data.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/symbolic-math/data.hy):
+1. Define a helper function `(term-multiply t1 t2)` that multiplies coefficients, asserts they share the same variable (unless one has exponent 0), and adds their exponents.
+2. Define a function `(polynomial-multiply p q)` that distributes each term in `p` across each term in `q` using your helper, returning a new normalized polynomial via `make-polynomial`.
+3. Add a test case to `run-smoke-test` in [data.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/symbolic-math/data.hy) (e.g., multiplying `(x + 2)` by itself to get `x^2 + 4x + 4`).
+
+### Problem 3: Numerical Integration (Trapezoidal Rule)
+In [integration.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/symbolic-math/integration.hy), definite integration is computed analytically using the Fundamental Theorem of Calculus.
+Implement a function `(integrate-trapezoidal poly lower upper [n-steps 100])` that computes the definite integral of `poly` from `lower` to `upper` numerically using the trapezoidal rule:
+$$ \int_a^b f(x) dx \approx \frac{h}{2} \left[ f(a) + 2 \sum_{i=1}^{n-1} f(a + ih) + f(b) \right] $$
+where $h = (b - a) / n$.
+Compare the result with the analytical evaluation from [evaluate-definite](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/symbolic-math/integration.hy#L61-L68) for $p = 3x^2 - x + 5$ over $[0, 1]$ and verify that the approximation converges as `n-steps` increases.

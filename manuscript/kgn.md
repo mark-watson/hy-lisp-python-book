@@ -362,3 +362,11 @@ If you have not already done so, I hope you experiment running this example appl
 If you enjoyed running and experimenting with this example and want to modify it for your own projects then I hope that I provided a sufficient road map for you to do so.
 
 I got the idea for the KGN application because I was spending quite a bit of time manually setting up SPARQL queries for DBPedia and other public sources like WikiData, and I wanted to experiment with partially automating this exploration process.
+
+## Optional Practice Problems
+
+To deepen your understanding of KGN, SPARQL, and entity extraction in Hy, try completing the following exercises:
+
+1. **Extend Entity Types**: Currently, `kgn.hy` only extracts and maps `PERSON`, `GPE` (Place), and `ORG` (Organisation) entities to DBpedia types. Modify the `entity-type-to-type-uri` dictionary and the interactive loop to support additional spaCy entity types, such as `WORK_OF_ART` (mapped to `<http://dbpedia.org/ontology/Work>`) or `EVENT` (mapped to `<http://dbpedia.org/ontology/Event>`). Test your changes with queries containing book/movie titles or historical events.
+2. **Implement a Query Caching Layer**: Since DBpedia queries over the network can be slow or fail, implement a simple caching layer in `sparql.hy`. You can serialize query results to a local JSON file or a SQLite database keyed by the SPARQL query string. If a query is found in the cache, return it immediately; otherwise, fetch it over the network and cache it.
+3. **Integrate Wikidata**: The `sparql.hy` file defines `wikidata-sparql` but it is not currently used by the application. Modify `kgn.hy` to allow querying Wikidata as a fallback or side-by-side comparison when looking up entity details. Note that Wikidata's property URIs and structures are different from DBpedia's, so you will need to formulate a compatible SPARQL query structure.

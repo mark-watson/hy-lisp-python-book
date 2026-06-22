@@ -70,3 +70,8 @@ Fixing a leaky faucet can be a straightforward process, and you can often do it 
 etc.
 ```
 
+## Optional Practice Problems
+
+- **System Persona**: Modify [text_completion.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/openai_apis/text_completion.hy) to accept a system prompt instructing the model to adopt a specific persona (for example, a Lisp developer explaining Python code). You will need to add a message dictionary with the `"role" "system"` at the beginning of the `:messages` list in the [completion](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/openai_apis/text_completion.hy#L8) function.
+- **Configurable Parameters**: Update the [completion](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/openai_apis/text_completion.hy#L8) function signature to support optional parameters or keyword arguments like `temperature` (default `0.7`) and `max-tokens` (default `150`), and pass them to the underlying call to `client.chat.completions.create`.
+- **Interactive Chat Loop**: Implement an interactive loop in [text_completion.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/openai_apis/text_completion.hy) using `while` and `input` so that the user can ask questions iteratively from the terminal until they type "exit" or "quit".

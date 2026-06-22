@@ -331,3 +331,20 @@ uv run hy knowledge_base_navigator.hy
 ---
 
 This example demonstrates that Hy is an excellent choice for AI-powered applications. The combination of Lisp's expressive syntax with Python's rich library ecosystem makes it easy to build sophisticated tools with minimal code. The `google-genai` SDK integrates naturally with Hy, and the result is a concise, readable application that would be substantially more verbose in most other languages.
+
+## Optional Practice Problems
+
+1. **Add a Search History Command (`/history`):** Modify the interactive loop in [knowledge_base_navigator.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/knowledge_base_navigator/knowledge_base_navigator.hy) to keep track of previous search prompts. Initialize a list `history` (e.g., `(setv history [])`) before starting the `while` loop, and append each valid search query to it. Add a check so that if the user enters `/history`, the application prints a list of all past queries instead of sending the input to Gemini.
+2. **Implement Domain-Specific Filtering via System Instructions:** Add support for a system instruction that restricts entity extraction to a specific domain or topic. Customize `extract-entities` to accept an optional `system-instruction` parameter, and pass it into the Gemini configuration block:
+   ```hylang
+   (setv config (| {"system_instruction" system-instruction
+                    "tools" [{"google_search" {}}]}
+                 kwargs))
+   ```
+   Integrate this into the CLI loop (perhaps via a command like `/domain <topic>`) to let the user restrict exploration to domains like "programming languages", "historical figures", or "sci-fi movies".
+3. **Export Search Results to Markdown:** After retrieving entity details and relationship summaries, prompt the user with "Would you like to save these details? (y/n)". If they respond with `y` or `yes`, prompt them for a filename and write the Markdown-formatted content to disk using Hy's `with` macro and Python's standard `open` function:
+   ```hylang
+   (with [f (open filename "w")]
+     (.write f details))
+   ```
+

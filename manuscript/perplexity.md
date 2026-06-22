@@ -69,3 +69,11 @@ It's worth noting that there are other individuals with the name Mark Watson who
 ## Wrap Up for Using Perplexity
 
 While the Perplexity API could be expensive to use in high API call volume production applications, I find it to be very useful for simplifying my code when I need to combine web search with LLM use.
+
+## Optional Practice Problems
+
+To deepen your understanding of using Perplexity's API with Hy, try implementing the following exercises by modifying the code in [search_llm.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/perplexity_search_llm/search_llm.hy):
+
+- **Extracting and Printing Citations**: Perplexity's API response includes a list of citations (source URLs) in the `citations` attribute of the chat completion response object. Modify [search_llm](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/perplexity_search_llm/search_llm.hy#L13) to access this attribute (e.g., using `(. response citations)`) and print the list of reference URLs at the end of the response.
+- **Implementing Streaming Responses**: For longer queries or slower network connections, waiting for the entire answer can result in a laggy user experience. Modify the API call in [search_llm.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/perplexity_search_llm/search_llm.hy) to use streaming (by passing `:stream True` to `client.chat.completions.create`) and iterate over the chunks as they arrive to print the generated text in real-time.
+- **Comparing Search Models**: Perplexity provides different models such as `sonar`, `sonar-pro`, and `sonar-reasoning`. Modify the script to allow passing a model name as an argument, and compare the response quality, citation depth, and execution time between the default `sonar` model and `sonar-reasoning`.

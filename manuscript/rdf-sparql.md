@@ -339,3 +339,25 @@ Just like `lfor` maps to list comprehensions, `dfor` maps to dictionary comprehe
 ## Conclusion
 
 This pedagogical implementation demonstrates the synergy between Lisp's functional/recursive patterns and Python's data structures. Implementing the resolution of conjunctive query joins is a classic Lisp programming task, made clean and concise in Hy. Rather than building custom record structures or dictionary utilities from scratch, the engine leverages Python's dictionary merge `|`, list/dictionary comprehensions, and classes.
+
+## Optional Practice Problems
+
+To deepen your understanding of RDF datastores and SPARQL query evaluation, try extending the implementation in [rdf_datastore.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/rdf-datastore-with-sparql/rdf_datastore.hy) with the following exercises. You can verify your changes using [test_basic.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/rdf-datastore-with-sparql/test_basic.hy) or [main.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/rdf-datastore-with-sparql/main.hy).
+
+### 1. Implement `SELECT DISTINCT` Support
+Currently, the query engine returns all matching variable bindings. If a query matches multiple paths in the graph that yield the same values for the selected variables, duplicate result dictionaries are returned.
+- **Task**: Modify [parse-sparql-query](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/rdf-datastore-with-sparql/rdf_datastore.hy#L106) and [project-results](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/rdf-datastore-with-sparql/rdf_datastore.hy#L190) to support a `DISTINCT` keyword modifier (e.g., `"SELECT DISTINCT ?name WHERE { ... }"`).
+- **Hint**: Python dictionary objects are not hashable by default, so you cannot simply insert them into a Python `set`. Try converting each result dictionary into a sorted tuple of items (e.g., `(frozenset (.items r))`) to filter out duplicates.
+
+### 2. Add a Simple `FILTER` Clause
+Real SPARQL queries often include a `FILTER` expression to restrict results based on logical or comparison criteria (e.g., checking if a numeric value is greater than a certain threshold).
+- **Task**: Extend the parser and execution engine to handle a basic comparison filter, such as `FILTER(?age > 30)`.
+- **Hint**: Enhance [parse-sparql-query](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/rdf-datastore-with-sparql/rdf_datastore.hy#L106) to identify and extract the `FILTER` pattern, and then filter the list of binding dictionaries returned by [execute-sparql](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/rdf-datastore-with-sparql/rdf_datastore.hy#L64) before projecting the final variables. Remember to cast string values (like `"30"`) to integers or floats when comparing them.
+
+### 3. Serialization: Exporting and Importing N-Triples
+In standard Semantic Web workflows, graphs are exchanged using standardized file formats like W3C N-Triples.
+- **Task**: Add methods to the [RdfStore](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/rdf-datastore-with-sparql/rdf_datastore.hy#L25) class to save and load triples from an external file:
+  - `(defn save-to-file [self filepath])`: Write each triple in the store on a new line in the format `subject predicate object .`.
+  - `(defn load-from-file [self filepath])`: Read an N-Triples file, parsing each line to extract the subject, predicate, and object, and adding them to the datastore.
+- **Hint**: Make sure to strip any trailing punctuation (like `.`) and surrounding quotes or whitespace when importing triples.
+

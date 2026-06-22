@@ -303,3 +303,25 @@ Marks-MacBook:nlp $ uv run hy nlp_example.hy
 I spent several years of development time during the period from  1984 through 2015 working on natural language processing technology and as a personal side project I sold commercial NLP libraries that I wrote on my own time in Ruby and Common Lisp. The state-of-the-art of Deep Learning enhanced NLP is very good and the open source spaCy library makes excellent use of both conventional NLP technology and pre-trained Deep Learning models. I no longer spend very much time writing my own NLP libraries and instead use spaCy or more recently LLMs that we cover later.
 
 I urge you to read through the [spaCy documentation](https://spacy.io/api/doc) because we covered just basic functionality here that we will also need in the later chapter on automatically generating data for Knowledge Graphs. After working through the interactive REPL sessions and the examples in this chapter, you should be able to translate any Python API example code to Hy.
+
+## Optional Practice Problems
+
+Here are a few optional practice problems to help you get more comfortable with spaCy and the Hy language. We encourage you to modify the code in the `source_code_for_examples/nlp` directory and experiment!
+
+### Problem 1: Filter Entities by Type
+Currently, the [nlp](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/nlp/nlp_lib.hy#L30) function in [nlp_lib.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/nlp/nlp_lib.hy) returns all recognized entities. Modify the function (or write a new one) that takes an optional list of allowed entity labels (e.g., `["PERSON", "ORG"]`) and filters the results.
+- Implement the filtering logic in [nlp_lib.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/nlp/nlp_lib.hy).
+- Update [nlp_example.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/nlp/nlp_example.hy) to call this function and only print entities of type `"PERSON"`.
+- *Tip*: You can use Hy's list comprehensions (`lfor`) and check if an entity's label is in the list of allowed labels using the `in` operator.
+
+### Problem 2: Extract Noun Phrases (Noun Chunks)
+In addition to named entities, spaCy is excellent at identifying noun chunks (base noun phrases).
+- Read the spaCy documentation for `doc.noun_chunks` or inspect it using the Hy REPL.
+- Add a new function `get-noun-chunks` to [nlp_lib.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/nlp/nlp_lib.hy) that processes input text and returns a list of strings representing the noun chunks.
+- Verify your implementation in [nlp_example.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/nlp/nlp_example.hy) by analyzing a sentence like `"The quick brown fox jumps over the lazy dog"`.
+
+### Problem 3: Token Filtering (Removing Stopwords and Punctuation)
+When preparing text for downstream machine learning tasks, it is common to filter out punctuation and stopwords (common words like "the", "is", "at").
+- Inspect the attributes of a spaCy token in the REPL (e.g., `word.is_punct` and `word.is_stop`).
+- Write a function `clean-text-tokens` in [nlp_lib.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/nlp/nlp_lib.hy) that returns a list of token text strings, excluding any tokens where `word.is_punct` or `word.is_stop` is true.
+- Test your function with a sample sentence and ensure the output contains only meaningful content words.

@@ -208,5 +208,42 @@ January 16, 2020  For years, Elon Musk skeptics have shorted Tesla stock, conf
 
 TSA Says It Seized A Record Number Of Firearms At U.S. Airports Last Year
 ~~~~~~~~
-
 The examples seen here are simple but should be sufficient to get you started gathering text data from the web.
+
+## Optional Practice Problems
+
+Here are a few optional practice problems to help you build confidence modifying the web scraping code:
+
+1. **Extract Image Meta-Data**:
+   Modify the function `get-page-html-elements` in `get_page_data.hy` to also extract all `<img>` tags. Extend `get-element-data` to handle image elements by extracting the `src` and `alt` attributes. 
+   
+   *Hint*: In Hy, you can add key-value pairs to the returned dictionary for `<img>` tags. For example, your updated `get-element-data` might look like:
+   ```hylang
+   (defn get-element-data [anElement]
+     {"text" (.getText anElement)
+      "name" (. anElement name)
+      "class" (.get anElement "class")
+      "href" (.get anElement "href")
+      "src" (.get anElement "src")
+      "alt" (.get anElement "alt")})
+   ```
+
+2. **Normalize Relative Links**:
+   In `democracynow_front_page.hy`, many extracted links are relative paths (e.g., `/2020/1/7/...`). Modify the list comprehension (`lfor`) in `get-democracy-now-links` to normalize these links. If a link starts with `/`, prepend `https://www.democracynow.org` to it.
+   
+   *Hint*: Use a helper function or an inline `if` expression to check if the URI starts with `/`. In Hy, that might look like:
+   ```hylang
+   (defn normalize-url [url base-url]
+     (if (.startswith url "/")
+         (+ base-url url)
+         url))
+   ```
+
+3. **Keyword Filtering for Summaries**:
+   Modify `create-npr-summary` in `npr_front_page_summary.hy` so that it filters the headlines based on a set of target keywords (e.g., "Election", "Climate", "Musk"). The function should only include items where the text contains one of the user-specified keywords (case-insensitively).
+   
+   *Hint*: You can write a helper function `contains-any-keyword?` using `any` and a list comprehension:
+   ```hylang
+   (defn contains-any-keyword? [text keywords]
+     (any (lfor kw keywords (in (.lower kw) (.lower text)))))
+   ```

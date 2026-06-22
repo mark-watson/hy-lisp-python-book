@@ -198,3 +198,9 @@ The Apache Foundation has a [good introduction to SPARQL](https://jena.apache.or
 I hope that I have provided you with enough motivation to explore RDF data sources and consider the use of linked data/semantic web technologies for your projects.
 
 If I depend on a library, regardless of the programming language, I like to keep an up-to-date copy of the source code ready at hand. There is sometimes no substitute for having library code available to read.
+
+## Optional Practice Problems
+
+1. **Extend the FOAF Graph with Relationships**: In your interactive REPL session, create two different people (using either `rdflib.BNode` or `rdflib.URIRef`) and link them using the `FOAF.knows` property. Add additional properties to each person such as `FOAF.mbox` (email) or `FOAF.homepage`, and then serialize the graph to Turtle format to see how relationships are represented.
+2. **Querying a Local Graph with SPARQL**: Use `rdflib`'s `query` method to run a SPARQL query on the local graph you constructed in the first problem. Write a query to find and print the names of all individuals who are connected via the `FOAF.knows` property.
+3. **Parse and Analyze an External RDF Source**: Write a short Hy script that parses a public RDF or Turtle file (such as a public web page's RDF markup or a remote ontology file) using `graph.parse`. Print the total number of triples in the graph, and write a loop to print all subjects that are of type `foaf:Person`.

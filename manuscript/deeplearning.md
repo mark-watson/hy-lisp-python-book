@@ -458,3 +458,23 @@ How is this example working? The model learns what combinations of characters te
 
 In the next chapter we will use pre-trained Deep Learning models for natural language processing (NLP).
 
+
+## Optional Practice Problems
+
+1. **Full Dataset Training and Model Tuning in [wisconsin.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/deeplearning/wisconsin.hy)**
+   The training and test data loader in [wisconsin.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/deeplearning/wisconsin.hy) currently slices only the first 10 rows using `(slice 0 10)` to speed up testing. Modify the `load-data` function to load the entire dataset from `train.csv` and `test.csv`. Additionally, experiment with:
+   - Changing the hidden layer sizes or adding another `Dense` layer.
+   - Using the `Adam` optimizer instead of `RMSprop`.
+   - Modifying the activation functions (e.g., changing hidden layers to `tanh` or `elu`).
+
+2. **Hyperparameter Tuning in [lstm.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/deeplearning/lstm.hy)**
+   In [lstm.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/deeplearning/lstm.hy), the sequence length `maxlen` is set to 40, and the sampling step size `step` is set to 3. Modify these hyperparameters:
+   - Decrease `maxlen` to 20 or increase it to 60. How does this affect text coherence and training time?
+   - Change `step` to 1 or 5. How does this change the total number of sentences generated for training data, and what is the impact on memory usage?
+
+3. **Saving and Reloading the LSTM Model**
+   Because training a character-level LSTM model takes a substantial amount of time, it is impractical to retrain it every time you want to generate text. Modify [lstm.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/deeplearning/lstm.hy) to:
+   - Save the model weights and structure to disk using `(.save model "nietzsche_lstm.keras")` at the end of training.
+   - Write a separate Hy script (e.g., `generate.hy`) that loads the saved model and generates text from a given seed without retraining.
+
+

@@ -103,3 +103,9 @@ Running Hy using **uv** with the **-i** parameter loads the file and then puts t
 ## Wrap-up
 
 In addition to using automated web scraping to get data for my personal research, I often use automated web search. I find the Brave search APIs are the most convenient to use and I like paying for services that I use. The search engine Duck Duck Go also provides free search APIs but even though I use Duck Duck Go for 90% of my manual web searches, when I build automated systems I prefer to rely on services that I pay for.
+
+## Optional Practice Problems
+
+1. **Error Handling and Validation**: The current implementation of `brave_search` assumes that the `BRAVE_SEARCH_API_KEY` environment variable is always defined and that the network request succeeds. Modify the function to check if the environment variable is set before making the request, and raise a clean error message if it is missing. Also, wrap the network request in a try/except block to handle connection errors or invalid HTTP responses gracefully.
+2. **Retrieve Extra Metadata**: Inspect the full JSON payload returned by the Brave Search API. Update the return value of `brave_search` to include additional metadata about the search results, such as the total search time, or individual result attributes like the published date or whether the result is from a secure site (HTTPS).
+3. **Custom Result Filtering**: Extend the `brave_search` function to accept an optional parameter `filter-domain`. Modify the list comprehension (`lfor`) to only return results where the URL contains the specified domain name.

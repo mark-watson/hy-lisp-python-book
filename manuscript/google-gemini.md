@@ -258,3 +258,9 @@ Dear reader, note that these APIs may change. Please check out the documentation
 There are many good commercial LLM APIs (and I have most of them) but I currently most frequently use Gemini for two reasons: supports a one million token context size and is very low cost.
 
 I discuss Gemini in more detail in another book that you can read online: [https://leanpub.com/solo-ai/read](https://leanpub.com/solo-ai/read).
+
+## Optional Practice Problems
+
+- **Persistent Conversation History:** Modify the CLI chat script [chat.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/google-gemini/chat.hy) to serialize the chat history to a JSON file when exiting, and load it when starting. This allows resuming chat sessions across restarts.
+- **Inspect Grounding Citations:** Modify the [web_search.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/google-gemini/web_search.hy) script to print the sources and URLs referenced by the `google_search` tool. You will need to inspect the model's response metadata structure.
+- **System Instructions in GUI:** Add a system instruction text field in [ui_chat.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/google-gemini/ui_chat.hy) to allow specifying the behavior or persona of the model (such as a helpful programming tutor) via the API request configuration.
