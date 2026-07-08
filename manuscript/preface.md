@@ -6,7 +6,7 @@ This eBook will be updated occasionally so please periodically check the [leanpu
 
 If you read my eBooks free online then please consider hiring me for consulting work [https://markwatson.com](https://markwatson.com).
 
-This is this edition released March 2026.
+This is this edition released June 2026.
 
 Please visit the [author's website](http://markwatson.com).
 
@@ -15,12 +15,6 @@ Please visit the [author's website](http://markwatson.com).
 While this is a book on the Hy Lisp language, we have a wider theme here. In an age where artificial intelligence (AI) is a driver of the largest corporations and government agencies, the question is how do individuals and small organizations take advantage of AI technologies given the disadvantages of small scale. The material I chose to write about here is selected to help you, dear reader, survive as a healthy small fish in a big bond.
 
 I have been using Lisp languages professionally since 1982 and have written books covering the Common Lisp and Scheme languages. Most of my career has involved working on AI projects so tools for developing AI applications will be a major theme. In addition to covering the Hy language, you will get experience with AI tools and techniques that will help you craft your own AI platforms regardless of whether you are a consultant, work at a startup, or a corporation.
-
-The latest version of this book (updated in August 2025) has major code changes:
-
-- Code examples modified to work with the latest Hy version 1.1.0.
-- The README files for the code examples and book text now reflect the author's use of the **uv** Python utility to run Hy scripts.
-- Addition of a chapter to run LLMs locally using Ollama.
 
 The code examples can be found in my GitHub repository [https://github.com/mark-watson/hy-lisp-python-book](https://github.com/mark-watson/hy-lisp-python-book) that contains code examples in the directory **source_code_for_examples** and the Markdown manuscript files for this book in the directory **manuscript**.
 
