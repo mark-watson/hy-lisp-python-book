@@ -420,12 +420,12 @@ To solidify your understanding of data visualization and Python-Hy interoperabil
 ### Data Visualization and Plotting
 
 1. **Plotting Multiple Curves**: Modify `plot_sigmoid.hy` (or create a new Hy script) to plot both the Sigmoid and ReLU functions on the same graph. Use `(plt.plot ... :label "Sigmoid")` and `(plt.plot ... :label "ReLU")`, and call `(plt.legend)` to render a legend.
-2. **Visual Reference Lines**: Add a horizontal dotted line at $y = 0.5$ on your Sigmoid plot to indicate the inflection point, and a vertical line at $x = 0$. In Matplotlib, this can be done using:
+2. **Visual Reference Lines**: Add a horizontal dotted line at `y = 0.5`$ on your Sigmoid plot to indicate the inflection point, and a vertical line at `x = 0`$. In Matplotlib, this can be done using:
    ```hylang
    (plt.axhline :y 0.5 :color "red" :linestyle "--")
    (plt.axvline :x 0.0 :color "gray" :linestyle "-.")
    ```
-3. **Plotting Tanh**: Implement and plot the hyperbolic tangent activation function ($\tanh$). The equation is $f(x) = \tanh(x)$. *Hint: you can use numpy's built-in `(np.tanh x)`.* Compare its output range with the Sigmoid function.
+3. **Plotting Tanh**: Implement and plot the hyperbolic tangent activation function (`\tanh`$). The equation is `f(x) = \tanh(x)`$. *Hint: you can use numpy's built-in `(np.tanh x)`.* Compare its output range with the Sigmoid function.
 
 ### Python Interoperability
 

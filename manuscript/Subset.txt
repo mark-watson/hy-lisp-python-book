@@ -1,2 +1,5 @@
-rdf-sparql.md
+hytutorial.md
+symbolic-math.md
+nlp.md
+ 
 

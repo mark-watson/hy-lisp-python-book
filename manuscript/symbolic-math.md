@@ -459,6 +459,8 @@ Implement polynomial multiplication in [data.hy](file:///Users/markwatson/GITHUB
 ### Problem 3: Numerical Integration (Trapezoidal Rule)
 In [integration.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/symbolic-math/integration.hy), definite integration is computed analytically using the Fundamental Theorem of Calculus.
 Implement a function `(integrate-trapezoidal poly lower upper [n-steps 100])` that computes the definite integral of `poly` from `lower` to `upper` numerically using the trapezoidal rule:
-$$ \int_a^b f(x) dx \approx \frac{h}{2} \left[ f(a) + 2 \sum_{i=1}^{n-1} f(a + ih) + f(b) \right] $$
-where $h = (b - a) / n$.
-Compare the result with the analytical evaluation from [evaluate-definite](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/symbolic-math/integration.hy#L61-L68) for $p = 3x^2 - x + 5$ over $[0, 1]$ and verify that the approximation converges as `n-steps` increases.
+```$
+\int_a^b f(x)\,dx \approx \frac{h}{2} \left[ f(a) + 2 \sum_{i=1}^{n-1} f(a + ih) + f(b) \right]
+```
+where `h = \frac{b-a}{n}`$.
+Compare the result with the analytical evaluation from [evaluate-definite](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/symbolic-math/integration.hy#L61-L68) for `p = 3x^2 - x + 5`$ over `[0,\,1]`$ and verify that the approximation converges as `n-steps` increases.

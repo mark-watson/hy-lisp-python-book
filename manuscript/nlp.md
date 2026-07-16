@@ -246,7 +246,7 @@ For an example in a later chapter, we will use the library developed here to aut
 - MONEY: any monetary value or unit of money
 - NORP: nationalities or religious groups
 - ORG: any organization like a company, non-profit, school, etc.
-- PERCENT: any number in \[0, 100\] followed by the percent % character
+- PERCENT: any number in `[0, 100]`$ followed by the percent % character
 - PERSON
 - ORDINAL: any number spelled out, like "one", "two", etc.
 - TIME
