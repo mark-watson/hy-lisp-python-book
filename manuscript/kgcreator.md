@@ -54,7 +54,7 @@ The application that we develop next is one way to quickly bootstrap a new KG by
 ## Design of KGCreator Application
 
 {width: "80%"}
-![Knowledge Graph Creator architecture: text processing pipeline to RDF output](images/FIG_kgcreator.jpg)
+![Knowledge Graph Creator architecture: text processing pipeline to RDF output](FIG_kgcreator.jpg)
 
 The example application developed here processes input text files in the sub-directory **test_data**. For each file with the extension **.txt** in **test_data**, there should be a matching file with the extension **.meta** that contains the origin URI for the corresponding text file. The git repository for this book has a few files in **test_data** that you can experiment with or replace with your own data:
 
@@ -67,7 +67,7 @@ test1.meta test1.txt test2.meta test2.txt test3.meta test3.txt
 The *.txt files contain plain text for analysis and the *.meta files contain the original web source URI for the corresponding *.txt files. Using the spaCy library and Python/Hy's standard libraries for file access, the KGCreator is simple to implement. Here is the overall design of this example:
 
 {width=70%}
-![Overview of the Knowledge Graph Creator script](images/kg1.png)
+![Overview of the Knowledge Graph Creator script](kg1.png)
 
 We will develop two versions of the Knowledge Graph Creator. The first generates RDF that uses string values for the object part of generated RDF statements. The second implementation attempts to resolve these string values to DBPedia URIs.
 
@@ -236,13 +236,13 @@ $ open test.png
 Edited to fit on the page, the output looks like:
 
 {width: "90%"}
-![](images/1dot1.png)
+![](1dot1.png)
 
 {width: "90%"}
-![](images/1dot2.png)
+![](1dot2.png)
 
 {width: "90%"}
-![](images/1dot3.png)
+![](1dot3.png)
 
 Because we used literal values, notice how for example the node for the entity **IBM** is not shared and thus a software agent using this RDF data cannot, for example, infer relationships between two news sources that both have articles about IBM. We will work on a solution to this problem in the next section.
 
@@ -303,7 +303,7 @@ $ uv run hy kgcreator_uri.hy
 Now when we visualize generated RDF, we share nodes for The Wall Street Journal and IBM:
 
 {width=90%}
-![Part of the RDF graph that shows shared nodes when URIs are used for RDF values instead of literal strings](images/2dot1.png)
+![Part of the RDF graph that shows shared nodes when URIs are used for RDF values instead of literal strings](2dot1.png)
 
 While literal values sometimes are useful in generated RDF, using literals for the values in RDF triples prevents types of queries and inference that can be performed on the data.
 

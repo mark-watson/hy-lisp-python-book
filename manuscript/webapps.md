@@ -6,7 +6,7 @@ I like lightweight web frameworks. In Ruby I use Sinatra, in Haskell I use Spock
 
 
 {width: "80%"}
-![Flask web application architecture with Jinja2 templates and session management](images/FIG_webapp.jpg)
+![Flask web application architecture with Jinja2 templates and session management](FIG_webapp.jpg)
 
 ## Getting Started With Flask: Using Python Decorators in Hy
 
@@ -53,7 +53,7 @@ Press CTRL+C to quit
 Open [http://127.0.0.1:5000/](http://127.0.0.1:5000/) in your web browser:
 
 {width: "80%"}
-![Hello world Flask web app](images/flask1.jpg)
+![Hello world Flask web app](flask1.jpg)
 
 
 ## Using Jinja2 Templates To Generate HTML
@@ -128,10 +128,10 @@ Please note that there is nothing special about the names inside the **with-deco
 Open [http://127.0.0.1:5000/](http://127.0.0.1:5000/) in your web browser:
 
 {width: "80%"}
-![Flask web app using a Jinja2 Template](images/flask2.jpg)
+![Flask web app using a Jinja2 Template](flask2.jpg)
 
 {width: "80%"}
-![Flask web app using a Jinja2 Template after entering my name and submitting the HTML input form](images/flask3.jpg)
+![Flask web app using a Jinja2 Template after entering my name and submitting the HTML input form](flask3.jpg)
 
 
 ## Handling HTTP Sessions and Cookies

@@ -12,7 +12,7 @@ The `UMLS_graph.hy` script:
 4. **Generates PDF output** - Uses Graphviz for professional-quality renderings
 
 {width: "80%"}
-![GraphViz knowledge graph visualization architecture](images/FIG_plots_with_graphviz.jpg)
+![GraphViz knowledge graph visualization architecture](FIG_plots_with_graphviz.jpg)
 
 ## The Input Data Format
 

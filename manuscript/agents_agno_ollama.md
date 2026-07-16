@@ -4,7 +4,7 @@ The example in this chapter uses a local LLM running on Ollama. The examples for
 
 
 {width: "80%"}
-![Agno agent architecture with web scraping tool and local Ollama model](images/FIG_agents_agno.jpg)
+![Agno agent architecture with web scraping tool and local Ollama model](FIG_agents_agno.jpg)
 
 ## An Agent For Answering Questions About A Specific Web Site
 

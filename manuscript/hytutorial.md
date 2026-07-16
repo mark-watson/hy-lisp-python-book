@@ -133,7 +133,7 @@ If we only wanted to import **BeautifulSoup** from the Python BeautifulSoup libr
 ~~~~~~~~
 
 {width: "80%"}
-![Hy-Python interoperability architecture: importing and using Hy code in Python programs](images/FIG_use_hy_in_python.jpg)
+![Hy-Python interoperability architecture: importing and using Hy code in Python programs](FIG_use_hy_in_python.jpg)
 
 ## Using Hy Libraries in Python Programs
 
@@ -339,7 +339,7 @@ The book **Serious Python** by Julien Danjou has an entire chapter (Chapter 9) o
 [This podcast](https://www.pythonpodcast.com/episode-23-hylang-core-developers/) in 2015 interviews Hy developers Paul Tagliamonte, Tuukka Turto, and Morten Linderud. You can see the [current Hy contributor list on github](https://github.com/hylang/hy/graphs/contributors).
 
 {width: "80%"}
-![Matplotlib plotting architecture: Numpy data processing and visualization pipeline](images/FIG_matplotlib_examples.jpg)
+![Matplotlib plotting architecture: Numpy data processing and visualization pipeline](FIG_matplotlib_examples.jpg)
 
 ## Plotting Data Using the Numpy and the Matplotlib Libraries
 
@@ -389,7 +389,7 @@ The git repository directory **hy-lisp-python/matplotlib** contains two similar 
 The generated plot looks like this on macOS (Matplotlib is portable and also works on Windows and Linux):
 
 {width: "70%"}
-![Sigmoid Function](images/sigmoid.png)
+![Sigmoid Function](sigmoid.png)
 
 ## Bonus Points: Configuration for macOS and ITerm2 for Generating Plots Inline in a Hy REPL and Shell
 
@@ -404,12 +404,12 @@ The add the following to your .profile, .bash_profile, or .zshrc (depending on y
 Here we run an example from the last section in a zsh shell (bash, etc. also should work):
 
 {width: "80%"}
-![Inline matplotlib use in zsh shell in an ITerm on macOS](images/mac-inline-matplotlib.png)
+![Inline matplotlib use in zsh shell in an ITerm on macOS](mac-inline-matplotlib.png)
 
 The best part of generating inline plots is during interactive REPL-based coding sessions:
 
 {width: "80%"}
-![Inline matplotlib use in a Hy REPL on macOS](images/mac-inline-matplotlib2.png)
+![Inline matplotlib use in a Hy REPL on macOS](mac-inline-matplotlib2.png)
 
 If you use a Mac laptop to SSH into a remote Linux server you need to install **itermplot** and set the environment variable **MPLBACKEND** on the remote server.
 

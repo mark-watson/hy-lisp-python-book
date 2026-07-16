@@ -25,15 +25,15 @@ I assume that the format of the WikiPedia page is familiar so let's look at the 
 The subject for each Sedona related triple is the above URI for the DBPedia human readable page. The subject and property references in an RDF triple will almost always be a URI that can ground an entity to information on the web. The human readable page for Sedona lists several properties and the values of these properties. One of the properties is "dbo:areaCode" where "dbo" is a name space reference (in this case for a [DatatypeProperty](http://www.w3.org/2002/07/owl#DatatypeProperty)).
 
 {width: "80%"}
-![RDF and linked data architecture: rdflib, SPARQL queries, and semantic web stack](images/FIG_rdf.jpg)
+![RDF and linked data architecture: rdflib, SPARQL queries, and semantic web stack](FIG_rdf.jpg)
 
 The following two figures show an abstract representation of linked data and then a sample of linked data with actual web URIs for resources and properties:
 
 {width=40%}
-![Abstract RDF representation with 2 Resources, 2 literal values, and 3 Properties](images/rdf1.png)
+![Abstract RDF representation with 2 Resources, 2 literal values, and 3 Properties](rdf1.png)
 
 {width=75%}
-![Concrete example using RDF seen in last chapter showing the RDF representation with 2 Resources, 2 literal values, and 3 Properties](images/rdf2.png)
+![Concrete example using RDF seen in last chapter showing the RDF representation with 2 Resources, 2 literal values, and 3 Properties](rdf2.png)
 
 We saw a SPARQL Query (SPARQL for RDF data is similar to SQL for relational database queries) in the last chapter. Let's look at another example using the RDF in the last figure:
 

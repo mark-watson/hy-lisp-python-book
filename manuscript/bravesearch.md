@@ -4,7 +4,7 @@ You will need to get a free API key at [https://brave.com/search/api/](https://b
 
 
 {width: "80%"}
-![Brave Search API integration architecture](images/FIG_brave_search.jpg)
+![Brave Search API integration architecture](FIG_brave_search.jpg)
 
 ## Setting an Environment Variable for the Access Key for Brave Search APIs
 

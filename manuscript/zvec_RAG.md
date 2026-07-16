@@ -17,7 +17,7 @@ The architecture follows a classic two-phase RAG pattern, adding an additional t
 - Use a small LLM model (qwen3:1.7b) to process the retrieved chunks and  taking into account the user’s original query and then format a subset of the text in the returned chunks for the user to read.
 
 {width: "80%"}
-![RAG pipeline architecture using zvec vector datastore and local Ollama model](images/FIG_RAG_zvec.jpg)
+![RAG pipeline architecture using zvec vector datastore and local Ollama model](FIG_RAG_zvec.jpg)
 
 ## Design Analysis: Dependency Minimization
 

@@ -82,7 +82,7 @@ I hope you find that Hy meets your needs as it does my own.
 The official Hy Language logo is an octopus:
 
 {width=22%}
-![The Hy Language logo Cuddles by Karen Rustad](images/hylisplogo.jpg)
+![The Hy Language logo Cuddles by Karen Rustad](hylisplogo.jpg)
 
 
 I thank my wife Carol for editing this manuscript, finding typos, and suggesting improvements.

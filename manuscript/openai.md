@@ -3,7 +3,7 @@
 I use frequently use the OpenAI APIs in my work. In this chapter we use the GPT-5 API since it works well for our examples.
 
 {width: "80%"}
-![OpenAI GPT API integration architecture](images/FIG_openai_apis.jpg)
+![OpenAI GPT API integration architecture](FIG_openai_apis.jpg)
 
 ## OpenAI Text Completion API
 

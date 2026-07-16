@@ -9,7 +9,7 @@ I will not cover older symbolic methods of NLP here, rather I refer you to my pr
 You will learn how to apply both DL and NLP by using the state-of-the-art full-feature library [spaCy](https://spacy.io/). This chapter concentrates on how to use spaCy in the Hy language for solutions to a few selected problems in NLP that I use in my own work. I urge you to also review the "Guides" section of the [spaCy documentation](https://spacy.io/usage) where examples are in Python but after experimenting with the examples in this chapter you should have no difficulty in translating any spaCy Python examples to the Hy language.
 
 {width: "80%"}
-![NLP processing architecture using spaCy for entity recognition and text analysis](images/FIG_nlp.jpg)
+![NLP processing architecture using spaCy for entity recognition and text analysis](FIG_nlp.jpg)
 
 If you have not already done so install the **spaCy** library and the full English language model:
 

@@ -8,7 +8,7 @@ Google Colab directly supports only the Python and R languages. We can use Hy by
 
 Here we use the [Colab notebook](https://colab.research.google.com/drive/1pHBa-8TaajsBEiZ-dEydeL1FyLn5nvnW?usp=sharing) that is shown here:
 
-![Hy lang falcon-7b LLM.ipynb](images/colab1.png)
+![Hy lang falcon-7b LLM.ipynb](colab1.png)
 
 If you have a laptop that can run this example, you can also run it locally by installing the dependencies:
 

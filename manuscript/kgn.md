@@ -7,7 +7,7 @@ Please note that the example is a simplified version that I first wrote in Commo
 The code for this application is in the directory **kgn** and this example is pre-configured to use **uv**.
 
 {width: "80%"}
-![Knowledge Graph Navigator architecture: NLP entity extraction, SPARQL queries, and DBPedia exploration](images/FIG_kgn.jpg)
+![Knowledge Graph Navigator architecture: NLP entity extraction, SPARQL queries, and DBPedia exploration](FIG_kgn.jpg)
 
 One time only, you will need to download **spacy** language model that we used in the earlier chapter on natural language processing. Install this language model requirement in the directory **kgn** (edited to fit page width):
 
