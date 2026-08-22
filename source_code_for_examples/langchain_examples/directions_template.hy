@@ -1,4 +1,4 @@
-(import langchain.prompts [PromptTemplate])
+(import langchain_core.prompts [PromptTemplate])
 (import langchain_openai.llms [OpenAI])
 
 (setv llm (OpenAI :temperature 0.9))
