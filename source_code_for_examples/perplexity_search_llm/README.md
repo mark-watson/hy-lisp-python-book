@@ -19,3 +19,15 @@ This example uses the [Perplexity Sonar](https://docs.perplexity.ai/home) model 
 uv sync
 uv run hy search_llm.hy
 ```
+
+## Running the Tests
+
+The tests are written in Hy in `test_search_llm.hy`. Run them with:
+
+```bash
+uv run pytest
+```
+
+No API key or network access is needed: `openai.OpenAI` is replaced with a fake that records the endpoint, model and messages it receives.
+
+By default pytest does not collect `.hy` files, so `conftest.py` adds a small hook that tells it to collect any file named `test_*.hy`. To add more tests, create another `test_*.hy` file or add `test-` functions to `test_search_llm.hy`.

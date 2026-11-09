@@ -85,4 +85,5 @@
 
 ;; (pprint (dbpedia-get-entities-by-name "Bill Gates" "<http://dbpedia.org/ontology/Person>"))
 
-(kgn)
+(when (= __name__ "__main__")
+  (kgn))

@@ -5,34 +5,35 @@
 (import agno.models.ollama [Ollama])
 (import agno.tools [tool])
 
-(tool ;; in Python this would be a @tool annotation
-  (defn scrape-website-content [url]
-    "Fetches and extracts the clean, textual content from a given webpage URL.
-    Use this tool when you need to read the contents of a specific web page to
-    answer a question.
-    
-    Args:
-        url (str): The full, valid URL of the webpage to be scraped
-        (e.g., 'https://example.com').
-        
-    Returns:
-        str: The extracted text content of the webpage.
-    "
-    (try
-      ;; Set a User-Agent header to mimic a real browser.
-      (let
-        [headers
-         {"User-Agent" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"}
-         response (requests.get url :headers headers :timeout 10)]
-        (.raise_for_status response)
-        (let [soup (BeautifulSoup response.text "html.parser")]
-          ;; Remove unwanted tags
-          (for [tag (soup ["script" "style" "nav" "footer" "aside"])]
-            (.decompose tag))
-          (let [text (.get_text soup :separator "\n" :strip True)]
-            (if (not text)
-              f"Connected to {url}, but no text content could be extracted."
-              f"Successfully scraped content from {url}:\n\n{text}")))))))
+;; (defn [tool] ...) is Hy's decorator syntax: like @tool in Python, it
+;; wraps the function so agno registers it as a tool for the agent
+(defn [tool] scrape-website-content [url]
+  "Fetches and extracts the clean, textual content from a given webpage URL.
+  Use this tool when you need to read the contents of a specific web page to
+  answer a question.
+  
+  Args:
+      url (str): The full, valid URL of the webpage to be scraped
+      (e.g., 'https://example.com').
+      
+  Returns:
+      str: The extracted text content of the webpage.
+  "
+  (try
+    ;; Set a User-Agent header to mimic a real browser.
+    (let
+      [headers
+       {"User-Agent" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"}
+       response (requests.get url :headers headers :timeout 10)]
+      (.raise_for_status response)
+      (let [soup (BeautifulSoup response.text "html.parser")]
+        ;; Remove unwanted tags
+        (for [tag (soup ["script" "style" "nav" "footer" "aside"])]
+          (.decompose tag))
+        (let [text (.get_text soup :separator "\n" :strip True)]
+          (if (not text)
+            f"Connected to {url}, but no text content could be extracted."
+            f"Successfully scraped content from {url}:\n\n{text}"))))))
 
 ;; Initialize the web scraping and analysis agent
 (setv scraper-agent (Agent

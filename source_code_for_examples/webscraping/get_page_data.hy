@@ -19,10 +19,9 @@
   (setv h2 (.find_all soup "h2"))
   {"title" title "a" a "h1" h1 "h2" h2})
 
-(setv elements (get-page-html-elements "http://markwatson.com"))
-
-(print (get elements "a"))
-
-(for [ta (get elements "a")] (print (get-element-data ta)))
+(when (= __name__ "__main__")
+  (setv elements (get-page-html-elements "http://markwatson.com"))
+  (print (get elements "a"))
+  (for [ta (get elements "a")] (print (get-element-data ta))))
 
 

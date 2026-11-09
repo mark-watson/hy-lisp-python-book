@@ -26,5 +26,6 @@
   "Sally is 77, Bill is 32, and Alex is 44 years old. Pairwise, what are their age differences? Be concise."
   )
 
-(print
- (completion user-prompt))
+(when (= __name__ "__main__")
+  (print
+   (completion user-prompt)))

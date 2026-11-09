@@ -94,7 +94,7 @@
   (setv query-vector (get-embedding query))
   (setv results
     (.query collection
-      (zvec.VectorQuery "embedding" :vector query-vector)
+      (zvec.Query "embedding" :vector query-vector)
       :topk topk))
   (setv chunks [])
   (for [res results]

@@ -23,3 +23,15 @@ uv run hy country_information.hy
 uv run hy directions_template.hy
 uv run hy doc_search.hy
 ```
+
+## Running the Tests
+
+The tests are written in Hy in `test_langchain_examples.hy`. Run them with:
+
+```bash
+uv run pytest
+```
+
+No API key or network access is needed: the OpenAI LLM is replaced with a fake, and `conftest.py` sets a placeholder `OPENAI_API_KEY` because the LLM objects are created when the modules are imported. `doc_search.hy` is not tested because it builds a Chroma index with OpenAI embeddings as soon as it is loaded.
+
+By default pytest does not collect `.hy` files, so `conftest.py` adds a small hook that tells it to collect any file named `test_*.hy`. To add more tests, create another `test_*.hy` file or add `test-` functions to `test_langchain_examples.hy`.

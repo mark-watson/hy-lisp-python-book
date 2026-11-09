@@ -58,7 +58,7 @@
 (setv optimizer (RMSprop 0.01))
 (.compile model :loss "categorical_crossentropy" :optimizer optimizer)
 
-(defn sample [preds &optional [temperature 1.0]]
+(defn sample [preds [temperature 1.0]]
   (setv preds (.astype (np.array preds) "float64"))
   (setv preds (/ (np.log preds) temperature))
   (setv exp_preds (np.exp preds))

@@ -19,3 +19,15 @@ uv run hy web_site_qa.hy
 ```
 
 The agent will scrape a web page and answer questions about its content using the local LLM.
+
+## Running the Tests
+
+The tests are written in Hy in `test_web_site_qa.hy`. Run them with:
+
+```bash
+uv run pytest
+```
+
+Ollama does not need to be running and no network access is needed: `requests.get` is replaced with a fake that returns sample HTML. The tests check that the scraping tool strips scripts, styles, navigation and footers, and they inspect the agent's configuration without running it.
+
+By default pytest does not collect `.hy` files, so `conftest.py` adds a small hook that tells it to collect any file named `test_*.hy`. To add more tests, create another `test_*.hy` file or add `test-` functions to `test_web_site_qa.hy`.

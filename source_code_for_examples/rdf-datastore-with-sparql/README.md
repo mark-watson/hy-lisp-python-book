@@ -28,3 +28,15 @@ uv run hy main.hy
 ```
 
 This will run several example queries against the datastore, showcasing single-pattern queries, multi-pattern joins, and variable projection.
+
+## Running the Tests
+
+The tests are written in Hy in `test_rdf_datastore.hy`. Run them with:
+
+```bash
+uv run pytest
+```
+
+The tests cover the triple store, the SPARQL parser, and single-pattern, join and projection queries. (`test_basic.hy` is an older self-contained demo script; pytest collects it but it contains no tests.)
+
+By default pytest does not collect `.hy` files, so `conftest.py` adds a small hook that tells it to collect any file named `test_*.hy`. To add more tests, create another `test_*.hy` file or add `test-` functions to `test_rdf_datastore.hy`.

@@ -22,3 +22,15 @@ uv sync
 uv run hy plot_relu.hy
 uv run hy plot_sigmoid.hy
 ```
+
+## Running the Tests
+
+The tests are written in Hy in `test_plots.hy`. Run them with:
+
+```bash
+uv run pytest
+```
+
+`conftest.py` selects matplotlib's non-interactive `Agg` backend, so the plots are drawn without opening a window.
+
+By default pytest does not collect `.hy` files, so `conftest.py` adds a small hook that tells it to collect any file named `test_*.hy`. To add more tests, create another `test_*.hy` file or add `test-` functions to `test_plots.hy`.

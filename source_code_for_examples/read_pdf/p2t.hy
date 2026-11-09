@@ -6,5 +6,6 @@
 (defn pdf2text [s]
   (extract_text s))
 
-(print (pdf2text "Sales force - Multi-Hop Knowledge Graph Reasoning with Reward Shaping.pdf"))
+(when (= __name__ "__main__")
+  (print (pdf2text "Sales force - Multi-Hop Knowledge Graph Reasoning with Reward Shaping.pdf")))
 

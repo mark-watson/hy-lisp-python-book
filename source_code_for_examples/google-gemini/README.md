@@ -31,3 +31,15 @@ uv run hy web_search.hy "What is the latest news about the James Webb Space Tele
 # Answer questions about a web page
 uv run hy context_url.hy
 ```
+
+## Running the Tests
+
+The tests are written in Hy in `test_gemini.hy`. Run them with:
+
+```bash
+uv run pytest
+```
+
+No API key or network access is needed: the Gemini SDK client and `requests.post` are replaced with fakes, and `conftest.py` sets a placeholder `GOOGLE_API_KEY` because `genai.Client()` is created when the modules are imported. The tests cover `chat.hy`, `ui_chat.hy`, `web_search.hy` and `context_url.hy`. `gemini_interactions_api.hy` is not tested because it calls the API as soon as it is loaded.
+
+By default pytest does not collect `.hy` files, so `conftest.py` adds a small hook that tells it to collect any file named `test_*.hy`. To add more tests, create another `test_*.hy` file or add `test-` functions to `test_gemini.hy`.

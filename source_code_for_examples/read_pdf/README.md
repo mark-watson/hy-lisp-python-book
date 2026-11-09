@@ -18,3 +18,15 @@ uv run hy p2t.hy
 ```
 
 The script extracts text from the included sample PDF (`Sales force - Multi-Hop Knowledge Graph Reasoning with Reward Shaping.pdf`) and prints it to stdout.
+
+## Running the Tests
+
+The tests are written in Hy in `test_p2t.hy`. Run them with:
+
+```bash
+uv run pytest
+```
+
+The tests extract text from the included sample PDF.
+
+By default pytest does not collect `.hy` files, so `conftest.py` adds a small hook that tells it to collect any file named `test_*.hy`. To add more tests, create another `test_*.hy` file or add `test-` functions to `test_p2t.hy`.

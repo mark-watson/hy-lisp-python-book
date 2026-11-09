@@ -14,6 +14,6 @@
     ;;(print completion)
     (get completion.choices 0)))
 
-(setv x (completion "how to fix leaky faucet?"))
-
-(print x.message.content)
+(when (= __name__ "__main__")
+  (setv x (completion "how to fix leaky faucet?"))
+  (print x.message.content))

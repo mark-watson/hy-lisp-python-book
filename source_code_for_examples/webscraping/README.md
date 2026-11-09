@@ -30,3 +30,15 @@ make data
 uv run hy democracynow_front_page.hy
 uv run hy npr_front_page_summary.hy
 ```
+
+## Running the Tests
+
+The tests are written in Hy in `test_webscraping.hy`. Run them with:
+
+```bash
+uv run pytest
+```
+
+Neither `make data` nor network access is needed: the tests write small HTML pages to a temporary directory and replace `urlopen` with a fake.
+
+By default pytest does not collect `.hy` files, so `conftest.py` adds a small hook that tells it to collect any file named `test_*.hy`. To add more tests, create another `test_*.hy` file or add `test-` functions to `test_webscraping.hy`.

@@ -62,7 +62,7 @@ Here is a listing or the source file **google-gemini/chat.hy**:
   (setv response (requests.post api-url :headers headers :data (json.dumps data)))
 
   ;; Raise HTTPError for bad responses (4xx or 5xx)
-  (. response raise_for-status)
+  (.raise-for-status response)
 
   ;; Return the JSON response as a Hy dictionary/list
   (response.json))

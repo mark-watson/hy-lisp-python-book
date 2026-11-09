@@ -26,3 +26,15 @@ uv run hy cookie_test.hy
 ```
 
 Open `http://127.0.0.1:5000` in your browser after starting a server.
+
+## Running the Tests
+
+The tests are written in Hy in `test_webapp.hy`. Run them with:
+
+```bash
+uv run pytest
+```
+
+No server is started: each app is exercised with Flask's built-in test client. `conftest.py` makes this directory the current directory so Flask can find `templates/`.
+
+By default pytest does not collect `.hy` files, so `conftest.py` adds a small hook that tells it to collect any file named `test_*.hy`. To add more tests, create another `test_*.hy` file or add `test-` functions to `test_webapp.hy`.

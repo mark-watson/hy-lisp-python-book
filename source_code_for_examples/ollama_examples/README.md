@@ -30,3 +30,15 @@ uv run hy completion_local.hy
 # Tool use example
 uv run hy ollama_tools_examples.hy
 ```
+
+## Running the Tests
+
+The tests are written in Hy in `test_ollama_examples.hy`. Run them with:
+
+```bash
+uv run pytest
+```
+
+Ollama does not need to be running and no network access is needed: the Ollama client and the `httpx` calls made by the tools are replaced with fakes. The tests cover `tools.hy`, `completion_local.hy` and `completion_cloud.hy`. `ollama_tools_examples.hy` is not tested because it starts its interactive menu as soon as it is loaded.
+
+By default pytest does not collect `.hy` files, so `conftest.py` adds a small hook that tells it to collect any file named `test_*.hy`. To add more tests, create another `test_*.hy` file or add `test-` functions to `test_ollama_examples.hy`.

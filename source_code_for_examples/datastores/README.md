@@ -38,3 +38,15 @@ uv run hy postgres_example.hy
 []
 [('Mark Watson', 'mark@markwatson.com')]
 ```
+
+## Running the Tests
+
+The tests are written in Hy in `test_sqlite_lib.hy`. Run them with:
+
+```bash
+uv run pytest
+```
+
+The SQLite tests run against real in-memory and temporary on-disk databases. The PostgreSQL tests put a fake `psycopg2` module in place, so no database server (or `psycopg2` install) is needed.
+
+By default pytest does not collect `.hy` files, so `conftest.py` adds a small hook that tells it to collect any file named `test_*.hy`. To add more tests, create another `test_*.hy` file or add `test-` functions to `test_sqlite_lib.hy`.

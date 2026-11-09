@@ -34,3 +34,15 @@ When prompted, enter a sentence containing people, places, or organizations. For
     Steve Jobs went to Microsoft in Seattle to visit Bill Gates
 
 The program will extract entities, query DBpedia for matches, and let you select which ones to explore further.
+
+## Running the Tests
+
+The tests are written in Hy in `test_kgn.hy`. Run them with:
+
+```bash
+uv run pytest
+```
+
+No network access is needed: DBpedia/Wikidata HTTP calls and keyboard input are replaced with fakes. The `kgn.hy` tests also need the spaCy model (`uv run python -m spacy download en_core_web_sm`); if it is not installed, those tests are skipped.
+
+By default pytest does not collect `.hy` files, so `conftest.py` adds a small hook that tells it to collect any file named `test_*.hy`. To add more tests, create another `test_*.hy` file or add `test-` functions to `test_kgn.hy`.

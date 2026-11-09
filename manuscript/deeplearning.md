@@ -117,18 +117,18 @@ neural network model, we will implement a model in about 40 lines of Hy code to 
 
 Since there are nine input values we will need nine input neurons that will represent the input values for a sample in either training or separate test data. These nine input neurons (created in lines 9-10 in the following listing) will be completely connected to twelve neurons in a hidden layer. Here, completely connected means that each of the nine input neurons is connected via a weight to each hidden layer neuron. There are 9 * 12 = 108 weights between the input and hidden layers. There is a single output layer neuron that is connected to each hidden layer neuron.
 
-Notice that in lines 12 and 14 in the following listing that we specify a **relu** activation function while the activation function connecting the hidden layer to the output layer uses the **sigmoid** activation function that we saw plotted earlier.
+Notice that in lines 15 and 17 in the following listing that we specify a **relu** activation function while the activation function connecting the hidden layer to the output layer uses the **sigmoid** activation function that we saw plotted earlier.
 
 There is an example in the git example repo directory **hy-lisp-python/matplotlib** in the file **plot_relu.hy** that generated the following figure:
 
 {width: "70%"}
 ![Relu Function](relu.png)
 
-The following listing shows the use of the Keras TensorFlow APIs to build a model (lines 9-19) with one input layer, two hidden layers, and an output layer with just one neuron. After we build the model, we define two utility functions **train** (lines 21-23) to train a model given training inputs (**x** argument**) and corresponding training outputs (**y** argument), and we also define **predict** (lines 25-26) using a trained model to make a cancer or benign prediction given test input values (**x-data** argument).
+The following listing shows the use of the Keras TensorFlow APIs to build a model (lines 12-22) with one input layer, two hidden layers, and an output layer with just one neuron. After we build the model, we define two utility functions **train** (lines 26-28) to train a model given training inputs (**x** argument**) and corresponding training outputs (**y** argument), and we also define **predict** (lines 30-31) using a trained model to make a cancer or benign prediction given test input values (**x-data** argument).
 
-Lines 28-33 show a utility function **load-data** that loads a University of Wisconsin cancer data set CSV file, scales the input and output values to the range [0.0, 1.0] and returns a list containing input (**x-data**) and target output data (**y-data**). You may want to load this example in a REPL and evaluate **load-data** on one of the CSV files.
+Lines 33-38 show a utility function **load-data** that loads all rows of a University of Wisconsin cancer data set CSV file, scales the input values to the range [0.1, 1.0] (the target output values are already 0 or 1) and returns a list containing input (**x-data**) and target output data (**y-data**). You may want to load this example in a REPL and evaluate **load-data** on one of the CSV files.
 
-The function **main** (lines 35-45) loads training and test (evaluation of model accuracy on data not used for training), trains a model, and then tests the accuracy of the model on the test (evaluation) data:
+The function **main** (lines 40-50) loads training and test (evaluation of model accuracy on data not used for training), trains a model, and then tests the accuracy of the model on the test (evaluation) data. It prints the fraction of test samples that are classified correctly (rounding each prediction to 0 or 1) followed by the first ten predictions:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -166,9 +166,9 @@ The function **main** (lines 35-45) loads training and test (evaluation of model
 
 (defn load-data [file-name]
   (setv all-data (read-csv file-name :header None))
-  (setv x-data10 (. all-data.iloc [#((slice 0 10) [0 1 2 3 4 5 6 7 8])] values))
+  (setv x-data10 (. all-data.iloc [#((slice None) [0 1 2 3 4 5 6 7 8])] values))
   (setv x-data (* 0.1 x-data10))
-  (setv y-data (. all-data.iloc [#((slice 0 10) [9])] values))
+  (setv y-data (. all-data.iloc [#((slice None) [9])] values))
   [x-data y-data])
 
 (defn main []
@@ -176,15 +176,16 @@ The function **main** (lines 35-45) loads training and test (evaluation of model
   (setv model (build-model))
   (setv xytest (load-data "test.csv"))
   (train 10 model (. xyd [0]) (. xyd [1]))
-  (print "* predictions (calculated, expected):")
-  (setv predictions (list (map first (predict model (. xytest [0])))))
-  (setv expected (list (map first (. xytest [1]))))
-  (print
-    (list
-      (zip predictions expected))))
+  (setv predictions (lfor p (predict model (. xytest [0])) (round (float (first p)) 4)))
+  (setv expected (lfor e (. xytest [1]) (int (first e))))
+  (setv correct (sum (gfor [p e] (zip predictions expected) (= (round p) e))))
+  (print f"* accuracy on {(len expected)} test samples: {(/ correct (len expected)) :.3f}")
+  (print "* first 10 predictions (calculated, expected):")
+  (print (list (zip (cut predictions 10) (cut expected 10)))))
 
 
-(main)
+(when (= __name__ "__main__")
+  (main))
 ~~~~~~~~
 
 The following listing shows the output:
@@ -192,11 +193,12 @@ The following listing shows the output:
 {lang="hylang",linenos=on}
 ~~~~~~~~
 $ uv run hy wisconsin.hy
-* predictions (calculated, expected):
-[(0.9998953, 1), (0.9999737, 1), (0.9172243, 1), (0.9975936, 1), (0.38985246, 0), (0.4301587, 0), (0.99999213, 1), (0.855, 0), (0.3810781, 0), (0.9999431, 1)]
+* accuracy on 151 test samples: 0.974
+* first 10 predictions (calculated, expected):
+[(1.0, 1), (1.0, 1), (0.8645, 1), (0.9461, 1), (0.0005, 0), (0.0035, 0), (1.0, 1), (0.0242, 0), (0.0004, 0), (0.9998, 1)]
 ~~~~~~~~
 
-Let's look at the first test case: the "real" output from the training data is a value of 1 and the calculated predicted value (using the trained model) is 0.9759052. In making predictions, we can choose a cutoff value, 0.5 for example, and interpret any calculated prediction value less than the cutoff as a Boolean *false* prediction and calculated prediction value greater to or equal to the cutoff value is a Boolean *true* prediction.
+Let's look at the third test case: the "real" output from the test data is a value of 1 and the calculated predicted value (using the trained model) is 0.8645. Your numbers will differ slightly from run to run because the model's initial weights are random. In making predictions, we can choose a cutoff value, 0.5 for example, and interpret any calculated prediction value less than the cutoff as a Boolean *false* prediction and calculated prediction value greater to or equal to the cutoff value is a Boolean *true* prediction.
 
 
 ## Using a LSTM Recurrent Neural Network to Generate English Text Similar to the  Philosopher Nietzsche's Writing
@@ -326,7 +328,7 @@ This is a powerful technique that I used to model JSON with complex deeply neste
 (setv optimizer (RMSprop 0.01))
 (.compile model :loss "categorical_crossentropy" :optimizer optimizer)
 
-(defn sample [preds &optional [temperature 1.0]]
+(defn sample [preds [temperature 1.0]]
   (setv preds (.astype (np.array preds) "float64"))
   (setv preds (/ (np.log preds) temperature))
   (setv exp_preds (np.exp preds))
@@ -461,8 +463,8 @@ In the next chapter we will use pre-trained Deep Learning models for natural lan
 
 ## Optional Practice Problems
 
-1. **Full Dataset Training and Model Tuning in [wisconsin.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/deeplearning/wisconsin.hy)**
-   The training and test data loader in [wisconsin.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/deeplearning/wisconsin.hy) currently slices only the first 10 rows using `(slice 0 10)` to speed up testing. Modify the `load-data` function to load the entire dataset from `train.csv` and `test.csv`. Additionally, experiment with:
+1. **Model Tuning in [wisconsin.hy](file:///Users/markwatson/GITHUB/hy-lisp-python-book/source_code_for_examples/deeplearning/wisconsin.hy)**
+   The program prints the model's accuracy on the test data. Try to improve it (or reach the same accuracy with less training) by experimenting with:
    - Changing the hidden layer sizes or adding another `Dense` layer.
    - Using the `Adam` optimizer instead of `RMSprop`.
    - Modifying the activation functions (e.g., changing hidden layers to `tanh` or `elu`).

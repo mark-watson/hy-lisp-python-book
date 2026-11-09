@@ -32,5 +32,5 @@
   ;;(print content-string)
   content-string)
 
-(print (search_llm "Consultant Mark Watson has written many books on AI, Lisp and the semantic web. What musical instruments does he play?"))
-
+(when (= __name__ "__main__")
+  (print (search_llm "Consultant Mark Watson has written many books on AI, Lisp and the semantic web. What musical instruments does he play?")))

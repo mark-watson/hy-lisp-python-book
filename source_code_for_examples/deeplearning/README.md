@@ -28,3 +28,15 @@ uv run hy wisconsin.hy
 ```
 
 **Note:** The `pyproject.toml` must include `hy` as a dependency (via `uv add hy`) so the `hy` executable is available in the local `.venv`.
+
+## Running the Tests
+
+The tests are written in Hy in `test_wisconsin.hy`. Run them with:
+
+```bash
+uv run pytest
+```
+
+The tests check data loading, the model's layers and prediction shape, and run one short training pass to check that the loss goes down (about 15 seconds). `lstm.hy` is not tested because it downloads a text corpus and trains for a long time as soon as it is loaded.
+
+By default pytest does not collect `.hy` files, so `conftest.py` adds a small hook that tells it to collect any file named `test_*.hy`. To add more tests, create another `test_*.hy` file or add `test-` functions to `test_wisconsin.hy`.

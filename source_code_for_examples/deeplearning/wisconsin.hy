@@ -32,9 +32,9 @@
 
 (defn load-data [file-name]
   (setv all-data (read-csv file-name :header None))
-  (setv x-data10 (. all-data.iloc [#((slice 0 10) [0 1 2 3 4 5 6 7 8])] values))
+  (setv x-data10 (. all-data.iloc [#((slice None) [0 1 2 3 4 5 6 7 8])] values))
   (setv x-data (* 0.1 x-data10))
-  (setv y-data (. all-data.iloc [#((slice 0 10) [9])] values))
+  (setv y-data (. all-data.iloc [#((slice None) [9])] values))
   [x-data y-data])
 
 (defn main []
@@ -42,12 +42,13 @@
   (setv model (build-model))
   (setv xytest (load-data "test.csv"))
   (train 10 model (. xyd [0]) (. xyd [1]))
-  (print "* predictions (calculated, expected):")
-  (setv predictions (list (map first (predict model (. xytest [0])))))
-  (setv expected (list (map first (. xytest [1]))))
-  (print
-    (list
-      (zip predictions expected))))
+  (setv predictions (lfor p (predict model (. xytest [0])) (round (float (first p)) 4)))
+  (setv expected (lfor e (. xytest [1]) (int (first e))))
+  (setv correct (sum (gfor [p e] (zip predictions expected) (= (round p) e))))
+  (print f"* accuracy on {(len expected)} test samples: {(/ correct (len expected)) :.3f}")
+  (print "* first 10 predictions (calculated, expected):")
+  (print (list (zip (cut predictions 10) (cut expected 10)))))
 
 
-(main)
+(when (= __name__ "__main__")
+  (main))

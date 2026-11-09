@@ -5,7 +5,7 @@
   (setv response
         (ollama.chat
           :model "nemotron-3-nano:4b"
-          :messages [{"role" "user" "content" user-prompt}]))
+          :messages [{"role" "user" "content" prompt}]))
   (print response)
   (return response.message.content))
 
@@ -17,5 +17,6 @@
   "Sally is 77, Bill is 32, and Alex is 44 years old. Pairwise, what are their age differences? Be concise."
   )
 
-(print
- (completion user-prompt))
+(when (= __name__ "__main__")
+  (print
+   (completion user-prompt)))

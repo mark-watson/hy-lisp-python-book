@@ -31,7 +31,7 @@
 
   (setv url f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api-key}")
   (setv response (requests.post url :headers headers :data (json.dumps body) :timeout 60))
-  (. response raise-for-status)
+  (.raise-for-status response)
   (response.json))
 
 ;; ---------------------------------------------------------------------------

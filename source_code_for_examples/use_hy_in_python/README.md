@@ -23,3 +23,13 @@ uv run python use_hy_stuff.py
 ```
 
 Both commands fetch and print the HTML content of a web page.
+
+## Running the Tests
+
+The tests are in `test_get_web_page.py`. Run them with:
+
+```bash
+uv run pytest
+```
+
+The tests are written in plain Python rather than Hy, as one more example of using Hy from Python: after `import hy`, `get_web_page.hy` is imported and tested like any Python module, with Hy names such as `get-raw-data-from-web` available as `get_raw_data_from_web`. `urlopen` is replaced with a fake, so no network access is needed.

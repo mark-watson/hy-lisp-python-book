@@ -26,3 +26,15 @@ uv run hy nlp_example.hy
 ```
 
 The output shows extracted named entities (people, places, organizations) for each input sentence.
+
+## Running the Tests
+
+The tests are written in Hy in `test_nlp_lib.hy`. Run them with:
+
+```bash
+uv run pytest
+```
+
+These tests need the spaCy model (`uv run python -m spacy download en_core_web_sm`). If the model is not installed, the tests that need it are skipped.
+
+By default pytest does not collect `.hy` files, so `conftest.py` adds a small hook that tells it to collect any file named `test_*.hy`. To add more tests, create another `test_*.hy` file or add `test-` functions to `test_nlp_lib.hy`.

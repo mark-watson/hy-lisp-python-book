@@ -8,7 +8,7 @@
 (defn get-npr-links []
   (setv test-html (get-web-page-from-disk "npr_home_page.html"))
   (setv bs (BeautifulSoup test-html :features "lxml"))
-  (setv all-anchor-elements (.findAll bs "a"))
+  (setv all-anchor-elements (.find_all bs "a"))
   (setv filtered-a
     (lfor e all-anchor-elements
           :if (> (len (.get-text e)) 0)

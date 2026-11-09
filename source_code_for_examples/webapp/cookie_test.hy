@@ -19,5 +19,6 @@
     (a-response.set-cookie "hy-cookie" name)
     a-response)
 
-(app.run)
+(when (= __name__ "__main__")
+  (app.run))
 

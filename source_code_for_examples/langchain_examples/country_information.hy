@@ -21,5 +21,7 @@
   (print "\n" prompt_text ":")
   (llm.invoke prompt_text))
 
-(print (get_country_information "Germany"))
-;; (print (get_country_information "Canada"))
+(when (= __name__ "__main__")
+  (print (get_country_information "Germany"))
+  ;; (print (get_country_information "Canada"))
+  )

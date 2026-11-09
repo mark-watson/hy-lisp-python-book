@@ -34,36 +34,37 @@
   (setv response (requests.post api-url :headers headers :data (json.dumps data)))
 
   ;; Raise HTTPError for bad responses (4xx or 5xx)
-  (. response raise_for-status)
+  (.raise-for-status response)
 
   ;; Return the JSON response as a Hy dictionary/list
   (response.json))
 
 ;; --- Main Chat Loop ---
-(while True
-  ;; Get user input from the console
-  (setv user-input (input "You: "))
+(when (= __name__ "__main__")
+  (while True
+    ;; Get user input from the console
+    (setv user-input (input "You: "))
 
 
-  ;; Call the Gemini API
-  (setv response-data (call-gemini chat-history user-input))
+    ;; Call the Gemini API
+    (setv response-data (call-gemini chat-history user-input))
 
-  ;; Debug print (optional)
-  ;; (print "Raw response data:" response-data)
+    ;; Debug print (optional)
+    ;; (print "Raw response data:" response-data)
 
-  ;; Extract and print the assistant's message
-  ;; Using sequential gets for clarity, assumes expected structure
-  (setv candidates (get response-data "candidates"))
-  (setv first-candidate (get candidates 0))
-  (setv content (get first-candidate "content"))
-  (pprint content)
-  (setv parts (.get content "parts" []))
+    ;; Extract and print the assistant's message
+    ;; Using sequential gets for clarity, assumes expected structure
+    (setv candidates (get response-data "candidates"))
+    (setv first-candidate (get candidates 0))
+    (setv content (get first-candidate "content"))
+    (pprint content)
+    (setv parts (.get content "parts" []))
 
-  (if parts ; This check is True only if `parts` is NOT empty
-    (setv assistant-message (get (get parts 0) "text"))
-    [])
-  (print "Assistant:" assistant-message)
+    (if parts ; This check is True only if `parts` is NOT empty
+      (setv assistant-message (get (get parts 0) "text"))
+      [])
+    (print "Assistant:" assistant-message)
 
-  ;; Append BOTH user and assistant messages to chat history (important for context)
-  (.append chat-history {"role" "user" "parts" [{"text" user-input}]})
-  (.append chat-history {"role" "model" "parts" [{"text" assistant-message}]}))
+    ;; Append BOTH user and assistant messages to chat history (important for context)
+    (.append chat-history {"role" "user" "parts" [{"text" user-input}]})
+    (.append chat-history {"role" "model" "parts" [{"text" assistant-message}]})))

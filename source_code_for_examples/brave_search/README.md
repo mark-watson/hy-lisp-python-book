@@ -24,3 +24,15 @@ Then call `brave-search` from the REPL:
 => (brave-search "site:wikidata.org Sedona Arizona")
 [["Sedona - Wikidata" "https://www.wikidata.org/wiki/Q80041" "city in counties of Yavapai and Coconino, ...]]
 ```
+
+## Running the Tests
+
+The tests are written in Hy in `test_brave.hy`. Run them with:
+
+```bash
+uv run pytest
+```
+
+No API key or network access is needed: `requests.get` is replaced with a fake Brave Search response.
+
+By default pytest does not collect `.hy` files, so `conftest.py` adds a small hook that tells it to collect any file named `test_*.hy`. To add more tests, create another `test_*.hy` file or add `test-` functions to `test_brave.hy`.

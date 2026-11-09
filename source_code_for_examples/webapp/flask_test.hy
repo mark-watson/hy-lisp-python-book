@@ -6,5 +6,6 @@
 (import flask [Flask])
 (setv app (Flask "Flask test"))
 (defn [(.route app "/")] index [] "Hello World !")
-(app.run)
+(when (= __name__ "__main__")
+  (app.run))
 

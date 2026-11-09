@@ -70,4 +70,5 @@
   (conn.close)
   (print "\nConnection closed."))
 
-(test_sqlite-lib)
+(when (= __name__ "__main__")
+  (test_sqlite-lib))

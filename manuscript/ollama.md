@@ -34,7 +34,7 @@ The example code is in the file **completion_local.hy** and uses a local model:
   (setv response
         (ollama.chat
           :model "nemotron-3-nano:4b"
-          :messages [{"role" "user" "content" user-prompt}]))
+          :messages [{"role" "user" "content" prompt}]))
   (print response)
   (return response.message.content))
 

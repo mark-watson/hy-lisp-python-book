@@ -28,3 +28,15 @@ uv run python -m spacy download en_core_web_sm
 uv run hy kgcreator.hy
 uv run hy kgcreator_uri.hy
 ```
+
+## Running the Tests
+
+The tests are written in Hy in `test_kgcreator.hy`. Run them with:
+
+```bash
+uv run pytest
+```
+
+These tests need the spaCy model (`uv run python -m spacy download en_core_web_sm`). If the model is not installed, the tests that need it are skipped. The tests run both `kgcreator.hy` and `kgcreator_uri.hy` over the files in `test_data/` and write the RDF output to a temporary directory.
+
+By default pytest does not collect `.hy` files, so `conftest.py` adds a small hook that tells it to collect any file named `test_*.hy`. To add more tests, create another `test_*.hy` file or add `test-` functions to `test_kgcreator.hy`.

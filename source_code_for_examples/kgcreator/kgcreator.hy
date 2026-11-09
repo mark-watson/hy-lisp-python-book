@@ -59,4 +59,5 @@
               [(modify-entity-names e) t])]
     (data2Rdf meta entities frdf)))
 
-(process-directory "test_data" "output.rdf")
+(when (= __name__ "__main__")
+  (process-directory "test_data" "output.rdf"))

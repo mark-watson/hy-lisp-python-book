@@ -25,16 +25,16 @@
 (setv client (genai.Client))  ;; Initialize the Google AI client
       
 (defn context_qa [prompt]
-  """Calls the Gemini API using the url_context tool.
+  "Calls the Gemini API using the url_context tool.
   
   The prompt should contain both a URL and a question about its content.
   
   Args:
     prompt - A string combining URL and question, e.g.,
-             "https://example.com What is the main topic?"
+             \"https://example.com What is the main topic?\"
   
   Returns:
-    The text response from Gemini based on the URL content."""
+    The text response from Gemini based on the URL content."
 
   (setv
     response

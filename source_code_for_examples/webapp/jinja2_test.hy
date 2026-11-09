@@ -14,5 +14,6 @@
     (print name)
     (render_template "template1.j2" :name name))
 
-(app.run)
+(when (= __name__ "__main__")
+  (app.run))
 

@@ -18,34 +18,35 @@ Here we construct a sophisticated web scraping agent using the agno library. Thi
 (import agno.models.ollama [Ollama])
 (import agno.tools [tool])
 
-(tool ;; in Python this would be a @tool annotation
-  (defn scrape-website-content [url]
-    "Fetches and extracts the clean, textual content from a given webpage URL.
-    Use this tool when you need to read the contents of a specific web page to
-    answer a question.
-    
-    Args:
-        url (str): The full, valid URL of the webpage to be scraped
-        (e.g., 'https://example.com').
-        
-    Returns:
-        str: The extracted text content of the webpage.
-    "
-    (try
-      ;; Set a User-Agent header to mimic a real browser.
-      (let
-        [headers
-         {"User-Agent" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"}
-         response (requests.get url :headers headers :timeout 10)]
-        (.raise_for_status response)
-        (let [soup (BeautifulSoup response.text "html.parser")]
-          ;; Remove unwanted tags
-          (for [tag (soup ["script" "style" "nav" "footer" "aside"])]
-            (.decompose tag))
-          (let [text (.get_text soup :separator "\n" :strip True)]
-            (if (not text)
-              f"Connected to {url}, but no text content could be extracted."
-              f"Successfully scraped content from {url}:\n\n{text}")))))))
+;; (defn [tool] ...) is Hy's decorator syntax: like @tool in Python, it
+;; wraps the function so agno registers it as a tool for the agent
+(defn [tool] scrape-website-content [url]
+  "Fetches and extracts the clean, textual content from a given webpage URL.
+  Use this tool when you need to read the contents of a specific web page to
+  answer a question.
+  
+  Args:
+      url (str): The full, valid URL of the webpage to be scraped
+      (e.g., 'https://example.com').
+      
+  Returns:
+      str: The extracted text content of the webpage.
+  "
+  (try
+    ;; Set a User-Agent header to mimic a real browser.
+    (let
+      [headers
+       {"User-Agent" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"}
+       response (requests.get url :headers headers :timeout 10)]
+      (.raise_for_status response)
+      (let [soup (BeautifulSoup response.text "html.parser")]
+        ;; Remove unwanted tags
+        (for [tag (soup ["script" "style" "nav" "footer" "aside"])]
+          (.decompose tag))
+        (let [text (.get_text soup :separator "\n" :strip True)]
+          (if (not text)
+            f"Connected to {url}, but no text content could be extracted."
+            f"Successfully scraped content from {url}:\n\n{text}"))))))
 
 ;; Initialize the web scraping and analysis agent
 (setv scraper-agent (Agent
@@ -100,7 +101,7 @@ Here we construct a sophisticated web scraping agent using the agno library. Thi
 
 This code is divided into two main parts: the tool definition and the agent configuration.
 
-The first part is the definition of the **scrape-website-content** function acts as the agent's primary capability. It takes a URL, uses the requests library to perform an HTTP GET request (while mimicking a browser's User-Agent header to improve compatibility), and then processes the resulting HTML with BeautifulSoup. Critically, it removes tags like <script>, <style>, <nav>, and <footer> that typically contain boilerplate or non-essential content. This cleaning step is vital as it provides the language model with a concise and relevant block of text, free from the noise of web page structure and styling, allowing it to focus on the core information needed to answer the user's query.
+The first part is the definition of the **scrape-website-content** function, which acts as the agent's primary capability. The form **(defn [tool] scrape-website-content [url] ...)** uses Hy's decorator syntax: the list of decorators goes in square brackets right after **defn**, so this is equivalent to writing **@tool** above a Python function definition. The **tool** decorator wraps the function in an agno **Function** object, using the function's name and docstring to describe the tool to the model. It takes a URL, uses the requests library to perform an HTTP GET request (while mimicking a browser's User-Agent header to improve compatibility), and then processes the resulting HTML with BeautifulSoup. Critically, it removes tags like <script>, <style>, <nav>, and <footer> that typically contain boilerplate or non-essential content. This cleaning step is vital as it provides the language model with a concise and relevant block of text, free from the noise of web page structure and styling, allowing it to focus on the core information needed to answer the user's query.
 
 The second part initializes the Agent from the agno library. This is where the AI's behavior is defined. It's configured to use a specific Ollama model and is given access to the scrape-website-content tool we defined. The description and instructions parameters are crucial; they act as a system prompt that programs the agent's workflow, forcing it into a strict sequence of scraping, analyzing, and then answering. By specifying expected_output, we enforce a consistent structure on the agent's final response. The main execution block demonstrates a practical example, asking the agent to find information about musical instruments from a specific website, which triggers the entire scrape-and-answer process.
 

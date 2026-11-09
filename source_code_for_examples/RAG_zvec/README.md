@@ -19,3 +19,15 @@ uv run hy app.hy
 ```
 
 The program will prompt you for a question. It retrieves the most relevant text chunks from the vector store and uses the local LLM to produce a grounded answer.
+
+## Running the Tests
+
+The tests are written in Hy in `test_app.hy`. Run them with:
+
+```bash
+uv run pytest
+```
+
+Ollama does not need to be running: the tests replace the HTTP calls to Ollama with fakes. One test builds a real zvec index in a temporary directory from small sample files.
+
+By default pytest does not collect `.hy` files, so `conftest.py` adds a small hook that tells it to collect any file named `test_*.hy`. To add more tests, create another `test_*.hy` file or add `test-` functions to `test_app.hy`.
