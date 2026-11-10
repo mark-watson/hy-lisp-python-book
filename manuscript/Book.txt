@@ -22,5 +22,6 @@ langchain.md
 llm_colab.md
 zvec_RAG.md
 symbolic-math.md
+nsk-neural-symbolic-graph.md
 wrapup.md
 

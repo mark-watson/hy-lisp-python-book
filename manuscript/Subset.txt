@@ -1,5 +1,3 @@
-hytutorial.md
-symbolic-math.md
-nlp.md
+nsk-neural-symbolic-graph.md
  
 

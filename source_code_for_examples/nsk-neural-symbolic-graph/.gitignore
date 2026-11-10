@@ -1,0 +1,7 @@
+# Runtime data (transaction logs)
+*.log
+*.log.tmp
+
+.venv/
+__pycache__/
+.pytest_cache/
