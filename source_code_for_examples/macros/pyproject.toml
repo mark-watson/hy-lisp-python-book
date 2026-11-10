@@ -1,0 +1,10 @@
+[project]
+name = "macros"
+version = "0.1.0"
+description = "Macros and metaprogramming in Hy: defmacro, hygiene, reader macros, and an HTML/SVG DSL"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["hy>=1.3.1", "hyrule>=1.0.0", "pytest>=9.2.0"]
+
+[tool.uv]
+exclude-newer = "2 days"

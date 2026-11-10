@@ -6,7 +6,7 @@ This eBook will be updated occasionally so please periodically check the [leanpu
 
 If you read my eBooks free online then please consider hiring me for consulting work [https://markwatson.com](https://markwatson.com).
 
-This is this edition released June 2026.
+This is the edition released November 2026.
 
 Please visit the [author's website](http://markwatson.com).
 
@@ -21,8 +21,9 @@ The code examples can be found in my GitHub repository [https://github.com/mark-
 This book covers many programming topics using the Lisp language **Hy** that compiles to Python AST and is compatible with code, libraries, and frameworks written in Python. The main topics we will cover and write example applications for are:
 
 - Deep Learning
-- Large Langauge Models (LLMS)
-- Relational and graph databases
+- Large Language Models (LLMs), Evaluation, and Model Context Protocol (MCP)
+- Lisp Macros, Metaprogramming, Modern Hy Tooling, and Asynchronous Programming
+- Relational and graph databases, Knowledge Graph validation (SHACL), and GraphRAG
 - Web app development
 - Web scraping
 - Accessing semantic web and linked data sources like Wikipedia, DBpedia, and Wikidata

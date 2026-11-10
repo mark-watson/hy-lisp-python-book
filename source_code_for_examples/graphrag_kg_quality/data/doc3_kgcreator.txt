@@ -1,0 +1,7 @@
+Document: doc3_kgcreator.txt
+Source: https://example.org/docs/kgcreator
+
+KGCreator is a knowledge graph extraction utility created by Mark Watson.
+KGCreator processes plain text documents with the spaCy natural language processing library to identify named entities.
+After entity extraction, KGCreator maps relationships to the schema.org vocabulary and resolves entity strings to DBpedia URIs.
+The resulting RDF statements can be loaded into rdflib or a custom SPARQL datastore.

@@ -45,7 +45,7 @@ In the following listing notice how we import other code and libraries in Hy. Th
 ~~~~~~~~
 $ cd hy-lisp-python-book/source_code_for_examples/webscraping
 $ uv run hy
-Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
+Hy 1.3.1 (Eyes in the Sky) using CPython(main) 3.14.7 on Darwin
 => (import bs4 [BeautifulSoup])
 => (setv raw-data "<html><body><a href=\"http://markwatson.com\">Mark</a></body></html>")
 => (setv soup (BeautifulSoup raw-data "lxml"))
@@ -67,7 +67,7 @@ Although I don't generally recommend it, sometimes it is convenient to export lo
 {lang="hylang",linenos=on}
 ~~~~~~~~
 $ uv run hy
-Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
+Hy 1.3.1 (Eyes in the Sky) using CPython(main) 3.14.7 on Darwin
 => (defn foo []
 ... (global x)
 ... (setv x 1)
@@ -117,7 +117,7 @@ Running this interactively in Hy:
 {lang="hylang",linenos=on}
 ~~~~~~~~
 $ uv run hy
-Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
+Hy 1.3.1 (Eyes in the Sky) using CPython(main) 3.14.7 on Darwin
 => (import test)
 => test
 <module 'test' from '/Users/markw/GITHUB/hy-lisp-python/test.py'>
@@ -198,7 +198,7 @@ In Hy this would be:
 {lang="hylang",linenos=off}
 ~~~~~~~~
 $ uv run hy    
-Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
+Hy 1.3.1 (Eyes in the Sky) using CPython(main) 3.14.7 on Darwin
 => (setv s "0123456789")
 => (cut s 2 4)
 '23'
@@ -283,7 +283,7 @@ I suggest using the Python **format** method when you need to format output. In 
 {lang="hylang",linenos=off}
 ~~~~~~~~
 $ uv run hy    
-Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
+Hy 1.3.1 (Eyes in the Sky) using CPython(main) 3.14.7 on Darwin
 => (.format "first: {} second: {}" "cat" 3.14159)
 'first: cat second: 3.14159'
 => (.format "first: {:>15} second: {:>15}" "cat" 3.14159)
@@ -307,7 +307,7 @@ $ pwd
 /Users/markw/GITHUB/hhy-lisp-python-book
 $ cd webscraping 
 $ uv run hy    
-Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
+Hy 1.3.1 (Eyes in the Sky) using CPython(main) 3.14.7 on Darwin
 => (import sys)
 => (sys.path.insert 1 "../nlp")
 => (import nlp-lib [nlp])
@@ -350,7 +350,7 @@ The Numpy library supports what is called "broadcasting" in Python. In the funct
 {lang="hylang",linenos=on}
 ~~~~~~~~
 $ uv run hy    
-Hy 1.1.0 (Business Hugs) using CPython(main) 3.12.0 on Darwin
+Hy 1.3.1 (Eyes in the Sky) using CPython(main) 3.14.7 on Darwin
 => (import numpy :as np)
 => (import matplotlib.pyplot :as plt)
 => 
@@ -367,7 +367,7 @@ array([0.00669285, 0.11920292, 0.5, 0.88079708, 0.99330715])
 => 
 ~~~~~~~~
 
-The git repository directory **hy-lisp-python/matplotlib** contains two similar scripts for plotting the **sigmoid** and **relu** functions. Here is the script to plot the **sigmoid** function:
+The git repository directory **source_code_for_examples/matplotlib_examples** contains two similar scripts (`plot_sigmoid.hy` and `plot_relu.hy`) for plotting the **sigmoid** and **relu** functions. Here is the script to plot the **sigmoid** function:
 
 {lang="hylang",linenos=on}
 ~~~~~~~~
@@ -412,6 +412,227 @@ The best part of generating inline plots is during interactive REPL-based coding
 ![Inline matplotlib use in a Hy REPL on macOS](mac-inline-matplotlib2.png)
 
 If you use a Mac laptop to SSH into a remote Linux server you need to install **itermplot** and set the environment variable **MPLBACKEND** on the remote server.
+
+## Modern Hy and Python 3.12–3.15: What Changed Since Hy 1.1
+
+When I started earlier editions of this book, Hy 0.x and 1.1 were the targets. Every project in this repository now pins `hy>=1.3.1` and uses `uv` for reproducible environments. This section walks through the language features added across Hy 1.2 and Hy 1.3 and shows how Hy tracks modern Python (3.12 through 3.15) without giving up portability.
+
+The companion code for this section is in the directory **source_code_for_examples/modern_hy**, in addition to the interop example in **source_code_for_examples/use_hy_in_python**.
+
+### Version Policy and Upgrade Workflow
+
+Hy 1.3.1 supports CPython 3.9 through 3.15. In this book our project `pyproject.toml` files require Python 3.12 or newer (`requires-python = ">=3.12"`), and I test the examples on Python 3.12 and 3.14. When a feature requires Python 3.14 or 3.15 (such as PEP 750 template strings or PEP 810 lazy imports), I call it out explicitly so you can keep your main codebase portable across Python 3.12+.
+
+When upgrading an older Hy 1.1 project to 1.3.1, my workflow has four steps:
+
+1. Pin `hy>=1.3.1` in `pyproject.toml` and run `uv sync`.
+2. Run `uv run hy2py your_module.hy` on each file to inspect the Python code that Hy generates.
+3. Run your interactive sessions with `uv run hy --spy` when you want to see the translated Python statement before each form executes.
+4. Run `uv run pytest` to verify behavior across your test suite.
+
+### Assignment: `setv :chain`, `setx`, `let`, and `nonlocal`
+
+Hy 1.2 added `:chain` to `setv` so you can initialize multiple targets to the same value—just like Python's `hits = misses = errors = 0`:
+
+```hy
+(defn reset-counters []
+  "Return a dictionary of zeroed counters using (setv :chain ...)."
+  (setv :chain [hits misses errors] 0)
+  {"hits" hits "misses" misses "errors" errors})
+```
+
+Whereas `setv` is a statement form (or compiles to assignments), `setx` is Python's assignment expression (`:=`, the walrus operator). It binds a name *and* returns the value inside a condition or comprehension, avoiding a redundant function call:
+
+```hy
+(defn first-non-empty [#^ (get list str) lines]
+  "Demonstrate (setx ...) inside a condition and a comprehension."
+  (setv cleaned
+    (lfor raw lines
+          :if (setx stripped (.strip raw))
+          stripped))
+  (if cleaned (get cleaned 0) ""))
+```
+
+For lexical scoping inside a function, `let` creates bindings that exist only within the `let` body, while `nonlocal` lets an inner closure mutate a variable from an enclosing function scope:
+
+```hy
+(defn make-accumulator [#^ int start]
+  "Return a closure that increments an internal total using nonlocal."
+  (let [initial (max 0 start)]
+    (setv total initial)
+    (defn step [#^ int delta]
+      (nonlocal total)
+      (+= total delta)
+      total)
+    step))
+```
+
+### Structural Pattern Matching with `match`
+
+Python's structural pattern matching (`match`/`case`) is expressed in Hy as `(match subject pattern-1 result-1 pattern-2 result-2 ...)`. Each arm pairs a pattern (plus an optional `:if` guard) with a result expression, and because `match` is an expression in Hy, it returns the value of the matching arm.
+
+Hy 1.3 improved `match` so patterns work cleanly with dataclasses, sequences, OR patterns (`|`), `:as` bindings, and even Hy's own syntax models (`hy.models.Expression`, `hy.models.Symbol`):
+
+```hy
+(defclass [dataclass] QueryEvent []
+  #^ str kind
+  #^ object payload)
+
+(defn #^ str describe-event [#^ object event]
+  "Describe a domain event or a raw Hy model using structural pattern matching."
+  (match event
+    (QueryEvent :kind "lookup" :payload (| "isa" "part_of") :as pred)
+      f"hierarchy lookup on {pred}"
+    (QueryEvent :kind "lookup" :payload pred)
+      f"lookup on {pred}"
+    (QueryEvent :kind "limit" :payload (int n)) :if (> n 0)
+      f"limit to {n} triples"
+    (hy.models.Expression [(hy.models.Symbol "edge") subj obj pred])
+      f"model edge: {(str subj)} -{(str pred)}-> {(str obj)}"
+    [subj obj pred]
+      f"tuple edge: {subj} -{pred}-> {obj}"
+    _
+      "unknown event"))
+```
+
+Matching directly on `hy.models.Expression` is especially useful when you write macros or small domain-specific languages, which we will do in the next chapter.
+
+### Type Annotations (`#^`), `deftype`, and Type-Checking via `hy2py`
+
+Hy attaches type annotations with the `#^` reader macro before a variable, parameter, or function name. For Python 3.12+ `type` aliases (PEP 695), Hy provides `deftype`, including generic type parameters via `:tp`:
+
+```hy
+(deftype NodeId str)
+(deftype Triple (get tuple #(NodeId str NodeId)))
+(deftype :tp [T] Pair (get tuple #(T T)))
+
+(defn #^ (get Pair NodeId) endpoints [#^ Triple triple]
+  "Return the (subject, object) pair of a (subject, object, predicate) triple."
+  (setv [subj obj _] triple)
+  #(subj obj))
+```
+
+Static type checkers such as `mypy` and `pyright` read Python syntax rather than `.hy` files, so the standard workflow is to translate your `.hy` module with `hy2py` and pass the generated Python to the checker. We will automate that pipeline in the tooling chapter.
+
+### Strings: Bracket Strings and Python 3.14 Template Strings (`t"..."`)
+
+When you embed multi-line SPARQL, Cypher, SQL, or prompts in Hy code, bracket strings `#[delim[...]delim]` avoid backslash-escaping altogether:
+
+```hy
+(setv CYPHER-SAMPLE #[cypher[
+MATCH (s:Concept)-[r]->(o:Concept)
+WHERE r.predicate = "isa"
+RETURN s.id, o.id
+]cypher])
+```
+
+> **Requires Python 3.14+ and Hy 1.3+:** Python 3.14 introduced PEP 750 template strings (`t"..."`), and Hy 1.3 supports them directly. Unlike an f-string `f"..."`, which immediately evaluates to a `str`, a t-string `t"SELECT ... WHERE pred = {predicate}"` evaluates to a `string.templatelib.Template` object whose `.strings` and `.interpolations` can be inspected and sanitized before rendering—ideal for SQL, SPARQL, or HTML escaping.
+
+### Modern Comprehensions, Async Forms, and Python 3.14/3.15 Runtime Notes
+
+Hy 1.3 also supports PEP 798 unpacking inside comprehensions: using `#*` in the result position of `lfor`, `sfor`, or `gfor` splices each inner iterable into the output:
+
+```hy
+(defn #^ (get list str) flatten-batches [#^ (get list (get list str)) batches]
+  "Flatten a list of batches with #* inside lfor (PEP 798 in Hy 1.3)."
+  (lfor batch batches #* batch))
+```
+
+Modern Hy provides full syntax for asynchronous Python—`(defn :async ...)`, `(fn :async ...)`, `(with [:async ...] ...)`, and `(for [:async ...] ...)`—which we cover in depth in the **Async and Concurrent Hy** chapter. And when running on Python 3.14's free-threaded build or Python 3.15's lazy imports (`pragma`), pure Hy functions compile to standard Python bytecode and follow the exact same concurrency and import semantics as regular Python modules.
+
+### Mini-Project: Refactoring the UMLS Triple Processor to Modern Hy
+
+To see these features working together, `source_code_for_examples/modern_hy/umls_modern.hy` refactors the triple-parsing and summarization core of `plots_with_graphviz/UMLS_graph.hy` using `deftype`, `#^` annotations, `setv :chain`, `setx`, `match`, and `#*` comprehension unpacking:
+
+```hy
+(import dataclasses [dataclass])
+
+(deftype NodeId str)
+(deftype Predicate str)
+(deftype Triple (get tuple #(NodeId NodeId Predicate)))
+
+(setv PREDICATE-COLORS
+  {"isa" "#FF6B6B"
+   "interacts_with" "#4ECDC4"
+   "affects" "#45B7D1"
+   "causes" "#96CEB4"
+   "part_of" "#FFEAA7"
+   "location_of" "#DDA0DD"
+   "treats" "#98D8C8"})
+
+(defclass [dataclass] GraphSummary []
+  #^ int triple-count
+  #^ int node-count
+  #^ (get dict #(Predicate int)) predicate-counts)
+
+(defn #^ str predicate-color [#^ Predicate pred]
+  "Return the color hex string for a predicate using structural match."
+  (match pred
+    (| "isa" "part_of") (.get PREDICATE-COLORS pred "#CCCCCC")
+    (str p) :if (in p PREDICATE-COLORS) (get PREDICATE-COLORS p)
+    _ "#CCCCCC"))
+
+(defn #^ (get list Triple) parse-triple-lines [
+    #^ (get list str) lines
+    #^ (| int None) [limit None]
+    #^ (| Predicate None) [filter-pred None]]
+  "Parse whitespace-separated (subject object predicate) lines."
+  (setv triples
+    (lfor line lines
+          :if (setx stripped (.strip line))
+          :if (not (.startswith stripped "#"))
+          :setv tokens (.split stripped)
+          :if (= (len tokens) 3)
+          :setv [subj obj pred] tokens
+          :if (or (is filter-pred None) (= pred filter-pred))
+          #(subj obj pred)))
+  (if (is limit None)
+    triples
+    (cut triples 0 limit)))
+
+(defn #^ GraphSummary summarize-triples [#^ (get list Triple) triples]
+  "Compute node and predicate counts for a list of triples."
+  (setv :chain [triple-count node-count] 0)
+  (setv endpoints (lfor [s o _] triples #* [s o]))
+  (setv unique-nodes (set endpoints))
+  (setv #^ (get dict #(Predicate int)) counts {})
+  (for [[_ _ pred] triples]
+    (setv (get counts pred) (+ (.get counts pred 0) 1)))
+  (setv triple-count (len triples)
+        node-count (len unique-nodes))
+  (GraphSummary
+    :triple-count triple-count
+    :node-count node-count
+    :predicate-counts counts))
+```
+
+You can run the demo, the test suite, and the `hy2py` + `mypy` check from `source_code_for_examples/modern_hy`:
+
+```bash
+$ cd source_code_for_examples/modern_hy
+$ uv sync
+$ uv run hy demo.hy
+=== Modern Hy 1.3.1 Tour ===
+Python: 3.14.7
+Counters: {'hits': 0, 'misses': 0, 'errors': 0}
+First non-empty: hello hy 1.3
+Accumulator steps: 15 22
+Endpoints: ('aspirin', 'headache')
+Match: hierarchy lookup on isa
+Match: limit to 25 triples
+Match: model edge: aspirin -treats-> headache
+Match: tuple edge: cell -has_part-> nucleus
+Safe query: ('SELECT subj, obj FROM triples WHERE pred = ? LIMIT ?', ('isa', 10))
+Flattened batches: ['a', 'b', 'c', 'd', 'e']
+UMLS summary: GraphSummary(triple_count=4, node_count=6, predicate_counts={'treats': 2, 'isa': 1, 'affects': 1})
+Color for 'isa': #FF6B6B
+$ uv run pytest -q
+.......                                                                  [100%]
+7 passed in 0.08s
+$ uv run hy2py umls_modern.hy > /tmp/umls_modern.py
+$ uv run mypy --ignore-missing-imports /tmp/umls_modern.py
+Success: no issues found in 1 source file
+```
 
 ## Optional Practice Problems
 

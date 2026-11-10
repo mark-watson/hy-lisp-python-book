@@ -1,0 +1,13 @@
+[project]
+name = "nsk-mcp"
+version = "0.1.0"
+description = "MCP server and client exposing the NSK knowledge graph engine in Hy"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "hy>=1.3.1",
+    "pytest>=9.2.0",
+]
+
+[tool.uv]
+exclude-newer = "2 days"

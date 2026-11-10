@@ -1,0 +1,7 @@
+Document: doc6_shacl_prov.txt
+Source: https://example.org/docs/shacl-provenance
+
+kg-rag is a GraphRAG and knowledge graph quality pipeline created by Mark Watson.
+Before indexing triples for retrieval, kg-rag validates the RDF graph against SHACL Shapes using the pyshacl library.
+Every extracted triple in kg-rag carries PROV-O provenance metadata linking the assertion to its source document chunk and an extraction confidence score between 0.0 and 1.0.
+kg-rag combines keyword chunk scoring with 2-hop SPARQL neighborhood expansion over canonicalized entities.

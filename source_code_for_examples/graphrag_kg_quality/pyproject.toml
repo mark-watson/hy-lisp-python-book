@@ -1,0 +1,15 @@
+[project]
+name = "graphrag-kg-quality"
+version = "0.1.0"
+description = "GraphRAG and Knowledge Graph Quality in Hy (SHACL, RDFS, SPARQL Update, Entity Resolution, Hybrid Retrieval)"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "hy>=1.3.1",
+    "pytest>=9.2.0",
+    "rdflib>=7.1.0",
+    "pyshacl>=0.26.0",
+]
+
+[tool.uv]
+exclude-newer = "2 days"

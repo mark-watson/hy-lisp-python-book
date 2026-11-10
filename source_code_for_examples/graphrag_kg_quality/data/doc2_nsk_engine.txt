@@ -1,0 +1,7 @@
+Document: doc2_nsk_engine.txt
+Source: https://example.org/docs/nsk-engine
+
+NSK is a neural-symbolic knowledge graph system authored by Mark Watson.
+NSK stores symbolic assertions in a three-index triplestore and evaluates queries using Logic Unification and forward-chaining Datalog rules.
+When symbolic unification finds no matching triple for a tilde-prefixed predicate, NSK invokes the Ollama Neural Predicate fallback served by the qwen3.5:4b language model.
+M. Watson documented NSK alongside KG-Creator to contrast symbolic deduction with neural guessing.

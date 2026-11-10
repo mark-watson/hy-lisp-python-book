@@ -1,9 +1,11 @@
 preface.md
 hytutorial.md
 whylisp.md
+macros.md
+tooling.md
 webapps.md
 webscrape.md
-bravesearch.md
+async.md
 graphviz.md
 deeplearning.md
 nlp.md
@@ -21,7 +23,9 @@ perplexity.md
 langchain.md
 llm_colab.md
 zvec_RAG.md
+llm-eval.md
 symbolic-math.md
 nsk-neural-symbolic-graph.md
+mcp.md
+graphrag.md
 wrapup.md
-

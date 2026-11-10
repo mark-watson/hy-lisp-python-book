@@ -1,0 +1,7 @@
+Document: doc5_zvec_rag.txt
+Source: https://example.org/docs/zvec-rag
+
+zvec_RAG is a vector retrieval-augmented generation system that indexes text chunks locally.
+zvec_RAG stores 768-dimensional floating-point embeddings inside the Alibaba zvec in-process vector database.
+During query time, zvec_RAG generates embeddings with embeddinggemma and synthesizes answers using the qwen3:1.7b model on Ollama.
+While zvec_RAG retrieves isolated text chunks by cosine similarity, it does not traverse multi-hop RDF entity relationships.

@@ -1,0 +1,7 @@
+Document: doc4_kgn_navigator.txt
+Source: https://example.org/docs/kgn-navigator
+
+KGN (Knowledge Graph Navigator) is an interactive semantic exploration tool authored by Mark Watson.
+KGN queries the public DBpedia SPARQL Endpoint to discover multi-hop connections between people, places, and organizations.
+KGN builds on a lightweight RDF datastore module that supports conjunction joins across SPARQL triple patterns.
+NSK Engine and KGN both illustrate how Lisp macros and symbolic data structures simplify graph query languages.

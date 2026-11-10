@@ -1,0 +1,50 @@
+@prefix ex:   <http://example.org/kgrag/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+ex:SoftwareProjectShape
+    a sh:NodeShape ;
+    sh:targetClass ex:SoftwareProject ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "Every SoftwareProject must have at least one string rdfs:label." ;
+    ] ;
+    sh:property [
+        sh:path ex:createdBy ;
+        sh:minCount 1 ;
+        sh:class ex:Person ;
+        sh:message "Every SoftwareProject must specify an ex:createdBy pointing to an ex:Person." ;
+    ] .
+
+ex:PersonShape
+    a sh:NodeShape ;
+    sh:targetClass ex:Person ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "Every Person must have a string rdfs:label." ;
+    ] .
+
+ex:ProvenanceStatementShape
+    a sh:NodeShape ;
+    sh:targetClass rdf:Statement ;
+    sh:property [
+        sh:path prov:wasDerivedFrom ;
+        sh:minCount 1 ;
+        sh:nodeKind sh:IRI ;
+        sh:message "Every reified rdf:Statement must link to a source chunk IRI via prov:wasDerivedFrom." ;
+    ] ;
+    sh:property [
+        sh:path ex:confidence ;
+        sh:minCount 1 ;
+        sh:datatype xsd:double ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 1.0 ;
+        sh:message "Every reified rdf:Statement must have an xsd:double ex:confidence in [0.0, 1.0]." ;
+    ] .

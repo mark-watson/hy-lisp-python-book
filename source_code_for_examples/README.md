@@ -1,10 +1,10 @@
 # Code for my book "A Lisp Programmer Living in Python-Land: The Hy Programming Language"
 
-The code examples have been updated in September 2024 to run with Hy version 1.2 (most current as of March 2026).
+The code examples have been updated in November 2026 to run with Hy version 1.3.1 (`hy>=1.3.1`).
 
 ## Code examples
 
-I now exclusively use `uv` as a package manager and to run exmples; for example:
+I now exclusively use `uv` as a package manager and to run examples; for example:
 
     uv run hy test2.hy
 
