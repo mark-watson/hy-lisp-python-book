@@ -121,23 +121,7 @@ I find, in general, that a "bottom-up" approach gets me to working high quality 
 
 When I need a library for a Hy project I search for Python libraries and either write a thin Hy language "wrapper" around the Python library or just call the Python APIs directly from Hy code. You will see many examples of both approaches in this book.
 
-## How This Book Reflects My Views on Artificial Intelligence and the Future of Society and Technology
-
-Since starting work on AI in 1982 I have seen the field progress from a niche technology where even international conferences had small attendances to a field that is generally viewed as transformative. In the USA there is legitimate concern that economic adversaries like China will exceed our abilities to develop core AI technologies and integrate these technologies into commercial and military systems. As I write this in February 2020, some people in our field including myself believe that the Chinese company Baidu may have already passed Google and Microsoft in applied AI.
-
-Even though most of my professional work in the last five years has been in Deep Learning (and before that I worked with the Knowledge Graph at Google on a knowledge representation problem and application), I believe that human level Artificial General Intelligence (AGI) will use hybrid Deep Learning, "old fashioned" symbolic AI, and techniques that we have yet to discover.
-
-This belief that Deep Learning will not get us to AGI capabilities is a motivation for me to use the Hy language because it offers transparent access to Python Deep Learning frameworks with a bottom-up Lisp development style that I have used for decades using symbolic AI and knowledge representation.
-
-I hope you find that Hy meets your needs as it does my own.
-
-## About the Book Cover
-
-The official Hy Language logo is an octopus:
-
-{width=22%}
-![The Hy Language logo Cuddles by Karen Rustad](hylisplogo.jpg)
-
+## Acknowledgements
 
 I thank my wife Carol for editing this manuscript, finding typos, and suggesting improvements.
 
