@@ -48,11 +48,64 @@ I am available for short consulting projects. Please see [https://markwatson.com
 
 In August 2025 I changed the way that I build and run both Hy language and Python scripts and programs. I now use **uv** and install dependencies in each Hy or Python project directory. 
 
-To free disk space for the **venv** directories, I define a top level **Makefile** in the GitGub repository for the example programs [https://github.com/mark-watson/hy-lisp-python-book](https://github.com/mark-watson/hy-lisp-python-book):
+To free disk space for the **venv** directories, I define a top level **Makefile** in the GitGub repository for the example programs [https://github.com/mark-watson/hy-lisp-python-book](https://github.com/mark-watson/hy-lisp-python-book) in the subdirectory `source_code_for_examples`:
 
 ```
 clean:
 	rm -rf */__pycache__ */venv
+```
+
+### Optional: Emacs setup in .emacs file
+
+I use the `straight` package manager. If you use something else the first line will need to be modified:
+
+```lisp
+(straight-use-package 'hy-mode)
+
+;; Hy hylang:
+;;  install:   uv tool install --force --python 3.12 hyuga
+
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs '(hy-mode . ("hyuga"))))
+(add-hook 'hy-mode-hook #'eglot-ensure)
+
+(defun my/hy-setup-environment ()
+  "Ensure the nearest .venv/bin is in exec-path, PATH, and sets hy-shell-interpreter."
+  (let* ((root (locate-dominating-file default-directory ".venv"))
+         (venv-bin (when root (expand-file-name ".venv/bin" root)))
+         (venv-hy (when venv-bin (expand-file-name "hy" venv-bin))))
+    (when (and venv-bin (file-directory-p venv-bin))
+      ;; Prepend to exec-path if not already there
+      (unless (member venv-bin exec-path)
+        (setq exec-path (cons venv-bin exec-path)))
+      ;; Prepend to process PATH environment variable
+      (let ((current-path (getenv "PATH")))
+        (unless (string-prefix-p (concat venv-bin ":") current-path)
+          (setenv "PATH" (concat venv-bin ":" current-path))))
+      ;; Set interpreter to the verified executable
+      (when (file-executable-p venv-hy)
+        (setq hy-shell-interpreter venv-hy)))))
+
+(with-eval-after-load 'hy-mode
+  (add-hook 'hy-mode-hook #'my/hy-setup-environment))
+
+(with-eval-after-load 'hy-mode
+  ;; Override the hardcoded (executable-find "hy") check across all hy-shell functions
+  (defun my/hy-shell-bypass-executable-check (orig-fun &rest args)
+    (cl-letf (((symbol-function 'executable-find)
+               (lambda (cmd)
+                 (if (member cmd '("hy" "hyuga"))
+                     (or (and (boundp 'hy-shell-interpreter)
+                              (file-executable-p hy-shell-interpreter)
+                              hy-shell-interpreter)
+                         (funcall orig-fun cmd))
+                   (funcall orig-fun cmd)))))
+      (apply orig-fun args)))
+
+  (advice-add 'hy-shell-eval-buffer :around #'my/hy-shell-bypass-executable-check)
+  (advice-add 'hy-shell-eval-region :around #'my/hy-shell-bypass-executable-check)
+  (advice-add 'hy-shell-eval-last-sexp :around #'my/hy-shell-bypass-executable-check)
+  (advice-add 'hy-shell-start-or-switch-to-shell :around #'my/hy-shell-bypass-executable-check))
 ```
 
 
