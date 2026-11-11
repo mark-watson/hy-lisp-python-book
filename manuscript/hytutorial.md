@@ -19,11 +19,16 @@ On Windows use one of these commands:
 irm https://astral.sh/uv/install.ps1 | iex
 ~~~~~~~~
 
+Whenever you start wrking in one of the book's example directories, always initialize the Python runtime environment for Hy and the libraires uses in the examples:
+
+```
+uv sync
+```
 
 
 ## Using Python Libraries
 
-Using Python libraries like TensorFlow, Keras, BeautifulSoup, etc. are the reason I use the Hy language. Importing Python code and libraries and calling out to Python is simple and here we look at sufficient examples so that you will understand example code that we will look at later.
+Using Python libraries like google-genai, openai, ollama, TensorFlow, Keras, BeautifulSoup, etc. are the reason I use the Hy language. Importing Python code and libraries and calling out to Python is simple and here we look at sufficient examples so that you will understand example code that we will look at later.
 
 *Note: starting in August 2025 the example programs in the GitHub repository XX are in individual directores, each pre-configured for use with **uv***
 
